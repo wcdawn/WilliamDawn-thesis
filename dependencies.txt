@@ -24,3 +24,6 @@ titlesec
 placeins
 fncychap
 microtype
+sudo apt install texlive*recommended
+mathdesign
+tikz
