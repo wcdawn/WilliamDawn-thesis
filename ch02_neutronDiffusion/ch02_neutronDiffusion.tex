@@ -2,7 +2,14 @@
 \label{ch:neutronDiffusion}
 
 \section{Introduction}
-  For typical nuclear reactor applications, diffusion theory well approximates the neutron distribution within the reactor.
+  For typical nuclear reactor applications, diffusion theory well approximates 
+  the neutron distribution within the reactor. The neutron diffusion equation is
+  a second order partial differential equation in space and energy.
+  \begin{equation}\label{eq:condinuous_diffusion}
+    \nabla \cdot (D(\vr,E) \nabla \phi(\vr,E)) + \Sigma_r(\vr,E) \phi(\vr,E) =
+      \frac{\chi(\vr,E)}{\keff} \int_0^{\infty} \Sigma_f(\vr,E') \phi(\vr,E') \;
+      dE' + \int_0^{\infty} \Sigma_s(\vr,E' \rightarrow E) \phi(\vr,E') \; dE'
+  \end{equation}
 
 \section{Formulation}
   \subsection{Derivation}
