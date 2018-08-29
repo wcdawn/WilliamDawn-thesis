@@ -44,14 +44,16 @@
   <internal package="biblatex" priority="9" active="0">
     <generic>latex</generic>
     <provides type="dynamic">
-      <file>YourName-thesis.aux</file>
-      <file>YourName-thesis-blx.bib</file>
+      <file>WilliamDawn-thesis.aux</file>
+      <file>WilliamDawn-thesis-blx.bib</file>
     </provides>
     <requires type="dynamic">
-      <file>YourName-thesis.bbl</file>
+      <file>WilliamDawn-thesis.bbl</file>
     </requires>
     <requires type="static">
+      <file>blx-dm.def</file>
       <file>blx-compat.def</file>
+      <file>blx-bibtex.def</file>
       <file>biblatex.def</file>
       <file>blx-natbib.def</file>
       <file>alphabetic.bbx</file>
@@ -66,23 +68,23 @@
     <cmdline>
       <binary>bibtex</binary>
       <option>-min-crossrefs 2</option>
-      <infile>YourName-thesis</infile>
+      <infile>WilliamDawn-thesis</infile>
     </cmdline>
     <input>
-      <file>YourName-thesis.aux</file>
+      <file>WilliamDawn-thesis.aux</file>
     </input>
     <output>
-      <file>YourName-thesis.bbl</file>
+      <file>WilliamDawn-thesis.bbl</file>
     </output>
     <provides type="dynamic">
-      <file>YourName-thesis.bbl</file>
+      <file>WilliamDawn-thesis.bbl</file>
     </provides>
     <requires type="dynamic">
-      <file>YourName-thesis.aux</file>
-      <file>YourName-thesis-blx.bib</file>
+      <file>WilliamDawn-thesis.aux</file>
+      <file>WilliamDawn-thesis-blx.bib</file>
     </requires>
     <requires type="editable">
-      <file>YourName-thesis.bib</file>
+      <file>WilliamDawn-thesis.bib</file>
     </requires>
     <requires type="static">
       <file>biblatex.bst</file>

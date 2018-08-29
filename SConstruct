@@ -1,7 +1,7 @@
 import os
 env = Environment(ENV=os.environ)
 
-fn = "YourName-thesis"
+fn = "WilliamDawn-thesis"
 chapters = Glob("Chapter-*/Chapter-*.tex") + Glob("Appendix-*/Appendix-*.tex")
 
 print chapters
