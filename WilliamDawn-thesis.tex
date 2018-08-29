@@ -21,7 +21,7 @@
 			sorting=nyt,%ynt					
 			hyperref=true, %	
 			giveninits=true,%
-			%backend=bibtex,
+			backend=bibtex,
 			natbib=true,
 			url=false,
 			isbn=false,
@@ -277,7 +277,12 @@ Method}
 
 %This makes it so that you can add short paths in your .tex by including the
 %folders where you store your images in the search path
-\graphicspath{{./Chapter-1/figs/}{./Chapter-2/figs/}{./Chapter-3/figs/}}%{./Chapter-4/figs/}{./Chapter-5/figs/}{./Chapter-6/figs/}}
+\graphicspath{
+  {./ch01_introduction/figs/}
+  {./ch02/figs/}
+  {./ch03/figs/}
+  {./ch04/figs/}
+  }
 
 %%---------------------------------------------------------------------------%%
 \usepackage{calc}
@@ -331,9 +336,10 @@ Method}
 \pagestyle{plain}
 \newgeometry{margin=1in,lmargin=1.25in,footskip=\chapterfootskip, includehead, 
   includefoot}
-\include{Chapter-1/Chapter-1}
-\include{Chapter-2/Chapter-2}
-\include{Chapter-3/Chapter-3}
+\include{ch01_introduction/ch01_introduction}
+\include{ch02/ch02}
+\include{ch03/ch03}
+\include{ch04/ch04}
 %\include{Chapter-4/Chapter-4}
 %\include{Chapter-5/Chapter-5}
 %\include{Chapter-6/Chapter-6}

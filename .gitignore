@@ -1,9 +1,11 @@
 *.log
 *.lot
 *.lof
+
 **.aux
-*.bbl
 *.out
-*.blg
 *.toc
 
+*.blg
+*.bbl
+*.bcf
