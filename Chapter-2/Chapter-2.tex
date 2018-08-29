@@ -26,9 +26,8 @@ Total & 3589 & 267 & 3856\\
 \end{table}
 
 \paragraph{Filler Text} \lipsum[1-2]
+
 \newgeometry{margin=1in,lmargin=1.25in,footskip=\chapterfootskip, includehead, includefoot}
-%\thispagestyle{lscape}
-%\pagestyle{lscape}
 \thispagestyle{lscapedplain}
 \begin{landscape}
 \begin{table}
@@ -52,7 +51,6 @@ Total & 6 & 12 & 18 & 24 & 30 & 36 & 42 & 48 & 54 & 270\\
 \end{center}
 \end{table}
 \end{landscape}
-%\newgeometry{margin=1in,lmargin=1.25in,footskip=\chapterfootskip, includehead, includefoot,landscape=false}
 \restoregeometry
 \pagestyle{plain}
 \thispagestyle{plain}
@@ -64,12 +62,13 @@ Total & 6 & 12 & 18 & 24 & 30 & 36 & 42 & 48 & 54 & 270\\
 The easiest way to insert a picture is to have that picture in pdf format.  
 \fref{fig:hist1} and \fref{fig:hist2} are two figures typeset normally.
 ETD guidelines allow the use of landscape pages in the electronic 
-submission.  To rotate a page, do NOT use the \texttt{lscape} environment. Instead, use the \texttt{pdflscape} package, for compatibility with PDFlatex.
+submission.  To rotate a page, do NOT use the \texttt{lscape} environment. 
+Instead, use the \texttt{pdflscape} package, for compatibility with PDFlatex.
 Please note, if you are preparing a document for binding, consider
 giving the \texttt{hardcopy} option in the \verb|\documentclass|
 declaration.  This will place the page number at the normal location,
 which is where it should be for printing and binding.
-%
+
 \begin{figure}[hbtp]
 \centering
 \includegraphics[width=0.6\textwidth]{Chapter-2/figs/pie}
@@ -82,8 +81,22 @@ For an example of a figure with a really long caption, see Fig.~\ref{fig:longcap
 \centering
 \calculategraphicstargetheight{11}
 \includegraphics[height=\graphht]{Chapter-2/figs/color_stretched}
-\caption{Here is a HUGE sample figure with a HUGE caption. Our goal is to make a caption that is so long that the caption spills into the lower margin, leading to an ETD error. The way to solve this problem in a systematic way is to calculate how many lines of text the caption will use, then adjust the size of the image, such that it leaves just enough space for your huge caption. How I am solving this problem is by providing a new variable called graphht that stores how tall the image should be. Then, to calculate how tall to make the figure, you use the new function that I am providing called calculategraphicstargetheight. This function has one argument. The argument of the function is how many lines of text you estimate that the caption occupies. You can always run your tex once, measure this number, and type it into the argument for the function. What the function will do (it is defined in the preamble) is take into account the size you give it, the spacing of the chapter and the footer at the bottom, 
-and then calculate the total vertical space available. Thus, this function should be used for images that are taller than they are wide.}
+\caption{Here is a HUGE sample figure with a HUGE caption. Our goal is to make 
+  a caption that is so long that the caption spills into the lower margin, 
+  leading to an ETD error. The way to solve this problem in a systematic way is
+  to calculate how many lines of text the caption will use, then adjust the size
+  of the image, such that it leaves just enough space for your huge caption.
+  How I am solving this problem is by providing a new variable called graphht 
+  that stores how tall the image should be. Then, to calculate how tall to make 
+  the figure, you use the new function that I am providing called
+  calculategraphicstargetheight. This function has one argument. The argument
+  of the function is how many lines of text you estimate that the caption
+  occupies. You can always run your tex once, measure this number, and type it
+  into the argument for the function. What the function will do (it is defined 
+  in the preamble) is take into account the size you give it, the spacing of the
+  chapter and the footer at the bottom, and then calculate the total vertical 
+  space available. Thus, this function should be used for images that are taller
+  than they are wide.}
 \label{fig:longcap}
 \end{figure}
 %
@@ -110,21 +123,17 @@ and then calculate the total vertical space available. Thus, this function shoul
 \paragraph{Filler Text} \lipsum[12-15]
 
 \newgeometry{margin=1in,lmargin=1.25in,footskip=\chapterfootskip, includehead, includefoot}
-%\thispagestyle{lscaped}
-%\pagestyle{lscaped}
 \thispagestyle{lscapedplain}
 \begin{landscape}
 \begin{figure}
 \centering
 \includegraphics[width=\textwidth]{Chapter-2/figs/sine}
-%\includegraphics[height=\textwidth]{Chapter-2/figs/sine}
 \caption{This figure has been turned sideways.  With large figures, 
          the author must ensure that there are at least two double spaces
          between the caption and the page number.}
 \label{fig:hist}
 \end{figure}
 \end{landscape}
-%\newgeometry{margin=1in,lmargin=1.25in,footskip=\chapterfootskip, includehead, includefoot,landscape=false}
 \restoregeometry
 \pagestyle{plain}
 \thispagestyle{plain}

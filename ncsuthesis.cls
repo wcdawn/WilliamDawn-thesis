@@ -40,8 +40,9 @@
 \DeclareOption{11pt}{\PassOptionsToClass{\CurrentOption}{book}}
 \DeclareOption{12pt}{\PassOptionsToClass{\CurrentOption}{book}}
 
-\DeclareOption*{\PackageWarning{ncsuthesis}{Unknown option `\CurrentOption'. Ignoring}}
-\ExecuteOptions{phd,onehalfspacing} % the default option is <phd, onehalfspacing>
+\DeclareOption*{\PackageWarning{ncsuthesis}{
+  Unknown option `\CurrentOption'. Ignoring}}
+\ExecuteOptions{phd,onehalfspacing} % the default option is <phd,onehalfspacing>
 \ProcessOptions
 \LoadClass[openany,oneside,titlepage,letterpaper]{book}
 
@@ -564,7 +565,7 @@
        %% standard LaTeX.
        \setlength{\unitlength}{\portraittextheight}
        \begin{picture}(0,0)
-           \put(0.055,0.557){\begin{sideways}\thepage\end{sideways}} % page number
+           \put(0.055,0.557){\begin{sideways}\thepage\end{sideways}}%page number
        \end{picture}
      }
 
@@ -673,7 +674,8 @@
         \protect\renewcommand{\protect\cftchappresnum}{Appendix }
         \protect\renewcommand{\protect\cftchapnumwidth}{\protect\appendixwidth}
         \protect\renewcommand{\protect\cftchapfont}{\protect\cftsecfont}
-        \protect\setlength{\protect\cftbeforechapskip}{\protect\cftbeforesecskip}
+        \protect\setlength{\protect\cftbeforechapskip}{
+          \protect\cftbeforesecskip}
         \protect\setlength{\protect\cftchapindent}{\protect\cftsecindent}
         \protect\renewcommand{\protect\cftchappagefont}{\protect\cftchapfont}
         \protect\setlength{\protect\cftsecindent}{\protect\cftsubsecindent}
