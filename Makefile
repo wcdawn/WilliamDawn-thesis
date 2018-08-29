@@ -1,5 +1,5 @@
 CHAPTERS=Chapter-*/Chapter-*.tex  Appendix-*/Appendix-*.tex
-NAME=YourName-thesis
+NAME=WilliamDawn-thesis
 AUX=$(NAME).aux front.aux Chapter-*/*.aux Appendix-*/*.aux optional.aux
 INTERMEDIATES=$(NAME).bbl $(NAME).blg $(NAME).lof $(NAME).lot \
               $(NAME).log $(NAME).toc 
