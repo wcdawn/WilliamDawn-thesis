@@ -4,22 +4,119 @@
 \section{Introduction}
   For typical nuclear reactor applications, diffusion theory well approximates 
   the neutron distribution within the reactor. The neutron diffusion equation is
-  a second order partial differential equation in space and energy.
-  \begin{equation}\label{eq:condinuous_diffusion}
-    \nabla \cdot (D(\vr,E) \nabla \phi(\vr,E)) + \Sigma_r(\vr,E) \phi(\vr,E) =
-      \frac{\chi(\vr,E)}{\keff} \int_0^{\infty} \Sigma_f(\vr,E') \phi(\vr,E') \;
-      dE' + \int_0^{\infty} \Sigma_s(\vr,E' \rightarrow E) \phi(\vr,E') \; dE'
+  a second order partial differential equation in space and energy. In standard
+  notation, the continuous neutron diffusion equation is presented as
+  \begin{multline}\label{eq:continuous_diffusion}
+    -\grad \cdot (D(\vr,E) \grad \phi(\vr,E)) + \Sigma_t(\vr,E) \phi(\vr,E) = \\
+      \frac{\chi(\vr,E)}{\keff} \int_0^{\infty} \nu_f(\vr,E') \Sigma_f(\vr,E') 
+      \phi(\vr,E') \; dE' + \int_0^{\infty} \Sigma_s(\vr,E' \rightarrow E) 
+      \phi(\vr,E') \; dE'
+  \end{multline}
+  Where $D$ is the diffusion constant, $\phi$ is the scalar neutron flux, 
+  $\Sigma_t$ is the total cross section, $\chi$ is the fission neutron 
+  spectrum, $\keff$ is the effective neutron multiplication factor, $\Sigma_f$ 
+  is the fission cross section, $\nu_f$ is the neutron yield per fission, and 
+  $\Sigma_s(\vr,E' \rightarrow E)$ is the scattering cross section for neutrons 
+  at position $\vr$ scattering from energy $E'$ to $E$.
+  
+  The neutron diffusion equation must be discretized in space and 
+  energy to be solved computationally. Energy discretization is relatively 
+  straight-forward.  An energy structure is described as $\{E_g\}$ for
+  $g = 1,2,\ldots,G$ and by convention
+  \[ E_G > E_{G-1} > \ldots > E_2 > E_1  \]
+  Then, multigroup constants can be calculated based on the energy group 
+  structure and the known cross sections. Multigroup constants are calculated to
+  preserve the number of neutrons produced or destroyed. That is, the 
+  calculation preserves reaction rates where the reaction rate for reaction $x$
+  is defined as $R_x=\Sigma_x \phi$. Multigroup constants are then calculated. A
+  formal derivation is given in \cite{duderstathamilton} and the results are 
+  presented below.
+  \begin{align}
+    D_g(\vr) &= \frac{\int_{E_g}^{E_{g-1}} D(\vr,E') \grad \phi(\vr,E)\;dE}
+      {\int_{E_g}^{E_{g-1}} \grad \phi(\vr,E)\;dE} \\
+    \Sigma_{t,g}(\vr) &= \frac{\int_{E_g}^{E_{g-1}} \Sigma_t(\vr,E) 
+      \phi(\vr,E)\;dE}{\int_{E_g}^{E_{g-1}} \phi(\vr,E)\;dE} \\
+    \nu\Sigma_{f,g}(\vr) &= \frac{\int_{E_g}^{E_{g-1}} \nu_f(\vr,E)
+      \Sigma_f(\vr,E) \phi(\vr,E)\;dE}{\int_{E_g}^{E_{g-1}} 
+      \phi(\vr,E)\;dE} \\
+    \Sigma_{s,g\rightarrow g'}(\vr) &= \frac{\int_{E_g'}^{E_{g'-1}} 
+      \int_{E_g}^{E_{g-1}} \Sigma_s(\vr,E' \rightarrow E) \phi(\vr,E')\;dE\;dE'}
+      {\int_{E_g}^{E_{g-1}} \phi(\vr,E)\;dE}  \\
+    \chi_g(\vr) &= \int_{E_g}^{E_{g-1}} \chi(\vr,E) \; dE \\
+    \phi_g(\vr) &= \int_{E_g}^{E_{g-1}} \phi(\vr,E) \; dE
+  \end{align}
+  Note that cross sections $\nu_f(\vr,E)$ and $\Sigma_f(\vr,E)$ have been 
+  combined. This is necessary and a mathematical result of the group collapse.
+  Then, \eref{eq:continuous_diffusion} can be discretized in energy as
+  \begin{align}\label{eq:multigroup_diffusion}
+    - \grad ( D_g(\vr) \grad \phi_g(\vr)) + \Sigma_{t,g}(\vr) \phi_g(\vr) = 
+      \frac{\chi_g(\vr)}{\keff} \sum_{g'=1}^{G} \nu\Sigma_{f,g'}(\vr) 
+      \phi_{g'}(\vr) + \sum_{g'=1}^{G} \Sigma_{s,g' \rightarrow g}(\vr) 
+      \phi_{g'}(\vr)
+  \end{align}
+  Spatial dicretization will be based on the Finite Element Method (FEM) and 
+  will be discussed in \sref{sec:formulation:derivation}.
+  
+  % todo discuss source splitting (up/down/self scatter) here or later
+  The total neutron cross section includes the contribution due to 
+  self-scattering. That is, due to $\Sigma_{s,g\rightarrow g}$. This can be 
+  removed from \eref{eq:multigroup_diffusion} for simplicity.
+  \begin{equation} \label{eq:multigroup_removal}
+    - \grad ( D_g(\vr) \grad \phi_g(\vr)) + \Sigma_{r,g}(\vr) \phi_g(\vr) = 
+      \frac{\chi_g(\vr)}{\keff} \sum_{g'=1}^{G} \nu\Sigma_{f,g'}(\vr) 
+      \phi_{g'}(\vr) + \sum_{g'=1, g' \ne g}^{G} \Sigma_{s,g' \rightarrow g}(\vr) 
+      \phi_{g'}(\vr)
   \end{equation}
+  Where $\Sigma_{r,g}$ is the removal cross section and $\Sigma_{r,g}(\vr) = 
+  \Sigma_{t,g}(\vr) - \Sigma_{s,g\rightarrow g}(\vr)$. For simplicity, the
+  neutron sources in \eref{eq:multigroup_removal} can be  combined into a
+  single term.
+  \begin{equation} \label{eq:multigroup_source}
+    - \grad ( D_g(\vr) \grad \phi_g(\vr)) + \Sigma_{r,g}(\vr) \phi_g(\vr) = 
+      q_g(\vr)
+  \end{equation}
+  Where $q_g(\vr)$ is the combined neutron source at position $\vr$. $q$ can 
+  then be further divided into contributions due to fission ($q_{fiss}$), up-
+  scattering ($q_{up}$) when a neutron increases in energy, and down-scattering 
+  when a neutron decreases in energy ($q_{down}$).
+  \begin{align}
+    q_g(\vr) &= q_{fiss,g}(\vr) + q_{up,g}(\vr) + q_{down,g}(\vr) \\
+    q_{fiss,g}(\vr) &= \frac{\chi_g(\vr)}{\keff} \sum_{g'=1}^{G} 
+      \nu \Sigma_{f,g'}(\vr) \phi_{g'}(\vr) \\
+    q_{up,g}(\vr) &= \sum_{g'=g+1}^{G} \Sigma_{s,g' \rightarrow g}(\vr)
+      \phi_{g'}(\vr) \\
+    q_{down,g}(\vr) &= \sum_{g'=1}^{g} \Sigma_{s,g' \rightarrow g}(\vr)
+      \phi_{g'}(\vr)
+  \end{align}
+  Where the difference between $q_{up}$ and $q_{down}$ are the limits of the 
+  summation. In an iterative scheme, it will be necessary for fission and 
+  up-scatter sources to use a different flux iterate than down-scatter so this
+  division will prove useful
+  
 
 \section{Formulation}
   \subsection{Derivation}
+    \label{sec:formulation:derivation}
+    The only remaining continuous variable in the problem is the spatial 
+    variable $\vr$. This will be discretized according to the Finite Element 
+    Method (FEM). 
   \subsection{Matrix Quantities}
     \subsubsection{Linear Triangles}
     \subsubsection{Linear Wedges}
 
 \section{Implementation}
+  \subsection{Algorithm}
+  	% in addition, make sure to mention the matrix is in RCM order
+  \subsection{Memory and Storage}
+  	% discuss two-table method
+    % mention other alternatives
+  \subsection{Linear System Solution}
+  	% Dr. Kelly's book and CG Method
+    % maybe discuss SPD here
 
 \section{Reference Results}
+	% develop a format to compare results for these so if updates happen
+    % the csv or whatever can simply be updated
   \subsection{Triangular Element Manufactured Solutions}
     \subsubsection{One Dimension, One-Group, Fixed Source}
     \subsubsection{One Dimension, One-Group, Criticality}
