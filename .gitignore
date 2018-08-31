@@ -9,3 +9,5 @@
 *.blg
 *.bbl
 *.bcf
+
+*.run.xml

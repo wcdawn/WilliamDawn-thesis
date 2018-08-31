@@ -12,6 +12,4 @@ $(NAME).pdf : $(NAME).tex $(NAME).bib front.tex $(CHAPTERS) ncsuthesis.cls optio
 	pdflatex $(NAME)
 
 clean :
-	rm $(AUX) $(INTERMEDIATES) $(NAME).pdf
-
-
+	rm $(AUX) $(INTERMEDIATES)
