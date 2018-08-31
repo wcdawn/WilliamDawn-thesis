@@ -13,6 +13,10 @@
 \usepackage{lipsum}    % filler text
 \usepackage{subfig}    % composite figures
 
+% user defined packages
+\usepackage{algorithm}
+\usepackage{algpseudocode}
+
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%%%%%%%% Hack for alphanumeric bibliography
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%5
@@ -39,7 +43,6 @@
 %http://tex.stackexchange.com/questions/27956/label-only-from-first-author
 \renewcommand*{\labelalphaothers}{}
     \renewcommand*{\intitlepunct}{}
-    \DefineBibliographyStrings{german}{in={}}
     \DefineBibliographyStrings{english}{in={}}
     \DeclareNameAlias{sortname}{last-first}
     \DeclareNameAlias{default}{last-first}
@@ -73,6 +76,7 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 \addbibresource{WilliamDawn-thesis.bib}
+\addbibresource{Mendeley.bib}
  \defbibheading{myheading}[BIBLIOGRAPHY]{
  \chapter*{#1}
  \markboth{#1}{#1}}
@@ -261,17 +265,28 @@ Method}
 \newcommand{\Conv}{\mathop{\scalebox{1.5}{\raisebox{-0.2ex}{$\ast$}}}}%
 
 % vectors and matrices
+\newcommand{\vf}{\mathbf{f}}
+\newcommand{\vn}{\mathbf{n}}
 \newcommand{\vr}{\mathbf{r}}
+\newcommand{\vu}{\mathbf{u}}
+\newcommand{\ma}{\mathbf{A}}
 
 % variable definitions
 \newcommand{\keff}{k_{eff}}
 \newcommand{\grad}{\mathbf{\nabla}}
+
+% neutronDiffusion
+\newcommand{\albedo}{\aleph}
+\newcommand{\basis}{N}
+
+\newcommand{\half}{\frac{1}{2}}
 
 % reference macros
 \newcommand{\eref}[1]{Eq.~\ref{#1}}
 \newcommand{\fref}[1]{Fig.~\ref{#1}}
 \newcommand{\tref}[1]{Table~\ref{#1}}
 \newcommand{\sref}[1]{Sec.~\ref{#1}}
+\newcommand{\chref}[1]{Chapter ~\ref{#1}}
 
 \usepackage{color}
 \newcommand{\NEW}[1]{#1}

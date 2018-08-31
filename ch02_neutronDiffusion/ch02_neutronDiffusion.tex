@@ -20,8 +20,18 @@
   at position $\vr$ scattering from energy $E'$ to $E$.
   
   The neutron diffusion equation must be discretized in space and 
-  energy to be solved computationally. Energy discretization is relatively 
-  straight-forward.  An energy structure is described as $\{E_g\}$ for
+  energy to be solved numerically. Energy discretization is relatively 
+  straight-forward and is performed using the multigroup method. Spatial 
+  discretization requires more attention and will be done with the Finite 
+  Element Method (FEM). This method is selected for several reasons. It allows
+  for easily increasing the order of the method by increasing the order of the 
+  elements with no changing of the mesh required. Coordinates of nodes can be 
+  easily updated to reflect physical phenomena such as thermal expansion 
+  (\chref{ch:thermalExpansion}). Additionally, material properties are 
+  calculated on an element basis allowing for fine detail updates to the 
+  material properties during the calculation.
+  
+  For energy discretization, An energy structure is described as $\{E_g\}$ for 
   $g = 1,2,\ldots,G$ and by convention
   \[ E_G > E_{G-1} > \ldots > E_2 > E_1  \]
   Then, multigroup constants can be calculated based on the energy group 
@@ -49,20 +59,21 @@
   combined. This is necessary and a mathematical result of the group collapse.
   Then, \eref{eq:continuous_diffusion} can be discretized in energy as
   \begin{align}\label{eq:multigroup_diffusion}
-    - \grad ( D_g(\vr) \grad \phi_g(\vr)) + \Sigma_{t,g}(\vr) \phi_g(\vr) = 
+    - \grad \cdot ( D_g(\vr) \grad \phi_g(\vr)) + \Sigma_{t,g}(\vr) \phi_g(\vr)= 
       \frac{\chi_g(\vr)}{\keff} \sum_{g'=1}^{G} \nu\Sigma_{f,g'}(\vr) 
       \phi_{g'}(\vr) + \sum_{g'=1}^{G} \Sigma_{s,g' \rightarrow g}(\vr) 
       \phi_{g'}(\vr)
   \end{align}
+  The neutron diffusion equation has now been discretized in energy.
   Spatial dicretization will be based on the Finite Element Method (FEM) and 
   will be discussed in \sref{sec:formulation:derivation}.
   
-  % todo discuss source splitting (up/down/self scatter) here or later
+  % todo this discussion may need to be moved to 'Implementation'
   The total neutron cross section includes the contribution due to 
   self-scattering. That is, due to $\Sigma_{s,g\rightarrow g}$. This can be 
   removed from \eref{eq:multigroup_diffusion} for simplicity.
   \begin{equation} \label{eq:multigroup_removal}
-    - \grad ( D_g(\vr) \grad \phi_g(\vr)) + \Sigma_{r,g}(\vr) \phi_g(\vr) = 
+    - \grad \cdot( D_g(\vr) \grad \phi_g(\vr)) + \Sigma_{r,g}(\vr) \phi_g(\vr) = 
       \frac{\chi_g(\vr)}{\keff} \sum_{g'=1}^{G} \nu\Sigma_{f,g'}(\vr) 
       \phi_{g'}(\vr) + \sum_{g'=1, g' \ne g}^{G} \Sigma_{s,g' \rightarrow g}(\vr) 
       \phi_{g'}(\vr)
@@ -72,7 +83,7 @@
   neutron sources in \eref{eq:multigroup_removal} can be  combined into a
   single term.
   \begin{equation} \label{eq:multigroup_source}
-    - \grad ( D_g(\vr) \grad \phi_g(\vr)) + \Sigma_{r,g}(\vr) \phi_g(\vr) = 
+    - \grad \cdot( D_g(\vr) \grad \phi_g(\vr)) + \Sigma_{r,g}(\vr) \phi_g(\vr) = 
       q_g(\vr)
   \end{equation}
   Where $q_g(\vr)$ is the combined neutron source at position $\vr$. $q$ can 
@@ -89,9 +100,10 @@
       \phi_{g'}(\vr)
   \end{align}
   Where the difference between $q_{up}$ and $q_{down}$ are the limits of the 
-  summation. In an iterative scheme, it will be necessary for fission and 
-  up-scatter sources to use a different flux iterate than down-scatter so this
-  division will prove useful
+  summation. This form allows for operator splitting of the neutron source term.
+  In an iterative scheme, it will be necessary for fission and up-scatter 
+  sources to use a different flux iterate than down-scatter so this division
+  will prove useful.
   
 
 \section{Formulation}
@@ -99,13 +111,287 @@
     \label{sec:formulation:derivation}
     The only remaining continuous variable in the problem is the spatial 
     variable $\vr$. This will be discretized according to the Finite Element 
-    Method (FEM). 
+    Method (FEM). The form of the diffusion equation to be discretized is 
+    \eref{eq:multigroup_source}. The problem is solved in a finite domain 
+    $\vr \in \Omega$ where $\partial \Omega$ represents the boundary of the 
+    domain where some boundary condition is specified. Boundary condition 
+    options provided include
+    \begin{enumerate}
+      \item Mirror. $\grad \phi_g(\vr) = 0$ for $\vr \in \partial \Omega$.
+      \item Albedo. $D_g(\vr) \grad \phi_g(\vr) + \albedo \phi_g(\vr)=0$ for 
+        $\vr \in \partial \Omega$ where $\albedo$ is a real constant specified
+        by the user. For vacuum conditions, $\alpha = \half$.
+      \item Zero Flux. $\phi_g(\vr) = 0$ for $\vr \in \partial \Omega$.
+    \end{enumerate}
+    (Note: the order of the above list corresponds to the order of boundary 
+    condition precedent in code with the greater the integer, the greater the 
+    precedent.)
+    
+    Finite Element derivation begins with \eref{eq:multigroup_source}.
+    The equation is multiplied by a testing function $v(\vr) \in H_1(\Omega)$ 
+    Where $H$ is the Sobolev Space. Then, the equation is integrated over the 
+    problem domain. This yields the Weak Form or Variational Form of the 
+    problem.
+    \begin{align}
+      -\grad \cdot (D_g(\vr) \grad \phi_g(\vr)) + \Sigma_{r,g}(\vr) \phi_g(\vr)
+        &=q_g(\vr) \\
+      -\grad \cdot (D_g(\vr) \grad \phi_g(\vr)) v(\vr) + 
+        \Sigma_{r,g}(\vr) \phi_g(\vr) v(\vr) &=
+        q_g(\vr) \\
+      - \int_{\Omega} \grad \cdot (D_g(\vr) \grad \phi_g(\vr)) v(\vr) \; d\Omega
+        \int_{\Omega} \Sigma_{r,g}(\vr) \phi_g(\vr) v(\vr) \;d\Omega &=
+        \int_{\Omega} q_g(\vr) v(\vr) \;d\Omega
+    \end{align}
+    
+    For the purposes of this application, material cross sections and the
+    neutron source are assumed to be constant within an element. Then, the 
+    integral can be partitioned into a sum of integrals over the elements in the
+    domain assuming the set of elements $\{\Omega_e\} = \Omega$ for 
+    $e = 1,2,\ldots,E$ where $E$ is the total number of elements.
+    \begin{equation} \label{eq:element_by_element}
+      -\sum_{e=1}^{E} D_{g,e} 
+        \int_{\Omega_e} \grad \cdot \grad \phi_g(\vr) v(\vr) \; d\Omega_e +
+        \sum_{e=1}^{E} \Sigma_{r,g,e} \int_{\Omega_e} \phi_g(\vr) v(\vr) 
+        \;d\Omega_e = \sum_{e=1}^{E} q_{g,e} \int_{\Omega_e} v(\vr) 
+        \; d\Omega_e
+    \end{equation}
+    The Second Green's Theorem is used to simplify the integral in the first
+    term. A proof can be found in \cite{textbookli} in Theorem 9.2.
+    \begin{equation} \label{eq:greens}
+      -\int_{\Omega_e} \grad \cdot \grad \phi_g(\vr) v(\vr) \;d\Omega_e =
+        -\int_{\partial \Omega_e}  
+        \frac{\partial \phi_g(\vr)}{\partial \vn} v(\vr)\; ds + \int_{\Omega_e} 
+        \grad \phi_g(\vr) \cdot \grad v(\vr) \; d\Omega_e
+    \end{equation}
+    Where $\frac{\partial \phi_g(\vr)}{\partial \vn}$ is the outward normal 
+    derivative and the integral $ds$ is a line integral in two dimensions or a 
+    surface integral in three dimensions. Recognizing that this quantity will 
+    only be relevant on the boundary of the problem, the value of the outward 
+    normal derivative may be specified in a boundary condition. Specifically, 
+    the Albedo boundary condition which has the following form for $\vr \in 
+    \partial \Omega$. 
+    \begin{align}
+      D_g(\vr) \grad \phi_g(\vr) + \albedo \phi_g(\vr) &= 0 \\
+      \grad \phi_g(\vr) &= \frac{-\albedo \phi_g(\vr)}{D_g}
+    \end{align}
+    Substituting \eref{eq:greens} into  \eref{eq:element_by_element} and 
+    assuming the outward normal derivative is specified in the form of an Albedo
+    boundary condition.
+    \begin{multline} \label{eq:element_boundary}
+      -\sum_{e=1}^{E} D_{g,e} \int_{\partial \Omega_e} v(\vr) 
+        \frac{\partial \phi_g(\vr)}{\partial \vn} \;ds + \sum_{e=1}^{E} D_{g,e}
+        \int_{\Omega_e} \grad \phi_g(\vr) \cdot \grad v(\vr) \; d\Omega_e + \\
+        \sum_{e=1}^{E} \Sigma_{r,g,e} \int_{\Omega_e} \phi_g(\vr) v(\vr) 
+        \; d\Omega_e =
+        \sum_{e=1}^{E} q_{g,e} \int_{\Omega_e} v(\vr) \; d\Omega_e
+    \end{multline}
+    \begin{multline} \label{eq:element_boundary}
+      \sum_{e=1}^{E} \albedo \int_{\partial \Omega_e} v(\vr) 
+        \phi_g(\vr) \;ds + \sum_{e=1}^{E} D_{g,e}
+        \int_{\Omega_e} \grad \phi_g(\vr) \cdot \grad v(\vr) \; d\Omega_e + \\
+        \sum_{e=1}^{E} \Sigma_{r,g,e} \int_{\Omega_e} \phi_g(\vr) v(\vr) 
+        \; d\Omega_e =
+        \sum_{e=1}^{E} q_{g,e} \int_{\Omega_e} v(\vr) \; d\Omega_e
+    \end{multline}
+    Now the function of interest $\phi_g(\vr)$ is assumed to be a linear 
+    combination of chosen basis functions $\{\basis_i\}$.
+    \begin{equation} \label{eq:linear_combination}
+      \phi_g(\vr) = \sum_{i=1}^{N} \alpha_{g,i} \basis_i(\vr)
+    \end{equation}
+    Where coefficients $\{\alpha_i\}$ are unknown and will be determined. 
+    Typically, these basis functions have unit magnitude and are centered at the
+    node  points so the coefficients $\alpha_i$ are the approximated solution at
+    the nodes. Basis functions are typically polynomials of arbitrary magnitude. 
+    Linear and quadratic polynomials are common but for the application 
+    presented here, only linear basis functions are explored.
+    The test function $v(\vr)$ is also chosen as a linear combination of the 
+    basis functions.
+    \begin{equation} \label{eq:linear_superposition}
+      v(\vr) = \sum_{j=1}^{N} \basis_j(\vr)
+    \end{equation}
+    The testing function is arbitrary so the magnitude is fixed to the magnitude
+    of the basis function.
+    
+    \eref{eq:linear_combination} and \eref{eq:linear_superposition} are plugged
+    into \eref{eq:element_boundary}. This yields a linear system of equations.
+    \begin{multline}
+      \sum_{e=1}^{E} \albedo \sum_{i=1}^{N} \alpha_{i,g}
+        \int_{\partial \Omega_e}
+        \basis_i(\vr)  \basis_j(\vr) \;ds +
+        \sum_{e=1}^{E} D_{g,e} \sum_{i=1}^{N} \alpha_{i,g}
+        \int_{\Omega_e} \grad \basis_i(\vr) \cdot \grad \basis_i(\vr)\;d\Omega_e
+        + \\
+        \sum_{e=1}^{E} \Sigma_{r,g,e} \sum_{i=1}^{N} \alpha_{i,g}
+        \int_{\Omega_e} \basis_i(\vr) \basis_i(\vr) \; d\Omega_e =
+        \sum_{e=1}^{E} q_{g,e} \sum_{i=1}^{N} 
+        \int_{\Omega_e} \basis_i(\vr) \; d\Omega_e
+    \end{multline}
+    \begin{multline}
+      \sum_{i=1}^{N} \alpha_{i,g} \sum_{j=1}^{N} \left(
+        \sum_{e=1}^{E} \albedo \int_{\partial \Omega_e}
+        \basis_i(\vr)  \basis_j(\vr) \;ds +
+        \sum_{e=1}^{E} D_{g,e} 
+        \int_{\Omega_e} \grad \basis_i(\vr) \cdot \grad \basis_j(\vr)\;d\Omega_e
+        \right.
+        + \\
+        \left.
+        \sum_{e=1}^{E} \Sigma_{r,g,e}
+        \int_{\Omega_e} \basis_i(\vr) \basis_j(\vr) \; d\Omega_e \right) =
+        \sum_{i=1}^{N} \left(
+        \sum_{e=1}^{E} q_{g,e} 
+        \int_{\Omega_e} \basis_i(\vr) \; d\Omega_e \right)
+    \end{multline}
+    \begin{align}
+      a(\basis_i,\basis_j) &= f(\basis_i) \\
+      \ma \vu &= \vf
+    \end{align}
+    $a(\basis_i,\basis_j)$ is the bilinear form and $f(\basis_i)$ is the linear 
+    form of the finite element system. In matrix notation, $\ma$ is described 
+    by the integral quantities (more to follow),  $\vu = \{\alpha_i\}$, and
+    $\vf$ is described by the source integral quantity.
+    
+    Inspecting the matrix $\ma$ and the vector $\vf$ reveals the following.
+    \begin{align}
+      \label{eq:matrix_population}
+      A_{i,j,g,e} &= \albedo \int_{\partial \Omega_e} \basis_i(\vr) 
+        \basis_j(\vr) \; ds + D_{g,e} 
+        \int_{\Omega_e} \grad \basis_i(\vr) \cdot \grad \basis_j(\vr) \;
+        d\Omega_e + \Sigma_{r,g,e} \int_{\Omega_e} \basis_i(\vr) \basis_j(\vr)
+        \; d\Omega_e \\
+      \label{eq:vector_population}
+      f_{i,g,e} &= q_{g,e} \int_{\Omega_e} \basis_i(\vr) \;d\Omega_e
+    \end{align}
+    Then, 
+    \begin{align}
+      A_{i,j,g} &= \sum_{e=1}^{E} A_{i,j,g,e} \\
+      f_{i,g} &=  \sum_{e=1}^{E} f_{i,g,e}
+    \end{align}
+    which leads to the natural population of the matrix $\ma$ on an 
+    element-by-element basis. That is, the matrix $\ma$ is assembled by looping
+    through all of the elements and summing their contribution to the matrix. 
+    Note that the contribution due to the surface integral will be zero in 
+    elements not on the boundary and may also be zero for problems with select
+    boundary conditions. The population of the vector $\vf$ is done similarly. 
+    Then, the matrix $\ma$ and the vector $\vf$ are known for each energy group.
+    The equations are solved on group at a time and $\phi_g$ is calculated and 
+    stored.
+    
+    Though the notation may be obtuse, the above reduces to a linear system of
+    equations. These equations are constructed from the integral quantities 
+    specified by the FEM and the coefficients given by the cross sections and
+    fixed source regions. The integral quantities themselves are expressed 
+    explicitly in the next section.
+    
   \subsection{Matrix Quantities}
+    For certain simple elements, the integral quantities described in 
+    \eref{eq:matrix_population} and \eref{eq:vector_population} have exact 
+    analytic forms. The for this application, linear triangles and linear wedges
+    are investigated and many of the integrals have exact expressions. If these 
+    quantities cannot be expressed exactly or doing so would be computationally
+    difficult, quadratures can be used and for certain problems, these 
+    quadratures can express the integrals exactly. This will be discussed in 
+    \sref{sec:quadratures}.
     \subsubsection{Linear Triangles}
+      Linear triangles are common to two dimensional finite element methods and
+      have been investigated in many applications CITATION. This is a triangle 
+      defined by three corner coordinates with basis functions located on each 
+      corner.
+      
+      Originally proposed
+      in \cite{textbookwhite}, there are simple expressions for the quantities.
+      For a triangle with corners $\{ x_i,y_i \}$.
+      \begin{align}
+        \int_{\Omega_e} \grad \basis_i(\vr) \cdot \grad \basis_j(\vr) 
+          \;d\Omega_e &= \frac{1}{4 A_e}
+          ((x_{i+1}-x_{i+2})(x_{j+1}-x_{j+2}) + 
+          (y_{i+1}-y_{i+2})(y_{j+1}-y_{j+2})) \\
+        \int_{\Omega_e} \basis_i(\vr) \basis_j(\vr) \;d\Omega_e &= 
+          \frac{A_e}{12} (1+\delta_{ij}) \\
+        \int_{\Omega_e} \basis_i(\vr) \;d\Omega_e &= \frac{A_e}{3} \\
+        \int_{\partial \Omega_e} \basis_i(\vr) \basis_j(\vr) \;ds &=
+          \frac{L_e}{6}(1+\delta_{ij}) \\
+      \end{align}
+      Where $A_e$ is the area of the triangular element $L_e$ is the length of 
+      the edge between node $i$ and node$j$, and $\delta_{ij}$ is the Kronecker
+      delta such that
+      \begin{equation} \label{eq:kroneker_delta}
+        \delta_{ij} =
+        \begin{cases}
+          0 & \text{if } i \ne j \\
+          1 & \text{if } i = j
+        \end{cases}
+      \end{equation}
+      For higher order triangular elements, it will be necessary to employ a 
+      quadrature.
     \subsubsection{Linear Wedges}
+      Wedge elements have not reached the same commonality as triangular 
+      elements but are extruded triangles. Geometrically, the shape is a 
+      pentahedron or a triangular prism. However, their exact geometric
+      relation is not fixed and the nodes are free to expand. These shapes 
+      are unique because three of the faces are quadrilateral and two of
+      the faces are triangular.
+      \begin{align}
+        \int_{\Omega_e} \basis_i(\vr) \basis_j(\vr) \;d\Omega_e &= 
+          \frac{V_e}{2}
+          \begin{pmatrix}
+            \frac{1}{18} & \frac{1}{36} & \frac{1}{36} & \frac{1}{36} & 
+              \frac{1}{72} & \frac{1}{72} \\
+            \frac{1}{36} & \frac{1}{18} & \frac{1}{36} & \frac{1}{72} & 
+              \frac{1}{36} & \frac{1}{72} \\
+            \frac{1}{36} & \frac{1}{36} & \frac{1}{18} & \frac{1}{72} & 
+              \frac{1}{72} & \frac{1}{36} \\
+            \frac{1}{36} & \frac{1}{72} & \frac{1}{72} & \frac{1}{18} & 
+              \frac{1}{36} & \frac{1}{36} \\
+            \frac{1}{72} & \frac{1}{36} & \frac{1}{72} & \frac{1}{36} & 
+              \frac{1}{18} & \frac{1}{36} \\
+            \frac{1}{72} & \frac{1}{72} & \frac{1}{36} & \frac{1}{36} & 
+              \frac{1}{36} & \frac{1}{18} 
+          \end{pmatrix} \\
+        \int_{\Omega_e} \basis_i(\vr) \;d\Omega_e &= \frac{V_e}{12} \\
+        \int_{\partial \Omega_e} \basis_i(\vr) 
+          \basis_j(\vr) \;d\partial\Omega_e &= 
+          \begin{cases}
+            \frac{A_{\Delta}}{12}(1+\delta_{ij}) & \text{if triangle} \\
+            \frac{A_{\Box}}{36}(1+\delta_{ij})(1-\half \delta_{i,(5-j)}) &
+              \text{if quadrilateral}
+          \end{cases}
+      \end{align}
+      Where $V_e$ is the volume of the element. This matrix is indexed $A_{ij}$
+      and is presented as a matrix because of its irregular form. Notice the 
+      integral containing the gradient operator has been omitted because if 
+      it could be computed analytically, it would be less computationally 
+      efficient than using a quadrature.
+      
+  \subsection{Quadratures}
+    \label{sec:quadratures}
+    Quadratures are sets of coordinates and weights which allow for the exact
 
 \section{Implementation}
   \subsection{Algorithm}
+    \begin{algorithm}[H]
+      \caption{General Iteration Scheme}
+      \begin{algorithmic}[1]
+      \State Initialize $\phi^{(0)}$
+      \State Calculate $\Sigma_s$, $\Sigma_t$, and $\nu \Sigma_f$ for each 
+        element
+      \State Calculate Stiffness Matrix $A$ for each group. Store this.
+      \While{Power/Outer Iteration}
+      	\State $s=s+1$
+      	\State Update $q_{fiss}$ and $q_{up}$ from previous data  $\phi^{(s-1)}$
+        \State Update $\chi$ in each element using previous data
+        \For{$g=1,G$}
+          \State Update $q_{down}$ from current data $\phi^{(s)}$
+          \State Calculate total effective source in each element
+          \State Update Load Vector with new source
+          \State Solve $\ma \vu = \vf$ using an iterative technique
+          \State Parse $\vu$ for $\phi$ nodal solution
+          \State Calculate element-average $\phi$
+        \EndFor
+        \State Update $k_{eff}$
+        \State Check convergence
+      \EndWhile
+      \end{algorithmic}
+    \end{algorithm}
   	% in addition, make sure to mention the matrix is in RCM order
   \subsection{Memory and Storage}
   	% discuss two-table method
@@ -128,6 +414,10 @@
     \subsubsection{SNR}
     \subsubsection{HWR}
     \subsubsection{IAEA}
+      % nore0125
+      % nore0500
+      % refl0125
+      % refl0500
   \subsection{Wedge Element Manufactured Solution Finite Cylinder}
   \subsection{Three Dimension Reactors}
     \subsubsection{MONJU}
