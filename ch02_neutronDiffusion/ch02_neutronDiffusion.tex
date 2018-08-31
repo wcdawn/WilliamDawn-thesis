@@ -177,7 +177,7 @@
     Substituting \eref{eq:greens} into  \eref{eq:element_by_element} and 
     assuming the outward normal derivative is specified in the form of an Albedo
     boundary condition.
-    \begin{multline} \label{eq:element_boundary}
+    \begin{multline} 
       -\sum_{e=1}^{E} D_{g,e} \int_{\partial \Omega_e} v(\vr) 
         \frac{\partial \phi_g(\vr)}{\partial \vn} \;ds + \sum_{e=1}^{E} D_{g,e}
         \int_{\Omega_e} \grad \phi_g(\vr) \cdot \grad v(\vr) \; d\Omega_e + \\
@@ -293,13 +293,14 @@
     \sref{sec:quadratures}.
     \subsubsection{Linear Triangles}
       Linear triangles are common to two dimensional finite element methods and
-      have been investigated in many applications CITATION. This is a triangle 
-      defined by three corner coordinates with basis functions located on each 
-      corner.
+      have been investigated in many applications \cite{Hosseini2017} 
+      \cite{Hosseini2013} \cite{Hosseini2015}. This is a triangle  defined by
+      three corner coordinates with basis functions located on each corner
+      \cite{vtk}.
       
-      Originally proposed
-      in \cite{textbookwhite}, there are simple expressions for the quantities.
-      For a triangle with corners $\{ x_i,y_i \}$.
+      Originally proposed in \cite{textbookwhite}, there are simple expressions
+      for the quantities. The expression for the line integral is found in 
+      \cite{computerLab}. For a triangle with corners $\{ x_i,y_i \}$.
       \begin{align}
         \int_{\Omega_e} \grad \basis_i(\vr) \cdot \grad \basis_j(\vr) 
           \;d\Omega_e &= \frac{1}{4 A_e}
@@ -329,7 +330,9 @@
       pentahedron or a triangular prism. However, their exact geometric
       relation is not fixed and the nodes are free to expand. These shapes 
       are unique because three of the faces are quadrilateral and two of
-      the faces are triangular.
+      the faces are triangular. The values presented herein are not yet found
+      in literature and are calculated by there author and published here for 
+      the first time.
       \begin{align}
         \int_{\Omega_e} \basis_i(\vr) \basis_j(\vr) \;d\Omega_e &= 
           \frac{V_e}{2}
@@ -364,7 +367,73 @@
       
   \subsection{Quadratures}
     \label{sec:quadratures}
-    Quadratures are sets of coordinates and weights which allow for the exact
+    Quadratures are sets of coordinates and weights which allow for the exact 
+    integration of polynomials of given order. For a given set of weights 
+    $\{w_i\}$ and a set of coordinates $\{\vx\}$, the quadrature can be 
+    expressed as follows.
+    \begin{equation}
+      \int_{\Omega} f(\vx) \;d\Omega \approx \sum_{i=1}^{N} w_i f(\vx_i)
+    \end{equation}
+    where $\Omega$ is an arbitrary domain described by $\{\vx_i\}$. The above
+    quadrature will exactly integrate a polynomial of the order of the 
+    quadrature. It is not necessarily true that $N$ be the order of the 
+    quadrature.
+    
+    For one dimensional integrals, the Gaussian quadrature is common and the 
+    most compact quadrature. The Gaussian quadrature exactly integrates a 
+    polynomial of order $n$ using exactly $n$ points. Weights and coordinates
+    for this quadrature set are presented in \cite{gaussianQuadrature}. For this
+    quadrature, $n=N$.
+    
+    Two dimensional and three dimensional quadratures are necessary for the 
+    solution of this problem. Triangular quadratures are not as simply derived 
+    as line quadratures and the number of points need not equal the order of the
+    polynomial integrated. The triangular quadrature as implemented here is 
+    symmetric and open. That is, there are no points on the boundary of the 
+    triangle. The structure for this triangular quadrature is found in 
+    \cite{triangleQuadrature}.
+    
+    Quadrilateral quadrature sets are simply tensor products of two line 
+    Gaussian quadratures. For an order $N$ polynomial, now $n^2$ points are 
+    required. 
+    
+    Wedge quadrature sets are simply tensor products of a line Gaussian 
+    quadrature and a triangular quadrature. 
+    
+    All of the quadratures described here are tabulated for a reference element
+    be it a line, a triangle, a quadrilateral, or a wedge. Integration in the 
+    FEM is performed on an arbitrary element in space. Therefore, it is 
+    necessary to perform a coordinate transform when using a quadrature set.
+    \begin{equation}
+      \int_{\Omega} f(\vx) \;d\Omega = 
+        \int_{\Omega_{ref}} f(\vx) \lvert \mj \rvert \;d\Omega \approx
+        \sum_{i=1}^{N} w_i f(\vx_i) \lvert \mj_i \rvert
+    \end{equation}
+    where $\mj$ is the Jacobian matrix, $\mj_i$ is the Jacobian matrix at 
+    quadrature coordinate $\vx_i$, and $\lvert \cdot \rvert$ represents
+    the matrix determinant. Notationally, $J=\lvert \mj \rvert$ and is termed
+    the Jacobi.
+    
+    For simple elements, the Jacobi is constant over the element and can be
+    precalculated to save from allocating, populating, and taking the 
+    determinant of a matrix for each integration point. For the elements of 
+    concern, these values are presented below as found in 
+    \cite{textbookcolorado}.
+    \begin{table}
+      \caption{Jacobian Determinants}
+      \label{tab:jacobian_determinants}
+      \begin{center}
+        \begin{tabular}{lll}
+          \toprule
+          Element & Jacobi & $J$ \\
+          \midrule
+          Triangle & $J=\half \lvert \mj \rvert $ & $A_e$ \\
+          Quadrilateral & $J= \lvert \mj \rvert $ & $\frac{1}{4} A_e$ \\
+          Wedge & $J = \half \lvert \mj \rvert $ & $\half V_e$ \\
+          \bottomrule
+        \end{tabular}
+      \end{center}
+    \end{table}
 
 \section{Implementation}
   \subsection{Algorithm}
@@ -372,10 +441,11 @@
       \caption{General Iteration Scheme}
       \begin{algorithmic}[1]
       \State Initialize $\phi^{(0)}$
+      \State Order the nodes of the problem into RCM order.
       \State Calculate $\Sigma_s$, $\Sigma_t$, and $\nu \Sigma_f$ for each 
         element
       \State Calculate Stiffness Matrix $A$ for each group. Store this.
-      \While{Power/Outer Iteration}
+      \While{Power Iteration}
       	\State $s=s+1$
       	\State Update $q_{fiss}$ and $q_{up}$ from previous data  $\phi^{(s-1)}$
         \State Update $\chi$ in each element using previous data
@@ -385,7 +455,7 @@
           \State Update Load Vector with new source
           \State Solve $\ma \vu = \vf$ using an iterative technique
           \State Parse $\vu$ for $\phi$ nodal solution
-          \State Calculate element-average $\phi$
+          \State Calculate element-average $\phiavg$
         \EndFor
         \State Update $k_{eff}$
         \State Check convergence
@@ -394,6 +464,8 @@
     \end{algorithm}
   	% in addition, make sure to mention the matrix is in RCM order
   \subsection{Memory and Storage}
+    The Finite Element matrix $\ma$ is large and sparse so a sparse storage 
+    implementation is required.
   	% discuss two-table method
     % mention other alternatives
   \subsection{Linear System Solution}
