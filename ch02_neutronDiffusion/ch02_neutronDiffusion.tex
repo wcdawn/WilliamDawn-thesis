@@ -497,12 +497,23 @@
     described by the FEM. 
     
     In step \ref{state:rcm} the matrix is reordered. Mathematically this has no
-    effect on the result as the solution is the same. 
+    effect on the result as the linear system represented is equivalent. This 
+    choice to reorder the system is made to improve computational efficiency. 
+    Indexing nodes that are physically proximate with proximate indices causes 
+    rows in the Finite Element Matrix $\ma$ to be closely coupled to nearby
+    rows. In a general unstructured and unordered mesh rows may be coupled to 
+    other random rows in the matrix. This step of reordering the matrix $\ma$ 
+    seeks to decrease the bandwidth of the matrix and encourage cache hits when
+    accessing coupled values in the linear system. The ordering chosen is the
+    Reverse Cuthill-McKee (RCM) method and common to sparse linear systems and 
+    described in \cite{rcm}.
+    
     \begin{algorithm}
       \caption{General Iteration Scheme}
       \begin{algorithmic}[1]
       \State Initialize $\phiavg^{(0)}$.
-      \State Order the nodes of the mesh into RCM order. \label{state:rcm}
+      \State Order the nodes of the mesh into RCM order \cite{rcm}.
+        \label{state:rcm}
       \State Calculate $\Sigma_s$, $\Sigma_t$, and $\nu \Sigma_f$ for each 
         element.
       \State Calculate Finite Element Matrix $\ma_g$ for each group. Store this. 
@@ -532,13 +543,20 @@
     and the material cross sections. For this reason, $\ma$ can be generated 
     once at the beginning of the problem and stored for the duration of the 
     calculation.
-  	% in addition, make sure to mention the matrix is in RCM order
     \FloatBarrier % make sure the algorithm is in the correct section
   \subsection{Memory and Storage}
-    The Finite Element matrix $\ma$ is large and sparse so a sparse storage 
-    implementation is required. \cite{rcm}
-  	% discuss two-table method
+    The Finite Element matrix $\ma$ is large and sparse so a sparse storage and
+    sparse solution to the linear system are required. Many sparse matrix 
+    implementations have been described and implemented in the past including
+    triplet storage, reduced column, and reduced row storage \cite{sparseBLAS}.
+    For this application a \twotable method is chosen which was uniquely 
+    developed. \twotable storage is not designed to be the most efficient 
+    storage method but is chosen for its simplicity and conforming with the 
+    FEM. Future work may include a reduced row implementation but there will be
+    a tradeoff between memory minimization and computational efficiency.
+    
     % mention other alternatives
+    
   \subsection{Linear System Solution}
   	% Dr. Kelly's book and CG Method
     % maybe discuss SPD here
