@@ -283,6 +283,7 @@
     explicitly in the next section.
     
   \subsection{Matrix Quantities}
+    \label{sec:matrix_quantities}
     For certain simple elements, the integral quantities described in 
     \eref{eq:matrix_population} and \eref{eq:vector_population} have exact 
     analytic forms. The for this application, linear triangles and linear wedges
@@ -300,7 +301,7 @@
       \fref{fig:vtk_triangle} \cite{vtk}.
       \begin{figure}
         \centering
-        \includegraphics[width=0.6\textwidth]{vtk_triangle}
+        \includegraphics[width=0.3\textwidth]{vtk_triangle}
         \caption{VTK description of triangle element.}
         \label{fig:vtk_triangle}
       \end{figure}
@@ -349,7 +350,7 @@
       \fref{fig:vtk_wege} \cite{vtk}.
       \begin{figure}
         \centering
-        \includegraphics[width=0.6\textwidth]{vtk_wedge}
+        \includegraphics[width=0.3\textwidth]{vtk_wedge}
         \caption{VTK description of wedge element.}
         \label{fig:vtk_wedge}
       \end{figure}
@@ -528,8 +529,7 @@
       \caption{General Iteration Scheme}
       \begin{algorithmic}[1]
       \State Initialize $\phiavg^{(0)}$.
-      \State Order the nodes of the mesh into RCM order \cite{rcm}.
-        \label{state:rcm}
+      \State Order the nodes of the mesh into RCM order \cite{rcm}. \label{state:rcm}
       \State Calculate $\Sigma_s$, $\Sigma_t$, and $\nu \Sigma_f$ for each 
         element.
       \State Calculate Finite Element Matrix $\ma_g$ for each group. Store this. 
@@ -571,9 +571,68 @@
     FEM. Future work may include a reduced row implementation but there will be
     a tradeoff between memory minimization and computational efficiency.
     
-    The     
+    The \twotable method is composed of two separate matrices in memory. An 
+    integer index table, \texttt{IDX}, and a double precision value table
+    \texttt{VAL}. Each table is dimension $DOF \times D$ where $DOF$ is the
+    number of degrees of freedom of the linear system and $D$ is the maximum
+    number of nodes that a node shares including itself. This must be determined
+    a priori. 
+    
+    \texttt{IDX} is initialized to -1 and \texttt{VAL} is initialized 
+    to 0.0 such that an index of -1 corresponds to a zero entry in the 
+    matrix. \texttt{IDX} is then populated with a modified adjacency graph. 
+    Values in \texttt{IDX} indicate the column in which the \texttt{VAL} entry
+    occurs. For example, the following descriptions are equivalent.
+    \begin{align}
+      \texttt{IDX}(7,3) &= 8 \\
+      \texttt{VAL}(7,3) &= 12.0 \\
+      A_{7,8} &= 12.0
+    \end{align}
+    All of these representations indicate that the value of matrix $\ma$ in the
+    seventh row in the eighth column is 12.0. This will allow for simple row 
+    operations and matrix vector multiplication which will be necessary in the 
+    solution of the system.
+    
+  \subsection{Boundary Conditions}
+    Boundary conditions deserve brief consideration. There are many way to treat 
+    sets of boundary conditions and all result in mathematically the same 
+    answer. The choices made for this application are presented below. Mirror 
+    boundary conditions require $\grad \phi_g(\vr) = 0$ for 
+    $\vr \in \partial \Omega$. These are also known as ``natural'' boundary
+    conditions because the Finite Element Matrix $\ma$ requires no additional 
+    treatment and this condition is natural.
+    
+    Albedo boundary conditions are treated with an additional contribution to 
+    the Finite Element Matrix $\ma$. These contributions represent a line 
+    integral in two dimensions and a surface integral in three dimensions. These
+    values are found in \eref{eq:matrix_population} and the quantities are 
+    expressed in \sref{sec:matrix_quantities} or by quadratures 
+    \sref{sec:quadratures}.
+    
+    Zero Flux boundary conditions require $\phi(\vr) = 0$ for 
+    $\vr \in \partial \Omega$. These are treated by removing these entries from
+    the Finite Element Matrix $\ma$. Entries are removed by using an index 
+    vector. In a natural system (see Mirror boundary conditions above) each node
+    corresponds to a row/column of the matrix. With entries removed, node number
+    and index number may not exactly agree. A vector \texttt{ID} is introduced. 
+    Nodes with non-zero flux boundary conditions are set to a sequential 
+    positive integer. Nodes with zero flux boundary conditions are set to a 
+    negative integer (-1) and are omitted in the actual solution of the system.
+    This strategy comes from \cite{textbookjohnson}. Other strategies have been
+    proposed such as the penalty approach \cite{textbookhughes} and manually
+    forcing the solution of the linear system \cite{textbookli}. This method is
+    chosen because it decreases the degree of freedom of the linear system while
+    encouraging a well conditioned matrix. Now, the degree of freedom of the 
+    matrix is equal to the number of nodes with non-zero flux boundary 
+    conditions.
   \subsection{Linear System Solution}
+    For a nonsingular linear system $\ma \vu = \vf$, there exists a unique 
+    solution. Many strategies have been proposed to solve this system in an
+    efficient manner. Options are restricted in this application because the 
+    solution must operate with a sparsely stored linear system and result in no 
+    fill-in. This immediately demands an iterative method. 
   	% Dr. Kelly's book and CG Method
+    % include an algorithm 
     % maybe discuss SPD here
 
 \section{Reference Results}
