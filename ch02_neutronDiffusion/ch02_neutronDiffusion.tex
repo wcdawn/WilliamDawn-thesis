@@ -296,7 +296,15 @@
       have been investigated in many applications \cite{Hosseini2017} 
       \cite{Hosseini2013} \cite{Hosseini2015}. This is a triangle  defined by
       three corner coordinates with basis functions located on each corner
-      \cite{vtk}. The reference triangle $T_{ref}$ is located in
+      \cite{vtk}. The triangle from the VTK toolkit is described in 
+      \fref{fig:vtk_triangle} \cite{vtk}.
+      \begin{figure}
+        \centering
+        \includegraphics[width=0.6\textwidth]{vtk_triangle}
+        \caption{VTK description of triangle element.}
+        \label{fig:vtk_triangle}
+      \end{figure}
+      The reference triangle $T_{ref}$ is located in
       $\xi \in [0,1]$ and $\eta \in [0,1-\xi]$. The basis functions for the 
       reference linear triangle are provided.
       \begin{align}
@@ -337,7 +345,15 @@
       pentahedron or a triangular prism. However, their exact geometric
       relation is not fixed and the nodes are free to expand. These shapes 
       are unique because three of the faces are quadrilateral and two of
-      the faces are triangular. The reference wedge $W_{ref}$ is located in 
+      the faces are triangular. The wedge from the VTK toolkit is described in
+      \fref{fig:vtk_wege} \cite{vtk}.
+      \begin{figure}
+        \centering
+        \includegraphics[width=0.6\textwidth]{vtk_wedge}
+        \caption{VTK description of wedge element.}
+        \label{fig:vtk_wedge}
+      \end{figure}
+      The reference wedge $W_{ref}$ is located in 
       $\xi \in [0,1]$, $\eta \in [0,1-\xi]$, and $\zeta \in [-1,1]$. The basis
       functions for the reference wedge are provided.
       \begin{align}
@@ -555,8 +571,7 @@
     FEM. Future work may include a reduced row implementation but there will be
     a tradeoff between memory minimization and computational efficiency.
     
-    % mention other alternatives
-    
+    The     
   \subsection{Linear System Solution}
   	% Dr. Kelly's book and CG Method
     % maybe discuss SPD here
