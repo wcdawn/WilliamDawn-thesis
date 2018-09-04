@@ -296,7 +296,14 @@
       have been investigated in many applications \cite{Hosseini2017} 
       \cite{Hosseini2013} \cite{Hosseini2015}. This is a triangle  defined by
       three corner coordinates with basis functions located on each corner
-      \cite{vtk}.
+      \cite{vtk}. The reference triangle $T_{ref}$ is located in
+      $\xi \in [0,1]$ and $\eta \in [0,1-\xi]$. The basis functions for the 
+      reference linear triangle are provided.
+      \begin{align}
+        \basis_1(\xi,\eta) &= \xi \\
+        \basis_2(\xi,\eta) &= \eta \\
+        \basis_3(\xi,\eta) &= 1-\xi-\eta
+      \end{align}
       
       Originally proposed in \cite{textbookwhite}, there are simple expressions
       for the quantities. The expression for the line integral is found in 
@@ -310,7 +317,7 @@
           \frac{A_e}{12} (1+\delta_{ij}) \\
         \int_{\Omega_e} \basis_i(\vr) \;d\Omega_e &= \frac{A_e}{3} \\
         \int_{\partial \Omega_e} \basis_i(\vr) \basis_j(\vr) \;ds &=
-          \frac{L_e}{6}(1+\delta_{ij}) \\
+          \frac{L_e}{6}(1+\delta_{ij}) 
       \end{align}
       Where $A_e$ is the area of the triangular element $L_e$ is the length of 
       the edge between node $i$ and node$j$, and $\delta_{ij}$ is the Kronecker
@@ -330,9 +337,19 @@
       pentahedron or a triangular prism. However, their exact geometric
       relation is not fixed and the nodes are free to expand. These shapes 
       are unique because three of the faces are quadrilateral and two of
-      the faces are triangular. The values presented herein are not yet found
-      in literature and are calculated by there author and published here for 
-      the first time.
+      the faces are triangular. The reference wedge $W_{ref}$ is located in 
+      $\xi \in [0,1]$, $\eta \in [0,1-\xi]$, and $\zeta \in [-1,1]$. The basis
+      functions for the reference wedge are provided.
+      \begin{align}
+        \basis_1(\xi,\eta,\zeta) &= \half (1-\zeta)(1-\xi-\eta) \\
+        \basis_2(\xi,\eta,\zeta) &= \half (1-\zeta)\xi \\
+        \basis_3(\xi,\eta,\zeta) &= \half (1-\zeta)\eta \\
+        \basis_4(\xi,\eta,\zeta) &= \half (1+\zeta)(1-\xi-\eta) \\
+        \basis_5(\xi,\eta,\zeta) &= \half (1+\zeta)\xi \\
+        \basis_6(\xi,\eta,\zeta) &= \half (1+\zeta)\eta 
+      \end{align}
+      The values presented herein are not yet found in literature and are 
+      calculated by there author and published here for the first time.
       \begin{align}
         \int_{\Omega_e} \basis_i(\vr) \basis_j(\vr) \;d\Omega_e &= 
           \frac{V_e}{2}
@@ -400,6 +417,33 @@
     Wedge quadrature sets are simply tensor products of a line Gaussian 
     quadrature and a triangular quadrature. 
     
+    Basis functions are polynomials of first, second, or third order. These 
+    quadratures are capable of exactly integrating functions of given order so 
+    there is a quadrature order that will exactly integrate the Finite Element 
+    quantities to the precision of the quadrature and the numeric precision. The
+    table of the order required for exact integration are provided in 
+    \tref{tab:quadrature_orders}.
+    \begin{table}
+      \caption{Quadrature orders for FEM quantities.}
+      \label{tab:quadrature_orders}
+      \begin{center}
+        \begin{tabular}{lccc}
+          \toprule
+          Quantity & Linear & Quadratic & Cubic \\
+          \midrule
+          $\int_{\Omega} \basis_i(\vr) \;d\Omega$ & 1 & 2 & 4\footnotemark \\
+          $\int_{\Omega} \basis_i(\vr) \basis_j(\vr) \;d\Omega$ &
+            2 & 4 & 6 \\
+          $\int_{\Omega} \grad \basis_i(\vr) \cdot \grad \basis_j(\vr) 
+            \;d\Omega$ & 2 & 3 & 5 \\
+          \bottomrule
+        \end{tabular}
+      \end{center}
+    \end{table}
+    \footnotetext{A third order quadrature would be exact but the quadrature
+    would have negative weights so a fourth order quadrature is 
+    selected.}
+    
     All of the quadratures described here are tabulated for a reference element
     be it a line, a triangle, a quadrilateral, or a wedge. Integration in the 
     FEM is performed on an arbitrary element in space. Therefore, it is 
@@ -417,55 +461,82 @@
     For simple elements, the Jacobi is constant over the element and can be
     precalculated to save from allocating, populating, and taking the 
     determinant of a matrix for each integration point. For the elements of 
-    concern, these values are presented below as found in 
+    concern, these values are presented in \tref{tab:jacobi} as found in 
     \cite{textbookcolorado}.
     \begin{table}
-      \caption{Jacobian Determinants}
-      \label{tab:jacobian_determinants}
+      \caption{Jacobi for selected elements}
+      \label{tab:jacobi}
       \begin{center}
-        \begin{tabular}{lll}
+        \begin{tabular}{ll}
           \toprule
-          Element & Jacobi & $J$ \\
+          Element & $J$ \\
           \midrule
-          Triangle & $J=\half \lvert \mj \rvert $ & $A_e$ \\
-          Quadrilateral & $J= \lvert \mj \rvert $ & $\frac{1}{4} A_e$ \\
-          Wedge & $J = \half \lvert \mj \rvert $ & $\half V_e$ \\
+          Triangle      & $A_e$ \\
+          Quadrilateral & $\frac{1}{4} A_e$ \\
+          Wedge         & $\half V_e$ \\
           \bottomrule
         \end{tabular}
       \end{center}
     \end{table}
 
 \section{Implementation}
+  A Finite Element neutron diffusion solution method has been developed using 
+  the above formulae. The program begins with a geometry description specified
+  in a plaintext VTK file. Cross sections are specified in either a plaintext
+  user format or the ISOTXS format as common to fast reactor applications 
+  and the multigroup cross section generator \mcc. The multigroup neutron 
+  diffusion equation is then solved according to \eref{eq:multigroup_source}.
+  The resulting effective neutron multiplication factor, $\keff$, is written to
+  an output file. The multigroup neutron flux is written to a different results
+  VTK file for easy visualization.
   \subsection{Algorithm}
-    \begin{algorithm}[H]
+    The algorithm for this solution to the diffusion equation is similar to most
+    implementations of the multigroup method. The steps unique to the Finite
+    Element method are steps \ref{state:fem_matrix} and \ref{state:fem_vector}.
+    These require the quantities previously derived and form the linear system 
+    described by the FEM. 
+    
+    In step \ref{state:rcm} the matrix is reordered. Mathematically this has no
+    effect on the result as the solution is the same. 
+    \begin{algorithm}
       \caption{General Iteration Scheme}
       \begin{algorithmic}[1]
-      \State Initialize $\phi^{(0)}$
-      \State Order the nodes of the problem into RCM order.
+      \State Initialize $\phiavg^{(0)}$.
+      \State Order the nodes of the mesh into RCM order. \label{state:rcm}
       \State Calculate $\Sigma_s$, $\Sigma_t$, and $\nu \Sigma_f$ for each 
-        element
-      \State Calculate Stiffness Matrix $A$ for each group. Store this.
+        element.
+      \State Calculate Finite Element Matrix $\ma_g$ for each group. Store this. 
+        \label{state:fem_matrix}
       \While{Power Iteration}
-      	\State $s=s+1$
-      	\State Update $q_{fiss}$ and $q_{up}$ from previous data  $\phi^{(s-1)}$
+      	\State Update the iteration counter. $s=s+1$
+      	\State Update $q_{fiss}$ and $q_{up}$ from previous data
+          $\phiavg^{(s-1)}$.
         \State Update $\chi$ in each element using previous data
         \For{$g=1,G$}
-          \State Update $q_{down}$ from current data $\phi^{(s)}$
-          \State Calculate total effective source in each element
-          \State Update Load Vector with new source
-          \State Solve $\ma \vu = \vf$ using an iterative technique
-          \State Parse $\vu$ for $\phi$ nodal solution
-          \State Calculate element-average $\phiavg$
+          \State Update $q_{down}$ from current data $\phiavg^{(s)}$
+          \State Calculate total effective source in each element.
+          \State Update Finite Element Vector $\vf_g$ with new source.
+            \label{state:fem_vector}
+          \State Solve $\ma \vu = \vf$ using an iterative technique.
+          \State Parse $\vu$ for $\phi$ nodal solution.
+          \State Calculate element-average $\phiavg$.
         \EndFor
-        \State Update $k_{eff}$
-        \State Check convergence
+        \State Update $k_{eff}$.
+        \State Check convergence.
       \EndWhile
       \end{algorithmic}
     \end{algorithm}
+    
+    Note that the Finite Element vector $\vf$ must be updated on each iteration
+    of the solution whereas the matrix $\ma$ is described entirely by geometry 
+    and the material cross sections. For this reason, $\ma$ can be generated 
+    once at the beginning of the problem and stored for the duration of the 
+    calculation.
   	% in addition, make sure to mention the matrix is in RCM order
+    \FloatBarrier % make sure the algorithm is in the correct section
   \subsection{Memory and Storage}
     The Finite Element matrix $\ma$ is large and sparse so a sparse storage 
-    implementation is required.
+    implementation is required. \cite{rcm}
   	% discuss two-table method
     % mention other alternatives
   \subsection{Linear System Solution}
