@@ -756,13 +756,26 @@
     % the csv or whatever can simply be updated
   \subsection{Triangular Element Manufactured Solutions}
     \subsubsection{One Dimension, One-Group, Fixed Source}
-      \begin{tabular}{ll}
-        % Refine & RMS & RMS ratio & $\|e\|_1 & \|e\|_1 ratio & \|e\|_2 & 
-        %   \|e\|_2 ratio & \|e\|_{\infty} & \|e\|_{\infty} ratio
-        \bfseries Refine & \bfseries RMS 
-        \csvreader[head to column names]{ch02_neutronDiffusion/data/analytic_fem_1dfixedsrc.csv}{}
-        {\\\hline \refine & \rms}
-      \end{tabular}
+      \begin{table}
+        \caption{One Dimension, One-Group, Fixed Source Convergence Study 
+          Results.}
+        \label{tab:1dfixedsrc}
+        \begin{center}
+          \begin{tabular}{ccccccc}
+            \toprule
+            Refine & RMS & RMS ratio & $\|e\|_2$ & $\|e\|_2$ ratio & 
+              $\|e\|_{\infty}$ & $\|e\|_{\infty}$ ratio \\
+            \midrule
+            \csvreader[
+              %head to column names,
+              late after line=\\,
+              late after last line=\\\bottomrule,]
+              {ch02_neutronDiffusion/data/1dfixedsrc.csv}{}
+              {\csvcoli & \csvcolii & \csvcoliii & \csvcolvi & \csvcolvii &
+              \csvcolviii & \csvcolix}
+          \end{tabular}
+        \end{center}
+      \end{table}
     \subsubsection{One Dimension, One-Group, Criticality}
     \subsubsection{One Dimension, Two-Group, Criticality}
     \subsubsection{One Dimension, One-Group, Two-Region, Criticality}
