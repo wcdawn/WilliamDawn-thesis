@@ -867,6 +867,26 @@
       % refl0125
       % refl0500
   \subsection{Wedge Element Manufactured Solution Finite Cylinder}
+      \begin{table}
+        \caption{Three Dimension, One-Group, Criticality Convergence Study
+          Results.}
+        \label{tab:2d1g}
+        \begin{center}
+          \begin{tabular}{cccccccccc}
+            \toprule
+            Refine & $\keff$ & $\keff$ error [pcm] & $\keff$ ratio & RMS & 
+              RMS ratio  & $\|e\|_{\infty}$ & $\|e\|_{\infty}$ ratio \\
+            \midrule
+            \csvreader[
+              %head to column names,
+              late after line=\\,
+              late after last line=\\\bottomrule,]
+              {ch02_neutronDiffusion/data/finite_cyl.csv}{}
+              {\csvcoli & \csvcolii & \csvcoliii & \csvcoliv & \csvcolv & 
+              \csvcolvi & \csvcolxi & \csvcolxii}
+          \end{tabular}
+        \end{center}
+      \end{table}
   \subsection{Three Dimension Reactors}
     \subsubsection{MONJU}
     \subsubsection{KNK}
