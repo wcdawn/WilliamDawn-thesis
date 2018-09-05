@@ -752,8 +752,6 @@
     system solution, is is crucial that this process be efficient.
 
 \section{Reference Results}
-	% develop a format to compare results for these so if updates happen
-    % the csv or whatever can simply be updated
   \subsection{Triangular Element Manufactured Solutions}
     \subsubsection{One Dimension, One-Group, Fixed Source}
       \begin{table}
@@ -777,6 +775,26 @@
         \end{center}
       \end{table}
     \subsubsection{One Dimension, One-Group, Criticality}
+      \begin{table}
+        \caption{One Dimension, One-Group, Fixed Source Convergence Study 
+          Results.}
+        \label{tab:1dfixedsrc}
+        \begin{center}
+          \begin{tabular}{ccccccc}
+            \toprule
+            Refine & RMS & RMS ratio & $\|e\|_2$ & $\|e\|_2$ ratio & 
+              $\|e\|_{\infty}$ & $\|e\|_{\infty}$ ratio \\
+            \midrule
+            \csvreader[
+              %head to column names,
+              late after line=\\,
+              late after last line=\\\bottomrule,]
+              {ch02_neutronDiffusion/data/1d1g.csv}{}
+              {\csvcoli & \csvcolii & \csvcoliii & \csvcolvi & \csvcolvii &
+              \csvcolviii & \csvcolix}
+          \end{tabular}
+        \end{center}
+      \end{table}
     \subsubsection{One Dimension, Two-Group, Criticality}
     \subsubsection{One Dimension, One-Group, Two-Region, Criticality}
     \subsubsection{Two Dimension, One-Group, Criticality}
