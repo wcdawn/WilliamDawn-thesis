@@ -859,7 +859,43 @@
       \end{table}
   \subsection{Two Dimension Reactors}
     \subsubsection{VVER440}
+      \begin{table}
+        \caption{VVER440 Benchmark Convergence Study. 
+          $k_{ref} = 1.009700$ \cite{chao}}
+        \label{tab:vver440}
+        \begin{center}
+          \begin{tabular}{cccc}
+            \toprule
+            Refine & $\keff$ & $\keff$ error [pcm] & $\keff$ ratio \\
+            \midrule
+            \csvreader[
+              %head to column names,
+              late after line=\\,
+              late after last line=\\\bottomrule,]
+              {ch02_neutronDiffusion/data/vver440.csv}{}
+              {\csvcoli & \csvcolvi & \csvcolvii & \csvcolviii}
+          \end{tabular}
+        \end{center}
+      \end{table}
     \subsubsection{SNR}
+      \begin{table}
+        \caption{SNR Benchmark Convergence Study. 
+          $k_{ref} = 1.124000$ \cite{argonneBenchmark}}
+        \label{tab:snr}
+        \begin{center}
+          \begin{tabular}{cccc}
+            \toprule
+            Refine & $\keff$ & $\keff$ error [pcm] & $\keff$ ratio \\
+            \midrule
+            \csvreader[
+              %head to column names,
+              late after line=\\,
+              late after last line=\\\bottomrule,]
+              {ch02_neutronDiffusion/data/snr.csv}{}
+              {\csvcoli & \csvcolvi & \csvcolvii & \csvcolviii}
+          \end{tabular}
+        \end{center}
+      \end{table}
     \subsubsection{HWR}
     \subsubsection{IAEA}
       % nore0125
