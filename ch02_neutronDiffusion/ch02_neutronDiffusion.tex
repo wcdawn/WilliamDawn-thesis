@@ -897,6 +897,24 @@
         \end{center}
       \end{table}
     \subsubsection{HWR}
+      \begin{table}
+        \caption{HWR Benchmark Convergence Study. 
+          $k_{ref} = 0.991965$ \cite{chao}}
+        \label{tab:snr}
+        \begin{center}
+          \begin{tabular}{cccc}
+            \toprule
+            Refine & $\keff$ & $\keff$ error [pcm] & $\keff$ ratio \\
+            \midrule
+            \csvreader[
+              %head to column names,
+              late after line=\\,
+              late after last line=\\\bottomrule,]
+              {ch02_neutronDiffusion/data/hwr.csv}{}
+              {\csvcoli & \csvcolvi & \csvcolvii & \csvcolviii}
+          \end{tabular}
+        \end{center}
+      \end{table}
     \subsubsection{IAEA}
       % nore0125
       % nore0500
