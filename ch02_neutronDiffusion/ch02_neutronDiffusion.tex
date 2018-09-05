@@ -917,9 +917,81 @@
       \end{table}
     \subsubsection{IAEA}
       % nore0125
+      \begin{table}
+        \caption{IAEA Benchmark Convergence Study. No Reflector. $\albedo = 
+          0.125$. $k_{ref} = 0.991378 $ \cite{chao}}
+        \label{tab:iaea_nore0125}
+        \begin{center}
+          \begin{tabular}{cccc}
+            \toprule
+            Refine & $\keff$ & $\keff$ error [pcm] & $\keff$ ratio \\
+            \midrule
+            \csvreader[
+              %head to column names,
+              late after line=\\,
+              late after last line=\\\bottomrule,]
+              {ch02_neutronDiffusion/data/iaea_nore0125.csv}{}
+              {\csvcoli & \csvcolvi & \csvcolvii & \csvcolviii}
+          \end{tabular}
+        \end{center}
+      \end{table}
       % nore0500
+      \begin{table}
+        \caption{IAEA Benchmark Convergence Study. No Reflector. $\albedo = 
+          0.500$. $k_{ref} = 0.978077$ \cite{chao}}
+        \label{tab:iaea_nore0500}
+        \begin{center}
+          \begin{tabular}{cccc}
+            \toprule
+            Refine & $\keff$ & $\keff$ error [pcm] & $\keff$ ratio \\
+            \midrule
+            \csvreader[
+              %head to column names,
+              late after line=\\,
+              late after last line=\\\bottomrule,]
+              {ch02_neutronDiffusion/data/iaea_nore0500.csv}{}
+              {\csvcoli & \csvcolvi & \csvcolvii & \csvcolviii}
+          \end{tabular}
+        \end{center}
+      \end{table}
       % refl0125
+      \begin{table}
+        \caption{IAEA Benchmark Convergence Study. With Reflector. $\albedo = 
+          0.125$. $k_{ref} = 1.006630 $ \cite{chao}}
+        \label{tab:iaea_refl0125}
+        \begin{center}
+          \begin{tabular}{cccc}
+            \toprule
+            Refine & $\keff$ & $\keff$ error [pcm] & $\keff$ ratio \\
+            \midrule
+            \csvreader[
+              %head to column names,
+              late after line=\\,
+              late after last line=\\\bottomrule,]
+              {ch02_neutronDiffusion/data/iaea_refl0125.csv}{}
+              {\csvcoli & \csvcolvi & \csvcolvii & \csvcolviii}
+          \end{tabular}
+        \end{center}
+      \end{table}
       % refl0500
+      \begin{table}
+        \caption{IAEA Benchmark Convergence Study. With Reflector. $\albedo = 
+          0.500$. $k_{ref} = 1.005507 $ \cite{chao}}
+        \label{tab:iaea_refl0500}
+        \begin{center}
+          \begin{tabular}{cccc}
+            \toprule
+            Refine & $\keff$ & $\keff$ error [pcm] & $\keff$ ratio \\
+            \midrule
+            \csvreader[
+              %head to column names,
+              late after line=\\,
+              late after last line=\\\bottomrule,]
+              {ch02_neutronDiffusion/data/iaea_refl0500.csv}{}
+              {\csvcoli & \csvcolvi & \csvcolvii & \csvcolviii}
+          \end{tabular}
+        \end{center}
+      \end{table}
   \subsection{Wedge Element Manufactured Solution Finite Cylinder}
       \begin{table}
         \caption{Three Dimension, One-Group, Criticality Convergence Study

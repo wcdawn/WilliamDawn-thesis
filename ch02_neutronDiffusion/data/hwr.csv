@@ -1,4 +1,3 @@
-reference,0.991965,,,,,,
 refine,tri,dif3d_sol,dif3d_err,dif3d_rat,fem_sol,fem_err,fem_rat
 0,1,0.991884,8.07,1.46,0.989780,218.47,3.30
 1,2,0.991910,5.52,2.87,0.991303,66.16,2.38
