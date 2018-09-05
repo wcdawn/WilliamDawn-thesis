@@ -756,6 +756,13 @@
     % the csv or whatever can simply be updated
   \subsection{Triangular Element Manufactured Solutions}
     \subsubsection{One Dimension, One-Group, Fixed Source}
+      \begin{tabular}{ll}
+        % Refine & RMS & RMS ratio & $\|e\|_1 & \|e\|_1 ratio & \|e\|_2 & 
+        %   \|e\|_2 ratio & \|e\|_{\infty} & \|e\|_{\infty} ratio
+        \bfseries Refine & \bfseries RMS 
+        \csvreader[head to column names]{ch02_neutronDiffusion/data/analytic_fem_1dfixedsrc.csv}{}
+        {\\\hline \refine & \rms}
+      \end{tabular}
     \subsubsection{One Dimension, One-Group, Criticality}
     \subsubsection{One Dimension, Two-Group, Criticality}
     \subsubsection{One Dimension, One-Group, Two-Region, Criticality}
