@@ -759,45 +759,104 @@
           Results.}
         \label{tab:1dfixedsrc}
         \begin{center}
-          \begin{tabular}{ccccccc}
+          \begin{tabular}{ccccc}
             \toprule
-            Refine & RMS & RMS ratio & $\|e\|_2$ & $\|e\|_2$ ratio & 
-              $\|e\|_{\infty}$ & $\|e\|_{\infty}$ ratio \\
+            Refine & RMS & RMS ratio & $\|e\|_{\infty}$ & 
+              $\|e\|_{\infty}$ ratio \\
             \midrule
             \csvreader[
               %head to column names,
               late after line=\\,
               late after last line=\\\bottomrule,]
               {ch02_neutronDiffusion/data/1dfixedsrc.csv}{}
-              {\csvcoli & \csvcolii & \csvcoliii & \csvcolvi & \csvcolvii &
-              \csvcolviii & \csvcolix}
+              {\csvcoli & \csvcolii & \csvcoliii & \csvcolviii & \csvcolix}
           \end{tabular}
         \end{center}
       \end{table}
     \subsubsection{One Dimension, One-Group, Criticality}
       \begin{table}
-        \caption{One Dimension, One-Group, Fixed Source Convergence Study 
+        \caption{One Dimension, One-Group, Criticality Convergence Study
           Results.}
-        \label{tab:1dfixedsrc}
+        \label{tab:1d1g}
         \begin{center}
-          \begin{tabular}{ccccccc}
+          \begin{tabular}{cccccccccc}
             \toprule
-            Refine & RMS & RMS ratio & $\|e\|_2$ & $\|e\|_2$ ratio & 
-              $\|e\|_{\infty}$ & $\|e\|_{\infty}$ ratio \\
+            Refine & $\keff$ & $\keff$ error [pcm] & $\keff$ ratio & RMS & 
+              RMS ratio  & $\|e\|_{\infty}$ & $\|e\|_{\infty}$ ratio \\
             \midrule
             \csvreader[
               %head to column names,
               late after line=\\,
               late after last line=\\\bottomrule,]
               {ch02_neutronDiffusion/data/1d1g.csv}{}
-              {\csvcoli & \csvcolii & \csvcoliii & \csvcolvi & \csvcolvii &
-              \csvcolviii & \csvcolix}
+              {\csvcoli & \csvcolii & \csvcoliii & \csvcoliv & \csvcolv & 
+              \csvcolvi & \csvcolxi & \csvcolxii}
           \end{tabular}
         \end{center}
       \end{table}
     \subsubsection{One Dimension, Two-Group, Criticality}
+      \begin{table}
+        \caption{One Dimension, Two-Group, Criticality Convergence Study
+          Results.}
+        \label{tab:1d2g}
+        \begin{center}
+          \begin{tabular}{ccccccc}
+            \toprule
+            Refine & $\keff$ & $\keff$ error [pcm] & $\keff$ ratio & 
+              $\phi_2/\phi_1$ & $\phi_2/\phi_1$ error & $\phi_2/\phi_1$ ratio \\
+            \midrule
+            \csvreader[
+              %head to column names,
+              late after line=\\,
+              late after last line=\\\bottomrule,]
+              {ch02_neutronDiffusion/data/1d2g.csv}{}
+              {\csvcoli & \csvcolii & \csvcoliii & \csvcoliv & \csvcolv & 
+              \csvcolvi & \csvcolvii}
+          \end{tabular}
+        \end{center}
+      \end{table}
     \subsubsection{One Dimension, One-Group, Two-Region, Criticality}
+      \begin{table}
+        \caption{One Dimension, One-Group, Two-Region, Criticality Convergence
+          Study Results.}
+        \label{tab:2reg}
+        \begin{center}
+          \begin{tabular}{cccccccccc}
+            \toprule
+            Refine & $\keff$ & $\keff$ error [pcm] & $\keff$ ratio & RMS & 
+              RMS ratio  & $\|e\|_{\infty}$ & $\|e\|_{\infty}$ ratio \\
+            \midrule
+            \csvreader[
+              %head to column names,
+              late after line=\\,
+              late after last line=\\\bottomrule,]
+              {ch02_neutronDiffusion/data/2reg.csv}{}
+              {\csvcoli & \csvcolii & \csvcoliii & \csvcoliv & \csvcolv & 
+              \csvcolvi & \csvcolxi & \csvcolxii}
+          \end{tabular}
+        \end{center}
+      \end{table}
     \subsubsection{Two Dimension, One-Group, Criticality}
+      \begin{table}
+        \caption{Two Dimension, One-Group, Criticality Convergence Study
+          Results.}
+        \label{tab:2d1g}
+        \begin{center}
+          \begin{tabular}{cccccccccc}
+            \toprule
+            Refine & $\keff$ & $\keff$ error [pcm] & $\keff$ ratio & RMS & 
+              RMS ratio  & $\|e\|_{\infty}$ & $\|e\|_{\infty}$ ratio \\
+            \midrule
+            \csvreader[
+              %head to column names,
+              late after line=\\,
+              late after last line=\\\bottomrule,]
+              {ch02_neutronDiffusion/data/2d1g.csv}{}
+              {\csvcoli & \csvcolii & \csvcoliii & \csvcoliv & \csvcolv & 
+              \csvcolvi & \csvcolxi & \csvcolxii}
+          \end{tabular}
+        \end{center}
+      \end{table}
   \subsection{Two Dimension Reactors}
     \subsubsection{VVER440}
     \subsubsection{SNR}
