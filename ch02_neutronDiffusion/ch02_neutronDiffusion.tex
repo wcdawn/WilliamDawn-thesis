@@ -1083,4 +1083,23 @@
       \end{table}
   \subsection{Three Dimension Reactors}
     \subsubsection{MONJU}
+      \begin{table}
+        \caption{MONJU Benchmark Rod Worth Results.}
+        \label{tab:monju}
+        \begin{center}
+          \begin{tabular}{cccccccccc}
+            \toprule
+            Refine & $\keff$ & $\keff$ error [pcm] & $\keff$ ratio & RMS & 
+              RMS ratio  & $\|e\|_{\infty}$ & $\|e\|_{\infty}$ ratio \\
+            \midrule
+            \csvreader[
+              %head to column names,
+              late after line=\\,
+              late after last line=\\\bottomrule,]
+              {ch02_neutronDiffusion/data/monju.csv}{}
+              {\csvcoli & \csvcolii & \csvcoliii & \csvcoliv & \csvcolv & 
+              \csvcolvi & \csvcolxi & \csvcolxii}
+          \end{tabular}
+        \end{center}
+      \end{table}
     \subsubsection{KNK}
