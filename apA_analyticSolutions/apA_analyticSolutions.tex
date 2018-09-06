@@ -19,15 +19,20 @@
     -D_2 \nabla^2 \phi_2 + \Sigma_{r2} \phi_2 &= 
       \Sigma_{s 1 \rightarrow 2} \phi_2
   \end{align}
+  Where $\phi_1$ is the higher energy group and $\phi_2$ is the lower energy 
+  group. This formulation assumes all fission neutrons are created in the fast 
+  energy group and there is no up-scattering (scattering that results in an 
+  increase in neutron energy). These are realistic assumptions for all diffusive
+  neutron systems.
 
-Analytic solutions for 1D and 2D problems are provided below. These can be 
-replicated in a 2D FEM solver using a square geometry. The reference square is 
-$[0,1]\times[0,1]$. For one-dimension, two of the boundary conditions are set to
-reflective conditions and two to essential $(\phi = 0)$ conditions. For 
-two-dimension, all of the boundary conditions are set to essential conditions.
-
-These formula are common but this specific formulation comes from E. E. Lewis
-\textit{Fundamentals of Nuclear Reactor Physics}.
+  Analytic solutions for 1D and 2D problems are provided below. These can be 
+  replicated in a 2D FEM solver using a square geometry. The reference square is 
+  $[0,1]\times[0,1]$. For one-dimension, two of the boundary conditions are set
+  to reflective conditions and two to essential $(\phi = 0)$ conditions. For 
+  two-dimension, all of the boundary conditions are set to essential conditions.
+  
+  These formula are common but this specific formulation comes from E. E. Lewis
+  \textit{Fundamentals of Nuclear Reactor Physics}.
 
 \section{One Dimension, One-Group, Fixed Source}
   For this problem, the following one-group coefficients are used.
@@ -86,13 +91,6 @@ These formula are common but this specific formulation comes from E. E. Lewis
   \begin{equation} \label{eq:one_dimension}
     \phi(x) = -\cosh(Bx) + \frac{\cosh(BL)-1}{\sinh(BL)} \sinh(Bx) +1
   \end{equation}
-  A plot is presented below
-  \begin{figure}[H] 
-    \centering
-    \includegraphics[width=5in]{analytic_plot}
-    \caption{Solution to 1D analytic problem.}
-    \label{fg:analytic_plot}
-  \end{figure}
   
 \section{One Dimension, One Group, Criticality} \label{sc:onegroup1d}
   This problem also uses the one-group neutron diffusion equation from 
@@ -176,7 +174,7 @@ These formula are common but this specific formulation comes from E. E. Lewis
   it is assumed that there is no up-scattering 
   (i.e. $\Sigma_{2\rightarrow1}=0$).
   
-  Then, the two-group neutron diffusion equations may be written
+  Then, the two-group neutron diffusion equations are given in \eref{eq:}
   \begin{align} \label{eq:twogroup}
   \begin{split}
     -D_1 \nabla^2 \phi_1 + \Sigma_{r1} \phi_1 &= \frac{1}{k_{eff}} \left(\nu 
