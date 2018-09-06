@@ -1087,18 +1087,18 @@
         \caption{MONJU Benchmark Rod Worth Results.}
         \label{tab:monju}
         \begin{center}
-          \begin{tabular}{cccccccccc}
+          \begin{tabular}{c}
             \toprule
-            Refine & $\keff$ & $\keff$ error [pcm] & $\keff$ ratio & RMS & 
-              RMS ratio  & $\|e\|_{\infty}$ & $\|e\|_{\infty}$ ratio \\
+            Pattern \\%& $\keff$ & Rod Worth [pcm] & Rod Difference [\%$\Delta k$]&
+              %%Rod Worth Error (relative) & Rod Difference Error [\%$\Delta k$]\\
             \midrule
             \csvreader[
               %head to column names,
               late after line=\\,
               late after last line=\\\bottomrule,]
               {ch02_neutronDiffusion/data/monju.csv}{}
-              {\csvcoli & \csvcolii & \csvcoliii & \csvcoliv & \csvcolv & 
-              \csvcolvi & \csvcolxi & \csvcolxii}
+              {\csvcoli }%& \csvcolii & \csvcoliii & \csvcoliv & \csvcolvi & 
+              %\csvcolvii}
           \end{tabular}
         \end{center}
       \end{table}
