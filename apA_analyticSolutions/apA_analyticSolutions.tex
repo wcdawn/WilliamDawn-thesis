@@ -8,14 +8,14 @@
   For the reference problems, the one-group neutron diffusion problem is written
   below.
   \begin{equation} \label{eq:onegroup}
-    -D \grad^2 \phi + \Sigma_r \phi =  \frac{1}{keff} \nu \Sigma_f \phi + 
+    -D \grad^2 \phi + \Sigma_r \phi =  \frac{1}{\keff} \nu \Sigma_f \phi + 
       q_{fixed}
   \end{equation}
   For two-group neutron diffusion problems, the two-group neutron diffusion 
   problem is written below.
   \begin{align} 
     \label{eq:twogroup1}
-    -D_1 \grad^2 \phi_1 + \Sigma_{r1} \phi_1 &= \frac{1}{keff} \left(
+    -D_1 \grad^2 \phi_1 + \Sigma_{r1} \phi_1 &= \frac{1}{\keff} \left(
       \nu \Sigma_{f1} \phi_1 + \nu \Sigma_{f2} \phi_2 \right) \\
     \label{eq:twogroup2}
     -D_2 \grad^2 \phi_2 + \Sigma_{r2} \phi_2 &= 
@@ -123,13 +123,13 @@
     \phi = \sin(x/b)
   \end{equation}
   Plugging this solution back into \eref{eq:onegroup} and dividing both sides
-  by $\sin(x/b)$ will yield an expression for $keff$.
+  by $\sin(x/b)$ will yield an expression for $\keff$.
   \begin{align}
-    -D B^2 + \Sigma_r &= \frac{1}{keff} \nu \Sigma_f \\
-    keff &= \frac{\nu \Sigma_f}{DB^2 + \Sigma_r} \label{eq:keff1d}
+    -D B^2 + \Sigma_r &= \frac{1}{\keff} \nu \Sigma_f \\
+    \keff &= \frac{\nu \Sigma_f}{DB^2 + \Sigma_r} \label{eq:keff1d}
   \end{align}
   Then, for a slab of length 100 cm, $B = \pi / 100$ and
-  \[ keff = 1.9980280254 \]
+  \[ \keff = 1.9980280254 \]
 \section{Two Dimension, One Group, Criticality}
   The same material coefficients are used for this problem as in the 
   one-dimensional problem. Similar to the one-dimensional problem, this 
@@ -159,12 +159,12 @@
   \end{equation}
   Where $b$ is the x-dimension of the problem and $a$ is the y-dimension of 
   the problem.
-  If $B_x=B_y$; that is, $a=b$,  $keff$ can be calculated as
+  If $B_x=B_y$; that is, $a=b$,  $\keff$ can be calculated as
   \begin{equation}
-    keff = \frac{\nu \Sigma_f}{2DB^2 + \Sigma_r} 
+    \keff = \frac{\nu \Sigma_f}{2DB^2 + \Sigma_r} 
   \end{equation}
   Then, for $a = b = 100$
-  \[ keff = 1.9960599356 \]
+  \[ \keff = 1.9960599356 \]
 \section{One Dimension, Two Group, Criticality}
   Much of this section is drawn from a manuscript prepared by Dr. Scott 
   Palmtag \textit{Analytic Solution to 2-group Bare Core Problem}, June 2018.
@@ -205,16 +205,16 @@
   Returning to the first equation from \eref{eq:twogroup} and again dividing
   both sides by $\sin(Bx)$
   \begin{align}
-    D_1 B^2 c_1 &= \frac{1}{keff} \left( \nu \Sigma_{f1} c_1 + 
+    D_1 B^2 c_1 &= \frac{1}{\keff} \left( \nu \Sigma_{f1} c_1 + 
       \nu \Sigma_{f2} c_2\right)\\
-    keff &= \frac{\nu \Sigma_{f1} c_1 + \nu \Sigma_{f2} c_2}
+    \keff &= \frac{\nu \Sigma_{f1} c_1 + \nu \Sigma_{f2} c_2}
       {D_1 B^2 c_1 + \Sigma{r1} c_1}\\
-    keff &= \frac{\nu \Sigma_{f1} + \nu \Sigma_{f2} c_2/c_1}
+    \keff &= \frac{\nu \Sigma_{f1} + \nu \Sigma_{f2} c_2/c_1}
       {D_1 B^2 + \Sigma{r1}}
   \end{align}
   Plugging in the expression from \eref{eq:fluxratio}
   \begin{equation}
-    keff = \frac{\nu \Sigma_{f1} + \nu \Sigma_{f2} 
+    \keff = \frac{\nu \Sigma_{f1} + \nu \Sigma_{f2} 
       \left(\frac{\Sigma_{s1\rightarrow2}}{D_2B^2+\Sigma_{r2}}\right)}
       {D_1 B^2 + \Sigma{r1}}
   \end{equation}
@@ -232,18 +232,19 @@
   For a 100cm slab then,
   \begin{align*}
     \frac{c_2}{c_1} &= 0.26132419 \\
-    keff &= 0.892349025
+    \keff &= 0.892349025
   \end{align*}
-\section{One-Dimension, One-Group, Two-Region, ``Reactor''}
+  
+\section{One-Dimension, One-Group, Two-Region, Criticality}
   This final analytic problem was designed to test the materials mapping of a
-  FEM solver. The problem is proposed as a slab-reactor with a fuel and 
-  reflector region. The neutron diffusion equation is given in 
-  \eref{eq:onegroup}. Geometry is described in the figure below.
-  \begin{figure}[H] 
+  solver. The problem is proposed as a slab-reactor with a fuel and  reflector
+  region. The neutron diffusion equation is given in 
+  \eref{eq:onegroup}. Geometry is described in \fref{fig:2reg_geom}
+  \begin{figure}
     \centering
-    \includegraphics[width=3in]{2reg_geom}
+    \includegraphics[width=0.4\textwidth]{2reg_geom}
     \caption{Geometry for Two-Region Problem.}
-    \label{fg:2reg_geom}
+    \label{fig:2reg_geom}
   \end{figure}
   Boundary conditions on the horizontal surfaces (top/bottom) are reflective
   to reduce the problem to one-dimension. Other boundary conditions are given
@@ -253,16 +254,24 @@
     \phi_R(b)&=0\\
     D_F\phi'_F(a)&=D_R\phi'_R(a)
   \end{align}
-  The material properties are specified below
-  \begin{center}
-  \begin{tabular}{c r r}
-    & Fuel & Reflector\\
-    $D$ & 1.2 & 0.7 \\
-    $\Sigma_r$ & 0.02 & 0.015 \\
-    $\nu \Sigma_f$ & 0.02 & 0 \\
-    $q_{fixed}$ & 0 & 0
-  \end{tabular}
-  \end{center}
+  The material properties are specified in \tref{tab:2reg_constants}.
+  \begin{table}
+    \caption{Two Region Material Constants.}
+    \label{tab:2reg_constants}
+    \begin{center}
+      \begin{tabular}{crr}
+        \toprule
+        & Fuel & Reflector \\
+        \midrule
+        $D$ & 1.2 & 0.7 \\
+        $\Sigma_r$ & 0.02 & 0.015 \\
+        $\nu \Sigma_f$ & 0.02 & 0 \\
+        $q_{fixed}$ & 0 & 0 \\
+        \bottomrule
+      \end{tabular}
+    \end{center}
+  \end{table}
+  
   The general form of the solution in the fueled region has the form 
   \[ \phi_F(x) = c_{1F} \cos(B_F x) + c_{2F} \sin(B_F x) \]
   Then, using the boundary condition $\phi'_F(0)=0$
@@ -336,110 +345,9 @@
   to \eref{eq:keff1d} above, in this problem, for $a=50$, $b=100$
   \begin{align}
     B_F^2  &= 0.02559220482138791289 \\
-    keff &= \frac{\nu\Sigma_{fF}}{D_F B_F^2 + \Sigma_{rF}} \\
+    \keff &= \frac{\nu\Sigma_{fF}}{D_F B_F^2 + \Sigma_{rF}} \\
     &= 0.96218825608052727105
   \end{align}
-  
-\section{One-Dimension, One-Group, Two-Region, Fixed-Source}
-  This problem is similar to that described above except both regions are 
-  non-fissile and there is a uniform fixed source in the problem. This will 
-  draw on many previous equations.
-  
-  In this problem, material 1 is on the left and extends from 0 to $a$. 
-  Material 2 is on the right and extends from $a$ to $b$. Boundary conditions 
-  are $\phi(0)=\phi(b)=0$.
-  
-  The diffusion problem is written as \eref{eq:onegroup} with 
-  $\nu \Sigma_f =0$ and $q_{fixed}$ nonzero. Then, from \eref{eq:particular},
-  \begin{equation}
-  	\phi_p = \frac{q_{fixed}}{\Sigma_r b}
-  \end{equation}
-  NOTE: This solution requires constant removal cross section in the two 
-  materials. Otherwise, a different method for calculating the particular 
-  solution must be used. The solution has general form similar to
-  \eref{eq:general}.
-  \begin{align}
-  	\phi &= \phi_p + \phi_1 H(a-x) + \phi_2 H(x-a) \\
-    \phi_1 &= c_1 \cosh(B_1 x) + c_2 \sinh(B_1 x) \\
-    \phi_2 &= c_3 \cosh(B_2 (x-a)) + c_4 \sinh(B_2 (x-a))
-    \phi(0)&=\phi(b)=0
-  \end{align}
-  Where $B_i$ is the buckling coefficient for material $i$ given as
-  \begin{equation}
-    B_i = \sqrt{\Sigma_{ri} / D_i}
-  \end{equation}
-  
-  Beginning with the boundary condition at $x=0$
-  \begin{align}
-    \phi(0) &= 0 \\
-    &= \phi_p + c_1 \cosh(B_1 x) + c_2 \sinh(B_1 x) \\
-    &= \phi_p + c_1\\
-    c_1 &= -\phi_p \label{eq:bc_x0}
-  \end{align}
-  Next the boundary condition at $x=b$
-  \begin{align}
-    \phi(b) &= 0 \\
-    &= \phi_p + c_3 \cosh(B_2 (b-a)) + c_4 \sinh(B_2 (b-a)) \\
-    c_3 &= - \frac{\phi_p + c_4 \sinh(B_2(x-a))}{\cosh(B_2(b-a))} \\
-    c_3 &= - \left(\frac{\phi_p}{\cosh(B_2(b-a))} + 
-      c_4 \tanh(B_2(b-a))\right) \label{eq:bc_xb}
-  \end{align}
-  Next the interfacial boundary condition for conservation of flux
-  $\phi(a^-)=\phi(a^+)$
-  \begin{align}
-    \phi(a^-) &= \phi(a^+) \\
-    \phi_p - \phi_p \cosh(B_1 a) + c_2 \sinh(B_1 a) &= 
-      \phi_p + c_3 \\
-    c_3 &= c_2 \sinh(B_1 a) - \phi_p \cosh(B_1 a) \label{eq:bc_flux}
-  \end{align}
-  Next the interfacial boundary condition for conservation of current
-  ${D_1 \phi'(a^-) = D_2 \phi'(a^+)}$
-  \begin{align}
-    D_1 \phi'(a^-) &= D_2 \phi'(a^+) \\
-    D_1 (c_1 B_1 \sinh(B_1 a) + c_2 B_1 \cosh(B_1 a)) &=
-      D_2 c_4 B_2 \\
-    c_4 &= \frac{D_1 B_1}{D_2 B_2} (c_1 \sinh(B_1 a) + c_2 \cosh(B_1 a)) \\
-    &= \frac{D_1 B_1}{D_2 B_2}(c_2 \cosh(B_1 a) - \phi_p \sinh(B_1 a))
-      \label{eq:bc_current}
-  \end{align}
-  
-  All of the coefficients have forward expressions given above except for 
-  $c_2$. This will require significant algebra. Begin by setting 
-  \eref{eq:bc_xb} = \eref{eq:bc_flux} and solve for $c_4$.
-  \begin{align}
-    - \left( \frac{\phi_p}{\cosh(B_2(b-a))} + c_4 \tanh(B_2 (b-a))\right)&=
-      c_2 \sinh(B_1 a) - \phi_p \cosh(B_1 a) \\
-    \phi_p \cosh(B_1 a) - \frac{\phi_p}{\cosh(B_2(b-a))} - 
-      c_2 \sinh(B_1 a) &= c_4 \tanh(B_2 (b-a)) \\
-    \phi_p \frac{\cosh(B_1 a)}{\tanh(B_2(b-a))} - 
-      \frac{\phi_p}{\cosh(B_2(b-a))} 
-      \frac{\cosh(B_2(b-a))}{\sinh(B_2(b-a))} - 
-      c_2 \frac{\sinh(B_1 a)}{\tanh(B_2(b-a))} &= c_4\\
-    \phi_p \left(\frac{\cosh(B_1 a)}{\tanh(B_2(b-a))} - \frac{1}
-      {\sinh(B_2(b-a))} \right) - c_2 \frac{\sinh(B_1a)}{\tanh(B_2(b-a))} 
-      &= c_4
-  \end{align}
-  Setting the above expression equal to \eref{eq:bc_current} and finally 
-  solve for $c_2$.
-  \begin{align}
-    \phi_p \left(\frac{\cosh(B_1 a)}{\tanh(B_2(b-a))} - 
-      \frac{1}{\sinh(B_2(b-a))}\right) -
-      c_2 \frac{\sinh(B_1 a)}{\tanh(B_2(b-a))} &=
-      \frac{D_1 B_1}{D_2 B_2} \left( c_2 \cosh(B_1 a) - 
-      \phi_1 \sinh(B_1 a)\right) \\
-    \phi_p \left(\frac{\cosh(B_1 a)}{\tanh(B_2(b-a))} - 
-      \frac{1}{\sinh(B_2(b-a))} \right) + 
-      \frac{D_1 B_1}{D_2 B_2} \phi_p \sinh(B_1 a) &= 
-      \frac{D_1 B_1}{D_2 B_2} c_2 \cosh(B_1a) + 
-      c_2 \frac{\sinh(B_1a)}{\tanh(B_2(b-a))} \\
-    \frac{\phi_p \left( \frac{\cosh(B_1a)}{\tanh(B_2(b-a))} - 
-      \frac{1}{\sinh(B_2(b-a))} + 
-      \frac{D_1 B_1}{D_2B_2} \sinh(B_1a) \right)}
-      {\frac{D_1B_1}{D_2B_2} \cosh(B_1a) + 
-      \frac{\sinh(B_1a)}{\tanh(B_2(b-a))}} &= c_2 \label{eq:c2}
-  \end{align}
-  Now, use equations \eref{eq:bc_x0}, \eref{eq:c2}, \eref{eq:bc_flux}, and 
-  \eref{eq:bc_current} to solve for $c_1$ through $c_4$ respectively.
   
 \section{Finite Cylinder, One Group, Criticality}
   The finite cylinder is an example of a truly three-dimensional problem with
@@ -503,7 +411,7 @@
   \begin{equation}
     -D \left( \frac{1}{r} \frac{\partial}{\partial r} \left( r 
       \frac{\partial \phi}{\partial r} \right) + \frac{\partial^2 \phi}
-      {\partial z^2} \right) + \Sigma_r \phi = \frac{1}{keff} \nu 
+      {\partial z^2} \right) + \Sigma_r \phi = \frac{1}{\keff} \nu 
       \Sigma_f \phi
   \end{equation}
   Beginning with the differentiation terms for simplicity. Axial 
@@ -543,29 +451,29 @@
     \left( J_0(B_r r) - J_2(B_r r) \right) \right) + B_z^2 J_0(B_r r) \sin(B_z
     z) \right) + \\
     \Sigma_r J_0(B_r r) \sin(B_z z) \\
-    = \frac{1}{keff} \nu
+    = \frac{1}{\keff} \nu
     \Sigma_f J_0(B_r r) \sin(B_z z)
   \end{multline}
   Dividing through by $\sin(B_z z)$.
   \begin{multline}
     D \left( B_r \left( \frac{1}{r} J_1(B_r r) + \frac{1}{2} B_r
     \left( J_0(B_r r) - J_2(B_r r) \right) \right) + B_z^2 J_0(B_r r) \right)+\\
-    \Sigma_r J_0(B_r r) = \frac{1}{keff} \nu \Sigma_f J_0(B_r r) 
+    \Sigma_r J_0(B_r r) = \frac{1}{\keff} \nu \Sigma_f J_0(B_r r) 
   \end{multline}
   Dividing through by $J_0(B_r r)$ and expanding some terms.
   \begin{align}
     D \left( B_r \left( \frac{1}{r} \frac{J_1(B_r r)}{J_0(B_r r)} + 
       \frac{1}{2} \left(B_r - \frac{J_2(B_r r)}{J_0(B_r r)} \right) \right) 
-      + B_z^2 \right)+ \Sigma_r &= \frac{1}{keff} \nu \Sigma_f \\
+      + B_z^2 \right)+ \Sigma_r &= \frac{1}{\keff} \nu \Sigma_f \\
     D \left( \frac{1}{r} B_r \frac{J_1(B_r r)}{J_0(B_r r)} + \frac{B_r^2}{2} -
       \frac{B_r^2}{2} \frac{J_2(B_r r)}{J_0(B_r r)} + B_z^2 \right) + \Sigma_r&=
-      \frac{1}{keff} \nu \Sigma_f  \\
+      \frac{1}{\keff} \nu \Sigma_f  \\
     \frac{1}{r} B_r \frac{J_1(B_r r)}{J_0(B_r r)} + \frac{B_r^2}{2} -
       \frac{B_r^2}{2} \frac{J_2(B_r r)}{J_0(B_r r)} + B_z^2 + 
-      \frac{\Sigma_r}{D} &= \frac{1}{keff} \frac{\nu \Sigma_f}{D}\\
+      \frac{\Sigma_r}{D} &= \frac{1}{\keff} \frac{\nu \Sigma_f}{D}\\
     \frac{1}{J_0(B_r r)} \frac{B_r^2}{2} \left(\frac{1}{r} \frac{2}{B_r} 
       J_1(B_r r) - J_2(B_r r) \right) + \frac{B_r^2}{2} + B_z^2 + 
-      \frac{\Sigma_r}{D} &= \frac{1}{keff} \frac{\nu \Sigma_f}{D}
+      \frac{\Sigma_r}{D} &= \frac{1}{\keff} \frac{\nu \Sigma_f}{D}
   \end{align}
   Note the Bessel function recursion relationship.
   \begin{equation} \label{eq:bessel_recursion}
@@ -574,14 +482,14 @@
   Using \eref{eq:bessel_recursion} the term above is simplified.
   \begin{align}
     \frac{1}{J_0(B_r r)} \frac{B_r^2}{2} \left( J_0(B_r r) \right) + 
-      \frac{B_r^2}{2} + B_z^2 + \Sigma_r &= \frac{1}{keff} 
+      \frac{B_r^2}{2} + B_z^2 + \Sigma_r &= \frac{1}{\keff} 
       \frac{\nu \Sigma_f}{D} \\
-    B_r^2 + B_z^2 + \frac{\Sigma_r}{D} &= \frac{1}{keff} \frac{\nu \Sigma_f}
+    B_r^2 + B_z^2 + \frac{\Sigma_r}{D} &= \frac{1}{\keff} \frac{\nu \Sigma_f}
       {D}
   \end{align}
   Now, an expression for the eigenvalue can be written.
   \begin{align}
-    keff &= \frac{\nu \Sigma_f}{D(B_r^2 + B_z^2) + \Sigma_r} \\
+    \keff &= \frac{\nu \Sigma_f}{D(B_r^2 + B_z^2) + \Sigma_r} \\
     &= \frac{\nu \Sigma_f}{D\left(\left(\frac{\alpha_0}{R}\right)^2 + 
       \left(\frac{\pi}{H}\right)^2 \right) + \Sigma_r}
   \end{align}
