@@ -8,15 +8,17 @@
   For the reference problems, the one-group neutron diffusion problem is written
   below.
   \begin{equation} \label{eq:onegroup}
-    -D \nabla^2 \phi + \Sigma_r \phi =  \frac{1}{k_{eff}} \nu \Sigma_f \phi + 
+    -D \grad^2 \phi + \Sigma_r \phi =  \frac{1}{k_{eff}} \nu \Sigma_f \phi + 
       q_{fixed}
   \end{equation}
   For two-group neutron diffusion problems, the two-group neutron diffusion 
   problem is written below.
   \begin{align} 
-    -D_1 \nabla^2 \phi_1 + \Sigma_{r1} \phi_1 &= \frac{1}{k_{eff}} \left(
+    \label{eq:twogroup1}
+    -D_1 \grad^2 \phi_1 + \Sigma_{r1} \phi_1 &= \frac{1}{k_{eff}} \left(
       \nu \Sigma_{f1} \phi_1 + \nu \Sigma_{f2} \phi_2 \right) \\
-    -D_2 \nabla^2 \phi_2 + \Sigma_{r2} \phi_2 &= 
+    \label{eq:twogroup2}
+    -D_2 \grad^2 \phi_2 + \Sigma_{r2} \phi_2 &= 
       \Sigma_{s 1 \rightarrow 2} \phi_2
   \end{align}
   Where $\phi_1$ is the higher energy group and $\phi_2$ is the lower energy 
@@ -42,20 +44,20 @@
     \nu \Sigma_f &= 0\\
     q_{fixed} &= 1
   \end{align*}
-  Then, equation \eqref{eq:onegroup} is written
+  Then, equation \eref{eq:onegroup} is written
   \begin{equation}
-    - \nabla^2 \phi + \phi = 1 
+    - \grad^2 \phi + \phi = 1 
   \end{equation}
   or
   \begin{equation} \label{eq:diffusion_simplified}
-    \nabla^2 \phi - B^2 \phi = S
+    \grad^2 \phi - B^2 \phi = S
   \end{equation}
   where $B = 1$ and $S=-1$.
   The solution is composed of a particular and general solution.
   \begin{equation}
     \phi = \phi_g + \phi_p 
   \end{equation}
-  For problems of the form of \eqref{eq:diffusion_simplified} the general 
+  For problems of the form of \eref{eq:diffusion_simplified} the general 
   solution has the form
   \begin{equation} \label{eq:general}
     \phi_g = c_1 \cosh(Bx) + c_2 \sinh(Bx)
@@ -94,7 +96,7 @@
   
 \section{One Dimension, One Group, Criticality} \label{sc:onegroup1d}
   This problem also uses the one-group neutron diffusion equation from 
-  \eqref{eq:onegroup} and the following coefficients:
+  \eref{eq:onegroup} and the following coefficients:
   \begin{align*}
     D &= 1\\
     \Sigma_r &= 1\\
@@ -103,7 +105,7 @@
   \end{align*}
   The problem is then proposed as 
   \begin{equation}
-    -\nabla^2 \phi - \phi = 0 
+    -\grad^2 \phi - \phi = 0 
   \end{equation}
   and has general solution
   \begin{equation}
@@ -120,7 +122,7 @@
   \begin{equation} \label{eq:onedimensionsol}
     \phi = \sin(x/b)
   \end{equation}
-  Plugging this solution back into \eqref{eq:onegroup} and dividing both sides
+  Plugging this solution back into \eref{eq:onegroup} and dividing both sides
   by $\sin(x/b)$ will yield an expression for $k_{eff}$.
   \begin{align}
     -D B^2 + \Sigma_r &= \frac{1}{k_{eff}} \nu \Sigma_f \\
@@ -136,11 +138,11 @@
   \begin{equation}
     \phi(x,y) = X(x) Y(y) 
   \end{equation}
-  Beginning with equation \eqref{eq:onegroup}.
+  Beginning with equation \eref{eq:onegroup}.
   \begin{align}
-    -D \nabla^2 \phi(x,y) + \Sigma_r \phi(x,y) &= \nu \Sigma_f \phi(x,y) \\
-    - \nabla^2 \phi(x,y) - \phi(x,y) &= 0 \\
-    \nabla^2 \phi(x,y) + \phi(x,y) &= 0 \\
+    -D \grad^2 \phi(x,y) + \Sigma_r \phi(x,y) &= \nu \Sigma_f \phi(x,y) \\
+    - \grad^2 \phi(x,y) - \phi(x,y) &= 0 \\
+    \grad^2 \phi(x,y) + \phi(x,y) &= 0 \\
     \frac{\partial^2}{\partial x^2} \phi(x,y) + 
       \frac{\partial^2}{\partial y^2} \phi(x,y) +
       \phi(x,y) &= 0\\
@@ -151,7 +153,7 @@
       \right) &= 0
   \end{align}
   The solution to this problem is the product of the solutions from the 
-  previous problem presented in \eqref{eq:onedimensionsol}. The solution is
+  previous problem presented in \eref{eq:onedimensionsol}. The solution is
   \begin{equation} \label{eq:twodimensionsol}
     \phi(x,y) = \sin(x/b) \sin(y/a)
   \end{equation}
@@ -174,18 +176,11 @@
   it is assumed that there is no up-scattering 
   (i.e. $\Sigma_{2\rightarrow1}=0$).
   
-  Then, the two-group neutron diffusion equations are given in \eref{eq:}
-  \begin{align} \label{eq:twogroup}
-  \begin{split}
-    -D_1 \nabla^2 \phi_1 + \Sigma_{r1} \phi_1 &= \frac{1}{k_{eff}} \left(\nu 
-      \Sigma_{f1} \phi_1 + \nu \Sigma_{f2} \phi_2 \right) \\
-    -D_2 \nabla^2 \phi_2 + \Sigma_{r2} \phi_2 &= \Sigma_{s1\rightarrow2} 
-      \phi_1 
-  \end{split}
-  \end{align}
+  Then, the two-group neutron diffusion equations are given in
+  \eref{eq:twogroup1} and \eref{eq:twogroup2}.
   
   Referring to the problem posed by Section \ref{sc:onegroup1d}, the flux 
-  solutions have form given in equation \eqref{eq:sinshape}. Then
+  solutions have form given in equation \eref{eq:sinshape}. Then
   \begin{align} \label{eq:twogroupflux}
   \begin{split}
     \phi_1 &= c_1 \sin(Bx) \\
@@ -198,7 +193,7 @@
     B = \pi/L
   \end{equation}
   where $L$ is the length of the problem. Then, plugging 
-  \eqref{eq:twogroupflux} into the second equation from \eqref{eq:twogroup} 
+  \eref{eq:twogroupflux} into the second equation from \eref{eq:twogroup} 
   and dividing the equation by $\sin(Bx)$
   \begin{equation}
     D_2 B^2 c_2 + \Sigma_{r2} c_2 = \Sigma{s1\rightarrow2} c_1
@@ -207,7 +202,7 @@
   \begin{equation} \label{eq:fluxratio}
     \frac{c_2}{c_1} = \frac{\Sigma_{s1\rightarrow2}}{D_2 B^2 + \Sigma_{r2}}
   \end{equation}
-  Returning to the first equation from \eqref{eq:twogroup} and again dividing
+  Returning to the first equation from \eref{eq:twogroup} and again dividing
   both sides by $\sin(Bx)$
   \begin{align}
     D_1 B^2 c_1 &= \frac{1}{k_{eff}} \left( \nu \Sigma_{f1} c_1 + 
@@ -217,7 +212,7 @@
     k_{eff} &= \frac{\nu \Sigma_{f1} + \nu \Sigma_{f2} c_2/c_1}
       {D_1 B^2 + \Sigma{r1}}
   \end{align}
-  Plugging in the expression from \eqref{eq:fluxratio}
+  Plugging in the expression from \eref{eq:fluxratio}
   \begin{equation}
     k_{eff} = \frac{\nu \Sigma_{f1} + \nu \Sigma_{f2} 
       \left(\frac{\Sigma_{s1\rightarrow2}}{D_2B^2+\Sigma_{r2}}\right)}
@@ -243,7 +238,7 @@
   This final analytic problem was designed to test the materials mapping of a
   FEM solver. The problem is proposed as a slab-reactor with a fuel and 
   reflector region. The neutron diffusion equation is given in 
-  \eqref{eq:onegroup}. Geometry is described in the figure below.
+  \eref{eq:onegroup}. Geometry is described in the figure below.
   \begin{figure}[H] 
     \centering
     \includegraphics[width=3in]{2reg_geom}
@@ -309,11 +304,11 @@
     c_{1F} \cos(B_F a) &= c_{1R} \\
     c_{1R} &= c_{1F} \cos(B_F a) \label{eq:c1r}
   \end{align}
-  Setting equations \eqref{eq:c2rnumber1} and \eqref{eq:c2rnumber2} equal.
+  Setting equations \eref{eq:c2rnumber1} and \eref{eq:c2rnumber2} equal.
   \begin{equation}
     - \frac{D_F c_{1F} B_F \sin(B_F a)}{D_R B_R} = -c_{1R} \tanh(B_R(b-a))
   \end{equation}
-  Plugging in the the expression for $c_{1R}$ from \eqref{eq:c1r}
+  Plugging in the the expression for $c_{1R}$ from \eref{eq:c1r}
   \begin{align}
     - \frac{D_F c_{1F} B_F \sin(B_F a)}{D_R B_R} &=
       - \frac{c_{1F} \cos(B_F a)}{\tanh(B_R(b-a))}\\
@@ -338,7 +333,7 @@
   Where $H(x)$ is the Heaviside step function.  
   
   The eigenvalue for this problem can be expressed for a known $B_F$. Similar 
-  to \eqref{eq:keff1d} above, in this problem, for $a=50$, $b=100$
+  to \eref{eq:keff1d} above, in this problem, for $a=50$, $b=100$
   \begin{align}
     B_F^2  &= 0.02559220482138791289 \\
     k_{eff} &= \frac{\nu\Sigma_{fF}}{D_F B_F^2 + \Sigma_{rF}} \\
@@ -354,15 +349,15 @@
   Material 2 is on the right and extends from $a$ to $b$. Boundary conditions 
   are $\phi(0)=\phi(b)=0$.
   
-  The diffusion problem is written as \eqref{eq:onegroup} with 
-  $\nu \Sigma_f =0$ and $q_{fixed}$ nonzero. Then, from \eqref{eq:particular},
+  The diffusion problem is written as \eref{eq:onegroup} with 
+  $\nu \Sigma_f =0$ and $q_{fixed}$ nonzero. Then, from \eref{eq:particular},
   \begin{equation}
   	\phi_p = \frac{q_{fixed}}{\Sigma_r b}
   \end{equation}
   NOTE: This solution requires constant removal cross section in the two 
   materials. Otherwise, a different method for calculating the particular 
   solution must be used. The solution has general form similar to
-  \eqref{eq:general}.
+  \eref{eq:general}.
   \begin{align}
   	\phi &= \phi_p + \phi_1 H(a-x) + \phi_2 H(x-a) \\
     \phi_1 &= c_1 \cosh(B_1 x) + c_2 \sinh(B_1 x) \\
@@ -410,7 +405,7 @@
   
   All of the coefficients have forward expressions given above except for 
   $c_2$. This will require significant algebra. Begin by setting 
-  \eqref{eq:bc_xb} = \eqref{eq:bc_flux} and solve for $c_4$.
+  \eref{eq:bc_xb} = \eref{eq:bc_flux} and solve for $c_4$.
   \begin{align}
     - \left( \frac{\phi_p}{\cosh(B_2(b-a))} + c_4 \tanh(B_2 (b-a))\right)&=
       c_2 \sinh(B_1 a) - \phi_p \cosh(B_1 a) \\
@@ -424,7 +419,7 @@
       {\sinh(B_2(b-a))} \right) - c_2 \frac{\sinh(B_1a)}{\tanh(B_2(b-a))} 
       &= c_4
   \end{align}
-  Setting the above expression equal to \eqref{eq:bc_current} and finally 
+  Setting the above expression equal to \eref{eq:bc_current} and finally 
   solve for $c_2$.
   \begin{align}
     \phi_p \left(\frac{\cosh(B_1 a)}{\tanh(B_2(b-a))} - 
@@ -443,8 +438,8 @@
       {\frac{D_1B_1}{D_2B_2} \cosh(B_1a) + 
       \frac{\sinh(B_1a)}{\tanh(B_2(b-a))}} &= c_2 \label{eq:c2}
   \end{align}
-  Now, use equations \eqref{eq:bc_x0}, \eqref{eq:c2}, \eqref{eq:bc_flux}, and 
-  \eqref{eq:bc_current} to solve for $c_1$ through $c_4$ respectively.
+  Now, use equations \eref{eq:bc_x0}, \eref{eq:c2}, \eref{eq:bc_flux}, and 
+  \eref{eq:bc_current} to solve for $c_1$ through $c_4$ respectively.
   
 \section{Finite Cylinder, One Group, Criticality}
   The finite cylinder is an example of a truly three-dimensional problem with
@@ -457,7 +452,7 @@
   directions. Beginning with the axial direction. The diffusion equation can 
   be written
   \begin{equation} \label{eq:simplediffusion}
-    \nabla^2 \phi(z) + B_z^2 \phi(z) = 0
+    \grad^2 \phi(z) + B_z^2 \phi(z) = 0
   \end{equation}
   and has solution of the form
   \begin{equation} \label{eq:cyl_axial}
@@ -468,7 +463,7 @@
   
   Moving on to the radial direction. The diffusion equation can be written.
   \begin{equation}
-    \nabla^2 \phi(r) + B_r^2 \phi(r) = 0
+    \grad^2 \phi(r) + B_r^2 \phi(r) = 0
   \end{equation}
   Noting the radial coordinates.
   \begin{align}
@@ -484,7 +479,7 @@
     \frac{\partial^2 \phi}{\partial r^2} + \frac{1}{r} \frac{\partial \phi}
       {\partial r} + B_r^2 \phi &= 0 \label{eq:besselequation}
   \end{align}
-  Noting equation \eqref{eq:besselequation}, Lewis Appendix B shows the 
+  Noting equation \eref{eq:besselequation}, Lewis Appendix B shows the 
   equation has solution of the form
   \begin{equation} \label{eq:cyl_radial}
     \phi(r) = c_3 J_0(B_r r) + c_4 Y_0(B_r r)
@@ -497,13 +492,13 @@
   zero of the $J_0$ function and $\alpha_0 \approx 2.4048$. Then 
   $B_r=\alpha_0/R$.
   
-  Combining the radial expression \eqref{eq:cyl_radial} and the axial 
-  expression \eqref{eq:cyl_axial} yields the final expression for the flux.
+  Combining the radial expression \eref{eq:cyl_radial} and the axial 
+  expression \eref{eq:cyl_axial} yields the final expression for the flux.
   \begin{align} \label{eq:cyl_flux}
     \phi(r,z) &= J_0(B_r r) \sin(B_z z) \\
     &= J_0(r \alpha_0 / R) \sin(z \pi / H)
   \end{align}
-  Plugging \eqref{eq:cyl_flux} into the diffusion equation will yield the 
+  Plugging \eref{eq:cyl_flux} into the diffusion equation will yield the 
   buckling/criticality condition.
   \begin{equation}
     -D \left( \frac{1}{r} \frac{\partial}{\partial r} \left( r 
@@ -531,7 +526,7 @@
     \frac{d}{dr} J_n(r) = \frac{1}{2} \left( J_{n-1}(r) - J_{n+1}(r)\right)
   \end{equation}
   Evaluating the rest of the cylindrical derivative using
-  \eqref{eq:deriv_besseln} and the product rule.
+  \eref{eq:deriv_besseln} and the product rule.
   \begin{align}
     \frac{\partial}{\partial r} \left( r \frac{\partial \phi}{\partial r}
       \right) &= -B_r \sin(B_z z) \left(J_1(B_r r) + \frac{1}{2} B_r r \left(
@@ -576,7 +571,7 @@
   \begin{equation} \label{eq:bessel_recursion}
     J_{n+1}(\alpha r) + J_{n-1}(\alpha r) = \frac{2n}{\alpha r} J_n(\alpha r)
   \end{equation}
-  Using \eqref{eq:bessel_recursion} the term above is simplified.
+  Using \eref{eq:bessel_recursion} the term above is simplified.
   \begin{align}
     \frac{1}{J_0(B_r r)} \frac{B_r^2}{2} \left( J_0(B_r r) \right) + 
       \frac{B_r^2}{2} + B_z^2 + \Sigma_r &= \frac{1}{k_{eff}} 
