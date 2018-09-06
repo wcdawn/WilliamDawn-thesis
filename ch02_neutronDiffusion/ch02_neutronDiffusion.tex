@@ -752,7 +752,63 @@
     system solution, is is crucial that this process be efficient.
 
 \section{Reference Results}
+  This application of the FEM has been benchmarked against reference 
+  reactor-type problems as well as contrived manufactured solutions. Comparison
+  against reactor-type problems demonstrates an ability to solve problems for
+  which this method was derived. Comparison against manufactured solutions 
+  allows for more detailed error and convergence analysis as not only the system
+  $\keff$ but also the exact flux solution is known.
+  
+  For all reference problems presented, a convergence study is presented. It has 
+  been shown that for a bounded second spatial derivative within the problem 
+  domain, the FEM derived above is second order convergent \cite{textbookli} 
+  (Remark 7.13).
+  \begin{equation} \label{eq:error_bound}
+    \|\ve\|_{\infty} \le c h^2 \| \grad^2 \phi(\vr) \|_{\infty}
+  \end{equation}
+  Where $\ve$ is the error vector such that $\ve = \phi(\vr) - \phi_{FEM}$ and
+  $\phi_{FEM}$ is solution to the finite element system of equations. Then,
+  $h$ is the characteristic mesh size, and $c$ is a constant. 
+  \eref{eq:error_bound} implies that if a characteristic mesh size is halved, 
+  the error is quartered. This relationship is useful as a proper implementation 
+  of the FEM will converge to the correct answer and do so at the correct rate.
+  
+  Mesh refinement studies are presented herein. For each refinement, $h$ is 
+  halved by introducing new elements and placing new nodes at the midway point
+  between existing nodes. Then, let $r$ be the refinement index.
+  \begin{equation}
+    x = 4 = \frac{x^{(r-1)}}{x^{(r)}}
+  \end{equation}
+  Such that for some quantity $x$, the error decreases by a factor of four for 
+  each refinement. As these are numerical solutions, the ratio rarely equals 
+  exactly four. It is observed that a few refinements are often necessary 
+  before the ratio approaches the expected value. This is especially the case
+  when the second derivative is not bounded in problems with heterogeneous 
+  materials.
+  
+  For reactor-type problems, only $\keff$ is analyzed and expected to converge
+  at the appropriate rate. When assembly powers were available, these are also
+  presented graphically. 
+  
+  For manufactured solutions, the error of the function $\phi$ itself can be 
+  analyzed because the function is known exactly. For all manufactured problems,
+  the Root Mean Squared (RMS) error as in \eref{eq:rms} is calculated for the
+  error vector $\ve$ and is presented. The ratio between refinements should 
+  assume the expected rate.
+  \begin{equation} \label{eq:rms}
+    \text{RMS}(\ve) = \sqrt{\frac{1}{N} \sum_{i=1}^{N} e_i}
+  \end{equation}
+  The maximal norm $\| \cdot \|_{\infty}$ is also presented and the ratio 
+  between refinements should assume the expected value. For criticality 
+  problems, $\keff$ is also presented.
+  
   \subsection{Triangular Element Manufactured Solutions}
+    As a demonstration of the proper solution to the diffusion equation for 
+    triangular elements, manufactured solutions are derived and then numerically
+    computed. These are One and Two Dimension problems. All of these are on a 
+    rectangular domain $[0,a] \times [0,b]$. For One Dimension problems, the 
+    edges $y=0$ and $y=a$ are mirror boundary conditions to reduce the 
+    dimension of the problem.
     \subsubsection{One Dimension, One-Group, Fixed Source}
       \begin{table}
         \caption{One Dimension, One-Group, Fixed Source Convergence Study 
@@ -861,7 +917,7 @@
     \subsubsection{VVER440}
       \begin{figure}
         \centering
-        \includegraphics[width=0.9\textwidth]{diffusion_vver440}
+        \includegraphics[width=\textwidth]{diffusion_vver440}
         \caption{VVER440 Benchmark Power Comparison for most refined mesh.}
         \label{fig:diffusion_vver440}
       \end{figure}
@@ -886,7 +942,7 @@
     \subsubsection{SNR}
       \begin{figure}
         \centering
-        \includegraphics[width=0.9\textwidth]{diffusion_snr}
+        \includegraphics[width=\textwidth]{diffusion_snr}
         \caption{SNR Benchmark Power Comparison for most refined mesh.}
         \label{fig:diffusion_snr}
       \end{figure}
@@ -1027,4 +1083,23 @@
       \end{table}
   \subsection{Three Dimension Reactors}
     \subsubsection{MONJU}
+      \begin{table}
+        \caption{MONJU Benchmark Rod Worth Results.}
+        \label{tab:monju}
+        \begin{center}
+          \begin{tabular}{cccccccccc}
+            \toprule
+            Refine & $\keff$ & $\keff$ error [pcm] & $\keff$ ratio & RMS & 
+              RMS ratio  & $\|e\|_{\infty}$ & $\|e\|_{\infty}$ ratio \\
+            \midrule
+            \csvreader[
+              %head to column names,
+              late after line=\\,
+              late after last line=\\\bottomrule,]
+              {ch02_neutronDiffusion/data/monju.csv}{}
+              {\csvcoli & \csvcolii & \csvcoliii & \csvcoliv & \csvcolv & 
+              \csvcolvi & \csvcolxi & \csvcolxii}
+          \end{tabular}
+        \end{center}
+      \end{table}
     \subsubsection{KNK}
