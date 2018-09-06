@@ -8,14 +8,14 @@
   For the reference problems, the one-group neutron diffusion problem is written
   below.
   \begin{equation} \label{eq:onegroup}
-    -D \grad^2 \phi + \Sigma_r \phi =  \frac{1}{k_{eff}} \nu \Sigma_f \phi + 
+    -D \grad^2 \phi + \Sigma_r \phi =  \frac{1}{keff} \nu \Sigma_f \phi + 
       q_{fixed}
   \end{equation}
   For two-group neutron diffusion problems, the two-group neutron diffusion 
   problem is written below.
   \begin{align} 
     \label{eq:twogroup1}
-    -D_1 \grad^2 \phi_1 + \Sigma_{r1} \phi_1 &= \frac{1}{k_{eff}} \left(
+    -D_1 \grad^2 \phi_1 + \Sigma_{r1} \phi_1 &= \frac{1}{keff} \left(
       \nu \Sigma_{f1} \phi_1 + \nu \Sigma_{f2} \phi_2 \right) \\
     \label{eq:twogroup2}
     -D_2 \grad^2 \phi_2 + \Sigma_{r2} \phi_2 &= 
@@ -123,13 +123,13 @@
     \phi = \sin(x/b)
   \end{equation}
   Plugging this solution back into \eref{eq:onegroup} and dividing both sides
-  by $\sin(x/b)$ will yield an expression for $k_{eff}$.
+  by $\sin(x/b)$ will yield an expression for $keff$.
   \begin{align}
-    -D B^2 + \Sigma_r &= \frac{1}{k_{eff}} \nu \Sigma_f \\
-    k_{eff} &= \frac{\nu \Sigma_f}{DB^2 + \Sigma_r} \label{eq:keff1d}
+    -D B^2 + \Sigma_r &= \frac{1}{keff} \nu \Sigma_f \\
+    keff &= \frac{\nu \Sigma_f}{DB^2 + \Sigma_r} \label{eq:keff1d}
   \end{align}
   Then, for a slab of length 100 cm, $B = \pi / 100$ and
-  \[ k_{eff} = 1.9980280254 \]
+  \[ keff = 1.9980280254 \]
 \section{Two Dimension, One Group, Criticality}
   The same material coefficients are used for this problem as in the 
   one-dimensional problem. Similar to the one-dimensional problem, this 
@@ -159,12 +159,12 @@
   \end{equation}
   Where $b$ is the x-dimension of the problem and $a$ is the y-dimension of 
   the problem.
-  If $B_x=B_y$; that is, $a=b$,  $k_{eff}$ can be calculated as
+  If $B_x=B_y$; that is, $a=b$,  $keff$ can be calculated as
   \begin{equation}
-    k_{eff} = \frac{\nu \Sigma_f}{2DB^2 + \Sigma_r} 
+    keff = \frac{\nu \Sigma_f}{2DB^2 + \Sigma_r} 
   \end{equation}
   Then, for $a = b = 100$
-  \[ k_{eff} = 1.9960599356 \]
+  \[ keff = 1.9960599356 \]
 \section{One Dimension, Two Group, Criticality}
   Much of this section is drawn from a manuscript prepared by Dr. Scott 
   Palmtag \textit{Analytic Solution to 2-group Bare Core Problem}, June 2018.
@@ -205,16 +205,16 @@
   Returning to the first equation from \eref{eq:twogroup} and again dividing
   both sides by $\sin(Bx)$
   \begin{align}
-    D_1 B^2 c_1 &= \frac{1}{k_{eff}} \left( \nu \Sigma_{f1} c_1 + 
+    D_1 B^2 c_1 &= \frac{1}{keff} \left( \nu \Sigma_{f1} c_1 + 
       \nu \Sigma_{f2} c_2\right)\\
-    k_{eff} &= \frac{\nu \Sigma_{f1} c_1 + \nu \Sigma_{f2} c_2}
+    keff &= \frac{\nu \Sigma_{f1} c_1 + \nu \Sigma_{f2} c_2}
       {D_1 B^2 c_1 + \Sigma{r1} c_1}\\
-    k_{eff} &= \frac{\nu \Sigma_{f1} + \nu \Sigma_{f2} c_2/c_1}
+    keff &= \frac{\nu \Sigma_{f1} + \nu \Sigma_{f2} c_2/c_1}
       {D_1 B^2 + \Sigma{r1}}
   \end{align}
   Plugging in the expression from \eref{eq:fluxratio}
   \begin{equation}
-    k_{eff} = \frac{\nu \Sigma_{f1} + \nu \Sigma_{f2} 
+    keff = \frac{\nu \Sigma_{f1} + \nu \Sigma_{f2} 
       \left(\frac{\Sigma_{s1\rightarrow2}}{D_2B^2+\Sigma_{r2}}\right)}
       {D_1 B^2 + \Sigma{r1}}
   \end{equation}
@@ -232,7 +232,7 @@
   For a 100cm slab then,
   \begin{align*}
     \frac{c_2}{c_1} &= 0.26132419 \\
-    k_{eff} &= 0.892349025
+    keff &= 0.892349025
   \end{align*}
 \section{One-Dimension, One-Group, Two-Region, ``Reactor''}
   This final analytic problem was designed to test the materials mapping of a
@@ -336,7 +336,7 @@
   to \eref{eq:keff1d} above, in this problem, for $a=50$, $b=100$
   \begin{align}
     B_F^2  &= 0.02559220482138791289 \\
-    k_{eff} &= \frac{\nu\Sigma_{fF}}{D_F B_F^2 + \Sigma_{rF}} \\
+    keff &= \frac{\nu\Sigma_{fF}}{D_F B_F^2 + \Sigma_{rF}} \\
     &= 0.96218825608052727105
   \end{align}
   
@@ -503,7 +503,7 @@
   \begin{equation}
     -D \left( \frac{1}{r} \frac{\partial}{\partial r} \left( r 
       \frac{\partial \phi}{\partial r} \right) + \frac{\partial^2 \phi}
-      {\partial z^2} \right) + \Sigma_r \phi = \frac{1}{k_{eff}} \nu 
+      {\partial z^2} \right) + \Sigma_r \phi = \frac{1}{keff} \nu 
       \Sigma_f \phi
   \end{equation}
   Beginning with the differentiation terms for simplicity. Axial 
@@ -543,29 +543,29 @@
     \left( J_0(B_r r) - J_2(B_r r) \right) \right) + B_z^2 J_0(B_r r) \sin(B_z
     z) \right) + \\
     \Sigma_r J_0(B_r r) \sin(B_z z) \\
-    = \frac{1}{k_{eff}} \nu
+    = \frac{1}{keff} \nu
     \Sigma_f J_0(B_r r) \sin(B_z z)
   \end{multline}
   Dividing through by $\sin(B_z z)$.
   \begin{multline}
     D \left( B_r \left( \frac{1}{r} J_1(B_r r) + \frac{1}{2} B_r
     \left( J_0(B_r r) - J_2(B_r r) \right) \right) + B_z^2 J_0(B_r r) \right)+\\
-    \Sigma_r J_0(B_r r) = \frac{1}{k_{eff}} \nu \Sigma_f J_0(B_r r) 
+    \Sigma_r J_0(B_r r) = \frac{1}{keff} \nu \Sigma_f J_0(B_r r) 
   \end{multline}
   Dividing through by $J_0(B_r r)$ and expanding some terms.
   \begin{align}
     D \left( B_r \left( \frac{1}{r} \frac{J_1(B_r r)}{J_0(B_r r)} + 
       \frac{1}{2} \left(B_r - \frac{J_2(B_r r)}{J_0(B_r r)} \right) \right) 
-      + B_z^2 \right)+ \Sigma_r &= \frac{1}{k_{eff}} \nu \Sigma_f \\
+      + B_z^2 \right)+ \Sigma_r &= \frac{1}{keff} \nu \Sigma_f \\
     D \left( \frac{1}{r} B_r \frac{J_1(B_r r)}{J_0(B_r r)} + \frac{B_r^2}{2} -
       \frac{B_r^2}{2} \frac{J_2(B_r r)}{J_0(B_r r)} + B_z^2 \right) + \Sigma_r&=
-      \frac{1}{k_{eff}} \nu \Sigma_f  \\
+      \frac{1}{keff} \nu \Sigma_f  \\
     \frac{1}{r} B_r \frac{J_1(B_r r)}{J_0(B_r r)} + \frac{B_r^2}{2} -
       \frac{B_r^2}{2} \frac{J_2(B_r r)}{J_0(B_r r)} + B_z^2 + 
-      \frac{\Sigma_r}{D} &= \frac{1}{k_{eff}} \frac{\nu \Sigma_f}{D}\\
+      \frac{\Sigma_r}{D} &= \frac{1}{keff} \frac{\nu \Sigma_f}{D}\\
     \frac{1}{J_0(B_r r)} \frac{B_r^2}{2} \left(\frac{1}{r} \frac{2}{B_r} 
       J_1(B_r r) - J_2(B_r r) \right) + \frac{B_r^2}{2} + B_z^2 + 
-      \frac{\Sigma_r}{D} &= \frac{1}{k_{eff}} \frac{\nu \Sigma_f}{D}
+      \frac{\Sigma_r}{D} &= \frac{1}{keff} \frac{\nu \Sigma_f}{D}
   \end{align}
   Note the Bessel function recursion relationship.
   \begin{equation} \label{eq:bessel_recursion}
@@ -574,14 +574,14 @@
   Using \eref{eq:bessel_recursion} the term above is simplified.
   \begin{align}
     \frac{1}{J_0(B_r r)} \frac{B_r^2}{2} \left( J_0(B_r r) \right) + 
-      \frac{B_r^2}{2} + B_z^2 + \Sigma_r &= \frac{1}{k_{eff}} 
+      \frac{B_r^2}{2} + B_z^2 + \Sigma_r &= \frac{1}{keff} 
       \frac{\nu \Sigma_f}{D} \\
-    B_r^2 + B_z^2 + \frac{\Sigma_r}{D} &= \frac{1}{k_{eff}} \frac{\nu \Sigma_f}
+    B_r^2 + B_z^2 + \frac{\Sigma_r}{D} &= \frac{1}{keff} \frac{\nu \Sigma_f}
       {D}
   \end{align}
   Now, an expression for the eigenvalue can be written.
   \begin{align}
-    k_{eff} &= \frac{\nu \Sigma_f}{D(B_r^2 + B_z^2) + \Sigma_r} \\
+    keff &= \frac{\nu \Sigma_f}{D(B_r^2 + B_z^2) + \Sigma_r} \\
     &= \frac{\nu \Sigma_f}{D\left(\left(\frac{\alpha_0}{R}\right)^2 + 
       \left(\frac{\pi}{H}\right)^2 \right) + \Sigma_r}
   \end{align}
