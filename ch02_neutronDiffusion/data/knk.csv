@@ -1,5 +1,5 @@
-Pattern,keff (0refine),rod worth (pcm),rod diff (%DK),keff_err [pcm],rod_worth_error [relative],rod_diff_err [%DK (subtract)]
-A,1.06175176246,,,-3334.82,#DIV/0!,0.00
-B,0.94240431747,0.119,11.93,-4089.57,14.88%,0.75
-C,0.82982892029,0.263,23.19,-5007.11,17.86%,1.67
+Pattern,keff(0refine),rodWorth(pcm),rodDiff(percDK),keff_err[pcm],rodWorthError[relative],rod_diff_err[percDK(subtract)]
+A,1.061752,,,-3334.82,,
+B,0.942404,0.119,11.93,-4089.57,14.88,0.75
+C,0.829829,0.263,23.19,-5007.11,17.86,1.67
 
