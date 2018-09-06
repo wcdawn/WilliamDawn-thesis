@@ -965,6 +965,12 @@
         \end{center}
       \end{table}
     \subsubsection{HWR}
+      \begin{figure}
+        \centering
+        \includegraphics[width=\textwidth]{diffusion_snr}
+        \caption{HWR Benchmark Power Comparison for most refined mesh.}
+        \label{fig:diffusion_hwr}
+      \end{figure}
       \begin{table}
         \caption{HWR Benchmark Convergence Study. 
           $k_{ref} = 0.991965$ \cite{chao}}
@@ -1084,22 +1090,41 @@
   \subsection{Three Dimension Reactors}
     \subsubsection{MONJU}
       \begin{table}
-        \caption{MONJU Benchmark Rod Worth Results.}
+        \caption{MONJU Benchmark Rod Worth Results. \cite{monjuBenchmark}}
         \label{tab:monju}
         \begin{center}
-          \begin{tabular}{cccccc}
+          \begin{tabular}{ccll}
             \toprule
-            Pattern & $\keff$ & Rod Worth [pcm] & Rod Difference [\%$\Delta k$]&
-              Rod Worth Error (relative) & Rod Difference Error [\%$\Delta k$]\\
+            Pattern & $\keff$ & Rod Worth [$\Delta k$] & 
+              Rod Difference [\%$\Delta k$] \\
             \midrule
             \csvreader[
               %head to column names,
               late after line=\\,
               late after last line=\\\bottomrule,]
               {ch02_neutronDiffusion/data/monju.csv}{}
-              {\csvcoli & \csvcolii & \csvcoliii & \csvcoliv & \csvcolvi & 
-              \csvcolvii}
+              {\csvcoli & \csvcolii & \csvcoliii \; \csvcolvi
+              & \csvcoliv \; \csvcolvii}
           \end{tabular}
         \end{center}
       \end{table}
     \subsubsection{KNK}
+      \begin{table}
+        \caption{KNK Benchmark Rod Worth Results. \cite{takedaBenchmark}}
+        \label{tab:knk}
+        \begin{center}
+          \begin{tabular}{ccll}
+            \toprule
+            Pattern & $\keff$ & Rod Worth [$\Delta k$] & 
+              Rod Difference [\%$\Delta k$] \\
+            \midrule
+            \csvreader[
+              %head to column names,
+              late after line=\\,
+              late after last line=\\\bottomrule,]
+              {ch02_neutronDiffusion/data/knk.csv}{}
+              {\csvcoli & \csvcolii & \csvcoliii \; \csvcolvi
+              & \csvcoliv \; \csvcolvii}
+          \end{tabular}
+        \end{center}
+      \end{table}
