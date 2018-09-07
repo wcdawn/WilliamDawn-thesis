@@ -4,6 +4,22 @@
 \section{Introduction}
 \section{Two Dimension}
   \subsection{VVER440}
+    \begin{table}
+      \caption{VVER440 Cross Sections.}
+      \label{tab:vver440xs}
+      \begin{center}
+        \begin{tabular}{cccccc}
+          \toprule
+          \csvreader[
+            late after first line=\\\midrule,
+            late after line=\\,
+            late after last line=\\\bottomrule,]
+            {apB_benchmarks/data/vver440_isotxs.csv}{}
+            {\csvcoli & \csvcolii & \csvcoliii & \csvcoliv & \csvcolv &
+            \csvcolvi}
+        \end{tabular}
+      \end{center}
+    \end{table}
   \subsection{SNR}
   \subsection{IAEA}
 \section{Three Dimension}
