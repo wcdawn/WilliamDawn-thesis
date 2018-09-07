@@ -791,25 +791,34 @@
   presented graphically. 
   
   For manufactured solutions, the error of the function $\phi$ itself can be 
-  analyzed because the function is known exactly. For all manufactured problems,
-  the Root Mean Squared (RMS) error as in \eref{eq:rms} is calculated for the
-  error vector $\ve$ and is presented. The ratio between refinements should 
-  assume the expected rate.
+  analyzed because the function is known exactly. The derivations of the exact 
+  functions are presented in \apref{ap:analyticSolutions}. Equations are 
+  presented here but their derivations are in the appendix. For all manufactured 
+  problems, the Root Mean Squared (RMS) error as in \eref{eq:rms} is calculated
+  for the error vector $\ve$ and is presented. The ratio between refinements 
+  should assume the expected rate.
   \begin{equation} \label{eq:rms}
     \text{RMS}(\ve) = \sqrt{\frac{1}{N} \sum_{i=1}^{N} e_i}
   \end{equation}
   The maximal norm $\| \cdot \|_{\infty}$ is also presented and the ratio 
-  between refinements should assume the expected value. For criticality 
-  problems, $\keff$ is also presented.
+  between refinements should assume the expected value.
+  \begin{equation} \label{eq:infnorm}
+    \|\ve\|_{\infty} = \max_{i=1,2,\ldots,N} \lvert e_i \rvert
+  \end{equation}
+  For criticality  problems, $\keff$ is also presented.
   
   \subsection{Triangular Element Manufactured Solutions}
-    As a demonstration of the proper solution to the diffusion equation for 
-    triangular elements, manufactured solutions are derived and then numerically
-    computed. These are One and Two Dimension problems. All of these are on a 
-    rectangular domain $[0,a] \times [0,b]$. For One Dimension problems, the 
-    edges $y=0$ and $y=a$ are mirror boundary conditions to reduce the 
-    dimension of the problem.
+    As a demonstration of the proper implementation of and solution to the 
+    diffusion equation for triangular elements, manufactured solutions are 
+    derived and then numerically computed. These are One and Two Dimension 
+    problems. All of these are on a rectangular domain $[0,L_x] \times [0,L_y]$.
+    For One Dimension problems, the edges $y=0$ and $y=L_x$ are mirror boundary 
+    conditions to reduce the dimension of the problem.
     \subsubsection{One Dimension, One-Group, Fixed Source}
+      Arguably the simplest to the neutron diffusion equation, this problem 
+      solves a domain $x \in [0,1]$ for a fixed unit source throughout the 
+      problem. The exact solution is derived in \sref{sec:deriv_1d1g} and the 
+      solution is also presented here.
       \begin{table}
         \caption{One Dimension, One-Group, Fixed Source Convergence Study 
           Results.}
@@ -967,7 +976,7 @@
     \subsubsection{HWR}
       \begin{figure}
         \centering
-        \includegraphics[width=\textwidth]{diffusion_snr}
+        \includegraphics[width=\textwidth]{diffusion_hwr}
         \caption{HWR Benchmark Power Comparison for most refined mesh.}
         \label{fig:diffusion_hwr}
       \end{figure}

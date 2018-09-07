@@ -1,4 +1,5 @@
 \chapter{Analytic Solutions to the Neutron Diffusion Equation}
+\label{ap:analyticSolutions}
 
 \section{Introduction}
   The following is a manufactured solution designed for verification of One,
@@ -38,6 +39,7 @@
   the formulation here is based in part from \cite{textbooklewis}.
 
 \section{One Dimension, One-Group, Fixed Source}
+  \label{sec:deriv_1d1g}
   This One Dimensional problem is in the domain $x \in [0,L]$. For this problem, 
   the following one-group coefficients are used.
   \begin{align*}
@@ -101,7 +103,7 @@
   \end{equation}
   
 \section{One Dimension, One Group, Criticality} 
-  \label{sec:onegroup1d}
+  \label{sec:1d1g}
   This One Dimensional problem is in the domain $x \in [0,L]$.
   This problem also uses the one-group neutron diffusion equation from 
   \eref{eq:onegroup}. For this problem, and the following coefficients:
@@ -141,7 +143,9 @@
   \begin{equation}
     \keff = 1.9980280254
   \end{equation}
+  
 \section{Two Dimension, One Group, Criticality}
+  \label{sec:2d1g}
   The same material coefficients are used for this problem as in the 
   One Dimension, criticality problem. For this problem, the domain is in the 
   rectangle $[0,L_x]\times[0,L_y]$. Similar to the one-dimensional problem, 
@@ -164,7 +168,13 @@
       X(x)\left(\frac{\partial^2}{\partial y^2}Y(y) + \frac{1}{2}Y(y)
       \right) &= 0
   \end{align}
-  The solution to this problem is the product of the solutions from the 
+  For non-trivial solutions $X(x) \ne 0$ and $Y(y) \ne 0$ then the following
+  second order ordinary differential equations can be solved.
+  \begin{align}
+    \frac{d^2}{dx^2} X(x) + \frac{1}{2} X(x) &= 0 \\
+    \frac{d^2}{dy^2} Y(y) + \frac{1}{2} Y(y) &= 0 \\
+  \end{align}
+  The solution to these problems is the product of the solutions from the 
   previous problem presented in \eref{eq:onedimensionsol}. The solution is
   \begin{equation} \label{eq:twodimensionsol}
     \phi(x,y) = \sin(x/A) \sin(y/B)
@@ -181,7 +191,9 @@
   \begin{equation}
     \keff = 1.9960599356
   \end{equation}
+  
 \section{One Dimension, Two Group, Criticality}
+  \label{sec:deriv_1d2g}
   Much of this section is drawn from course notes prepared by Dr. Scott 
   Palmtag \cite{analytic2g}.
   
@@ -193,7 +205,7 @@
   two-group neutron diffusion equations are given in \eref{eq:twogroup1} and 
   \eref{eq:twogroup2}.
   
-  Referring to the problem posed by Section \sref{sec:onegroup1d}, the flux 
+  Referring to the problem posed by Section \sref{sec:deriv_1d1g}, the flux 
   solutions have form given in equation \eref{eq:sinshape}. Then
   \begin{align}
     \label{eq:twogroupflux1}
@@ -251,6 +263,7 @@
   \end{align}
   
 \section{One-Dimension, One-Group, Two-Region, Criticality}
+  \label{sec:deriv_2reg}
   This final analytic problem was designed to test the materials mapping of a
   solver. The problem is proposed as a slab-reactor with a fuel and  reflector
   region. The neutron diffusion equation is given in  \eref{eq:onegroup}. 
@@ -379,61 +392,95 @@
   to \eref{eq:keff1d}. In this problem, for $a=50 \units{cm}$ and
   $b=100 \units{cm}$ and material constants given in \tref{tab:2reg_constants}.
   \begin{align}
-    B_F^2  &= 0.02559220482138791289 \\
+    B_F &= 0.0255922048213879 \\
     \keff &= \frac{\nu\Sigma_{fF}}{D_F B_F^2 + \Sigma_{rF}} \\
-    &= 0.96218825608052727105
+    &= 0.0255922048213879
   \end{align}
   
 \section{Finite Cylinder, One Group, Criticality}
+  \label{sec:deriv_finite_cyl}
   The finite cylinder is an example of a truly three-dimensional problem with
   an analytic solution. This is a homogeneous cylinder with zero-flux boundary
   conditions on the edge of the cylinder. The cylinder has height $H$ and 
-  radius $R$. The coordinates $r\in[0,R]$ and $z\in[0,H]$ where 
+  radius $T$. The coordinates $r\in[0,T]$ and $z\in[0,H]$ where 
   $r=\sqrt{x^2+y^2}$.
   
   The solution method is by separation of variables into radial and axial 
-  directions. Beginning with the axial direction. The diffusion equation can 
-  be written
-  \begin{equation} \label{eq:simplediffusion}
-    \grad^2 \phi(z) + B_z^2 \phi(z) = 0
-  \end{equation}
-  and has solution of the form
-  \begin{equation} \label{eq:cyl_axial}
-    \phi(z) = c_1 \cos(B_z z) + c_2 \sin(B_z z)
-  \end{equation}
-  Requiring $\phi(0)=\phi(H)=0$ yields $c_1=0$. Then $c_2$ is arbitrary and 
-  the buckling condition is $B_zH=\pi$ and $B_z=\pi/H$.
+  directions. This derivation is similar to that in \sref{sec:2d1g}. Beginning
+  with the one group neutron diffusion equation \eref{eq:onegroup} and assuming
+  that  $\phi(r,z) = R(r) Z(z)$.
+  \begin{align}
+    -D \grad^2 \phi(r,z) + \Sigma_r \phi(r,z) &= \nu \Sigma_f \phi(r,z) \\
+    \grad^2 \phi(r,z) + \frac{\nu\Sigma_f - \Sigma_r}{D} \phi(r,g) &= 0 \\
+    \frac{1}{r} \frac{\partial}{\partial r} \left( r \frac{\partial}{\partial r}
+      \phi(r,z) \right) + \frac{\partial^2}{\partial z^2} \phi(r,z) +
+      \frac{\nu\Sigma_f - \Sigma_r}{D} \phi(r,z) &= 0 \\
+    Z(z) \frac{1}{r} \frac{\partial}{\partial r} \left( r 
+      \frac{\partial}{\partial r} R(r) \right) + 
+      R(r) \frac{\partial^2}{\partial z^2} Z(z) + 
+      \frac{\nu\Sigma_f - \Sigma_r}{D} R(r) Z(z) &= 0 \\
+    Z(z) \frac{1}{r} \frac{\partial}{\partial r} \left( r 
+      \frac{\partial}{\partial r} R(r) \right) + 
+      R(r) \frac{\partial^2}{\partial z^2} Z(z) + 
+      B^2 R(r) Z(z) &= 0 \\
+    Z(z) \left( \frac{1}{r} \frac{\partial}{\partial r} \left( r 
+      \frac{\partial}{\partial r} R(r) \right) + \frac{B^2}{2} R(r) \right) + 
+      R(r) \left( \frac{\partial^2}{\partial z^2} Z(z) + \frac{B^2}{2} Z(z) 
+      \right) &= 0
+  \end{align}
+  For non-trivial solutions $R(r) \ne 0$ and $Z(z) \ne 0$ then the following
+  second order ordinary differential equations can be solved.
+  \begin{align}
+    \label{eq:cyl_radialR}
+    \frac{1}{r} \frac{\partial}{\partial r} \left( r \frac{\partial}{\partial r}
+      R(r) \right) + \frac{B^2}{2} R(r) &= 0 \\
+    \label{eq:cyl_axialZ}
+    \frac{\partial^2}{\partial z^2} Z(z) + \frac{B^2}{2} Z(z) &= 0
+  \end{align}
   
-  Moving on to the radial direction. The diffusion equation can be written.
+  Beginning with the axial direction. The diffusion equation can be rewritten as 
+  \eref{eq:cyl_axialZ}.
+  \begin{equation} \label{eq:simplediffusion}
+    \grad^2 Z(z) + B_z^2 Z(z) = 0
+  \end{equation}
+  and has solution of the form \eref{eq:critical_general}.
+  \begin{equation} \label{eq:cyl_axial}
+    Z(z) = c_1 \cos(B_z z) + c_2 \sin(B_z z)
+  \end{equation}
+  Requiring zero-flux boundary conditions $\phi(0)=\phi(H)=0$ yields $c_1=0$. 
+  Then $c_2$ is arbitrary and the buckling condition is $B_zH=\pi$ and $B_z=\pi/H$.
+  
+  Moving on to the radial direction. The diffusion equation can be written as
+  \eref{eq:cyl_radialR}.
   \begin{equation}
-    \grad^2 \phi(r) + B_r^2 \phi(r) = 0
+    \grad^2 R(r) + B_r^2 R(r) = 0
   \end{equation}
   Noting the radial coordinates.
   \begin{align}
-    \frac{1}{r} \frac{\partial}{\partial r} \left( r \frac{\partial \phi}
-      {\partial r} \right) + B_r^2 \phi &= 0 \\
-    \frac{\partial}{\partial r} \left( r \frac{\partial \phi}{\partial r}
-      \right) + B_r^2 \phi &= 0
+    \frac{1}{r} \frac{\partial}{\partial r} \left( r \frac{\partial R}
+      {\partial r} \right) + B_r^2 R &= 0 \\
+    \frac{\partial}{\partial r} \left( r \frac{\partial R}{\partial r}
+      \right) + B_r^2 R &= 0
   \end{align}
   Noting the product rule of differentiation.
   \begin{align}
-    r \frac{\partial^2 \phi}{\partial r^2} + \frac{\partial \phi}
-      {\partial r} + B_r^2 r \phi &= 0 \\
-    \frac{\partial^2 \phi}{\partial r^2} + \frac{1}{r} \frac{\partial \phi}
-      {\partial r} + B_r^2 \phi &= 0 \label{eq:besselequation}
+    r \frac{\partial^2 R}{\partial r^2} + \frac{\partial R}
+      {\partial r} + B_r^2 r R &= 0 \\
+    \frac{\partial^2 \phi}{\partial r^2} + \frac{1}{r} \frac{\partial R}
+      {\partial r} + B_r^2 R &= 0 \label{eq:besselequation}
   \end{align}
-  Noting equation \eref{eq:besselequation}, Lewis Appendix B shows the 
-  equation has solution of the form
+  Noting equation \eref{eq:besselequation}, \cite{textbooklewis} Appendix B
+  shows the equation has solution of the form
   \begin{equation} \label{eq:cyl_radial}
-    \phi(r) = c_3 J_0(B_r r) + c_4 Y_0(B_r r)
+    R(r) = c_3 J_0(B_r r) + c_4 Y_0(B_r r)
   \end{equation}
   Where $J_0$ is the Bessel function of the first kind, zeroth order and $Y_0$
   is the Bessel function of the second kind, zeroth order. Requiring the flux
   to be finite at $r=0$ requires $c_4=0$ as 
-  $\lim_{r\rightarrow0} Y_0(r) \rightarrow -\infty$. Again, $c_3$ is arbitrary. 
-  Zero flux boundary conditions requires $B_r R=\alpha_0$ where $\alpha_0$ is 
-  the first zero of the $J_0$ function and $\alpha_0 \approx 2.4048$. Then 
-  $B_r=\alpha_0/R$.
+  $\lim_{r\rightarrow0} Y_0(r) \rightarrow -\infty$. As this is an eigenvalue
+  problem, $c_3$ is arbitrary. Zero flux boundary conditions requires 
+  $B_r R=\alpha_0$ where $\alpha_0$ is the first root of the $J_0$ function and 
+  $\alpha_0 \approx 2.4048$. Then $B_r=\alpha_0/R$.
   
   Combining the radial expression \eref{eq:cyl_radial} and the axial 
   expression \eref{eq:cyl_axial} yields the final expression for the flux.
@@ -530,7 +577,7 @@
       \left(\frac{\pi}{H}\right)^2 \right) + \Sigma_r} \\
     &= 0.996710620898177
   \end{align}
-  NOTE: the shape of the boundary is \textbf{extremely} important for this 
-  problem. Therefore the mesh must be regenerated with a halved mesh parameter 
-  $h$ for each refinement, rather than simply splitting nodes.
-  
+  NOTE: the shape of the boundary is extremely important for this  problem.
+  Therefore, the mesh must be regenerated with a halved mesh parameter  $h$ for
+  each refinement, rather than simply splitting nodes as splitting nodes would 
+  not improve the description of the boundary.
