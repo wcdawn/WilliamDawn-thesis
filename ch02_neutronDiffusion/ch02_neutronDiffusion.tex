@@ -832,7 +832,6 @@
               $\|e\|_{\infty}$ ratio \\
             \midrule
             \csvreader[
-              %head to column names,
               late after line=\\,
               late after last line=\\\bottomrule,]
               {ch02_neutronDiffusion/data/1dfixedsrc.csv}{}
@@ -861,7 +860,6 @@
               RMS ratio  & $\|e\|_{\infty}$ & $\|e\|_{\infty}$ ratio \\
             \midrule
             \csvreader[
-              %head to column names,
               late after line=\\,
               late after last line=\\\bottomrule,]
               {ch02_neutronDiffusion/data/1d1g.csv}{}
@@ -872,7 +870,7 @@
       \end{table}
     \subsubsection{Two Dimension, One Group, Criticality}
       In addition to the one dimension problem in \sref{sec:1d1g}, this problem
-      tests the ability to solve truely two dimensional problems.
+      tests the ability to solve truly two dimensional problems.
       The exact solution is derived in \sref{sec:deriv_2d1g} and
       the solution is presented in \eref{eq:analytic_2d1g}. Results from
       the convergence study are presented in \tref{tab:2d1g}. The exact value 
@@ -888,7 +886,6 @@
               RMS ratio  & $\|e\|_{\infty}$ & $\|e\|_{\infty}$ ratio \\
             \midrule
             \csvreader[
-              %head to column names,
               late after line=\\,
               late after last line=\\\bottomrule,]
               {ch02_neutronDiffusion/data/2d1g.csv}{}
@@ -919,7 +916,6 @@
               $\phi_2/\phi_1$ & $\phi_2/\phi_1$ error & $\phi_2/\phi_1$ ratio \\
             \midrule
             \csvreader[
-              %head to column names,
               late after line=\\,
               late after last line=\\\bottomrule,]
               {ch02_neutronDiffusion/data/1d2g.csv}{}
@@ -946,7 +942,6 @@
               RMS ratio  & $\|e\|_{\infty}$ & $\|e\|_{\infty}$ ratio \\
             \midrule
             \csvreader[
-              %head to column names,
               late after line=\\,
               late after last line=\\\bottomrule,]
               {ch02_neutronDiffusion/data/2reg.csv}{}
@@ -973,7 +968,6 @@
             Refine & $\keff$ & $\keff$ error \units{pcm} & $\keff$ ratio \\
             \midrule
             \csvreader[
-              %head to column names,
               late after line=\\,
               late after last line=\\\bottomrule,]
               {ch02_neutronDiffusion/data/vver440.csv}{}
@@ -998,7 +992,6 @@
             Refine & $\keff$ & $\keff$ error \units{pcm} & $\keff$ ratio \\
             \midrule
             \csvreader[
-              %head to column names,
               late after line=\\,
               late after last line=\\\bottomrule,]
               {ch02_neutronDiffusion/data/snr.csv}{}
@@ -1023,7 +1016,6 @@
             Refine & $\keff$ & $\keff$ error \units{pcm} & $\keff$ ratio \\
             \midrule
             \csvreader[
-              %head to column names,
               late after line=\\,
               late after last line=\\\bottomrule,]
               {ch02_neutronDiffusion/data/hwr.csv}{}
@@ -1043,7 +1035,6 @@
             Refine & $\keff$ & $\keff$ error \units{pcm} & $\keff$ ratio \\
             \midrule
             \csvreader[
-              %head to column names,
               late after line=\\,
               late after last line=\\\bottomrule,]
               {ch02_neutronDiffusion/data/iaea_nore0125.csv}{}
@@ -1062,7 +1053,6 @@
             Refine & $\keff$ & $\keff$ error \units{pcm} & $\keff$ ratio \\
             \midrule
             \csvreader[
-              %head to column names,
               late after line=\\,
               late after last line=\\\bottomrule,]
               {ch02_neutronDiffusion/data/iaea_nore0500.csv}{}
@@ -1081,7 +1071,6 @@
             Refine & $\keff$ & $\keff$ error \units{pcm} & $\keff$ ratio \\
             \midrule
             \csvreader[
-              %head to column names,
               late after line=\\,
               late after last line=\\\bottomrule,]
               {ch02_neutronDiffusion/data/iaea_refl0125.csv}{}
@@ -1100,7 +1089,6 @@
             Refine & $\keff$ & $\keff$ error \units{pcm} & $\keff$ ratio \\
             \midrule
             \csvreader[
-              %head to column names,
               late after line=\\,
               late after last line=\\\bottomrule,]
               {ch02_neutronDiffusion/data/iaea_refl0500.csv}{}
@@ -1109,6 +1097,12 @@
         \end{center}
       \end{table}
   \subsection{Wedge Element Manufactured Solution Finite Cylinder}
+      In addition to the homogenous problem in \sref{sec:1d1g}, this problem
+      tests the mapping of materials to regions within the problem.
+      The exact solution is derived in \sref{sec:deriv_2reg} and
+      the solution is presented in \eref{eq:analytic_2reg}. Results from
+      the convergence study are presented in \tref{tab:2reg}. The exact value 
+      for the effective multiplication factor is $k_{ref} = 0.9621882561$.
       \begin{table}
         \caption{Three Dimension, One Group, Criticality Convergence Study
           Results.}
@@ -1120,7 +1114,6 @@
               RMS ratio  & $\|e\|_{\infty}$ & $\|e\|_{\infty}$ ratio \\
             \midrule
             \csvreader[
-              %head to column names,
               late after line=\\,
               late after last line=\\\bottomrule,]
               {ch02_neutronDiffusion/data/finite_cyl.csv}{}
@@ -1141,7 +1134,6 @@
               Rod Difference \units{\%$\Delta k$} \\
             \midrule
             \csvreader[
-              %head to column names,
               late after line=\\,
               late after last line=\\\bottomrule,]
               {ch02_neutronDiffusion/data/monju.csv}{}
@@ -1161,7 +1153,6 @@
               Rod Difference \units{\%$\Delta k$} \\
             \midrule
             \csvreader[
-              %head to column names,
               late after line=\\,
               late after last line=\\\bottomrule,]
               {ch02_neutronDiffusion/data/knk.csv}{}
