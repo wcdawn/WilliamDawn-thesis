@@ -788,7 +788,14 @@
   
   For reactor-type problems, only $\keff$ is analyzed and expected to converge
   at the appropriate rate. When assembly powers were available, these are also
-  presented graphically. 
+  presented graphically. In the graphical power representation, the key is 
+  presented in \fref{fig:hex_description}.
+  \begin{figure}
+    \centering
+    \includegraphics[width=0.25\textwidth]{hex_description}
+    \caption{Key for hexagonal power plots.}
+    \label{fig:hex_description}
+  \end{figure}
   
   For manufactured solutions, the error of the function $\phi$ itself can be 
   analyzed because the function is known exactly. The derivations of the exact 
@@ -816,11 +823,11 @@
     conditions to reduce the dimension of the problem.
     \subsubsection{One Dimension, One Group, Fixed Source}
       \label{sec:1dfixedsrc}
-      Arguably the simplest to the neutron diffusion equation, this problem 
-      solves a domain $x \in [0,1]$ for a fixed unit source throughout the 
-      problem. The exact solution is derived in \sref{sec:deriv_1dfixedsrc} and
-      the solution is presented in \eref{eq:analytic_1dfixedsrc}. Results from
-      the convergence study are presented in \tref{tab:1dfixedsrc}.
+      Arguably the simplest solutin to the neutron diffusion equation, this 
+      problem  solves a domain $x \in [0,1]$ for a fixed unit source throughout
+      the  problem. The exact solution is derived in \sref{sec:deriv_1dfixedsrc}
+      and the solution is presented in \eref{eq:analytic_1dfixedsrc}. Results 
+      from the convergence study are presented in \tref{tab:1dfixedsrc}.
       \begin{table}
         \caption{One Dimension, One Group, Fixed Source Convergence Study 
           Results.}
@@ -952,7 +959,18 @@
       \end{table}
   \subsection{Two Dimension Reactors}
     \subsubsection{VVER440}
-    
+      Described by \cite{chao} this reactor-type two dimension problem is of
+      VVER-440 type with 25 assemblies across the core diameter including an 
+      outer reflector. The reactor has vacuum boundary conditions 
+      ($\albedo = 0.5$). The core is simulated as a sixth-core problem with 
+      mirror symmetry. Assembly pitch is $14.7 \units{cm}$. The VVER-440 is a 
+      light-water moderated reactor and operates principally with thermal 
+      neutrons. Cross sections are provided for a two-group energy structure.
+      
+      Power comparison between the most refined mesh and the reference solution 
+      are presented graphically in \fref{fig:diffusion_vver440} according to the
+      key in \fref{fig:hex_description}. Numerical mesh convergence study for 
+      the quantity $\keff$ is presented in \tref{tab:vver440}.
       \begin{figure}
         \centering
         \includegraphics[width=\textwidth]{diffusion_vver440}
