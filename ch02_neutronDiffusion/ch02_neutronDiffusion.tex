@@ -1,4 +1,4 @@
-\chapter{FINITE ELEMENT NEUTRON DIFFUSION}
+\chapter{Finite Element Neutron Diffusion}
 \label{ch:neutronDiffusion}
 
 \section{Introduction}
@@ -87,9 +87,9 @@
       q_g(\vr)
   \end{equation}
   Where $q_g(\vr)$ is the combined neutron source at position $\vr$. $q$ can 
-  then be further divided into contributions due to fission ($q_{fiss}$), up-
-  scattering ($q_{up}$) when a neutron increases in energy, and down-scattering 
-  when a neutron decreases in energy ($q_{down}$).
+  then be further divided into contributions due to fission ($q_{fiss}$), 
+  up- scattering ($q_{up}$) when a neutron increases in energy, and 
+  down-scattering when a neutron decreases in energy ($q_{down}$).
   \begin{align}
     q_g(\vr) &= q_{fiss,g}(\vr) + q_{up,g}(\vr) + q_{down,g}(\vr) \\
     q_{fiss,g}(\vr) &= \frac{\chi_g(\vr)}{\keff} \sum_{g'=1}^{G} 
@@ -814,13 +814,15 @@
     problems. All of these are on a rectangular domain $[0,L_x] \times [0,L_y]$.
     For One Dimension problems, the edges $y=0$ and $y=L_x$ are mirror boundary 
     conditions to reduce the dimension of the problem.
-    \subsubsection{One Dimension, One-Group, Fixed Source}
+    \subsubsection{One Dimension, One Group, Fixed Source}
+      \label{sec:1dfixedsrc}
       Arguably the simplest to the neutron diffusion equation, this problem 
       solves a domain $x \in [0,1]$ for a fixed unit source throughout the 
-      problem. The exact solution is derived in \sref{sec:deriv_1d1g} and the 
-      solution is also presented here.
+      problem. The exact solution is derived in \sref{sec:deriv_1dfixedsrc} and
+      the solution is presented in \eref{eq:analytic_1dfixedsrc}. Results from
+      the convergence study are presented in \tref{tab:1dfixedsrc}.
       \begin{table}
-        \caption{One Dimension, One-Group, Fixed Source Convergence Study 
+        \caption{One Dimension, One Group, Fixed Source Convergence Study 
           Results.}
         \label{tab:1dfixedsrc}
         \begin{center}
@@ -838,10 +840,19 @@
           \end{tabular}
         \end{center}
       \end{table}
-    \subsubsection{One Dimension, One-Group, Criticality}
+    \subsubsection{One Dimension, One Group, Criticality}
+      \label{sec:1d1g}
+      In addition to the fixed source problem in \sref{sec:1dfixedsrc}, this 
+      problem tests the calculation of the source term and the general iteration
+      implementation in the solution method. This problem solves a fissile 
+      material in the domain $x \in [0,100]$.
+      The exact solution is derived in \sref{sec:deriv_1d1g} and
+      the solution is presented in \eref{eq:analytic_1d1g}. Results from
+      the convergence study are presented in \tref{tab:1d1g}. The exact value 
+      for the effective multiplication factor is $k_{ref} = 1.9980280254$.
       \begin{table}
-        \caption{One Dimension, One-Group, Criticality Convergence Study
-          Results.}
+        \caption{One Dimension, One Group, Criticality Convergence Study
+          Results. $k_{ref} = 1.9980280254$}
         \label{tab:1d1g}
         \begin{center}
           \begin{tabular}{cccccccccc}
@@ -859,10 +870,47 @@
           \end{tabular}
         \end{center}
       \end{table}
-    \subsubsection{One Dimension, Two-Group, Criticality}
+    \subsubsection{Two Dimension, One Group, Criticality}
+      In addition to the one dimension problem in \sref{sec:1d1g}, this problem
+      tests the ability to solve truely two dimensional problems.
+      The exact solution is derived in \sref{sec:deriv_2d1g} and
+      the solution is presented in \eref{eq:analytic_2d1g}. Results from
+      the convergence study are presented in \tref{tab:2d1g}. The exact value 
+      for the effective multiplication factor is $k_{ref} = 1.9960599356$.
       \begin{table}
-        \caption{One Dimension, Two-Group, Criticality Convergence Study
-          Results.}
+        \caption{Two Dimension, One Group, Criticality Convergence Study
+          Results. $k_{ref} = 1.9960599356$}
+        \label{tab:2d1g}
+        \begin{center}
+          \begin{tabular}{cccccccccc}
+            \toprule
+            Refine & $\keff$ & $\keff$ error [pcm] & $\keff$ ratio & RMS & 
+              RMS ratio  & $\|e\|_{\infty}$ & $\|e\|_{\infty}$ ratio \\
+            \midrule
+            \csvreader[
+              %head to column names,
+              late after line=\\,
+              late after last line=\\\bottomrule,]
+              {ch02_neutronDiffusion/data/2d1g.csv}{}
+              {\csvcoli & \csvcolii & \csvcoliii & \csvcoliv & \csvcolv & 
+              \csvcolvi & \csvcolxi & \csvcolxii}
+          \end{tabular}
+        \end{center}
+      \end{table}
+    \subsubsection{One Dimension, Two Group, Criticality }
+      In addition to the one group problem in \sref{sec:1d1g}, this problem
+      tests the solution of mulitgroup problems. The results presented are the 
+      convergece of $\keff$ and the ratio of relative magnitude of thermal to 
+      fast flux $\phi_2/\phi_1$.
+      The exact solution is derived in \sref{sec:deriv_1d2g} and
+      the solutions are presented in \eref{eq:twogroupflux1} and
+      \eref{twogroupflux2}. Results from the convergence study are presented in 
+      \tref{tab:1d2g}. The exact value for the effective multiplication factor 
+      is $k_{ref} = 0.892349025$ and the exact value for the relative flux ratio
+      is $(\phi_2/\phi_1)_{ref} = 0.26132419$.
+      \begin{table}
+        \caption{One Dimension, Two Group, Criticality Convergence Study
+          Results. $k_{ref} = 0.892349025$ $(\phi_2/\phi_1)_{ref} = 0.26132419$}
         \label{tab:1d2g}
         \begin{center}
           \begin{tabular}{ccccccc}
@@ -880,10 +928,16 @@
           \end{tabular}
         \end{center}
       \end{table}
-    \subsubsection{One Dimension, One-Group, Two-Region, Criticality}
+    \subsubsection{One Dimension, One Group, Two Region, Criticality}
+      In addition to the homogenous problem in \sref{sec:1d1g}, this problem
+      tests the mapping of materials to regions within the problem.
+      The exact solution is derived in \sref{sec:deriv_2reg} and
+      the solution is presented in \eref{eq:analytic_2reg}. Results from
+      the convergence study are presented in \tref{tab:2reg}. The exact value 
+      for the effective multiplication factor is $k_{ref} = 0.9621882561$.
       \begin{table}
-        \caption{One Dimension, One-Group, Two-Region, Criticality Convergence
-          Study Results.}
+        \caption{One Dimension, One Group, Two Region, Criticality Convergence
+          Study Results. $k_{ref} = 0.9621882561$}
         \label{tab:2reg}
         \begin{center}
           \begin{tabular}{cccccccccc}
@@ -896,27 +950,6 @@
               late after line=\\,
               late after last line=\\\bottomrule,]
               {ch02_neutronDiffusion/data/2reg.csv}{}
-              {\csvcoli & \csvcolii & \csvcoliii & \csvcoliv & \csvcolv & 
-              \csvcolvi & \csvcolxi & \csvcolxii}
-          \end{tabular}
-        \end{center}
-      \end{table}
-    \subsubsection{Two Dimension, One-Group, Criticality}
-      \begin{table}
-        \caption{Two Dimension, One-Group, Criticality Convergence Study
-          Results.}
-        \label{tab:2d1g}
-        \begin{center}
-          \begin{tabular}{cccccccccc}
-            \toprule
-            Refine & $\keff$ & $\keff$ error [pcm] & $\keff$ ratio & RMS & 
-              RMS ratio  & $\|e\|_{\infty}$ & $\|e\|_{\infty}$ ratio \\
-            \midrule
-            \csvreader[
-              %head to column names,
-              late after line=\\,
-              late after last line=\\\bottomrule,]
-              {ch02_neutronDiffusion/data/2d1g.csv}{}
               {\csvcoli & \csvcolii & \csvcoliii & \csvcoliv & \csvcolv & 
               \csvcolvi & \csvcolxi & \csvcolxii}
           \end{tabular}
@@ -1077,7 +1110,7 @@
       \end{table}
   \subsection{Wedge Element Manufactured Solution Finite Cylinder}
       \begin{table}
-        \caption{Three Dimension, One-Group, Criticality Convergence Study
+        \caption{Three Dimension, One Group, Criticality Convergence Study
           Results.}
         \label{tab:finite_cyl}
         \begin{center}

@@ -39,7 +39,7 @@
   the formulation here is based in part from \cite{textbooklewis}.
 
 \section{One Dimension, One-Group, Fixed Source}
-  \label{sec:deriv_1d1g}
+  \label{sec:deriv_1dfixedsrc}
   This One Dimensional problem is in the domain $x \in [0,L]$. For this problem, 
   the following one-group coefficients are used.
   \begin{align*}
@@ -98,12 +98,12 @@
     c_2 &= \frac{\cosh(BL)-1}{\sinh(BL)}
   \end{align}
   The final solution is 
-  \begin{equation} \label{eq:one_dimension}
+  \begin{equation} \label{eq:analytic_1dfixedsrc}
     \phi(x) = -\cosh(Bx) + \frac{\cosh(BL)-1}{\sinh(BL)} \sinh(Bx) +1
   \end{equation}
   
 \section{One Dimension, One Group, Criticality} 
-  \label{sec:1d1g}
+  \label{sec:deriv_1d1g}
   This One Dimensional problem is in the domain $x \in [0,L]$.
   This problem also uses the one-group neutron diffusion equation from 
   \eref{eq:onegroup}. For this problem, and the following coefficients:
@@ -130,7 +130,7 @@
   constant $c_2$ is arbitrary for $\sin(x)=0$. Introducing a Buckling term $B$
   then $B=\frac{n \pi}{L}$ and $\sin(Bx)=0$ for $n$ an odd integer. The 
   fundamental mode is then $B=\frac{1}{L}$. Therefore, the solution is 
-  \begin{equation} \label{eq:onedimensionsol}
+  \begin{equation} \label{eq:analytic_1d1g}
     \phi = \sin(x/L)
   \end{equation}
   Plugging this solution back into \eref{eq:onegroup} and dividing both sides
@@ -145,7 +145,7 @@
   \end{equation}
   
 \section{Two Dimension, One Group, Criticality}
-  \label{sec:2d1g}
+  \label{sec:deriv_2d1g}
   The same material coefficients are used for this problem as in the 
   One Dimension, criticality problem. For this problem, the domain is in the 
   rectangle $[0,L_x]\times[0,L_y]$. Similar to the one-dimensional problem, 
@@ -176,7 +176,7 @@
   \end{align}
   The solution to these problems is the product of the solutions from the 
   previous problem presented in \eref{eq:onedimensionsol}. The solution is
-  \begin{equation} \label{eq:twodimensionsol}
+  \begin{equation} \label{eq:analtyic_2d1g}
     \phi(x,y) = \sin(x/A) \sin(y/B)
   \end{equation}
   Where $L_x$ is the horizontal extent of the rectangular domain and $L_y$ is 
@@ -384,6 +384,7 @@
     \phi_F(x) &= \phi_0 \cos(B_F x)\\
     \phi_R(x) &= \phi_0 \cos(B_F a) \cosh(B_R (x-a)) 
       - \frac{D_F \phi_0 \sin(B_F a)}{D_R B_R} \sinh(B_R (x-a))\\
+    \label{eq:analytic_2reg}
     \phi(x) &= H(x-a)\phi_R(x) + H(a-x)\phi_F(x)
   \end{align}
   Where $H(x)$ is the Heaviside step function.  
