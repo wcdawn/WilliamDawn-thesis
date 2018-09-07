@@ -8,15 +8,15 @@
       \caption{VVER440 Cross Sections.}
       \label{tab:vver440xs}
       \begin{center}
-        \begin{tabular}{cccccc}
+        \begin{tabular}{c}
           \toprule
           \csvreader[
-            late after first line=\\\midrule,
+            %late after first line=\\\midrule,
+            respect underscore=true,
             late after line=\\,
             late after last line=\\\bottomrule,]
             {apB_benchmarks/data/vver440_isotxs.csv}{}
-            {\csvcoli & \csvcolii & \csvcoliii & \csvcoliv & \csvcolv &
-            \csvcolvi}
+            { \csvcolii }
         \end{tabular}
       \end{center}
     \end{table}
