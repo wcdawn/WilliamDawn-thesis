@@ -2,6 +2,48 @@
 \label{ap:benchmarks}
 
 \section{Introduction}
+  Two dimension and three dimension reactor type problems are presented here.
+  These are not original works but replications of data from elsewhere. The
+  intent is to make the data more easily accessible for others solving similar
+  problems.
+  All reactors in this section are based on a hexagonal design common to fast
+  spectrum neutron reactors. Not all reactors are fast reactors. For this 
+  application, it these tests were used to test the solution to the neutron 
+  diffusion equation in \chref{ch:neutronDiffusion}. As such, the cross sections 
+  presented are those necessary to solve the multigroup neutron diffusion
+  equation. All units are \units{cm} and \units{$\frac{1}{cm}$} where
+  applicable. One benchmark presented was 
+  originally developed as a transport benchmark but the cross sections are used 
+  to solve the diffusion euqation.
+
+  For each problem, geometry and cross sections are presented. The notation for
+  cross sections are common to the field and noted in \tref{tab:xssymbols}. 
+  When available, reference power distributions are presented. For three
+  dimensional problems, the calculation of control rod worth provides a useful
+  test of the method. This requires separate geometric configurations with
+  the control rods at varying axial positions. For three dimension problems, the
+  reactors are simulated with control rods fully withdrawn, 50\% inserted, and
+  fully inserted.
+
+  \begin{table}
+    \caption{Cross Section Notation.}
+    \label{tab:xssymbols}
+    \begin{center}
+      \begin{tabular}{clc}
+        \toprule
+        Symbol & Significance & Units\\
+        \midrule
+        $D_g$ & $g^{th}$ Diffusion Coefficient & \units{$\frac{1}{\text{cm}}$} \\
+        $\Sigma_{rg}$ & $g^{th}$ Removal Cross Section & $\units{cm}$ \\
+        $\nu\Sigma_{fg}$ & $g^{th}$ Neutrons per Fission times Fission Cross
+          Section & $\units{cm}$ \\
+        $\Sigma_{s g \rightarrow g'}$ & Scattering Cross Section from $g$ to
+          $g'$ & $\units{cm}$ \\
+        \bottomrule
+      \end{tabular}
+    \end{center}
+  \end{table}
+
 \section{Two Dimension}
   \subsection{VVER440}
     \begin{figure}

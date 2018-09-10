@@ -166,7 +166,7 @@
 %Defines a \FloatBarrier command, beyond which floats may not pass; useful,
 %for example, to ensure all floats for a section appear before the next 
 %\section command.
-% sectiion option enforces float barriers at sections but NOT sub....sections
+% section option enforces float barriers at sections but NOT sub....sections
 
 %%%Hack for centering all figures
 %\makeatletter
@@ -263,7 +263,6 @@ Method}
 %% A few examples to get you started.
 \newcommand{\uv}[1]{\ensuremath{\mathbf{\hat{#1}}}}
 \newcommand{\bo}{\ensuremath{\mathbf{\Omega}}}
-\newcommand{\del}{\nabla}
 % \renewcommand{\exp}[1]{e^{#1}}
 \newcommand{\Conv}{\mathop{\scalebox{1.5}{\raisebox{-0.2ex}{$\ast$}}}}%
 
@@ -414,7 +413,7 @@ Method}
 %%---------------------------------------------------------------------------%%
 % Appendices
 %\ensureoddstart
-%\restoregeometry
+\restoregeometry
 \appendix
 \newgeometry{margin=1in,lmargin=1.25in,footskip=\chapterfootskip, includehead,
   includefoot}
