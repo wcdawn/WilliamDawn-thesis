@@ -11,6 +11,7 @@ $(NAME).pdf : $(NAME).tex $(NAME).bib front.tex $(CHAPTERS) ncsuthesis.cls \
 	bibtex $(NAME)
 	pdflatex $(NAME)
 	pdflatex $(NAME)
+	grep -i "Warn" $(NAME).log
 
 clean :
 	rm $(AUX) $(INTERMEDIATES)

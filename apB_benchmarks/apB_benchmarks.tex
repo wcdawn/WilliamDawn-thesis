@@ -14,7 +14,7 @@
   equation. All units are \units{cm} and \units{$\frac{1}{cm}$} where
   applicable. One benchmark presented was 
   originally developed as a transport benchmark but the cross sections are used 
-  to solve the diffusion euqation.
+  to solve the diffusion equation.
 
   For each problem, geometry and cross sections are presented. The notation for
   cross sections are common to the field and noted in \tref{tab:xssymbols}. 
@@ -33,7 +33,7 @@
         \toprule
         Symbol & Significance & Units\\
         \midrule
-        $D_g$ & $g^{th}$ Diffusion Coefficient & \units{$\frac{1}{\text{cm}}$} \\
+        $D_g$ & $g^{th}$ Diffusion Coefficient & \units{$\frac{1}{\text{cm}}$}\\
         $\Sigma_{rg}$ & $g^{th}$ Removal Cross Section & $\units{cm}$ \\
         $\nu\Sigma_{fg}$ & $g^{th}$ Neutrons per Fission times Fission Cross
           Section & $\units{cm}$ \\
@@ -46,6 +46,18 @@
 
 \section{Two Dimension}
   \subsection{VVER440}
+    \label{sec:vver440}
+    The presentation of this benchmark is found in \cite{chao}. The problem is
+    one-twelfth of a VVER-440 reactor with seven control rods inserted. There
+    are 25 assemblies across the core diameter and a layer of reflectors in the
+    last ring of assemblies as shown in \fref{fig:vver440_geom}. Each assembly
+    has a flat-to-flat measurement of 14.7 \units{cm}. Vacuum boundary
+    condition ($\albedo = 0.5$) is applied on the core periphery and all other
+    boundaries are mirror boundary conditions ($\grad \phi = 0$). To the
+    precision of the benchmark, the effective neutron multiplication factor is
+    $\keff = 1.00970$. Cross sections for the problem are given in
+    \tref{tab:vver440xs}. The fission spectrum is given in
+    \tref{tab:vver440chi}. Assembly powers are given in \fref{fig:vver440_geom}.
     \begin{figure}
       \centering
       \includegraphics[width=0.6\textwidth]{vver440_geom}
@@ -71,13 +83,58 @@
         \end{tabular}
       \end{center}
     \end{table}
+    \begin{table}
+      \caption{VVER440 Fission Spectrum.}
+      \label{tab:vver440chi}
+      \begin{center}
+        \begin{tabular}{c}
+          \toprule
+          Fission Spectrum \\
+          \midrule
+          1.00000E+00  \\
+          0.00000E+00  \\
+          \bottomrule
+        \end{tabular}
+      \end{center}
+    \end{table}
   \subsection{SNR}
+    \label{sec:snr}
+    The presentation of this benchmark is found in \cite{argonneBenchmark}. It
+    is based on the MARK-I core design of the SNR-300. The problem is
+    one-twelfth of a reactor with no control rods inserted. There are 17
+    assemblies across the core diameter with the outer rings being blanket
+    assemblies as shown in \fref{fig:snr_geom}. Each assembly has a side-length
+    measurement of 6.4665 \units{cm}. Vacuum boundary condition ($\albedo =
+    0.5$) is applied on the core periphery and all other boundaries are mirror
+    boundary conditions ($\grad \phi = 0$). To the precision of the benchmark,
+    the effective neutron multiplication factor is $\keff = 1.12400$. Assembly
+    powers are not provided in the benchmark but can be calculated from existing
+    codes (e.g. DIF3D).
     \begin{figure}
       \centering
       \includegraphics[width=0.8\textwidth]{snr_geom}
       \caption{SNR Geometry \cite{argonneBenchmark}.}
       \label{fig:snr_geom}
     \end{figure}
+    \begin{table}
+      \caption{SNR Fission Spectrum.}
+      \label{tab:snrchi}
+      \begin{center}
+        \begin{tabular}{c}
+          \toprule
+          Fission Spectrum \\
+          \midrule
+          0.768 \\
+          0.232 \\
+          0.000 \\
+          0.000 \\
+          \bottomrule
+        \end{tabular}
+      \end{center}
+    \end{table}
+    \newgeometry{margin=1in,lmargin=1.25in,footskip=\chapterfootskip, includehead, includefoot}
+    \thispagestyle{lscapedplain}
+    \begin{landscape}
     \begin{table}
       \caption{SNR Cross Sections.}
       \label{tab:snrxs}
@@ -108,7 +165,95 @@
         \end{tabular}
       \end{center}
     \end{table}
+    \end{landscape}
+    \restoregeometry
+    \pagestyle{plain}
+    \thispagestyle{plain}
+    \newgeometry{margin=1in,lmargin=1.25in,footskip=\chapterfootskip, includehead, includefoot}
+  \subsection{HWR}
+    \label{sec:hwr}
+    \begin{table}
+      \caption{HWR Cross Sections (Part A).}
+      \label{tab:hwrxs_a}
+      \begin{center}
+        \begin{tabular}{cccccc}
+          \toprule
+          &MAT1&MAT2&MAT3&MAT4&MAT5\\
+          \midrule
+          $D_1$&1.382500E+00&1.382550E+00&1.374420E+00&1.311980E+00&1.200000E+00\\
+          $D_2$&8.975220E-01&8.974900E-01&8.883680E-01&8.799140E-01&9.000010E-01\\
+          $\Sigma_{r1}$&1.110580E-02&1.117460E-02&1.062040E-02&1.268800E-02&1.268800E-02\\
+          $\Sigma_{r2}$&2.230650E-02&2.238760E-02&1.694650E-02&5.290090E-04&5.300000E-04\\
+          $\Sigma_{s 1\rightarrow 2}$&8.164570E-03&8.223780E-03&8.088160E-03&1.231150E-02&1.231150E-02\\
+          $ \nu \Sigma_{f1}$&2.262160E-03&2.227500E-03&2.142810E-03&&\\
+          $ \nu \Sigma_{f2}$&2.306230E-02&2.268490E-02&2.048870E-02&&\\
+          \bottomrule
+        \end{tabular}
+      \end{center}
+    \end{table}
+    \begin{table}
+      \caption{HWR Cross Sections (Part B).}
+      \label{tab:hwrxs_b}
+      \begin{center}
+        \begin{tabular}{ccccc}
+          \toprule
+          &MAT6&MAT7&MAT8&MAT9\\
+          \midrule
+          $D_1$&1.381390E+00&1.305990E+00&1.291930E+00&1.065100E+00\\
+          $D_2$&9.036710E-01&8.372560E-01&8.193410E-01&3.228290E-01\\
+          $\Sigma_{r1}$&1.056310E-02&1.173130E-02&1.191530E-02&2.834620E-02\\
+          $\Sigma_{r2}$&2.190300E-02&4.333040E-03&3.005650E-04&3.334890E-02\\
+          $\Sigma_{s 1\rightarrow 2}$&7.765680E-03&1.109750E-02&1.155820E-02&2.619800E-02\\
+          $ \nu \Sigma_{f1}$&2.394690E-03&&&\\
+          $ \nu \Sigma_{f2}$&2.662100E-02&&&\\
+          \bottomrule
+        \end{tabular}
+      \end{center}
+    \end{table}
+    \begin{table}
+      \caption{HWR Fission Spectrum.}
+      \label{tab:hwrchi}
+      \begin{center}
+        \begin{tabular}{c}
+          \toprule
+          Fission Spectrum \\
+          \midrule
+          1.00000E+00  \\
+          0.00000E+00  \\
+          \bottomrule
+        \end{tabular}
+      \end{center}
+    \end{table}
   \subsection{IAEA}
+    \label{sec:iaea}
+    The IAEA Pressurized Water Reactor (PWR) problem was originally proposed for
+    square lattice PWRs but has been modified for a hexagonal geometry. This
+    modification is found in \cite{chao} The problem is one-twelfth of a reactor
+    core. This problem has a total of four cases, with and without a reflector
+    ring added to the external core and with the Albedo condition set to
+    $\albedo = 0.5$ and $\albedo = 0.125$. The fuel assembly pitch is 20.0
+    \units{cm}. To the precision of the benchmark, the cross sections are
+    summarized in \tref{tab:iaeakeff}.
+    Assembly geometry and powers is provided for without and with 
+    reflector in \fref{fig:iaea_nore_geom} and \fref{fig:iaea_refl_geom} 
+    respectively. All cross sections are provided in \tref{tab:iaeaxs}. Fission
+    spectrum is provided in \tref{tab:iaeachi}.
+    \begin{table}
+      \caption{IAEA Effective Neutron Multiplication Factors.}
+      \label{tab:iaeakeff}
+      \begin{center}
+        \begin{tabular}{llc}
+          \toprule
+          Reflector & Albedo ($\albedo$) & $\keff$ \\
+          \midrule
+          Without & 0.125 & 0.991378 \\
+          Without & 0.5   & 0.978077 \\
+          With    & 0.125 & 1.006630 \\
+          With    & 0.5   & 1.005507 \\
+          \bottomrule
+        \end{tabular}
+      \end{center}
+    \end{table}
     \begin{figure}
       \centering
       \includegraphics[width=0.6\textwidth]{iaea_nore_geom}
@@ -140,8 +285,69 @@
         \end{tabular}
       \end{center}
     \end{table}
+    \begin{table}
+      \caption{IAEA Fission Spectrum.}
+      \label{tab:iaeachi}
+      \begin{center}
+        \begin{tabular}{c}
+          \toprule
+          Fission Spectrum \\
+          \midrule
+          1.00000E+00  \\
+          0.00000E+00  \\
+          \bottomrule
+        \end{tabular}
+      \end{center}
+    \end{table}
 \section{Three Dimension}
   \subsection{MONJU}
+    \label{sec:monju}
+    The presentation of this benchmark is found in \cite{monjuBenchmark}. It is
+    based on a prototype fast breeder reactor with hexagonal pitch. The reactor
+    has one-third rotational (\textit{not} reflective) symmetry. For code
+    packages without rotational boundary conditions, it will be necessary to
+    simulate a full core. There are 21 assemblies across the core diameter with
+    outer rings being blanket assemblies as shown in \fref{fig:monju_geom}.
+    Each assembly has a side-length measurement of 6.67417 \units{cm}. Vacuum
+    boundary condition ($\albedo = 0.5$) is applied on the core periphery. Cross
+    sections are provided in \tref{tab:monjuxs}. No fission spectrum is
+    specified in the benchmark but the one used in these simulations is provided
+    in \tref{tab:monjuchi}.
+
+    The reactor is simulated with three different control rod configurations; 
+    patterns A, B, and C. Axially, all problems have a lower blanket extending
+    from 0 \units{cm} to 30 \units{cm} and an upper blanket extending from
+    121.5 \units{cm} to 151.5 \units{cm}. Fuel (in fueled assemblies) extends
+    from 30 \units{cm} to 121.5 \units{cm}. In blanket assemblies, all material
+    is blanket.
+
+    In pattern A, all control rods are withdrawn and channels are simulated with
+    sodium in the channel for the extend of the problem (0 \units{cm} to 151.5
+    \units{cm}). In pattern B, control rods in rings 5 and 6 (per the numbering
+    in \fref{fig:monju_geom}) are half way
+    inserted and all others remain withdrawn. Control material occupies 
+    75.75 \units{cm} to 151.5 \units{cm} and sodium material occupies 
+    0 \units{cm} to 75.5 \units{cm}. In pattern C, the control assemblies in
+    ring 5 and 6 that were previously half inserted are fully inserted and
+    occupy 0 \units{cm} to 151.5 \units{cm}. Reference effective neutron
+    multiplication factors and control rod worths are provided in
+    \tref{tab:monjukeff}.
+    \begin{table}
+      \caption{MONJU Effective Neutron Multiplication Factors and Rod Worths.}
+      \label{tab:monjukeff}
+      \begin{center}
+        \begin{tabular}{cccc}
+          \toprule
+          Pattern & $\keff$ & Rod Worth \units{$\Delta k$} & Rod Difference
+            \units{$\% \Delta k$} \\
+          \midrule
+          A & 1.0723 &       & \\
+          B & 1.0464 & 0.023 & 2.59 \\
+          C & 1.0224 & 0.046 & 4.99 \\
+          \bottomrule
+        \end{tabular}
+      \end{center}
+    \end{table}
     \begin{figure}
       \centering
       \includegraphics[width=0.6\textwidth]{monju_geom}
@@ -172,7 +378,66 @@
         \end{tabular}
       \end{center}
     \end{table}
+    \begin{table}
+      \caption{MONJU Fission Spectrum.}
+      \label{tab:monjuchi}
+      \begin{center}
+        \begin{tabular}{c}
+          \toprule
+          Fission Spectrum \\
+          \midrule
+          7.81200E-01  \\
+          2.09940E-01  \\
+          8.86000E-03  \\
+          \bottomrule
+        \end{tabular}
+      \end{center}
+    \end{table}
   \subsection{KNK}
+    \label{sec:knk}
+    The presentation of this benchmark is found in \cite{takedaBenchmark}. It is
+    based on a small Fast Breeder Reactor (FBR) with Hexagonal-Z geometry and is
+    a model of the KNK-II core. The reactor has one-third rotational
+    (\textit{not} reflective) symmetry. For code packages wihout rotational
+    boundary conditions, it will be necessary to simulate a full core. There are
+    15 assemblies across the core diameter with outer rings of reflectors and
+    steel as shown in \fref{fig:knk_geom}. Each assembly has a side-length
+    measurement of 7.50 \units{cm}. Vacuum boundary condition ($\albedo = 0.5$)
+    is applied on the core periphery. Cross sections are provided in
+    \tref{tab:knkxs_a} and \tref{tab:knkxs_b}. The fission spectrum is provided
+    in \tref{tab:knkchi}.
+
+    The reactor is simulated with three different control rod configurations;
+    patterns A, B, and C. In pattern A, all control rods are withdrawn. In
+    pattern B, control rods are half inserted into the active fuel region. In
+    pattern C, control rods are fully inserted into the active fuel region. All
+    axial geometries are described in \fref{fig:knk_cr_geom}. Reference
+    effective neutron multiplication factors and control rod worths are provided
+    in \tref{tab:knkkeff}.
+
+    Reference results for the KNK problem are presented for the solution to the
+    neutron transport equation. The reference presents monte carlo solutions and
+    analytic solutions to the neutron transport equation as these converge to
+    the same solution. For diffusion solutions to these simulations, agreement
+    is expected to within some tolerance. However, comparison can also be
+    difficult as the equantions solved are wholly different.
+
+    \begin{table}
+      \caption{KNK Effective Neutron Multiplication Factors and Rod Worths.}
+      \label{tab:knkkeff}
+      \begin{center}
+        \begin{tabular}{cccc}
+          \toprule
+          Pattern & $\keff$ & Rod Worth \units{$\Delta k$} & Rod Difference
+            \units{$\% \Delta k$} \\
+          \midrule
+          A & 1.0951 &       & \\
+          B & 1.9833 & 0.104 & 11.18 \\
+          C & 0.8799 & 0.223 & 21.52 \\
+          \bottomrule
+        \end{tabular}
+      \end{center}
+    \end{table}
     \begin{figure}
       \centering
       \includegraphics[width=\textwidth]{knk_geom}
@@ -185,6 +450,22 @@
       \caption{KNK Control Rod Geometry \cite{takedaBenchmark}.}
       \label{fig:knk_cr_geom}
     \end{figure}
+    \begin{table}
+      \caption{KNK Fission Spectrum.}
+      \label{tab:knkchi}
+      \begin{center}
+        \begin{tabular}{c}
+          \toprule
+          Fission Spectrum \\ 
+          \midrule
+          0.908564 \\
+          0.087307 \\
+          0.004129 \\
+          0.000000 \\
+          \bottomrule
+        \end{tabular}
+      \end{center}
+    \end{table}
     \newgeometry{margin=1in,lmargin=1.25in,footskip=\chapterfootskip, includehead, includefoot}
     \thispagestyle{lscapedplain}
     \begin{landscape}
@@ -222,6 +503,13 @@
         \end{tabular}
       \end{center}
     \end{table}
+    \end{landscape}
+    \restoregeometry
+    \pagestyle{plain}
+    \newgeometry{margin=1in,lmargin=1.25in,footskip=\chapterfootskip, includehead, includefoot}
+    \newgeometry{margin=1in,lmargin=1.25in,footskip=\chapterfootskip, includehead, includefoot}
+    \thispagestyle{lscapedplain}
+    \begin{landscape}
     \begin{table}
       \caption{KNK Cross Sections (Part B).}
       \label{tab:knkxs_b}
@@ -259,6 +547,5 @@
     \end{landscape}
     \restoregeometry
     \pagestyle{plain}
-    \thispagestyle{plain}
     \newgeometry{margin=1in,lmargin=1.25in,footskip=\chapterfootskip, includehead, includefoot}
 

@@ -511,7 +511,7 @@
 \section{Implementation}
   A Finite Element neutron diffusion solution method has been developed using 
   the above formulae. The program begins with a geometry description specified
-  in a plaintext VTK file. Cross sections are specified in either a plaintext
+  in a plain text VTK file. Cross sections are specified in either a plain text
   user format or the ISOTXS format as common to fast reactor applications 
   and the multigroup cross section generator \mcc. The multigroup neutron 
   diffusion equation is then solved according to \eref{eq:multigroup_source}.
@@ -584,7 +584,7 @@
     developed. \twotable storage is not designed to be the most efficient 
     storage method but is chosen for its simplicity and conforming with the 
     FEM. Future work may include a reduced row implementation but there will be
-    a tradeoff between memory minimization and computational efficiency.
+    a trade-off between memory minimization and computational efficiency.
     
     The \twotable method is composed of two separate matrices in memory. An 
     integer index table, \texttt{IDX}, and a double precision value table
@@ -641,7 +641,7 @@
     with non-zero flux boundary conditions.
     
   \subsection{Linear System Solution}
-    For a nonsingular linear system $\ma \vu = \vf$, where $\ma$ is a square 
+    For a non-singular linear system $\ma \vu = \vf$, where $\ma$ is a square 
     matrix, there exists a unique solution. Many strategies have been proposed 
     to solve this system in an efficient manner. Options are restricted in this
     application because the solution must operate with a sparsely stored linear 
@@ -823,7 +823,7 @@
     conditions to reduce the dimension of the problem.
     \subsubsection{One Dimension, One Group, Fixed Source}
       \label{sec:1dfixedsrc}
-      Arguably the simplest solutin to the neutron diffusion equation, this 
+      Arguably the simplest solution to the neutron diffusion equation, this 
       problem  solves a domain $x \in [0,1]$ for a fixed unit source throughout
       the  problem. The exact solution is derived in \sref{sec:deriv_1dfixedsrc}
       and the solution is presented in \eref{eq:analytic_1dfixedsrc}. Results 
@@ -959,11 +959,9 @@
       \end{table}
   \subsection{Two Dimension Reactors}
     \subsubsection{VVER440}
-      Described by \cite{chao} this reactor-type two dimension problem is of
-      VVER-440 type with 25 assemblies across the core diameter including an 
-      outer reflector. The reactor has vacuum boundary conditions 
-      ($\albedo = 0.5$). The core is simulated as a sixth-core problem with 
-      mirror symmetry. Assembly pitch is $14.7 \units{cm}$. The VVER-440 is a 
+      Proposed in \cite{chao} and described in \sref{sec:vver440}, this
+      reactor-type, two dimension problem is based on a
+      VVER-440 reactor. The VVER-440 is a 
       light-water moderated reactor and operates principally with thermal 
       neutrons. Cross sections are provided for a two-group energy structure.
       
@@ -995,6 +993,15 @@
         \end{center}
       \end{table}
     \subsubsection{SNR}
+      Proposed in \cite{argonneBenchmark} and described in \sref{sec:snr}, this
+      reactor-type, two dimensional problem is based on a SNR reactor. The SNR
+      is a sodium cooled fast reactor and operates principly with thermal
+      neutrons. Cross sections are provided for a four-group energy structure.
+
+      Power comparision between the most refined mesh and numerical solution
+      given by DIF3D are presented graphicall in \fref{fig:diffusion_snr}
+      according to the key in \fref{fig:hex_description}. Numerical mesh
+      convergence study for the quantity $\keff$ is presented in \tref{tab:snr}.
       \begin{figure}
         \centering
         \includegraphics[width=\textwidth]{diffusion_snr}
@@ -1019,6 +1026,16 @@
         \end{center}
       \end{table}
     \subsubsection{HWR}
+      Proposed in \cite{chao} and described in \sref{sec:hwr}, this
+      reactor-type, two dimensional problem is based on a large Heavy Water
+      Reactor (HWR). This is a heavy water moderated reactor and operates
+      principly with thermal neutrons. Cross sections are provided for a
+      two-group energy structure.
+
+      Power comparison between the most refined mesh and the reference solution 
+      are presented graphically in \fref{fig:diffusion_hwr} according to the
+      key in \fref{fig:hex_description}. Numerical mesh convergence study for 
+      the quantity $\keff$ is presented in \tref{tab:hwr}.
       \begin{figure}
         \centering
         \includegraphics[width=\textwidth]{diffusion_hwr}
@@ -1043,6 +1060,19 @@
         \end{center}
       \end{table}
     \subsubsection{IAEA}
+      Proposed in \cite{chao} and described in \sref{sec:iaea}, this
+      reactory-type, two dimensional problem was originally based on a cartesian
+      grid two dimensional Pressurized Water Reactor (PWR) but was converted to
+      hexagonal geometry in \cite{chao}. As it is based on a PWR deisgn, the
+      reactor operates principally with thermal neturons. Cross sections are
+      provided for a two-group energy structure.
+
+      The reactor is presented in four scenarios; both with and without
+      reflective assemblies as well as with $\albedo = 0.125$ and $\albedo =
+      0.5$. Numerical mesh convergence studies are presented for the quantity
+      $\keff$ for each case in each of \tref{tab:iaea_nore0125},
+      \tref{tab:iaea_nore0500}, \tref{tab:iaea_refl0125}, and
+      \tref{tab:iaea_refl0500}.
       % nore0125
       \begin{table}
         \caption{IAEA Benchmark Convergence Study. No Reflector. $\albedo = 
