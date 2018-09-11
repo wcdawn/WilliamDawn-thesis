@@ -172,9 +172,28 @@
     \newgeometry{margin=1in,lmargin=1.25in,footskip=\chapterfootskip, includehead, includefoot}
   \subsection{HWR}
     \label{sec:hwr}
+    The presentation of this benchamrk is found in \cite{chao}. It is based on a
+    very large Heavy Water moderated Reactor (HWR).  The problem is
+    one-sixth rotationally symmetric (\textit{not} reflective). For code
+    packages without rotational boundary conditions, it will be necessary to
+    simulate a full core. To reiterate, the problem is large with 35 assemblies
+    across the core diameter as shown in \fref{fig:hwr_geom}. The fueled
+    assemblies are surrounded by a tritium generating zone which is then 
+    surrounded by a reflector zone. Zero-flux boundary condition ($\phi = 0$) is
+    applied on the core periphery. This is the only benchmark with such a
+    boundary condition. Cross sections are provided in
+    \tref{tab:hwrxs}. The fission spectrum is specified in \tref{tab:hwrchi}. To
+    the precision of the benchmark, the effective neutron multiplication factor
+    is $\keff = 0.991965$. Assembly powers are given in \fref{fig:hwr_geom}.
+    \begin{figure}
+      \centering
+      \includegraphics[width=\textwidth]{hwr_geom}
+      \caption{HWR Geometry \cite{chao}.}
+      \label{fig:hwr_geom}
+    \end{figure}
     \begin{table}
-      \caption{HWR Cross Sections (Part A).}
-      \label{tab:hwrxs_a}
+      \caption{HWR Cross Sections.}
+      \label{tab:hwrxs}
       \begin{center}
         \begin{tabular}{cccccc}
           \toprule
@@ -187,25 +206,17 @@
           $\Sigma_{s 1\rightarrow 2}$&8.164570E-03&8.223780E-03&8.088160E-03&1.231150E-02&1.231150E-02\\
           $ \nu \Sigma_{f1}$&2.262160E-03&2.227500E-03&2.142810E-03&&\\
           $ \nu \Sigma_{f2}$&2.306230E-02&2.268490E-02&2.048870E-02&&\\
-          \bottomrule
-        \end{tabular}
-      \end{center}
-    \end{table}
-    \begin{table}
-      \caption{HWR Cross Sections (Part B).}
-      \label{tab:hwrxs_b}
-      \begin{center}
-        \begin{tabular}{ccccc}
-          \toprule
-          &MAT6&MAT7&MAT8&MAT9\\
           \midrule
-          $D_1$&1.381390E+00&1.305990E+00&1.291930E+00&1.065100E+00\\
-          $D_2$&9.036710E-01&8.372560E-01&8.193410E-01&3.228290E-01\\
-          $\Sigma_{r1}$&1.056310E-02&1.173130E-02&1.191530E-02&2.834620E-02\\
-          $\Sigma_{r2}$&2.190300E-02&4.333040E-03&3.005650E-04&3.334890E-02\\
-          $\Sigma_{s 1\rightarrow 2}$&7.765680E-03&1.109750E-02&1.155820E-02&2.619800E-02\\
-          $ \nu \Sigma_{f1}$&2.394690E-03&&&\\
-          $ \nu \Sigma_{f2}$&2.662100E-02&&&\\
+          &MAT6&MAT7&MAT8&MAT9&\\
+          \midrule
+          $D_1$&1.381390E+00&1.305990E+00&1.291930E+00&1.065100E+00&\\
+          $D_2$&9.036710E-01&8.372560E-01&8.193410E-01&3.228290E-01&\\
+          $\Sigma_{r1}$&1.056310E-02&1.173130E-02&1.191530E-02&2.834620E-02&\\
+          $\Sigma_{r2}$&2.190300E-02&4.333040E-03&3.005650E-04&3.334890E-02&\\
+          $\Sigma_{s 1\rightarrow
+          2}$&7.765680E-03&1.109750E-02&1.155820E-02&2.619800E-02&\\
+          $ \nu \Sigma_{f1}$&2.394690E-03&&&&\\
+          $ \nu \Sigma_{f2}$&2.662100E-02&&&&\\
           \bottomrule
         \end{tabular}
       \end{center}
