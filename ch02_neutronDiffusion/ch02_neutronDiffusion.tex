@@ -1175,6 +1175,18 @@
       \end{table}
   \subsection{Three Dimension Reactors}
     \subsubsection{MONJU}
+      Proposed in \cite{monjuBenchmark} and described in \sref{sec:monju}, this 
+      three dimension, reactory-type problem is based on a Sodium-cooled Fast
+      Reactor (SFR) operating principally with fast neutrons. Cross sections are
+      provided for a three group energy structure. However, the fission spectrum
+      is not provided and is seelcted for benchmark agreement. This fission
+      spectrum is presented in \tref{tab:monjuchi}. The rod worth
+      measurements appear insensitive to fission spectrum. 
+
+      Reference data can be found in \tref{tab:monjukeff}. Results from the
+      Finite Element application are presented in \tref{tab:monju}. The error
+      (difference between reference and calculated results) are presented in
+      parenthesis next to the quantities. 
       \begin{table}
         \caption{MONJU Benchmark Rod Worth Results. \cite{monjuBenchmark}}
         \label{tab:monju}
@@ -1194,6 +1206,22 @@
         \end{center}
       \end{table}
     \subsubsection{KNK}
+      Proposed in \cite{takedaBenchmark} and described in \sref{sec:knk}, this
+      three dimension, reactor-type problem is based on a SFR and is a model of
+      the KNK-II core. Cross sections are provided for a four group energy
+      structure. There are many materials specified in the problem so it also
+      aids in testing material mapping in a code. However, the reference data is
+      for a transport solution. In this application, the transport cross
+      sections are used to solve the neutron diffusion equation. This explains
+      some of the numerical differences in the results but general trends are
+      reflected. In addition to the comparison to the reference transport
+      solution, the neutron diffusion equation is solved with DIF3D and the
+      Finite Element results are comporable to the finite difference solution. 
+
+      Reference data can be found in \tref{tab:knkkeff}. Results from the Finite
+      Element neutron diffusion application are presented in \tref{tab:knk}. The
+      error (difference between reference and calculated results) are presented
+      in parenthesis next to the quantities.
       \begin{table}
         \caption{KNK Benchmark Rod Worth Results. \cite{takedaBenchmark}}
         \label{tab:knk}
