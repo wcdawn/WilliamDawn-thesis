@@ -12,8 +12,9 @@
     -D \grad^2 \phi + \Sigma_r \phi =  \frac{1}{\keff} \nu \Sigma_f \phi + 
       q_{fixed}
   \end{equation}
-  For two group neutron diffusion problems, the two group neutron diffusion 
-  problem is written below.
+  Where $\grad^2 \phi = \grad \cdot (\grad \phi)$ and is used to simplify 
+  notaiton. For two group neutron diffusion problems, the two group neutron 
+  diffusion problem is written below.
   \begin{align} 
     \label{eq:twogroup1}
     -D_1 \grad^2 \phi_1 + \Sigma_{r1} \phi_1 &= \frac{1}{\keff} \left(
@@ -50,32 +51,31 @@
   \end{align*}
   Then, \eref{eq:onegroup} is written
   \begin{equation} \label{eq:fixed_source}
-    - \grad \cdot \grad \phi + \phi = 1 
+    - \grad^2 \phi(x) + \phi(x) = 1 
   \end{equation}
-  For notational simplicity, $(\grad \cdot \grad) = \grad^2$. 
   \eref{eq:fixed_source} can also be rewritten.
   \begin{equation} \label{eq:diffusion_simplified}
-    \grad^2 \phi - B^2 \phi = S
+    \grad^2 \phi(x) - B^2 \phi(x) = S
   \end{equation}
   where $B = 1$ and $S=-1$.
   The solution is composed of a particular and general solution.
   \begin{equation}
-    \phi = \phi_g + \phi_p 
+    \phi(x) = \phi_g(x) + \phi_p(x)
   \end{equation}
   For problems of the form of \eref{eq:diffusion_simplified} the general 
   solution has exponential or hyperbolic trigonometric form.
   \begin{equation} \label{eq:fixedsource_general}
-    \phi_g = c_1 \cosh(Bx) + c_2 \sinh(Bx)
+    \phi_g(x) = c_1 \cosh(Bx) + c_2 \sinh(Bx)
   \end{equation}
   Where $c_1$ and $c_2$ are problem dependent constants. For $S=1$ as constant
   in the problem domain, the particular solution has given form.
   \begin{align} \label{eq:particular}
-    \phi_p &= -S/B \\
+    \phi_p(x) &= -S/B \\
            &= 1
   \end{align}
   Then, the combined solution has the given form.
   \begin{equation} 
-    \phi = c_1 \cosh(Bx) + c_2 \sinh(Bx) + 1
+    \phi(x) = c_1 \cosh(Bx) + c_2 \sinh(Bx) + 1
   \end{equation}
   The only remaining step is to solve for constants $c_1$ and $c_2$. These are
   zero-flux boundary conditions at the problem boundaries.
@@ -115,23 +115,23 @@
   \end{align*}
   The problem is then proposed as 
   \begin{equation}
-    -\grad^2 \phi - \phi = 0 
+    -\grad^2 \phi(x) - \phi(x) = 0 
   \end{equation}
   and has general solution
   \begin{equation} \label{eq:critical_general}
-    \phi_g = c_1 \cos(x) + c_2 \sin(x)
+    \phi_g(x) = c_1 \cos(x) + c_2 \sin(x)
   \end{equation}
   Considering zero-flux boundary conditions from \eref{eq:bcx0} and 
   \eref{eq:bcxL}, then $c_1 = 0 $ yielding
   \begin{equation} \label{eq:sinshape}
-    \phi_g = c_2 \sin(x)
+    \phi_g(x) = c_2 \sin(x)
   \end{equation}
   The problem is an eigenvalue problem and has infinite solutions so the 
   constant $c_2$ is arbitrary for $\sin(x)=0$. Introducing a Buckling term $B$
   then $B=\frac{n \pi}{L}$ and $\sin(Bx)=0$ for $n$ an odd integer. The 
   fundamental mode is then $B=\frac{1}{L}$. Therefore, the solution is 
   \begin{equation} \label{eq:analytic_1d1g}
-    \phi = \sin(x/L)
+    \phi(x) = \sin(x/L)
   \end{equation}
   Plugging this solution back into \eref{eq:onegroup} and dividing both sides
   by $\sin(x/L)$ will yield an expression for $\keff$.
@@ -209,16 +209,16 @@
   solutions have form given in equation \eref{eq:sinshape}. Then
   \begin{align}
     \label{eq:twogroupflux1}
-    \phi_1 &= c_1 \sin(Bx) \\
+    \phi_1(x) &= c_1 \sin(Bx) \\
     \label{eq:twogroupflux2}
-    \phi_2 &= c_2 \sin(Bx)
+    \phi_2(x) &= c_2 \sin(Bx)
   \end{align}
   Where $B$ is the geometric buckling term. For this geometry, the geometric 
   buckling of the fundamental mode is given by 
   \begin{equation}
-    B = \pi/L
+    B = \pi/L_x
   \end{equation}
-  Then, plugging  \eref{eq:twogroupflux1} and \eref{eq:twogroupflux2} into 
+  Then, plugging \eref{eq:twogroupflux1} and \eref{eq:twogroupflux2} into 
   \eref{eq:twogroup2} and dividing the equation by $\sin(Bx)$
   \begin{equation}
     D_2 B^2 c_2 + \Sigma_{r2} c_2 = \Sigma{s1\rightarrow2} c_1
@@ -245,7 +245,7 @@
       \left(\frac{\Sigma_{s1\rightarrow2}}{D_2B^2+\Sigma_{r2}}\right)}
       {D_1 B^2 + \Sigma{r1}}
   \end{equation}
-  From the VVER-440 benchmark, material 1,
+  From the VVER-440 benchmark \sref{sec:vver440}, material 1,
   \begin{align*}
     D_1 &= 1.3466  \\
     D_2 &= 0.37169 \\
@@ -265,7 +265,7 @@
 \section{One Dimension, One Group, Two Region, Criticality}
   \label{sec:deriv_2reg}
   This final analytic problem was designed to test the materials mapping of a
-  solver. The problem is proposed as a slab-reactor with a fuel and  reflector
+  solver. The problem is proposed as a slab reactor with a fuel and reflector
   region. The neutron diffusion equation is given in  \eref{eq:onegroup}. 
   Geometry is described in \fref{fig:2reg_geom}. Fuel Material (subscript F) 
   is located in $x \in [0,a]$ and Reflector Material (subscript R) is located in
@@ -397,7 +397,6 @@
     \keff &= \frac{\nu\Sigma_{fF}}{D_F B_F^2 + \Sigma_{rF}} \\
     &= 0.9621882561
   \end{align}
-  
 \section{Finite Cylinder, One Group, Criticality}
   \label{sec:deriv_finite_cyl}
   The finite cylinder is an example of a truly three-dimension problem with
