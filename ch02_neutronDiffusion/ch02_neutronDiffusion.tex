@@ -167,7 +167,7 @@
         \grad \phi_g(\vr) \cdot \grad v(\vr) \; d\Omega_e
     \end{equation}
     Where $\frac{\partial \phi_g(\vr)}{\partial \vn}$ is the outward normal 
-    derivative sometimes written $\grad_(\vn) \phi_g(\vr)$, and the integral 
+    derivative, sometimes written $\grad_{\vn} \phi_g(\vr)$, and the integral 
     $ds$ is a line integral in two dimensions or a surface integral in three 
     dimensions. Recognizing that this quantity will only be relevant on the 
     boundary of the problem, the value of the outward normal derivative may be 
@@ -204,7 +204,7 @@
     Where coefficients $\{\alpha_i\}$ are unknown and will be determined. 
     Typically, these basis functions have unit magnitude and are centered at the
     node  points so the coefficients $\alpha_i$ are the approximated solution at
-    the nodes. Basis functions are typically polynomials of arbitrary magnitude. 
+    the nodes. Basis functions are typically polynomials of arbitrary degree. 
     Linear and quadratic polynomials are common but for the application 
     presented here, only linear basis functions are explored.
     The test function $v(\vr)$ is also chosen as a linear combination of the 
@@ -247,25 +247,29 @@
     \begin{align}
       \label{eq:fem_notation}
       a(\basis_i,\basis_j) &= f(\basis_i) \\
+      \label{eq:matrix_notation}
       \ma \vu &= \vf
     \end{align}
     $a(\basis_i,\basis_j)$ is the bilinear form and $f(\basis_i)$ is the linear 
     form of the finite element system. The notation of \eref{eq:fem_notation} is
     common to mathematical discussions of the FEM. The diffusion coefficient 
     $D_g(\vr)$ is nonzero and bounded and the removal cross section 
-    $\Sigma_{r,g}(\vr)$ is bounded. Theorem 9.3 \cite{textbookli} then shows 
+    $\Sigma_{r,g}(\vr)$ is bounded. Then, Theorem 9.3 in \cite{textbookli} shows 
     that the finite element equations satisfy the Lax-Milgram Lemma implying 
     the solution to the finite element method are unique and bounded. This is 
-    not purely the case as the source function $q_g(\vr)$ is updated on each 
-    iteration. In each iteration a unique solution exists. The global problem
-    remains an eigenvalue problem as described in \cite{duderstathamilton}. The
-    method will return the fundamental eigenvalue $\keff$ and the shape function
-    which must be normalized by an arbitrary constant.
+    not the entire description as the source function $q_g(\vr)$ is updated on 
+    each iteration. What the satisfaction of the Lax Milgram Lemma does imply in
+    this instance is that for a fixed source on a given problem iteration, a 
+    unique solution exists. The global problem remains an eigenvalue problem as 
+    described in \cite{duderstathamilton}. The method will return the 
+    fundamental eigenvalue $\keff$ and the fundamental eigenmode $\phi$ which 
+    may be normalized by an arbitrary constant.
     
-    In matrix notation, $\ma$ is described by the integral quantities (more to 
-    follow),  $\vu = \{\alpha_i\}$, and $\vf$ is described by the source 
-    integral quantity. Inspecting the matrix $\ma$ and the vector $\vf$ reveals 
-    the following.
+    In matrix notation \eref{eq:matrix_notation}. Matrix $\ma$ is 
+    described by integral quantities, vector $\vu$ is the unknown magnitudes of
+    the basis functions $\{\alpha_i\}$, and vector $\vf$ is described by the 
+    source integral quantity. Inspecting the matrix $\ma$ and the vector $\vf$
+    reveals the following.
     \begin{align}
       \label{eq:matrix_population}
       A_{i,j,g,e} &= \albedo \int_{\partial \Omega_e} \basis_i(\vr) 
@@ -286,9 +290,10 @@
     through all of the elements and summing their contribution to the matrix. 
     Note that the contribution due to the surface integral will be zero in 
     elements not on the boundary and may also be zero for problems with select
-    boundary conditions. The population of the vector $\vf$ is done similarly. 
+    boundary conditions. See \sref{sec:boundary_conditions} for boundary
+    condition discussion.  The population of the vector $\vf$ is done similarly. 
     Then, the matrix $\ma$ and the vector $\vf$ are known for each energy group.
-    The equations are solved on group at a time and $\phi_g$ is calculated and 
+    The equations are solved for group at a time and $\phi_g$ is calculated and 
     stored.
     
     Though the notation may be obtuse, the above reduces to a linear system of
@@ -301,7 +306,7 @@
     \label{sec:matrix_quantities}
     For certain simple elements, the integral quantities described in 
     \eref{eq:matrix_population} and \eref{eq:vector_population} have exact 
-    analytic forms. The for this application, linear triangles and linear wedges
+    analytic forms. For this application, linear triangles and linear wedges
     are investigated and many of the integrals have exact expressions. If these 
     quantities cannot be expressed exactly or doing so would be computationally
     difficult, quadratures can be used and for certain problems, these 
@@ -330,8 +335,9 @@
       \end{align}
       
       Originally proposed in \cite{textbookwhite}, there are simple expressions
-      for the quantities. The expression for the line integral is found in 
-      \cite{computerLab}. For a triangle with corners $\{ x_i,y_i \}$.
+      for the integral quantities for an arbitrary triangle. The expression for
+      the line integral is found in \cite{computerLab}. For a triangle with 
+      corners $\{ x_i,y_i \}$ with $i=1,2,3$.
       \begin{align}
         \int_{\Omega_e} \grad \basis_i(\vr) \cdot \grad \basis_j(\vr) 
           \;d\Omega_e &= \frac{1}{4 A_e}
@@ -356,11 +362,11 @@
       For higher order triangular elements, it will be necessary to employ a 
       quadrature.
     \subsubsection{Linear Wedges}
-      Wedge elements have not reached the same commonality as triangular 
-      elements but are extruded triangles. Geometrically, the shape is a 
+      Wedge elements have not achieved the same commonality as triangular 
+      elements but are simply extruded triangles. Geometrically, the shape is a 
       pentahedron or a triangular prism. However, their exact geometric
-      relation is not fixed and the nodes are free to expand. These shapes 
-      are unique because three of the faces are quadrilateral and two of
+      relation is not fixed and the nodes are free to expand and distort. These 
+      shapes are unique because three of the faces are quadrilateral and two of
       the faces are triangular. The wedge from the VTK toolkit is described in
       \fref{fig:vtk_wedge} \cite{vtk}.
       \begin{figure}
@@ -380,6 +386,7 @@
         \basis_5(\xi,\eta,\zeta) &= \half (1+\zeta)\xi \\
         \basis_6(\xi,\eta,\zeta) &= \half (1+\zeta)\eta 
       \end{align}
+
       The values presented herein are not yet found in literature and are 
       calculated by there author and published here for the first time.
       \begin{align}
@@ -413,7 +420,6 @@
       integral containing the gradient operator has been omitted because if 
       it could be computed analytically, it would be less computationally 
       efficient than using a quadrature.
-      
   \subsection{Quadratures}
     \label{sec:quadratures}
     Quadratures are sets of coordinates and weights which allow for the exact 
@@ -451,7 +457,7 @@
     
     Basis functions are polynomials of first, second, or third order. These 
     quadratures are capable of exactly integrating functions of given order so 
-    there is a quadrature order that will exactly integrate the Finite Element 
+    there is a quadrature order that will exactly integrate the finite element 
     quantities to the precision of the quadrature and the numeric precision. The
     table of the order required for exact integration are provided in 
     \tref{tab:quadrature_orders}.
@@ -477,7 +483,7 @@
     selected.}
     
     All of the quadratures described here are tabulated for a reference element
-    be it a line, a triangle, a quadrilateral, or a wedge. Integration in the 
+    be it a line, triangle, quadrilateral, or wedge. Integration in the 
     FEM is performed on an arbitrary element in space. Therefore, it is 
     necessary to perform a coordinate transform when using a quadrature set.
     \begin{equation}
@@ -491,7 +497,7 @@
     the Jacobi.
     
     For simple elements, the Jacobi is constant over the element and can be
-    precalculated to save from allocating, populating, and taking the 
+    precalculated to save from populating, and evaluating the 
     determinant of a matrix for each integration point. For the elements of 
     concern, these values are presented in \tref{tab:jacobi} as found in 
     \cite{textbookcolorado}.
@@ -510,7 +516,6 @@
         \end{tabular}
       \end{center}
     \end{table}
-
 \section{Implementation}
   A Finite Element neutron diffusion solution method has been developed using 
   the above formulae. The program begins with a geometry description specified
@@ -523,10 +528,10 @@
   VTK file for easy visualization.
   \subsection{Algorithm}
     The algorithm for this solution to the diffusion equation is similar to most
-    implementations of the multigroup method. The algorithm itself is presented 
-    in Algorithm \ref{algorithm:general}. The steps unique to the Finite Element
-    method are steps \ref{state:fem_matrix} and \ref{state:fem_vector}. These
-    require the quantities previously derived and form the linear system 
+    implementations of the multigroup neutron diffusion method. The algorithm 
+    itself is presented in Algorithm \ref{algorithm:general}. The steps unique 
+    to the FEM are steps \ref{state:fem_matrix} and \ref{state:fem_vector}. 
+    These require the quantities previously derived and form the linear system 
     described by the FEM. 
     
     In step \ref{state:rcm} the matrix is reordered. Mathematically this has no
@@ -572,20 +577,20 @@
       \end{algorithmic}
     \end{algorithm}
     
-    Note that the Finite Element vector $\vf$ must be updated on each iteration
-    of the solution whereas the matrix $\ma$ is described entirely by geometry 
-    and the material cross sections. For this reason, $\ma$ can be generated 
-    once at the beginning of the problem and stored for the duration of the 
-    calculation.
+    Note that the Finite Element vector $\vf$ must be updated on each power
+    iteration of the solution whereas the matrix $\ma$ is described entirely by 
+    geometry and the material cross sections. For this reason, $\ma$ can be 
+    generated once at the beginning of the problem and stored for the duration 
+    of the calculation.
     \FloatBarrier % make sure the algorithm is in the correct section
   \subsection{Memory and Storage}
-    The Finite Element matrix $\ma$ is large and sparse so a sparse storage and
+    The Finite Element Matrix $\ma$ is large and sparse so a sparse storage and
     sparse solution to the linear system are required. Many sparse matrix 
     implementations have been described and implemented in the past including
     triplet storage, reduced column, and reduced row storage \cite{sparseBLAS}.
     For this application a \twotable method is chosen which was uniquely 
     developed. \twotable storage is not designed to be the most efficient 
-    storage method but is chosen for its simplicity and conforming with the 
+    storage method but is chosen for its simplicity and implementation with the 
     FEM. Future work may include a reduced row implementation but there will be
     a trade-off between memory minimization and computational efficiency.
     
@@ -594,10 +599,10 @@
     \texttt{VAL}. Each table is dimension $DOF \times D$ where $DOF$ is the
     number of degrees of freedom of the linear system and $D$ is the maximum
     number of nodes that a node shares including itself. This must be determined
-    a priori. 
+    at the beginning of the problem.
     
     \texttt{IDX} is initialized to -1 and \texttt{VAL} is initialized 
-    to 0.0 such that an index of -1 corresponds to a zero entry in the 
+    to 0.0 such that an index of -1 corresponds to a null entry in the 
     matrix. \texttt{IDX} is then populated with a modified adjacency graph. 
     Values in \texttt{IDX} indicate the column in which the \texttt{VAL} entry
     occurs. For example, the following descriptions are equivalent.
@@ -608,17 +613,18 @@
     \end{align}
     All of these representations indicate that the value of matrix $\ma$ in the
     seventh row in the eighth column is 12.0. This will allow for simple row 
-    operations and matrix vector multiplication which will be necessary in the 
-    solution of the system.
-    
+    operations and efficient matrix vector multiplication which will be 
+    necessary in the solution of the linear system.
   \subsection{Boundary Conditions}
+    \label{sec:boundary_conditions}
     Boundary conditions deserve brief consideration. There are many way to treat 
-    sets of boundary conditions and all result in mathematically the same 
+    of boundary conditions and all result in mathematically the same 
     answer. The choices made for this application are presented below. Mirror 
     boundary conditions require $\grad \phi_g(\vr) = 0$ for 
     $\vr \in \partial \Omega$. These are also known as ``natural'' boundary
     conditions because the Finite Element Matrix $\ma$ requires no additional 
-    treatment and this condition is natural.
+    treatment and this condition is natural. In the Albedo representation, this
+    is equivalent to $\albedo = 0$.
     
     Albedo boundary conditions are treated with an additional contribution to 
     the Finite Element Matrix $\ma$. These contributions represent a line 
@@ -641,7 +647,8 @@
     \cite{textbookli}. This method is chosen because it decreases the degree of 
     freedom of the linear system while encouraging a well conditioned matrix. 
     Now, the degree of freedom of the matrix is equal to the number of nodes 
-    with non-zero flux boundary conditions.
+    with non-zero flux boundary conditions. Alternatively, zero-flux boundary
+    conditions can be represented as $\albedo \rightarrow \infty$.
     
   \subsection{Linear System Solution}
     For a non-singular linear system $\ma \vu = \vf$, where $\ma$ is a square 
@@ -658,7 +665,7 @@
     description \eref{eq:matrix_population}. Briefly, $A_{i,j,g,e}=A_{j,i,g,e}$.
     Positive definiteness is a particularly useful condition but is often 
     difficult to prove. $\ma$ is sometimes diagonally dominant for conveniently
-    ordered meshes and certain elements but generally the matrix is not 
+    ordered meshes composed certain elements but generally, the matrix is not 
     diagonally dominant. 
     
     A matrix $\ma \in \realnn$ is positive definite if
@@ -684,18 +691,17 @@
         a \left( \sum_{i=1}^{N} x_i \basis_i, \sum_{j=1}^{N} x_j \basis_j 
         \right)
     \end{equation}
-    By construction of the FEM, $w(\vr) \sum_{i=1}^{N} x_i \basis_i$ where 
+    By construction of the FEM, $w(\vr) = \sum_{i=1}^{N} x_i \basis_i$ where 
     $w(\vr)$ is a piecewise continuous polynomial of arbitrary order.
     \begin{equation}
       \vx^{T} \ma \vx = a \left(w(\vr),w(\vr)\right)
     \end{equation}
-    $a(\cdot,\cdot)$ can be shown to form a norm $\|\cdot \|_a$ requiring the 
-    positive definite condition \cite{textbookli}.
+    $a(\cdot,\cdot)$ can be shown to form a norm $\|\cdot \|_a$
+    \cite{textbookli} satisfying the positive definite condition
+    \eref{eq:positive_definite}.
     \begin{equation}
       \vx^{T} \ma \vx > 0 \qquad \forall \vx \in \realn, \; \vx \ne 0
     \end{equation}
-    This satisfies the positive definite condition from 
-    \eref{eq:positive_definite}.
     
     A given matrix can be verified as positive definite by one of two methods.
     First, all eigenvalues of the matrix have positive real components. Second, 
@@ -703,18 +709,19 @@
     $\ml$ is a lower triangular matrix with positive diagonal entries and 
     $\ml^*$ is the conjugate transpose of the matrix \cite{textbookipsen}. For 
     real valued matrices, the conjugate transpose is equivalent to the 
-    conventional transpose.
+    conventional transpose. Though this may be useful for debugging or numerical
+    analysis purposes, these operations are computationally expensive. Instead,
+    this is verified here for the general matrix and not tested on-the-fly.
     
-    Symmetric Positive Definite matrices also posses a unique inverse. 
     Conventional methods to solve a linear system described by an SPD matrix 
     include Gauss-Seidel iteration with Successive Over-Relaxation (SOR) and
     the Conjugate Gradient (CG) Krylov subspace method. SOR requires a priori 
     knowledge of the optimized  over-relaxation factor $\omega_{opt}$. In 
-    practice, this is performed analytically with arbitrary and contrived 
-    solutions or in a modified guess-and-check method. For this application, the
+    practice, this is performed analytically with contrived solutions 
+    or in a modified guess-and-check method. For this application, the
     CG method is chosen because it requires no a priori knowledge and produced
-    a solution to the same tolerance in a comparable time without the need for 
-    guess-and-check iterations.
+    a solution to the same tolerance in a comparable wall-time without the need
+    for guess-and-check iterations.
     
     A simple recipe for the CG method is presented in Algorithm 2.4.1
     \cite{Kelley1995IterativeEquations} and its implementation in this 
@@ -749,16 +756,15 @@
     two-norm is most efficiently replaced by the inner-product. It is noted 
     that this method requires minimal storage with only four vectors 
     required ($\vx, \vw, \vp,$ and $\vr$). Additionally, two scalar products 
-    are required and a matrix-vector product which proves to be the most 
+    are required and a single matrix-vector product which proves to be the most 
     computationally expensive \cite{Kelley1995IterativeEquations}. As most of 
     the computational time of the diffusion solutions is spent in the linear 
     system solution, is is crucial that this process be efficient.
-
 \section{Reference Results}
   This application of the FEM has been benchmarked against reference 
-  reactor-type problems as well as contrived manufactured solutions. Comparison
+  reactor-type problems as well as manufactured solutions. Comparison
   against reactor-type problems demonstrates an ability to solve problems for
-  which this method was derived. Comparison against manufactured solutions 
+  which this application was intended. Comparison against manufactured solutions 
   allows for more detailed error and convergence analysis as not only the system
   $\keff$ but also the exact flux solution is known.
   
@@ -802,8 +808,7 @@
   
   For manufactured solutions, the error of the function $\phi$ itself can be 
   analyzed because the function is known exactly. The derivations of the exact 
-  functions are presented in \apref{ap:analyticSolutions}. Equations are 
-  presented here but their derivations are in the appendix. For all manufactured 
+  functions are presented in \apref{ap:analyticSolutions}. For all manufactured 
   problems, the Root Mean Squared (RMS) error as in \eref{eq:rms} is calculated
   for the error vector $\ve$ and is presented. The ratio between refinements 
   should assume the expected rate.
@@ -811,25 +816,28 @@
     \text{RMS}(\ve) = \sqrt{\frac{1}{N} \sum_{i=1}^{N} e_i}
   \end{equation}
   The maximal norm $\| \cdot \|_{\infty}$ is also presented and the ratio 
-  between refinements should assume the expected value.
+  between refinements should assume the expected rate.
   \begin{equation} \label{eq:infnorm}
     \|\ve\|_{\infty} = \max_{i=1,2,\ldots,N} \lvert e_i \rvert
   \end{equation}
-  For criticality  problems, $\keff$ is also presented.
-  
+  For criticality  problems, $\keff$ is also presented and the ration between
+  refinements should assume the expected rate.
   \subsection{Triangular Element Manufactured Solutions}
     As a demonstration of the proper implementation of and solution to the 
     diffusion equation for triangular elements, manufactured solutions are 
-    derived and then numerically computed. These are One and Two Dimension 
+    derived and then numerically computed. These are one and two dimension 
     problems. All of these are on a rectangular domain $[0,L_x] \times [0,L_y]$.
-    For One Dimension problems, the edges $y=0$ and $y=L_x$ are mirror boundary 
-    conditions to reduce the dimension of the problem.
+    For one dimension problems, the top and bottom edges $y=0$ and $y=L_x$ are 
+    mirror boundary conditions to reduce the dimension of the problem. To verify 
+    there was no error obscured by this process, the results were reproduced for
+    a rotated problem with the left and right edges set to mirror boundary
+    conditions.
     \subsubsection{One Dimension, One Group, Fixed Source}
       \label{sec:1dfixedsrc}
       Arguably the simplest solution to the neutron diffusion equation, this 
       problem  solves a domain $x \in [0,1]$ for a fixed unit source throughout
       the  problem. The exact solution is derived in \sref{sec:deriv_1dfixedsrc}
-      and the solution is presented in \eref{eq:analytic_1dfixedsrc}. Results 
+      and is presented in \eref{eq:analytic_1dfixedsrc}. Results 
       from the convergence study are presented in \tref{tab:1dfixedsrc}.
       \begin{table}
         \caption{One Dimension, One Group, Fixed Source Convergence Study 
@@ -856,12 +864,12 @@
       implementation in the solution method. This problem solves a fissile 
       material in the domain $x \in [0,100]$.
       The exact solution is derived in \sref{sec:deriv_1d1g} and
-      the solution is presented in \eref{eq:analytic_1d1g}. Results from
+      presented in \eref{eq:analytic_1d1g}. Results from
       the convergence study are presented in \tref{tab:1d1g}. The exact value 
-      for the effective multiplication factor is $k_{ref} = 1.9980280254$.
+      for the effective multiplication factor is $k_{ref} = 1.998028$.
       \begin{table}
         \caption{One Dimension, One Group, Criticality Convergence Study
-          Results. $k_{ref} = 1.9980280254$}
+          Results. $k_{ref} = 1.998028$.}
         \label{tab:1d1g}
         \begin{center}
           \begin{tabular}{cccccccccc}
@@ -882,12 +890,12 @@
       In addition to the one dimension problem in \sref{sec:1d1g}, this problem
       tests the ability to solve truly two dimensional problems.
       The exact solution is derived in \sref{sec:deriv_2d1g} and
-      the solution is presented in \eref{eq:analytic_2d1g}. Results from
+       presented in \eref{eq:analytic_2d1g}. Results from
       the convergence study are presented in \tref{tab:2d1g}. The exact value 
-      for the effective multiplication factor is $k_{ref} = 1.9960599356$.
+      for the effective multiplication factor is $k_{ref} = 1.9960560$.
       \begin{table}
         \caption{Two Dimension, One Group, Criticality Convergence Study
-          Results. $k_{ref} = 1.9960599356$}
+          Results. $k_{ref} = 1.996060$.}
         \label{tab:2d1g}
         \begin{center}
           \begin{tabular}{cccccccccc}
@@ -909,15 +917,15 @@
       tests the solution of mulitgroup problems. The results presented are the 
       convergece of $\keff$ and the ratio of relative magnitude of thermal to 
       fast flux $\phi_2/\phi_1$.
-      The exact solution is derived in \sref{sec:deriv_1d2g} and
+      The exact solutions are derived in \sref{sec:deriv_1d2g} and
       the solutions are presented in \eref{eq:twogroupflux1} and
       \eref{eq:twogroupflux2}. Results from the convergence study are presented in 
       \tref{tab:1d2g}. The exact value for the effective multiplication factor 
-      is $k_{ref} = 0.892349025$ and the exact value for the relative flux ratio
-      is $(\phi_2/\phi_1)_{ref} = 0.26132419$.
+      is $k_{ref} = 0.892349$ and the exact value for the relative flux ratio
+      is $(\phi_2/\phi_1)_{ref} = 0.261324$.
       \begin{table}
         \caption{One Dimension, Two Group, Criticality Convergence Study
-          Results. $k_{ref} = 0.892349025$ $(\phi_2/\phi_1)_{ref} = 0.26132419$}
+          Results. $k_{ref} = 0.892349$ $(\phi_2/\phi_1)_{ref} = 0.261324$}
         \label{tab:1d2g}
         \begin{center}
           \begin{tabular}{ccccccc}
@@ -938,12 +946,12 @@
       In addition to the homogenous problem in \sref{sec:1d1g}, this problem
       tests the mapping of materials to regions within the problem.
       The exact solution is derived in \sref{sec:deriv_2reg} and
-      the solution is presented in \eref{eq:analytic_2reg}. Results from
+      presented in \eref{eq:analytic_2reg}. Results from
       the convergence study are presented in \tref{tab:2reg}. The exact value 
-      for the effective multiplication factor is $k_{ref} = 0.9621882561$.
+      for the effective multiplication factor is $k_{ref} = 0.962188$.
       \begin{table}
         \caption{One Dimension, One Group, Two Region, Criticality Convergence
-          Study Results. $k_{ref} = 0.9621882561$}
+          Study Results. $k_{ref} = 0.962188$}
         \label{tab:2reg}
         \begin{center}
           \begin{tabular}{cccccccccc}
@@ -961,6 +969,13 @@
         \end{center}
       \end{table}
   \subsection{Two Dimension Reactors}
+    The application presented here was originally designed with the intention to 
+    simulate power reactors. As such, two dimension problems with similar
+    reactor physics phenomena have been examined here. These two dimension
+    problems come from existing benchmarks based on hexagonal geometry. These
+    benchmarks represent various energy group structures, geometries, assembly
+    sizes,  boundary conditions, as well as other properties. Data used in these
+    problems is consisely presented in \apref{ap:benchmarks}. 
     \subsubsection{VVER440}
       Proposed in \cite{chao} and described in \sref{sec:vver440}, this
       reactor-type, two dimension problem is based on a
@@ -1156,10 +1171,10 @@
       The exact solution is derived in \sref{sec:deriv_finite_cyl} and the
       solution is presented in \eref{eq:analytic_finite_cyl}. Results from the
       convergence study are presented in \tref{tab:finite_cyl}. The exact value
-      for the effective multiplication factor is $k_{ref} = 0.996710620898177$.
+      for the effective multiplication factor is $k_{ref} = 0.996711$.
       \begin{table}
         \caption{Finite Cylinder Convergence Study Results.
-          $k_{ref} = 0.996710620898177$}
+          $k_{ref} = 0.996711$}
         \label{tab:finite_cyl}
         \begin{center}
           \begin{tabular}{cccccccccc}

@@ -2,17 +2,17 @@
 \label{ap:analyticSolutions}
 
 \section{Introduction}
-  The following is a manufactured solution designed for verification of One,
-  Two, and Three Dimensional numerical neutron diffusion equation solvers.
-  One-group and Two-group problems are also addressed.
+  The following is a manufactured solution designed for verification of one,
+  two, and three dimension numerical neutron diffusion equation solvers.
+  one group and two group problems are also addressed.
   
-  For the reference problems, the one-group neutron diffusion problem is written
+  For the reference problems, the one group neutron diffusion problem is written
   below.
   \begin{equation} \label{eq:onegroup}
     -D \grad^2 \phi + \Sigma_r \phi =  \frac{1}{\keff} \nu \Sigma_f \phi + 
       q_{fixed}
   \end{equation}
-  For two-group neutron diffusion problems, the two-group neutron diffusion 
+  For two group neutron diffusion problems, the two group neutron diffusion 
   problem is written below.
   \begin{align} 
     \label{eq:twogroup1}
@@ -28,20 +28,20 @@
   increase in neutron energy). These are realistic assumptions for all diffusive
   neutron systems.
 
-  Analytic solutions are provided herein. One Dimensional problems can be 
-  replicated in a Two Dimensional solver using a square geometry and select 
+  Analytic solutions are provided herein. One dimension problems can be 
+  replicated in a two dimension solver using a square geometry and select 
   boundary conditions. For a given quadrilateral, two of the boundary conditions
   are set to reflective conditions and two are set to zero-flux $(\phi = 0)$ 
-  conditions. For true Two Dimensions problems, all of the boundary conditions 
+  conditions. For true two dimensions problems, all of the boundary conditions 
   are set to zero-flux conditions.
   
   These formula are common to second order partial differential equations but
   the formulation here is based in part from \cite{textbooklewis}.
 
-\section{One Dimension, One-Group, Fixed Source}
+\section{One Dimension, One Group, Fixed Source}
   \label{sec:deriv_1dfixedsrc}
-  This One Dimensional problem is in the domain $x \in [0,L]$. For this problem, 
-  the following one-group coefficients are used.
+  This one dimension problem is in the domain $x \in [0,L]$. For this problem, 
+  the following one group coefficients are used.
   \begin{align*}
     D &= 1\\
     \Sigma_r &= 1\\
@@ -104,8 +104,8 @@
   
 \section{One Dimension, One Group, Criticality} 
   \label{sec:deriv_1d1g}
-  This One Dimensional problem is in the domain $x \in [0,L]$.
-  This problem also uses the one-group neutron diffusion equation from 
+  This one dimension problem is in the domain $x \in [0,L]$.
+  This problem also uses the one group neutron diffusion equation from 
   \eref{eq:onegroup}. For this problem, and the following coefficients:
   \begin{align*}
     D &= 1\\
@@ -147,8 +147,8 @@
 \section{Two Dimension, One Group, Criticality}
   \label{sec:deriv_2d1g}
   The same material coefficients are used for this problem as in the 
-  One Dimension, criticality problem. For this problem, the domain is in the 
-  rectangle $[0,L_x]\times[0,L_y]$. Similar to the one-dimensional problem, 
+  one dimension, criticality problem. For this problem, the domain is in the 
+  rectangle $[0,L_x]\times[0,L_y]$. Similar to the one-dimension problem, 
   this problem has basic solution of $\sin(x/L)$. The problem is separable in 
   the two spatial dimensions. 
   \begin{equation}
@@ -197,12 +197,12 @@
   Much of this section is drawn from course notes prepared by Dr. Scott 
   Palmtag \cite{analytic2g}.
   
-  A two-group neutron diffusion problem is considered for a one-dimensional
+  A two group neutron diffusion problem is considered for a one-dimension
   homogeneous slab in the domain $x \in [0,L]$. Energy group 1 is higher energy
   than energy group 2. It is assumed all fission neutrons are  produced in the
   fast group (i.e. $\chi_1=1$ and $\chi_2=0$). Additionally, it is assumed that 
   there is no up-scattering  (i.e. $\Sigma_{2\rightarrow1}=0$).  Then, the
-  two-group neutron diffusion equations are given in \eref{eq:twogroup1} and 
+  two group neutron diffusion equations are given in \eref{eq:twogroup1} and 
   \eref{eq:twogroup2}.
   
   Referring to the problem posed by Section \sref{sec:deriv_1d1g}, the flux 
@@ -262,7 +262,7 @@
     \keff &= 0.892349025
   \end{align}
   
-\section{One-Dimension, One-Group, Two-Region, Criticality}
+\section{One Dimension, One Group, Two Region, Criticality}
   \label{sec:deriv_2reg}
   This final analytic problem was designed to test the materials mapping of a
   solver. The problem is proposed as a slab-reactor with a fuel and  reflector
@@ -273,7 +273,7 @@
   \begin{figure}
     \centering
     \includegraphics[width=0.6\textwidth]{2reg_geom}
-    \caption{Geometry for Two-Region Problem.}
+    \caption{Geometry for Two Region Problem.}
     \label{fig:2reg_geom}
   \end{figure}
   Boundary conditions on the horizontal surfaces (top/bottom) are reflective
@@ -400,7 +400,7 @@
   
 \section{Finite Cylinder, One Group, Criticality}
   \label{sec:deriv_finite_cyl}
-  The finite cylinder is an example of a truly three-dimensional problem with
+  The finite cylinder is an example of a truly three-dimension problem with
   an analytic solution. This is a homogeneous cylinder with zero-flux boundary
   conditions on the edge of the cylinder. The cylinder has height $H$ and 
   radius $T$. The coordinates $r\in[0,T]$ and $z\in[0,H]$ where 
