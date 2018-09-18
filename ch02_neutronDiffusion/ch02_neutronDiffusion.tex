@@ -4,9 +4,10 @@
 \section{Introduction}
   For typical nuclear reactor physics applications, diffusion theory well 
   approximates the neutron distribution within the reactor. The neutron 
-  diffusion equation is a second order partial differential equation in space 
-  and energy. In standard notation, the continuous neutron diffusion equation is 
-  presented as
+  diffusion equation is a second order partial differential equation in space.
+  The neutron flux as the solution to the diffusion equation is continuous in
+  both space and energy. In standard notation, the continuous neutron diffusion
+  equation is presented as
   \begin{multline}\label{eq:continuous_diffusion}
     -\grad \cdot (D(\vr,E) \grad \phi(\vr,E)) + \Sigma_t(\vr,E) \phi(\vr,E) = \\
       \frac{\chi(\vr,E)}{\keff} \int_0^{\infty} \nu_f(\vr,E') \Sigma_f(\vr,E') 
@@ -171,14 +172,14 @@
     $ds$ is a line integral in two dimensions or a surface integral in three 
     dimensions. Recognizing that this quantity will only be relevant on the 
     boundary of the problem, the value of the outward normal derivative may be 
-    specified in a boundary condition. Specifically, the Albedo boundary 
+    specified in a boundary condition. Specifically, the albedo boundary 
     condition which has the following form for $\vr \in \partial \Omega$. 
     \begin{align}
       D_g(\vr) \grad \phi_g(\vr) + \albedo \phi_g(\vr) &= 0 \\
       \grad \phi_g(\vr) &= \frac{-\albedo \phi_g(\vr)}{D_g}
     \end{align}
     Substituting \eref{eq:greens} into  \eref{eq:element_by_element} and 
-    assuming the outward normal derivative is specified in the form of an Albedo
+    assuming the outward normal derivative is specified in the form of an albedo
     boundary condition.
     \begin{multline} 
       -\sum_{e=1}^{E} D_{g,e} \int_{\partial \Omega_e} v(\vr) 
@@ -322,7 +323,7 @@
       \begin{figure}
         \centering
         \includegraphics[width=0.3\textwidth]{vtk_triangle}
-        \caption{VTK description of triangle element.}
+        \caption{VTK Description of Triangle Element.}
         \label{fig:vtk_triangle}
       \end{figure}
       The reference triangle $T_{ref}$ is located in
@@ -372,7 +373,7 @@
       \begin{figure}
         \centering
         \includegraphics[width=0.3\textwidth]{vtk_wedge}
-        \caption{VTK description of wedge element.}
+        \caption{VTK Description of Wedge Element.}
         \label{fig:vtk_wedge}
       \end{figure}
       The reference wedge $W_{ref}$ is located in 
@@ -462,7 +463,7 @@
     table of the order required for exact integration are provided in 
     \tref{tab:quadrature_orders}.
     \begin{table}
-      \caption{Quadrature orders for FEM quantities.}
+      \caption{Quadrature Orders for FEM Quantities.}
       \label{tab:quadrature_orders}
       \begin{center}
         \begin{tabular}{lccc}
@@ -502,7 +503,7 @@
     concern, these values are presented in \tref{tab:jacobi} as found in 
     \cite{textbookcolorado}.
     \begin{table}
-      \caption{Jacobi for selected elements}
+      \caption{Jacobi for Selected Elements.}
       \label{tab:jacobi}
       \begin{center}
         \begin{tabular}{ll}
@@ -623,7 +624,7 @@
     boundary conditions require $\grad \phi_g(\vr) = 0$ for 
     $\vr \in \partial \Omega$. These are also known as ``natural'' boundary
     conditions because the Finite Element Matrix $\ma$ requires no additional 
-    treatment and this condition is natural. In the Albedo representation, this
+    treatment and this condition is natural. In the albedo representation, this
     is equivalent to $\albedo = 0$.
     
     Albedo boundary conditions are treated with an additional contribution to 
@@ -802,7 +803,7 @@
   \begin{figure}
     \centering
     \includegraphics[width=0.25\textwidth]{hex_description}
-    \caption{Key for hexagonal power plots.}
+    \caption{Key for Hexagonal Power Plots.}
     \label{fig:hex_description}
   \end{figure}
   
@@ -990,7 +991,7 @@
       \begin{figure}
         \centering
         \includegraphics[width=\textwidth]{diffusion_vver440}
-        \caption{VVER440 Benchmark Power Comparison for most refined mesh.}
+        \caption{VVER440 Benchmark Power Comparison for Most Refined Mesh.}
         \label{fig:diffusion_vver440}
       \end{figure}
       \begin{table}
@@ -1023,7 +1024,7 @@
       \begin{figure}
         \centering
         \includegraphics[width=\textwidth]{diffusion_snr}
-        \caption{SNR Benchmark Power Comparison for most refined mesh.}
+        \caption{SNR Benchmark Power Comparison for Most Refined Mesh.}
         \label{fig:diffusion_snr}
       \end{figure}
       \begin{table}
@@ -1057,7 +1058,7 @@
       \begin{figure}
         \centering
         \includegraphics[width=\textwidth]{diffusion_hwr}
-        \caption{HWR Benchmark Power Comparison for most refined mesh.}
+        \caption{HWR Benchmark Power Comparison for Most Refined Mesh.}
         \label{fig:diffusion_hwr}
       \end{figure}
       \begin{table}
