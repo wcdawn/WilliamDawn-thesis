@@ -11,6 +11,7 @@
 *.bcf
 
 *.run.xml
+*.bib
 
 # this may get added later...
 *.pdf
