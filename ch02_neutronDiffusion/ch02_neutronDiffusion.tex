@@ -2,20 +2,20 @@
 \label{ch:neutronDiffusion}
 
 \section{Introduction}
-  For typical nuclear reactor physics applications, diffusion theory well 
-  approximates the neutron distribution within the reactor. The neutron 
+  For typical nuclear reactor physics applications, diffusion theory
+  approximates the neutron distribution within the reactor well. The neutron 
   diffusion equation is a second order partial differential equation in space.
   The neutron flux as the solution to the diffusion equation is continuous in
   both space and energy. In standard notation, the continuous neutron diffusion
   equation is presented as
   \begin{multline}\label{eq:continuous_diffusion}
-    -\grad \cdot (D(\vr,E) \grad \phi(\vr,E)) + \Sigma_t(\vr,E) \phi(\vr,E) = \\
+    -\grad \cdot (D(\vr,E) \grad \varphi(\vr,E)) + \Sigma_t(\vr,E) \varphi(\vr,E) = \\
       \frac{\chi(\vr,E)}{\keff} \int_0^{\infty} \nu_f(\vr,E') \Sigma_f(\vr,E') 
-      \phi(\vr,E') \; dE' + \int_0^{\infty} \Sigma_s(\vr,E' \rightarrow E) 
-      \phi(\vr,E') \; dE'
+      \varphi(\vr,E') \; dE' + \int_0^{\infty} \Sigma_s(\vr,E' \rightarrow E) 
+      \varphi(\vr,E') \; dE'
   \end{multline}
-  Where $D$ is the diffusion constant, $\phi$ is the scalar neutron flux, 
-  $\Sigma_t$ is the total cross section, $\chi$ is the fission neutron 
+  Where $D$ is the diffusion constant, $\varphi$ is the continuous scalar neutron flux, 
+  $\Sigma_t$ is the total cross section, $\chi$ is the effective fission neutron 
   spectrum, $\keff$ is the effective neutron multiplication factor, $\Sigma_f$ 
   is the fission cross section, $\nu_f$ is the neutron yield per fission, and 
   $\Sigma_s(\vr,E' \rightarrow E)$ is the scattering cross section for neutrons 
@@ -26,43 +26,52 @@
   straight-forward and is performed using the multigroup method. Spatial 
   discretization requires more attention and will be done with the Finite 
   Element Method (FEM). This spatial discretization method is selected for 
-  several reasons. It allows for easily increasing the convergence order of the 
-  method by increasing the order of the elements with no changing of the mesh 
-  required. For example, using quadratic elements instead of linear elements.
-  Coordinates of nodes and elements can be easily updated to reflect physical 
-  phenomena such as thermal expansion (\chref{ch:thermalExpansion}). 
-  Additionally, material properties are calculated on an element basis allowing 
-  for fine detail updates to the  material properties during the calculation in 
-  future applications.
+  several reasons. It allows for easily increasing the spatial convergence order
+  of the method by increasing the order of the elements without refining the
+  mesh. For example, for the same mesh, quadratic elements instead of linear
+  elements could be used to improve the solution. Coordinates of nodes and 
+  elements can be easily updated to reflect physical phenomena, such as thermal 
+  expansion (\chref{ch:thermalExpansion}). Additionally, material properties are 
+  calculated on an element basis allowing for fine detail updates to the 
+  material properties during the calculation in future applications.
   
   For energy discretization with the multigroup method, an energy structure is 
-  described as $\{E_g\}$ for $g = 1,2,\ldots,G$ and by in order of decreasing 
+  described as $\{E_g\}$ for $g = 0,1,2,\ldots,G$ and by in order of decreasing 
   energy by convention.
-  \[ E_G > E_{G-1} > \ldots > E_2 > E_1  \]
+  \[ 0 < E_G < E_{G-1} < \ldots < E_2 < E_1 < E_0 \]
   Then, multigroup constants can be calculated based on the energy group 
   structure and the known cross sections. Multigroup constants are calculated to
   preserve the number of neutrons produced or destroyed. That is, the 
   calculation preserves reaction rates where the reaction rate for reaction $x$
-  is defined as $R_x=\Sigma_x \phi$. Multigroup constants are then calculated. A
-  formal derivation is given in \cite{duderstathamilton} and the results are 
-  presented below.
+  is defined as $R_x=\Sigma_x \varphi$. A formal derivation is given in 
+  \cite{duderstathamilton} and the results are presented below.
   \begin{align}
-    D_g(\vr) &= \frac{\int_{E_g}^{E_{g-1}} D(\vr,E') \grad \phi(\vr,E)\;dE}
-      {\int_{E_g}^{E_{g-1}} \grad \phi(\vr,E)\;dE} \\
+    D_g(\vr) &= \frac{\int_{E_g}^{E_{g-1}} D(\vr,E') \grad \varphi(\vr,E)\;dE}
+      {\int_{E_g}^{E_{g-1}} \grad \varphi(\vr,E)\;dE} \\
     \Sigma_{t,g}(\vr) &= \frac{\int_{E_g}^{E_{g-1}} \Sigma_t(\vr,E) 
-      \phi(\vr,E)\;dE}{\int_{E_g}^{E_{g-1}} \phi(\vr,E)\;dE} \\
+      \varphi(\vr,E)\;dE}{\int_{E_g}^{E_{g-1}} \varphi(\vr,E)\;dE} \\
     \nu\Sigma_{f,g}(\vr) &= \frac{\int_{E_g}^{E_{g-1}} \nu_f(\vr,E)
-      \Sigma_f(\vr,E) \phi(\vr,E)\;dE}{\int_{E_g}^{E_{g-1}} 
-      \phi(\vr,E)\;dE} \\
+      \Sigma_f(\vr,E) \varphi(\vr,E)\;dE}{\int_{E_g}^{E_{g-1}} 
+      \varphi(\vr,E)\;dE} \\
     \Sigma_{s,g\rightarrow g'}(\vr) &= \frac{\int_{E_g'}^{E_{g'-1}} 
-      \int_{E_g}^{E_{g-1}} \Sigma_s(\vr,E' \rightarrow E) \phi(\vr,E')\;dE\;dE'}
-      {\int_{E_g}^{E_{g-1}} \phi(\vr,E)\;dE}  \\
+      \int_{E_g}^{E_{g-1}} \Sigma_s(\vr,E' \rightarrow E) \varphi(\vr,E')\;dE\;dE'}
+      {\int_{E_g}^{E_{g-1}} \varphi(\vr,E)\;dE}  \\
     \chi_g(\vr) &= \int_{E_g}^{E_{g-1}} \chi(\vr,E) \; dE \\
-    \phi_g(\vr) &= \int_{E_g}^{E_{g-1}} \phi(\vr,E) \; dE
+    \phi_g(\vr) &= \int_{E_g}^{E_{g-1}} \varphi(\vr,E) \; dE
   \end{align}
   Note that cross sections $\nu_f(\vr,E)$ and $\Sigma_f(\vr,E)$ have been 
-  combined. This is necessary and a mathematical result of the group collapse
-  to preserve the rate of neutrons produced. Then, 
+  combined. This is a convenient mathematical representation of the group
+  collapse to preserve the rate of neutrons produced. This is not, however, how
+  multigroup constants are actually calculated. The derivation assumes that
+  material cross sections and flux distributions are known continuously with
+  respect to energy. This is never the case as material cross sections are
+  measured from experiments and flux distributions are only known continuously
+  for select problems. More typically, these multigroup constants are measured
+  experimentally for a many group structure and then a group collapse is
+  performed discretely. For the purposes of this application, it is sufficient
+  to assume that the constants are provided from some higher order flux
+  calculation method.
+
   \eref{eq:continuous_diffusion} can be discretized in energy as
   \begin{align}\label{eq:multigroup_diffusion}
     - \grad \cdot ( D_g(\vr) \grad \phi_g(\vr)) + \Sigma_{t,g}(\vr) \phi_g(\vr)= 
@@ -76,32 +85,44 @@
   
   The total neutron cross section includes the contribution due to 
   self-scattering. That is, due to $\Sigma_{s,g\rightarrow g}$. This can be 
-  removed from \eref{eq:multigroup_diffusion} for simplicity.
+  removed from \eref{eq:multigroup_diffusion} for simplicity and numeric
+  efficiency.
   \begin{equation} \label{eq:multigroup_removal}
     - \grad \cdot( D_g(\vr) \grad \phi_g(\vr)) + \Sigma_{r,g}(\vr) \phi_g(\vr) = 
       \frac{\chi_g(\vr)}{\keff} \sum_{g'=1}^{G} \nu\Sigma_{f,g'}(\vr) 
       \phi_{g'}(\vr) + \sum_{g'=1, g' \ne g}^{G} \Sigma_{s,g' \rightarrow g}(\vr) 
       \phi_{g'}(\vr)
   \end{equation}
-  Where $\Sigma_{r,g}$ is the removal cross section and $\Sigma_{r,g}(\vr) = 
-  \Sigma_{t,g}(\vr) - \Sigma_{s,g\rightarrow g}(\vr)$. For simplicity, the
-  neutron sources in \eref{eq:multigroup_removal} can be  combined into a
-  single term.
+  Where $\Sigma_{r,g}$ is the removal cross section defined as 
+  $\Sigma_{r,g}(\vr) = \Sigma_{t,g}(\vr) - \Sigma_{s,g\rightarrow g}(\vr)$. For
+  simplicity, the neutron sources in \eref{eq:multigroup_removal} can be 
+  combined into a single term.
   \begin{equation} \label{eq:multigroup_source}
     - \grad \cdot( D_g(\vr) \grad \phi_g(\vr)) + \Sigma_{r,g}(\vr) \phi_g(\vr) = 
       q_g(\vr)
   \end{equation}
+  % todo review this
   Where $q_g(\vr)$ is the combined neutron source at position $\vr$ for energy 
-  group $g$ . $q$ can then be further divided into contributions due to fission 
-  ($q_{fiss}$), up-scattering ($q_{up}$) when a neutron increases in energy, and 
-  down-scattering when a neutron decreases in energy ($q_{down}$).
+  group $g$. \eref{eq:multigroup_source} is useful for solution of the
+  multigroup neutron diffusion problem for an arbitrary number of groups. The
+  equation is solved for each energy group and interaction between groups is
+  described in the term $q_g(\vr)$. In other implementations, the problem can be
+  solved for each group simultaneously using a method where interaction between
+  groups is treated explicitly. By solving each group independently (as done
+  here) the method remains general. Additionally, for many group energy
+  structures as common to fast reactor applications solving each group
+  independently is typically more computationally efficient.
+  
+  It is sometimes desirable to partition $q$ into contributions due 
+  to fission ($q_{fiss}$), up-scattering ($q_{up}$) when a neutron increases in 
+  energy, and down-scattering when a neutron decreases in energy ($q_{down}$).
   \begin{align}
     q_g(\vr) &= q_{fiss,g}(\vr) + q_{up,g}(\vr) + q_{down,g}(\vr) \\
     q_{fiss,g}(\vr) &= \frac{\chi_g(\vr)}{\keff} \sum_{g'=1}^{G} 
       \nu \Sigma_{f,g'}(\vr) \phi_{g'}(\vr) \\
     q_{up,g}(\vr) &= \sum_{g'=g+1}^{G} \Sigma_{s,g' \rightarrow g}(\vr)
       \phi_{g'}(\vr) \\
-    q_{down,g}(\vr) &= \sum_{g'=1}^{g} \Sigma_{s,g' \rightarrow g}(\vr)
+    q_{down,g}(\vr) &= \sum_{g'=1}^{g-1} \Sigma_{s,g' \rightarrow g}(\vr)
       \phi_{g'}(\vr)
   \end{align}
   Where the difference between $q_{up}$ and $q_{down}$ are the limits of the 
@@ -110,7 +131,7 @@
   sources to use a different flux iterate than down-scatter so this division
   will prove useful.
 
-\section{Formulation}
+\section{Formulation of Finite Element Equations}
   \subsection{Derivation}
     \label{sec:formulation:derivation}
     The only remaining continuous variable in the problem to be discretized is 
@@ -130,32 +151,40 @@
     condition precedent in code with the greater the integer, the greater the 
     precedent.)
     
-    Finite Element derivation begins with \eref{eq:multigroup_source}.
+    FEM begins by dividing the spatial domain $\Omega$
+    into a set of elements.
+    \[ \Omega = \Omega_1 \cup \Omega_2 \cup \Omega_3 \cup \ldots \cup
+      \Omega_{N_E} \]
+    where $\{\Omega_e\}$ for $e = 1,2,\ldots,N_E$ is a set of
+    nonoverlapping elements and $N_E$ is the number of elements in the problem.
+    Elements are in an unstructured grid and can be generated by any method to
+    describe the geometry of the problem.
+    
+    Finite element derivation begins with \eref{eq:multigroup_source}.
     The equation is multiplied by a testing function $v(\vr) \in H_1(\Omega)$ 
-    Where $H$ is the Sobolev Space. Then, the equation is integrated over the 
-    problem domain. This yields the Weak Form or Variational Form of the 
-    problem.
-    \begin{align}
-      -\grad \cdot (D_g(\vr) \grad \phi_g(\vr)) + \Sigma_{r,g}(\vr) \phi_g(\vr)
-        &=q_g(\vr) \\
+    Where $H$ is the Sobolev Space. 
+    \begin{equation}
       -\grad \cdot (D_g(\vr) \grad \phi_g(\vr)) v(\vr) + 
-        \Sigma_{r,g}(\vr) \phi_g(\vr) v(\vr) &=
-        q_g(\vr) v(\vr) \\
+        \Sigma_{r,g}(\vr) \phi_g(\vr) v(\vr) =
+        q_g(\vr) v(\vr)
+    \end{equation}
+    Then, the equation is integrated over the problem domain. This integration
+    yields the Weak Form or Variational Form of the problem.
+    \begin{equation}
       - \int_{\Omega} \grad \cdot (D_g(\vr) \grad \phi_g(\vr)) v(\vr) \; d\Omega
-        \int_{\Omega} \Sigma_{r,g}(\vr) \phi_g(\vr) v(\vr) \;d\Omega &=
+        \int_{\Omega} \Sigma_{r,g}(\vr) \phi_g(\vr) v(\vr) \;d\Omega =
         \int_{\Omega} q_g(\vr) v(\vr) \;d\Omega
-    \end{align}
+    \end{equation}
     
     For the purposes of this application, material cross sections and the
     neutron source are assumed to be constant within an element. Then, the 
     integral can be partitioned into a sum of integrals over the elements in the
-    domain assuming the set of elements $\{\Omega_e\} = \Omega$ for 
-    $e = 1,2,\ldots,E$ where $E$ is the total number of elements.
+    domain assuming the set of elements 
     \begin{equation} \label{eq:element_by_element}
-      -\sum_{e=1}^{E} D_{g,e} 
+      -\sum_{e=1}^{N_E} D_{g,e} 
         \int_{\Omega_e} \grad \cdot \grad \phi_g(\vr) v(\vr) \; d\Omega_e +
-        \sum_{e=1}^{E} \Sigma_{r,g,e} \int_{\Omega_e} \phi_g(\vr) v(\vr) 
-        \;d\Omega_e = \sum_{e=1}^{E} q_{g,e} \int_{\Omega_e} v(\vr) 
+        \sum_{e=1}^{N_E} \Sigma_{r,g,e} \int_{\Omega_e} \phi_g(\vr) v(\vr) 
+        \;d\Omega_e = \sum_{e=1}^{N_E} q_{g,e} \int_{\Omega_e} v(\vr) 
         \; d\Omega_e
     \end{equation}
     The Second Green's Theorem is used to simplify the integral in the first
@@ -176,95 +205,105 @@
     condition which has the following form for $\vr \in \partial \Omega$. 
     \begin{align}
       D_g(\vr) \grad \phi_g(\vr) + \albedo \phi_g(\vr) &= 0 \\
-      \grad \phi_g(\vr) &= \frac{-\albedo \phi_g(\vr)}{D_g}
+      D_g(\vr) \grad \phi_g(\vr) &= -\albedo \phi_g(\vr)
     \end{align}
     Substituting \eref{eq:greens} into  \eref{eq:element_by_element} and 
     assuming the outward normal derivative is specified in the form of an albedo
     boundary condition.
     \begin{multline} 
-      -\sum_{e=1}^{E} D_{g,e} \int_{\partial \Omega_e} v(\vr) 
-        \frac{\partial \phi_g(\vr)}{\partial \vn} \;ds + \sum_{e=1}^{E} D_{g,e}
+      -\sum_{e=1}^{N_E} D_{g,e} \int_{\partial \Omega_e} v(\vr) 
+        \frac{\partial \phi_g(\vr)}{\partial \vn} \;ds + \sum_{e=1}^{N_E} D_{g,e}
         \int_{\Omega_e} \grad \phi_g(\vr) \cdot \grad v(\vr) \; d\Omega_e + \\
-        \sum_{e=1}^{E} \Sigma_{r,g,e} \int_{\Omega_e} \phi_g(\vr) v(\vr) 
+        \sum_{e=1}^{N_E} \Sigma_{r,g,e} \int_{\Omega_e} \phi_g(\vr) v(\vr) 
         \; d\Omega_e =
-        \sum_{e=1}^{E} q_{g,e} \int_{\Omega_e} v(\vr) \; d\Omega_e
+        \sum_{e=1}^{N_E} q_{g,e} \int_{\Omega_e} v(\vr) \; d\Omega_e
     \end{multline}
     \begin{multline} \label{eq:element_boundary}
-      \sum_{e=1}^{E} \albedo \int_{\partial \Omega_e} v(\vr) 
-        \phi_g(\vr) \;ds + \sum_{e=1}^{E} D_{g,e}
+      \sum_{e=1}^{N_E} \albedo \int_{\partial \Omega_e} v(\vr) 
+        \phi_g(\vr) \;ds + \sum_{e=1}^{N_E} D_{g,e}
         \int_{\Omega_e} \grad \phi_g(\vr) \cdot \grad v(\vr) \; d\Omega_e + \\
-        \sum_{e=1}^{E} \Sigma_{r,g,e} \int_{\Omega_e} \phi_g(\vr) v(\vr) 
+        \sum_{e=1}^{N_E} \Sigma_{r,g,e} \int_{\Omega_e} \phi_g(\vr) v(\vr) 
         \; d\Omega_e =
-        \sum_{e=1}^{E} q_{g,e} \int_{\Omega_e} v(\vr) \; d\Omega_e
+        \sum_{e=1}^{N_E} q_{g,e} \int_{\Omega_e} v(\vr) \; d\Omega_e
     \end{multline}
     Now the function of interest $\phi_g(\vr)$ is assumed to be a linear 
     combination of chosen basis functions $\{\basis_i\}$.
     \begin{equation} \label{eq:linear_combination}
-      \phi_g(\vr) = \sum_{i=1}^{N} \beta_{g,i} \basis_i(\vr)
+      \phi_g(\vr) = \sum_{i=1}^{DOF} \beta_{g,i} \basis_i(\vr)
     \end{equation}
-    Where coefficients $\{\beta_i\}$ are unknown and will be determined. 
+    Where coefficients $\{\beta_i\}$ are unknown and will be determined and $DOF$
+    is the degree of freedom of the problem. Typically $DOF$ is the number of
+    nodes minus any nodes for which the flux is fixed (e.g. zero-flux nodes).
     Typically, these basis functions have unit magnitude and are centered at the
     node  points so the coefficients $\beta_i$ are the approximated solution at
     the nodes. Basis functions are typically polynomials of arbitrary degree. 
+    For selected elements, basis functions will be defined explicitly in
+    \sref{sec:matrix_quantities}.
     Linear and quadratic polynomials are common but for the application 
     presented here, only linear basis functions are explored.
     The test function $v(\vr)$ is also chosen as a linear combination of the 
     basis functions.
     \begin{equation} \label{eq:linear_superposition}
-      v(\vr) = \sum_{j=1}^{N} \basis_j(\vr)
+      v(\vr) = \sum_{j=1}^{DOF} \basis_j(\vr)
     \end{equation}
     The testing function is arbitrary so the magnitude is fixed to the magnitude
     of the basis function.
     
     \eref{eq:linear_combination} and \eref{eq:linear_superposition} are inserted 
-    into \eref{eq:element_boundary}. This yields a linear system of equations.
+    into \eref{eq:element_boundary}.
     \begin{multline}
-      \sum_{e=1}^{E} \albedo \sum_{i=1}^{N} \beta_{i,g}
+      \sum_{e=1}^{N_E} \albedo \sum_{i=1}^{N} \beta_{i,g}
         \int_{\partial \Omega_e}
         \basis_i(\vr)  \basis_j(\vr) \;ds +
-        \sum_{e=1}^{E} D_{g,e} \sum_{i=1}^{N} \beta_{i,g}
+        \sum_{e=1}^{N_E} D_{g,e} \sum_{i=1}^{N} \beta_{i,g}
         \int_{\Omega_e} \grad \basis_i(\vr) \cdot \grad \basis_i(\vr)\;d\Omega_e
         + \\
-        \sum_{e=1}^{E} \Sigma_{r,g,e} \sum_{i=1}^{N} \beta_{i,g}
+        \sum_{e=1}^{N_E} \Sigma_{r,g,e} \sum_{i=1}^{N} \beta_{i,g}
         \int_{\Omega_e} \basis_i(\vr) \basis_i(\vr) \; d\Omega_e =
-        \sum_{e=1}^{E} q_{g,e} \sum_{i=1}^{N} 
+        \sum_{e=1}^{N_E} q_{g,e} \sum_{i=1}^{N} 
         \int_{\Omega_e} \basis_i(\vr) \; d\Omega_e
     \end{multline}
+    This can be rearranged as a linear system of equations.
     \begin{multline}
       \sum_{i=1}^{N} \beta_{i,g} \sum_{j=1}^{N} \left(
-        \sum_{e=1}^{E} \albedo \int_{\partial \Omega_e}
+        \sum_{e=1}^{N_E} \albedo \int_{\partial \Omega_e}
         \basis_i(\vr)  \basis_j(\vr) \;ds +
-        \sum_{e=1}^{E} D_{g,e} 
+        \sum_{e=1}^{N_E} D_{g,e} 
         \int_{\Omega_e} \grad \basis_i(\vr) \cdot \grad \basis_j(\vr)\;d\Omega_e
         \right.
         + \\
         \left.
-        \sum_{e=1}^{E} \Sigma_{r,g,e}
+        \sum_{e=1}^{N_E} \Sigma_{r,g,e}
         \int_{\Omega_e} \basis_i(\vr) \basis_j(\vr) \; d\Omega_e \right) =
         \sum_{i=1}^{N} \left(
-        \sum_{e=1}^{E} q_{g,e} 
+        \sum_{e=1}^{N_E} q_{g,e} 
         \int_{\Omega_e} \basis_i(\vr) \; d\Omega_e \right)
     \end{multline}
-    \begin{align}
+    Which can be written in matrix format as
+    \begin{equation}
       \label{eq:fem_notation}
-      a(\basis_i,\basis_j) &= f(\basis_i) \\
+      a(\basis_i,\basis_j) = f(\basis_i)
+    \end{equation}
+    Or in the notation common to the FEM
+    \begin{equation}
       \label{eq:matrix_notation}
-      \ma \vu &= \vf
-    \end{align}
+      \ma \vu = \vf
+    \end{equation}
     $a(\basis_i,\basis_j)$ is the bilinear form and $f(\basis_i)$ is the linear 
     form of the finite element system. The notation of \eref{eq:fem_notation} is
     common to mathematical discussions of the FEM. The diffusion coefficient 
     $D_g(\vr)$ is non-zero and bounded and the removal cross section 
-    $\Sigma_{r,g}(\vr)$ is bounded. Then, Theorem 9.3 in \cite{textbookli} shows 
-    that the finite element equations satisfy the Lax-Milgram Lemma implying 
-    the solution to the finite element method are unique and bounded. This is 
+    $\Sigma_{r,g}(\vr)$ is bounded. The Lax-Milgram Lemma implies the solution
+    to the FEM as derived here is both unique and bounded (See Theorem 9.3
+    \cite{textbookli}). This is 
     not the entire description as the source function $q_g(\vr)$ is updated on 
-    each iteration. What the satisfaction of the Lax Milgram Lemma does imply in
-    this instance is that for a fixed source on a given problem iteration, a 
-    unique solution exists. The global problem remains an eigenvalue problem as 
-    described in \cite{duderstathamilton}. The method will return the 
-    fundamental eigenvalue $\keff$ and the fundamental eigenmode $\phi$ which 
-    may be normalized by an arbitrary constant.
+    each power iteration. What the satisfaction of the Lax Milgram Lemma does 
+    imply in this instance is that for a fixed source on a given problem 
+    iteration, a unique solution exists. The global problem remains an 
+    eigenvalue problem as described in \cite{duderstathamilton}. The power
+    iteration method will 
+    return the fundamental eigenvalue $\keff$ and the fundamental 
+    eigenmode $\phi$ which may be normalized by an arbitrary constant.
     
     In matrix notation \eref{eq:matrix_notation}. Matrix $\ma$ is 
     described by integral quantities, vector $\vu$ is the unknown magnitudes of
@@ -283,8 +322,8 @@
     \end{align}
     Then, 
     \begin{align}
-      A_{i,j,g} &= \sum_{e=1}^{E} A_{i,j,g,e} \\
-      f_{i,g} &=  \sum_{e=1}^{E} f_{i,g,e}
+      A_{i,j,g} &= \sum_{e=1}^{N_E} A_{i,j,g,e} \\
+      f_{i,g} &=  \sum_{e=1}^{N_E} f_{i,g,e}
     \end{align}
     which leads to the natural population of the matrix $\ma$ on an 
     element-by-element basis. That is, the matrix $\ma$ is assembled by looping
@@ -294,8 +333,8 @@
     boundary conditions. See \sref{sec:boundary_conditions} for boundary
     condition discussion.  The population of the vector $\vf$ is done similarly. 
     Then, the matrix $\ma$ and the vector $\vf$ are known for each energy group.
-    The equations are solved for group at a time and $\phi_g$ is calculated and 
-    stored.
+    The equations are solved for one group at a time and $\phi_g$ is calculated
+    and stored.
     
     Though the notation may be obtuse, the above reduces to a linear system of
     equations. These equations are constructed from the integral quantities 
