@@ -3,17 +3,17 @@
 
 \section{Introduction}
   The following is a manufactured solution designed for verification of one,
-  two, and three dimension numerical neutron diffusion equation solvers.
-  one group and two group problems are also addressed.
+  two, and three-dimension numerical neutron diffusion equation solvers.
+  one-group and two-group problems are also addressed.
   
-  For the reference problems, the one group neutron diffusion problem is written
+  For the reference problems, the one-group neutron diffusion problem is written
   below.
   \begin{equation} \label{eq:onegroup}
     -D \grad^2 \phi + \Sigma_r \phi =  \frac{1}{\keff} \nu \Sigma_f \phi + 
       q_{fixed}
   \end{equation}
   Where $\grad^2 \phi = \grad \cdot (\grad \phi)$ and is used to simplify 
-  notaiton. For two group neutron diffusion problems, the two group neutron 
+  notaiton. For two-group neutron diffusion problems, the two-group neutron 
   diffusion problem is written below.
   \begin{align} 
     \label{eq:twogroup1}
@@ -29,20 +29,20 @@
   increase in neutron energy). These are realistic assumptions for all diffusive
   neutron systems.
 
-  Analytic solutions are provided herein. One dimension problems can be 
-  replicated in a two dimension solver using a square geometry and select 
+  Analytic solutions are provided herein. One-dimension problems can be 
+  replicated in a two-dimension solver using a square geometry and select 
   boundary conditions. For a given quadrilateral, two of the boundary conditions
   are set to reflective conditions and two are set to zero-flux $(\phi = 0)$ 
-  conditions. For true two dimensions problems, all of the boundary conditions 
+  conditions. For true two-dimensions problems, all of the boundary conditions 
   are set to zero-flux conditions.
   
   These formula are common to second order partial differential equations but
   the formulation here is based in part from \cite{textbooklewis}.
 
-\section{One Dimension, One Group, Fixed Source}
+\section{One-Dimension, One-Group, Fixed Source}
   \label{sec:deriv_1dfixedsrc}
-  This one dimension problem is in the domain $x \in [0,L]$. For this problem, 
-  the following one group coefficients are used.
+  This one-dimension problem is in the domain $x \in [0,L]$. For this problem, 
+  the following one-group coefficients are used.
   \begin{align*}
     D &= 1\\
     \Sigma_r &= 1\\
@@ -102,10 +102,10 @@
     \phi(x) = -\cosh(Bx) + \frac{\cosh(BL)-1}{\sinh(BL)} \sinh(Bx) +1
   \end{equation}
   
-\section{One Dimension, One Group, Criticality} 
+\section{One-Dimension, One-Group, Criticality} 
   \label{sec:deriv_1d1g}
-  This one dimension problem is in the domain $x \in [0,L]$.
-  This problem also uses the one group neutron diffusion equation from 
+  This one-dimension problem is in the domain $x \in [0,L]$.
+  This problem also uses the one-group neutron diffusion equation from 
   \eref{eq:onegroup}. For this problem, and the following coefficients:
   \begin{align*}
     D &= 1\\
@@ -133,7 +133,7 @@
   \begin{equation} \label{eq:analytic_1d1g}
     \phi(x) = \sin(x/L)
   \end{equation}
-  Plugging this solution back into \eref{eq:onegroup} and dividing both sides
+  Inserting this solution back into \eref{eq:onegroup} and dividing both sides
   by $\sin(x/L)$ will yield an expression for $\keff$.
   \begin{align}
     -D B^2 + \Sigma_r &= \frac{1}{\keff} \nu \Sigma_f \\
@@ -144,10 +144,10 @@
     \keff = 1.9980280254
   \end{equation}
   
-\section{Two Dimension, One Group, Criticality}
+\section{Two-Dimension, One-Group, Criticality}
   \label{sec:deriv_2d1g}
   The same material coefficients are used for this problem as in the 
-  one dimension, criticality problem. For this problem, the domain is in the 
+  one-dimension, criticality problem. For this problem, the domain is in the 
   rectangle $[0,L_x]\times[0,L_y]$. Similar to the one-dimension problem, 
   this problem has basic solution of $\sin(x/L)$. The problem is separable in 
   the two spatial dimensions. 
@@ -192,17 +192,17 @@
     \keff = 1.9960599356
   \end{equation}
   
-\section{One Dimension, Two Group, Criticality}
+\section{One-Dimension, Two-Group, Criticality}
   \label{sec:deriv_1d2g}
   Much of this section is drawn from course notes prepared by Dr. Scott 
   Palmtag \cite{analytic2g}.
   
-  A two group neutron diffusion problem is considered for a one-dimension
+  A two-group neutron diffusion problem is considered for a one-dimension
   homogeneous slab in the domain $x \in [0,L]$. Energy group 1 is higher energy
   than energy group 2. It is assumed all fission neutrons are  produced in the
   fast group (i.e. $\chi_1=1$ and $\chi_2=0$). Additionally, it is assumed that 
   there is no up-scattering  (i.e. $\Sigma_{2\rightarrow1}=0$).  Then, the
-  two group neutron diffusion equations are given in \eref{eq:twogroup1} and 
+  two-group neutron diffusion equations are given in \eref{eq:twogroup1} and 
   \eref{eq:twogroup2}.
   
   Referring to the problem posed by Section \sref{sec:deriv_1d1g}, the flux 
@@ -218,7 +218,7 @@
   \begin{equation}
     B = \pi/L_x
   \end{equation}
-  Then, plugging \eref{eq:twogroupflux1} and \eref{eq:twogroupflux2} into 
+  Then, inserting \eref{eq:twogroupflux1} and \eref{eq:twogroupflux2} into 
   \eref{eq:twogroup2} and dividing the equation by $\sin(Bx)$
   \begin{equation}
     D_2 B^2 c_2 + \Sigma_{r2} c_2 = \Sigma{s1\rightarrow2} c_1
@@ -228,7 +228,7 @@
     \frac{c_2}{c_1} = \frac{\Sigma_{s1\rightarrow2}}{D_2 B^2 + \Sigma_{r2}}
   \end{equation}
   The ratio $\frac{c_2}{c_1}$ represents the relative magnitude of thermal to 
-  fast flux. Returning to \eref{eq:twogroup1}, pluggin in 
+  fast flux. Returning to \eref{eq:twogroup1}, and using in 
   \eref{eq:twogroupflux1} and \eref{eq:twogroupflux2} and again dividing both
   sides by  $\sin(Bx)$
   \begin{align}
@@ -239,7 +239,7 @@
     \keff &= \frac{\nu \Sigma_{f1} + \nu \Sigma_{f2} c_2/c_1}
       {D_1 B^2 + \Sigma{r1}}
   \end{align}
-  Plugging in the expression from \eref{eq:fluxratio}
+  Inserting the expression from \eref{eq:fluxratio}
   \begin{equation}
     \keff = \frac{\nu \Sigma_{f1} + \nu \Sigma_{f2} 
       \left(\frac{\Sigma_{s1\rightarrow2}}{D_2B^2+\Sigma_{r2}}\right)}
@@ -262,7 +262,7 @@
     \keff &= 0.892349025
   \end{align}
   
-\section{One Dimension, One Group, Two Region, Criticality}
+\section{One-Dimension, One-Group, Two Region, Criticality}
   \label{sec:deriv_2reg}
   This final analytic problem was designed to test the materials mapping of a
   solver. The problem is proposed as a slab reactor with a fuel and reflector
@@ -363,7 +363,7 @@
   \begin{equation}
     - \frac{D_F c_{1F} B_F \sin(B_F a)}{D_R B_R} = -c_{1R} \tanh(B_R(b-a))
   \end{equation}
-  Plugging in the the expression for $c_{1R}$ from \eref{eq:c1r}
+  Using the the expression for $c_{1R}$ from \eref{eq:c1r}
   \begin{align}
     - \frac{D_F c_{1F} B_F \sin(B_F a)}{D_R B_R} &=
       - \frac{c_{1F} \cos(B_F a)}{\tanh(B_R(b-a))}\\
@@ -397,7 +397,7 @@
     \keff &= \frac{\nu\Sigma_{fF}}{D_F B_F^2 + \Sigma_{rF}} \\
     &= 0.9621882561
   \end{align}
-\section{Finite Cylinder, One Group, Criticality}
+\section{Finite-Cylinder, One-Group, Criticality}
   \label{sec:deriv_finite_cyl}
   The finite cylinder is an example of a truly three-dimension problem with
   an analytic solution. This is a homogeneous cylinder with zero-flux boundary
@@ -407,8 +407,8 @@
   
   The solution method is by separation of variables into radial and axial 
   directions. This derivation is similar to that in \sref{sec:deriv_2d1g}.
-  Beginning with the one group neutron diffusion equation \eref{eq:onegroup} and assuming
-  that  $\phi(r,z) = R(r) Z(z)$.
+  Beginning with the one-group neutron diffusion equation \eref{eq:onegroup} 
+  and assuming that  $\phi(r,z) = R(r) Z(z)$.
   \begin{align}
     -D \grad^2 \phi(r,z) + \Sigma_r \phi(r,z) &= \nu \Sigma_f \phi(r,z) \\
     \grad^2 \phi(r,z) + \frac{\nu\Sigma_f - \Sigma_r}{D} \phi(r,g) &= 0 \\
@@ -488,8 +488,8 @@
     \phi(r,z) &= J_0(B_r r) \sin(B_z z) \\
     &= J_0(r \alpha_0 / R) \sin(z \pi / H)
   \end{align}
-  Plugging \eref{eq:analytic_finite_cyl} into the diffusion equation will yield the 
-  buckling/criticality condition.
+  Inserting \eref{eq:analytic_finite_cyl} into the diffusion equation will yield 
+  the buckling/criticality condition.
   \begin{equation}
     -D \left( \frac{1}{r} \frac{\partial}{\partial r} \left( r 
       \frac{\partial \phi}{\partial r} \right) + \frac{\partial^2 \phi}
@@ -528,7 +528,7 @@
       -B_r \sin(B_z z) \left(\frac{1}{r} J_1(B_r r) + \frac{1}{2} B_r \left(
       J_0(B_r r) - J_2(B_r r) \right) \right)
   \end{align}
-  Finally, plugging the expression for the Laplacian of the flux back into the
+  Finally, inserting the expression for the Laplacian of the flux back into the
   diffusion equation.
   \begin{multline}
     D \left( B_r \sin(B_z z) \left( \frac{1}{r} J_1(B_r r) + \frac{1}{2} B_r

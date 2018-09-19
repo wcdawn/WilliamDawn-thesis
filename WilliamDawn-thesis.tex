@@ -17,6 +17,7 @@
 \usepackage{algorithm}
 \usepackage[noend]{algpseudocode}
 \usepackage{csvsimple}
+\usepackage{threeparttable}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%%%%%%%% Hack for alphanumeric bibliography
@@ -287,14 +288,15 @@ Method}
 \newcommand{\realnn}{\real^{n \times n}}
 
 % variable definitions
-\newcommand{\keff}{k_{eff}}
+\newcommand{\keff}{k_{\!\mbox{\scriptsize \em eff}}}
+\newcommand{\kref}{k_{\!\mbox{\scriptsize \em ref}}}
 \newcommand{\grad}{\mathbf{\nabla}}
 
 % general macros
 \newcommand{\units}[1]{\;\text{[{#1}]}}
 
 % neutronDiffusion
-\newcommand{\albedo}{\aleph}
+\newcommand{\albedo}{\alpha}
 \newcommand{\basis}{N}
 \newcommand{\twotable}{TwoTable }
 \newcommand{\phiavg}{\overline{\phi}}

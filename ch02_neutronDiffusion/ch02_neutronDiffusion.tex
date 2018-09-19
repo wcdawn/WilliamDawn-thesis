@@ -200,11 +200,11 @@
     Now the function of interest $\phi_g(\vr)$ is assumed to be a linear 
     combination of chosen basis functions $\{\basis_i\}$.
     \begin{equation} \label{eq:linear_combination}
-      \phi_g(\vr) = \sum_{i=1}^{N} \alpha_{g,i} \basis_i(\vr)
+      \phi_g(\vr) = \sum_{i=1}^{N} \beta_{g,i} \basis_i(\vr)
     \end{equation}
-    Where coefficients $\{\alpha_i\}$ are unknown and will be determined. 
+    Where coefficients $\{\beta_i\}$ are unknown and will be determined. 
     Typically, these basis functions have unit magnitude and are centered at the
-    node  points so the coefficients $\alpha_i$ are the approximated solution at
+    node  points so the coefficients $\beta_i$ are the approximated solution at
     the nodes. Basis functions are typically polynomials of arbitrary degree. 
     Linear and quadratic polynomials are common but for the application 
     presented here, only linear basis functions are explored.
@@ -216,22 +216,22 @@
     The testing function is arbitrary so the magnitude is fixed to the magnitude
     of the basis function.
     
-    \eref{eq:linear_combination} and \eref{eq:linear_superposition} are plugged
+    \eref{eq:linear_combination} and \eref{eq:linear_superposition} are inserted 
     into \eref{eq:element_boundary}. This yields a linear system of equations.
     \begin{multline}
-      \sum_{e=1}^{E} \albedo \sum_{i=1}^{N} \alpha_{i,g}
+      \sum_{e=1}^{E} \albedo \sum_{i=1}^{N} \beta_{i,g}
         \int_{\partial \Omega_e}
         \basis_i(\vr)  \basis_j(\vr) \;ds +
-        \sum_{e=1}^{E} D_{g,e} \sum_{i=1}^{N} \alpha_{i,g}
+        \sum_{e=1}^{E} D_{g,e} \sum_{i=1}^{N} \beta_{i,g}
         \int_{\Omega_e} \grad \basis_i(\vr) \cdot \grad \basis_i(\vr)\;d\Omega_e
         + \\
-        \sum_{e=1}^{E} \Sigma_{r,g,e} \sum_{i=1}^{N} \alpha_{i,g}
+        \sum_{e=1}^{E} \Sigma_{r,g,e} \sum_{i=1}^{N} \beta_{i,g}
         \int_{\Omega_e} \basis_i(\vr) \basis_i(\vr) \; d\Omega_e =
         \sum_{e=1}^{E} q_{g,e} \sum_{i=1}^{N} 
         \int_{\Omega_e} \basis_i(\vr) \; d\Omega_e
     \end{multline}
     \begin{multline}
-      \sum_{i=1}^{N} \alpha_{i,g} \sum_{j=1}^{N} \left(
+      \sum_{i=1}^{N} \beta_{i,g} \sum_{j=1}^{N} \left(
         \sum_{e=1}^{E} \albedo \int_{\partial \Omega_e}
         \basis_i(\vr)  \basis_j(\vr) \;ds +
         \sum_{e=1}^{E} D_{g,e} 
@@ -254,7 +254,7 @@
     $a(\basis_i,\basis_j)$ is the bilinear form and $f(\basis_i)$ is the linear 
     form of the finite element system. The notation of \eref{eq:fem_notation} is
     common to mathematical discussions of the FEM. The diffusion coefficient 
-    $D_g(\vr)$ is nonzero and bounded and the removal cross section 
+    $D_g(\vr)$ is non-zero and bounded and the removal cross section 
     $\Sigma_{r,g}(\vr)$ is bounded. Then, Theorem 9.3 in \cite{textbookli} shows 
     that the finite element equations satisfy the Lax-Milgram Lemma implying 
     the solution to the finite element method are unique and bounded. This is 
@@ -268,7 +268,7 @@
     
     In matrix notation \eref{eq:matrix_notation}. Matrix $\ma$ is 
     described by integral quantities, vector $\vu$ is the unknown magnitudes of
-    the basis functions $\{\alpha_i\}$, and vector $\vf$ is described by the 
+    the basis functions $\{\beta_i\}$, and vector $\vf$ is described by the 
     source integral quantity. Inspecting the matrix $\ma$ and the vector $\vf$
     reveals the following.
     \begin{align}
@@ -314,7 +314,7 @@
     quadratures can express the integrals exactly. This will be discussed in 
     \sref{sec:quadratures}.
     \subsubsection{Linear Triangles}
-      Linear triangles are common to two dimensional finite element methods and
+      Linear triangles are common to two-dimensional finite element methods and
       have been investigated in many applications \cite{Hosseini2017} 
       \cite{Hosseini2013} \cite{Hosseini2015}. This is a triangle  defined by
       three corner coordinates with basis functions located on each corner
@@ -435,13 +435,13 @@
     quadrature. It is not necessarily true that $N$ be the order of the 
     quadrature.
     
-    For one dimensional integrals, the Gaussian quadrature is common and the 
+    For one-dimensional integrals, the Gaussian quadrature is common and the 
     most compact quadrature. The Gaussian quadrature exactly integrates a 
     polynomial of order $n$ using exactly $n$ points. Weights and coordinates
     for this quadrature set are presented in \cite{gaussianQuadrature}. For this
     quadrature, $n=N$.
     
-    Two dimensional and three dimensional quadratures are necessary for the 
+    Two-dimensional and three-dimensional quadratures are necessary for the 
     solution of this problem. Triangular quadratures are not as simply derived 
     as line quadratures and the number of points need not equal the order of the
     polynomial integrated. The triangular quadrature as implemented here is 
@@ -463,25 +463,30 @@
     table of the order required for exact integration are provided in 
     \tref{tab:quadrature_orders}.
     \begin{table}
-      \caption{Quadrature Orders for FEM Quantities.}
-      \label{tab:quadrature_orders}
       \begin{center}
-        \begin{tabular}{lccc}
-          \toprule
-          Quantity & Linear & Quadratic & Cubic \\
-          \midrule
-          $\int_{\Omega} \basis_i(\vr) \;d\Omega$ & 1 & 2 & 4\footnotemark \\
-          $\int_{\Omega} \basis_i(\vr) \basis_j(\vr) \;d\Omega$ &
-            2 & 4 & 6 \\
-          $\int_{\Omega} \grad \basis_i(\vr) \cdot \grad \basis_j(\vr) 
-            \;d\Omega$ & 2 & 3 & 5 \\
-          \bottomrule
-        \end{tabular}
+        \caption{Quadrature Orders for FEM Quantities.}
+        \label{tab:quadrature_orders}
+        \begin{threeparttable}
+          \begin{tabular}{lccc}
+            \toprule
+            Quantity & Linear & Quadratic & Cubic \\
+            \midrule
+            $\int_{\Omega} \basis_i(\vr) \;d\Omega$ & 1 & 2 & 4
+              \tnote{$\dagger$} \\
+            $\int_{\Omega} \basis_i(\vr) \basis_j(\vr) \;d\Omega$ &
+              2 & 4 & 6 \\
+            $\int_{\Omega} \grad \basis_i(\vr) \cdot \grad \basis_j(\vr) 
+              \;d\Omega$ & 2 & 3 & 5 \\
+            \bottomrule
+          \end{tabular}
+          \begin{tablenotes}
+            \item[$\dagger$] A third order quadrature would be exact but the 
+              quadrature would have negative weights so a fourth order 
+              quadrature is selected.
+          \end{tablenotes}
+        \end{threeparttable}
       \end{center}
     \end{table}
-    \footnotetext{A third order quadrature would be exact but the quadrature
-    would have negative weights so a fourth order quadrature is 
-    selected.}
     
     All of the quadratures described here are tabulated for a reference element
     be it a line, triangle, quadrilateral, or wedge. Integration in the 
@@ -539,7 +544,7 @@
     effect on the result as the linear system represented is equivalent. This 
     choice to reorder the system is made to improve computational efficiency. 
     Indexing nodes that are physically proximate with proximate indices causes 
-    rows in the Finite Element Matrix $\ma$ to be closely coupled to nearby
+    rows in the finite element matrix $\ma$ to be closely coupled to nearby
     rows. In a general unstructured and unordered mesh rows may be coupled to 
     other random rows in the matrix. This step of reordering the matrix $\ma$ 
     seeks to decrease the bandwidth of the matrix and encourage cache hits when
@@ -556,7 +561,7 @@
         \label{state:rcm}
       \State Calculate $\Sigma_s$, $\Sigma_t$, and $\nu \Sigma_f$ for each 
         element.
-      \State Calculate Finite Element Matrix $\ma_g$ for each group. Store this. 
+      \State Calculate finite element matrix $\ma_g$ for each group. Store this. 
         \label{state:fem_matrix}
       \While{Power Iteration}
       	\State Update the iteration counter. $s=s+1$
@@ -572,7 +577,7 @@
           \State Parse $\vu$ for $\phi$ nodal solution.
           \State Calculate element-average $\phiavg$.
         \EndFor
-        \State Update $k_{eff}$.
+        \State Update $\keff$.
         \State Check convergence.
       \EndWhile
       \end{algorithmic}
@@ -585,7 +590,7 @@
     of the calculation.
     \FloatBarrier % make sure the algorithm is in the correct section
   \subsection{Memory and Storage}
-    The Finite Element Matrix $\ma$ is large and sparse so a sparse storage and
+    The finite element matrix $\ma$ is large and sparse so a sparse storage and
     sparse solution to the linear system are required. Many sparse matrix 
     implementations have been described and implemented in the past including
     triplet storage, reduced column, and reduced row storage \cite{sparseBLAS}.
@@ -623,12 +628,12 @@
     answer. The choices made for this application are presented below. Mirror 
     boundary conditions require $\grad \phi_g(\vr) = 0$ for 
     $\vr \in \partial \Omega$. These are also known as ``natural'' boundary
-    conditions because the Finite Element Matrix $\ma$ requires no additional 
+    conditions because the finite element matrix $\ma$ requires no additional 
     treatment and this condition is natural. In the albedo representation, this
     is equivalent to $\albedo = 0$.
     
     Albedo boundary conditions are treated with an additional contribution to 
-    the Finite Element Matrix $\ma$. These contributions represent a line 
+    the finite element matrix $\ma$. These contributions represent a line 
     integral in two dimensions and a surface integral in three dimensions. These
     values are found in \eref{eq:matrix_population} and the quantities are 
     expressed in \sref{sec:matrix_quantities} or by quadratures 
@@ -636,12 +641,12 @@
     
     Zero Flux boundary conditions require $\phi(\vr) = 0$ for 
     $\vr \in \partial \Omega$. These are treated by removing these entries from
-    the Finite Element Matrix $\ma$. Entries are removed by using an index 
+    the finite element matrix $\ma$. Entries are removed by using an index 
     vector. In a natural system (see Mirror boundary conditions above) each node
     corresponds to a row/column of the matrix. With entries removed, node number
     and index number may not exactly agree. A vector \texttt{ID} is introduced
     \cite{textbookjohnson}. Nodes with non-zero flux boundary conditions are set
-    to a sequential positive integer. Nodes with zero flux boundary conditions 
+    to a sequential positive integer. Nodes with zero-flux boundary conditions 
     are set to a negative integer (-1) and are omitted in the actual solution of 
     the system. Other strategies have been proposed such as the penalty approach 
     \cite{textbookhughes} and manually forcing the solution of the linear system 
@@ -660,7 +665,7 @@
     method. The linear system described by the FEM can then be exploited for its 
     unique properties to select a favorable solution method.
     
-    The Finite Element Matrix $\ma$ for the problem described in 
+    The finite element matrix $\ma$ for the problem described in 
     \eref{eq:multigroup_source} is Symmetric Positive Definite (SPD). Symmetry
     condition is straight-forward and is observed in the elemental matrix 
     description \eref{eq:matrix_population}. Briefly, $A_{i,j,g,e}=A_{j,i,g,e}$.
@@ -744,9 +749,9 @@
             \State $\vp = \vr + \beta \vp$
           \EndIf
           \State $\vw = \ma \vp$
-          \State $\alpha = \rho_{k-1} / \vp^{T} \vw$
-          \State $\vx = \vx + \alpha \vp$
-          \State $\vr = \vr - \alpha \vw$
+          \State $\beta = \rho_{k-1} / \vp^{T} \vw$
+          \State $\vx = \vx + \beta \vp$
+          \State $\vr = \vr - \beta \vw$
           \State $\rho_k = \| \vr \|_2^2$
           \State $k=k+1$
         \EndWhile
@@ -826,14 +831,14 @@
   \subsection{Triangular Element Manufactured Solutions}
     As a demonstration of the proper implementation of and solution to the 
     diffusion equation for triangular elements, manufactured solutions are 
-    derived and then numerically computed. These are one and two dimension 
-    problems. All of these are on a rectangular domain $[0,L_x] \times [0,L_y]$.
-    For one dimension problems, the top and bottom edges $y=0$ and $y=L_x$ are 
-    mirror boundary conditions to reduce the dimension of the problem. To verify 
-    there was no error obscured by this process, the results were reproduced for
-    a rotated problem with the left and right edges set to mirror boundary
-    conditions.
-    \subsubsection{One Dimension, One Group, Fixed Source}
+    derived and then numerically computed. These are one-dimensional and
+    two-dimensional problems. All of these are on a rectangular domain 
+    $[0,L_x] \times [0,L_y]$. For one-dimension problems, the top and 
+    bottom edges $y=0$ and $y=L_x$ are mirror boundary conditions to reduce the
+    dimension of the problem. To verify there was no error obscured by this 
+    process, the results were reproduced for a rotated problem with the left and 
+    right edges set to mirror boundary conditions.
+    \subsubsection{One-Dimension, One-Group, Fixed Source}
       \label{sec:1dfixedsrc}
       Arguably the simplest solution to the neutron diffusion equation, this 
       problem  solves a domain $x \in [0,1]$ for a fixed unit source throughout
@@ -841,7 +846,7 @@
       and is presented in \eref{eq:analytic_1dfixedsrc}. Results 
       from the convergence study are presented in \tref{tab:1dfixedsrc}.
       \begin{table}
-        \caption{One Dimension, One Group, Fixed Source Convergence Study 
+        \caption{One-Dimension, One-Group, Fixed Source Convergence Study 
           Results.}
         \label{tab:1dfixedsrc}
         \begin{center}
@@ -858,7 +863,7 @@
           \end{tabular}
         \end{center}
       \end{table}
-    \subsubsection{One Dimension, One Group, Criticality}
+    \subsubsection{One-Dimension, One-Group, Criticality}
       \label{sec:1d1g}
       In addition to the fixed source problem in \sref{sec:1dfixedsrc}, this 
       problem tests the calculation of the source term and the general iteration
@@ -867,10 +872,10 @@
       The exact solution is derived in \sref{sec:deriv_1d1g} and
       presented in \eref{eq:analytic_1d1g}. Results from
       the convergence study are presented in \tref{tab:1d1g}. The exact value 
-      for the effective multiplication factor is $k_{ref} = 1.998028$.
+      for the effective multiplication factor is $\kref = 1.998028$.
       \begin{table}
-        \caption{One Dimension, One Group, Criticality Convergence Study
-          Results. $k_{ref} = 1.998028$.}
+        \caption{One-Dimension, One-Group, Criticality Convergence Study
+          Results.}
         \label{tab:1d1g}
         \begin{center}
           \begin{tabular}{cccccccccc}
@@ -880,23 +885,25 @@
             \midrule
             \csvreader[
               late after line=\\,
-              late after last line=\\\bottomrule,]
+              late after last line=\\,]
               {ch02_neutronDiffusion/data/1d1g.csv}{}
               {\csvcoli & \csvcolii & \csvcoliii & \csvcoliv & \csvcolv & 
               \csvcolvi & \csvcolxi & \csvcolxii}
+            Ref. & 1.998028 \\
+            \bottomrule
           \end{tabular}
         \end{center}
       \end{table}
-    \subsubsection{Two Dimension, One Group, Criticality}
-      In addition to the one dimension problem in \sref{sec:1d1g}, this problem
-      tests the ability to solve truly two dimensional problems.
+    \subsubsection{Two-Dimension, One-Group, Criticality}
+      In addition to the one-dimension problem in \sref{sec:1d1g}, this problem
+      tests the ability to solve truly two-dimensional problems.
       The exact solution is derived in \sref{sec:deriv_2d1g} and
        presented in \eref{eq:analytic_2d1g}. Results from
       the convergence study are presented in \tref{tab:2d1g}. The exact value 
-      for the effective multiplication factor is $k_{ref} = 1.9960560$.
+      for the effective multiplication factor is $\kref = 1.996060$.
       \begin{table}
-        \caption{Two Dimension, One Group, Criticality Convergence Study
-          Results. $k_{ref} = 1.996060$.}
+        \caption{Two-Dimension, One-Group, Criticality Convergence Study
+          Results.}
         \label{tab:2d1g}
         \begin{center}
           \begin{tabular}{cccccccccc}
@@ -906,15 +913,17 @@
             \midrule
             \csvreader[
               late after line=\\,
-              late after last line=\\\bottomrule,]
+              late after last line=\\,]
               {ch02_neutronDiffusion/data/2d1g.csv}{}
               {\csvcoli & \csvcolii & \csvcoliii & \csvcoliv & \csvcolv & 
               \csvcolvi & \csvcolxi & \csvcolxii}
+            Ref. & 1.996060  \\
+            \bottomrule
           \end{tabular}
         \end{center}
       \end{table}
-    \subsubsection{One Dimension, Two Group, Criticality }
-      In addition to the one group problem in \sref{sec:1d1g}, this problem
+    \subsubsection{One-Dimension, Two-Group, Criticality }
+      In addition to the one-group problem in \sref{sec:1d1g}, this problem
       tests the solution of mulitgroup problems. The results presented are the 
       convergece of $\keff$ and the ratio of relative magnitude of thermal to 
       fast flux $\phi_2/\phi_1$.
@@ -922,11 +931,11 @@
       the solutions are presented in \eref{eq:twogroupflux1} and
       \eref{eq:twogroupflux2}. Results from the convergence study are presented in 
       \tref{tab:1d2g}. The exact value for the effective multiplication factor 
-      is $k_{ref} = 0.892349$ and the exact value for the relative flux ratio
+      is $\kref = 0.892349$ and the exact value for the relative flux ratio
       is $(\phi_2/\phi_1)_{ref} = 0.261324$.
       \begin{table}
-        \caption{One Dimension, Two Group, Criticality Convergence Study
-          Results. $k_{ref} = 0.892349$ $(\phi_2/\phi_1)_{ref} = 0.261324$}
+        \caption{One-Dimension, Two-Group, Criticality Convergence Study
+          Results.}
         \label{tab:1d2g}
         \begin{center}
           \begin{tabular}{ccccccc}
@@ -936,23 +945,25 @@
             \midrule
             \csvreader[
               late after line=\\,
-              late after last line=\\\bottomrule,]
+              late after last line=\\,]
               {ch02_neutronDiffusion/data/1d2g.csv}{}
               {\csvcoli & \csvcolii & \csvcoliii & \csvcoliv & \csvcolv & 
               \csvcolvi & \csvcolvii}
+            Ref. & 0.892349 &  &  & 0.261324 \\
+            \bottomrule
           \end{tabular}
         \end{center}
       \end{table}
-    \subsubsection{One Dimension, One Group, Two Region, Criticality}
+    \subsubsection{One-Dimension, One-Group, Two-Region, Criticality}
       In addition to the homogenous problem in \sref{sec:1d1g}, this problem
       tests the mapping of materials to regions within the problem.
       The exact solution is derived in \sref{sec:deriv_2reg} and
       presented in \eref{eq:analytic_2reg}. Results from
       the convergence study are presented in \tref{tab:2reg}. The exact value 
-      for the effective multiplication factor is $k_{ref} = 0.962188$.
+      for the effective multiplication factor is $\kref = 0.962188$.
       \begin{table}
-        \caption{One Dimension, One Group, Two Region, Criticality Convergence
-          Study Results. $k_{ref} = 0.962188$}
+        \caption{One-Dimension, One-Group, Two-Region, Criticality Convergence
+          Study Results.}
         \label{tab:2reg}
         \begin{center}
           \begin{tabular}{cccccccccc}
@@ -962,24 +973,26 @@
             \midrule
             \csvreader[
               late after line=\\,
-              late after last line=\\\bottomrule,]
+              late after last line=\\,]
               {ch02_neutronDiffusion/data/2reg.csv}{}
               {\csvcoli & \csvcolii & \csvcoliii & \csvcoliv & \csvcolv & 
               \csvcolvi & \csvcolxi & \csvcolxii}
+            Ref. & 0.962188 \\
+            \bottomrule
           \end{tabular}
         \end{center}
       \end{table}
   \subsection{Two Dimension Reactors}
     The application presented here was originally designed with the intention to 
-    simulate power reactors. As such, two dimension problems with similar
-    reactor physics phenomena have been examined here. These two dimension
+    simulate power reactors. As such, two-dimension problems with similar
+    reactor physics phenomena have been examined here. These two-dimension
     problems come from existing benchmarks based on hexagonal geometry. These
     benchmarks represent various energy group structures, geometries, assembly
     sizes,  boundary conditions, as well as other properties. Data used in these
     problems is consisely presented in \apref{ap:benchmarks}. 
     \subsubsection{VVER440}
       Proposed in \cite{chao} and described in \sref{sec:vver440}, this
-      reactor-type, two dimension problem is based on a
+      reactor-type, two-dimension problem is based on a
       VVER-440 reactor. The VVER-440 is a 
       light-water moderated reactor and operates principally with thermal 
       neutrons. Cross sections are provided for a two-group energy structure.
@@ -995,25 +1008,31 @@
         \label{fig:diffusion_vver440}
       \end{figure}
       \begin{table}
-        \caption{VVER440 Benchmark Convergence Study. 
-          $k_{ref} = 1.009700$ \cite{chao}}
-        \label{tab:vver440}
         \begin{center}
-          \begin{tabular}{cccc}
-            \toprule
-            Refine & $\keff$ & $\keff$ error \units{pcm} & $\keff$ ratio \\
-            \midrule
-            \csvreader[
-              late after line=\\,
-              late after last line=\\\bottomrule,]
-              {ch02_neutronDiffusion/data/vver440.csv}{}
-              {\csvcoli & \csvcolvi & \csvcolvii & \csvcolviii}
-          \end{tabular}
+          \caption{VVER440 Benchmark Convergence Study.}
+          \label{tab:vver440}
+          \begin{threeparttable}
+            \begin{tabular}{cccc}
+              \toprule
+              Refine & $\keff$ & $\keff$ error \units{pcm} & $\keff$ ratio \\
+              \midrule
+              \csvreader[
+                late after line=\\,
+                late after last line=\\,]
+                {ch02_neutronDiffusion/data/vver440.csv}{}
+                {\csvcoli & \csvcolvi & \csvcolvii & \csvcolviii}
+              Ref.\tnote{$\dagger$}  & 1.009700 \\
+              \bottomrule
+            \end{tabular}
+            \begin{tablenotes}
+              \item[$\dagger$] See \cite{chao}.
+            \end{tablenotes}
+          \end{threeparttable}
         \end{center}
       \end{table}
     \subsubsection{SNR}
       Proposed in \cite{argonneBenchmark} and described in \sref{sec:snr}, this
-      reactor-type, two dimensional problem is based on a SNR reactor. The SNR
+      reactor-type, two-dimensional problem is based on a SNR reactor. The SNR
       is a sodium cooled fast reactor and operates principly with thermal
       neutrons. Cross sections are provided for a four-group energy structure.
 
@@ -1028,25 +1047,31 @@
         \label{fig:diffusion_snr}
       \end{figure}
       \begin{table}
-        \caption{SNR Benchmark Convergence Study. 
-          $k_{ref} = 1.124000$ \cite{argonneBenchmark}}
-        \label{tab:snr}
         \begin{center}
-          \begin{tabular}{cccc}
-            \toprule
-            Refine & $\keff$ & $\keff$ error \units{pcm} & $\keff$ ratio \\
-            \midrule
-            \csvreader[
-              late after line=\\,
-              late after last line=\\\bottomrule,]
-              {ch02_neutronDiffusion/data/snr.csv}{}
-              {\csvcoli & \csvcolvi & \csvcolvii & \csvcolviii}
-          \end{tabular}
+          \caption{SNR Benchmark Convergence Study.}
+          \label{tab:snr}
+          \begin{threeparttable}
+            \begin{tabular}{cccc}
+              \toprule
+              Refine & $\keff$ & $\keff$ error \units{pcm} & $\keff$ ratio \\
+              \midrule
+              \csvreader[
+                late after line=\\,
+                late after last line=\\,]
+                {ch02_neutronDiffusion/data/snr.csv}{}
+                {\csvcoli & \csvcolvi & \csvcolvii & \csvcolviii}
+              Ref. \tnote{$\dagger$} & 1.124000 \\
+              \bottomrule
+            \end{tabular}
+            \begin{tablenotes}
+              \item[$\dagger$] See \cite{argonneBenchmark}.
+            \end{tablenotes}
+          \end{threeparttable}
         \end{center}
       \end{table}
     \subsubsection{HWR}
       Proposed in \cite{chao} and described in \sref{sec:hwr}, this
-      reactor-type, two dimensional problem is based on a large Heavy Water
+      reactor-type, two-dimensional problem is based on a large Heavy Water
       Reactor (HWR). This is a heavy water moderated reactor and operates
       principly with thermal neutrons. Cross sections are provided for a
       two-group energy structure.
@@ -1062,26 +1087,32 @@
         \label{fig:diffusion_hwr}
       \end{figure}
       \begin{table}
-        \caption{HWR Benchmark Convergence Study. 
-          $k_{ref} = 0.991965$ \cite{chao}}
-        \label{tab:hwr}
         \begin{center}
-          \begin{tabular}{cccc}
-            \toprule
-            Refine & $\keff$ & $\keff$ error \units{pcm} & $\keff$ ratio \\
-            \midrule
-            \csvreader[
-              late after line=\\,
-              late after last line=\\\bottomrule,]
-              {ch02_neutronDiffusion/data/hwr.csv}{}
-              {\csvcoli & \csvcolvi & \csvcolvii & \csvcolviii}
-          \end{tabular}
+          \caption{HWR Benchmark Convergence Study.}
+          \label{tab:hwr}
+          \begin{threeparttable}
+            \begin{tabular}{cccc}
+              \toprule
+              Refine & $\keff$ & $\keff$ error \units{pcm} & $\keff$ ratio \\
+              \midrule
+              \csvreader[
+                late after line=\\,
+                late after last line=\\,]
+                {ch02_neutronDiffusion/data/hwr.csv}{}
+                {\csvcoli & \csvcolvi & \csvcolvii & \csvcolviii}
+              Ref.\tnote{$\dagger$} & 0.991965  \\
+              \bottomrule
+            \end{tabular}
+            \begin{tablenotes}
+              \item[$\dagger$] See \cite{chao}.
+            \end{tablenotes}
+          \end{threeparttable}
         \end{center}
       \end{table}
     \subsubsection{IAEA}
       Proposed in \cite{chao} and described in \sref{sec:iaea}, this
-      reactory-type, two dimensional problem was originally based on a cartesian
-      grid two dimensional Pressurized Water Reactor (PWR) but was converted to
+      reactory-type, two-dimensional problem was originally based on a cartesian
+      grid two-dimensional Pressurized Water Reactor (PWR) but was converted to
       hexagonal geometry in \cite{chao}. As it is based on a PWR deisgn, the
       reactor operates principally with thermal neturons. Cross sections are
       provided for a two-group energy structure.
@@ -1094,88 +1125,115 @@
       \tref{tab:iaea_refl0500}.
       % nore0125
       \begin{table}
-        \caption{IAEA Benchmark Convergence Study. No Reflector. $\albedo = 
-          0.125$. $k_{ref} = 0.991378 $ \cite{chao}}
-        \label{tab:iaea_nore0125}
         \begin{center}
-          \begin{tabular}{cccc}
-            \toprule
-            Refine & $\keff$ & $\keff$ error \units{pcm} & $\keff$ ratio \\
-            \midrule
-            \csvreader[
-              late after line=\\,
-              late after last line=\\\bottomrule,]
-              {ch02_neutronDiffusion/data/iaea_nore0125.csv}{}
-              {\csvcoli & \csvcolvi & \csvcolvii & \csvcolviii}
-          \end{tabular}
+          \caption{IAEA Benchmark Convergence Study. No Reflector. $\albedo = 
+            0.125$.}
+          \label{tab:iaea_nore0125}
+          \begin{threeparttable}
+            \begin{tabular}{cccc}
+              \toprule
+              Refine & $\keff$ & $\keff$ error \units{pcm} & $\keff$ ratio \\
+              \midrule
+              \csvreader[
+                late after line=\\,
+                late after last line=\\,]
+                {ch02_neutronDiffusion/data/iaea_nore0125.csv}{}
+                {\csvcoli & \csvcolvi & \csvcolvii & \csvcolviii}
+              Ref. \tnote{$\dagger$} & 0.991378 \\
+              \bottomrule
+            \end{tabular}
+            \begin{tablenotes}
+              \item[$\dagger$] See \cite{chao}.
+            \end{tablenotes}
+          \end{threeparttable}
         \end{center}
       \end{table}
       % nore0500
       \begin{table}
-        \caption{IAEA Benchmark Convergence Study. No Reflector. $\albedo = 
-          0.500$. $k_{ref} = 0.978077$ \cite{chao}}
-        \label{tab:iaea_nore0500}
         \begin{center}
-          \begin{tabular}{cccc}
-            \toprule
-            Refine & $\keff$ & $\keff$ error \units{pcm} & $\keff$ ratio \\
-            \midrule
-            \csvreader[
-              late after line=\\,
-              late after last line=\\\bottomrule,]
-              {ch02_neutronDiffusion/data/iaea_nore0500.csv}{}
-              {\csvcoli & \csvcolvi & \csvcolvii & \csvcolviii}
-          \end{tabular}
+          \caption{IAEA Benchmark Convergence Study. No Reflector. $\albedo = 
+            0.500$.}
+          \label{tab:iaea_nore0500}
+          \begin{threeparttable}
+            \begin{tabular}{cccc}
+              \toprule
+              Refine & $\keff$ & $\keff$ error \units{pcm} & $\keff$ ratio \\
+              \midrule
+              \csvreader[
+                late after line=\\,
+                late after last line=\\,]
+                {ch02_neutronDiffusion/data/iaea_nore0500.csv}{}
+                {\csvcoli & \csvcolvi & \csvcolvii & \csvcolviii}
+              Ref. \tnote{$\dagger$} & 0.978077 \\
+              \bottomrule
+            \end{tabular}
+            \begin{tablenotes}
+              \item[$\dagger$] See \cite{chao}.
+            \end{tablenotes}
+          \end{threeparttable}
         \end{center}
       \end{table}
       % refl0125
       \begin{table}
-        \caption{IAEA Benchmark Convergence Study. With Reflector. $\albedo = 
-          0.125$. $k_{ref} = 1.006630 $ \cite{chao}}
-        \label{tab:iaea_refl0125}
         \begin{center}
-          \begin{tabular}{cccc}
-            \toprule
-            Refine & $\keff$ & $\keff$ error \units{pcm} & $\keff$ ratio \\
-            \midrule
-            \csvreader[
-              late after line=\\,
-              late after last line=\\\bottomrule,]
-              {ch02_neutronDiffusion/data/iaea_refl0125.csv}{}
-              {\csvcoli & \csvcolvi & \csvcolvii & \csvcolviii}
-          \end{tabular}
+          \caption{IAEA Benchmark Convergence Study. With Reflector. $\albedo = 
+            0.125$.}
+          \label{tab:iaea_refl0125}
+          \begin{threeparttable}
+            \begin{tabular}{cccc}
+              \toprule
+              Refine & $\keff$ & $\keff$ error \units{pcm} & $\keff$ ratio \\
+              \midrule
+              \csvreader[
+                late after line=\\,
+                late after last line=\\,]
+                {ch02_neutronDiffusion/data/iaea_refl0125.csv}{}
+                {\csvcoli & \csvcolvi & \csvcolvii & \csvcolviii}
+              Ref. \tnote{$\dagger$} & 1.006630 \\
+              \bottomrule
+            \end{tabular}
+            \begin{tablenotes}
+              \item[$\dagger$] See \cite{chao}.
+            \end{tablenotes}
+          \end{threeparttable}
         \end{center}
       \end{table}
       % refl0500
       \begin{table}
-        \caption{IAEA Benchmark Convergence Study. With Reflector. $\albedo = 
-          0.500$. $k_{ref} = 1.005507 $ \cite{chao}}
-        \label{tab:iaea_refl0500}
         \begin{center}
-          \begin{tabular}{cccc}
-            \toprule
-            Refine & $\keff$ & $\keff$ error \units{pcm} & $\keff$ ratio \\
-            \midrule
-            \csvreader[
-              late after line=\\,
-              late after last line=\\\bottomrule,]
-              {ch02_neutronDiffusion/data/iaea_refl0500.csv}{}
-              {\csvcoli & \csvcolvi & \csvcolvii & \csvcolviii}
-          \end{tabular}
+        \caption{IAEA Benchmark Convergence Study. With Reflector. $\albedo = 
+          0.500$.}
+        \label{tab:iaea_refl0500}
+          \begin{threeparttable}
+            \begin{tabular}{cccc}
+              \toprule
+              Refine & $\keff$ & $\keff$ error \units{pcm} & $\keff$ ratio \\
+              \midrule
+              \csvreader[
+                late after line=\\,
+                late after last line=\\,]
+                {ch02_neutronDiffusion/data/iaea_refl0500.csv}{}
+                {\csvcoli & \csvcolvi & \csvcolvii & \csvcolviii}
+              Ref. \tnote{$\dagger$} & 1.005507 \\
+              \bottomrule
+            \end{tabular}
+            \begin{tablenotes}
+              \item[$\dagger$] See \cite{chao}.
+            \end{tablenotes}
+          \end{threeparttable}
         \end{center}
       \end{table}
   \subsection{Wedge Element Manufactured Solution Finite Cylinder}
-      A three dimension problem is presented that is contrived and has an 
+      A three-dimension problem is presented that is contrived and has an 
       analytic solution. This problem is a finite cylinder with zero-flux
-      boundary conditions. The cylinder is three dimensional but the solution
+      boundary conditions. The cylinder is three-dimensional but the solution
       can be reduced to two dimensions (radial and axial directions). 
       The exact solution is derived in \sref{sec:deriv_finite_cyl} and the
       solution is presented in \eref{eq:analytic_finite_cyl}. Results from the
       convergence study are presented in \tref{tab:finite_cyl}. The exact value
-      for the effective multiplication factor is $k_{ref} = 0.996711$.
+      for the effective multiplication factor is $\kref = 0.996711$.
       \begin{table}
-        \caption{Finite Cylinder Convergence Study Results.
-          $k_{ref} = 0.996711$}
+        \caption{Finite Cylinder Convergence Study Results.}
         \label{tab:finite_cyl}
         \begin{center}
           \begin{tabular}{cccccccccc}
@@ -1185,19 +1243,21 @@
             \midrule
             \csvreader[
               late after line=\\,
-              late after last line=\\\bottomrule,]
+              late after last line=\\,]
               {ch02_neutronDiffusion/data/finite_cyl.csv}{}
               {\csvcoli & \csvcolii & \csvcoliii & \csvcoliv & \csvcolv & 
               \csvcolvi & \csvcolxi & \csvcolxii}
+            Ref. & 0.996711 \\
+            \bottomrule
           \end{tabular}
         \end{center}
       \end{table}
   \subsection{Three Dimension Reactors}
     \subsubsection{MONJU}
       Proposed in \cite{monjuBenchmark} and described in \sref{sec:monju}, this 
-      three dimension, reactory-type problem is based on a Sodium-cooled Fast
+      three-dimension, reactory-type problem is based on a Sodium-cooled Fast
       Reactor (SFR) operating principally with fast neutrons. Cross sections are
-      provided for a three group energy structure. However, the fission spectrum
+      provided for a three-group energy structure. However, the fission spectrum
       is not provided and is seelcted for benchmark agreement. This fission
       spectrum is presented in \tref{tab:monjuchi}. The rod worth
       measurements appear insensitive to fission spectrum. 
@@ -1226,8 +1286,8 @@
       \end{table}
     \subsubsection{KNK}
       Proposed in \cite{takedaBenchmark} and described in \sref{sec:knk}, this
-      three dimension, reactor-type problem is based on a SFR and is a model of
-      the KNK-II core. Cross sections are provided for a four group energy
+      three-dimension, reactor-type problem is based on a SFR and is a model of
+      the KNK-II core. Cross sections are provided for a four-group energy
       structure. There are many materials specified in the problem so it also
       aids in testing material mapping in a code. However, the reference data is
       for a transport solution. In this application, the transport cross
