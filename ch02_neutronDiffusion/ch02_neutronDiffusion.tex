@@ -9,17 +9,18 @@
   both space and energy. In standard notation, the continuous neutron diffusion
   equation is presented as
   \begin{multline}\label{eq:continuous_diffusion}
-    -\grad \cdot (D(\vr,E) \grad \varphi(\vr,E)) + \Sigma_t(\vr,E) \varphi(\vr,E) = \\
+    -\grad \cdot (D(\vr,E) \grad \varphi(\vr,E)) + \Sigma_t(\vr,E) 
+      \varphi(\vr,E) = \\
       \frac{\chi(\vr,E)}{\keff} \int_0^{\infty} \nu_f(\vr,E') \Sigma_f(\vr,E') 
       \varphi(\vr,E') \; dE' + \int_0^{\infty} \Sigma_s(\vr,E' \rightarrow E) 
       \varphi(\vr,E') \; dE'
   \end{multline}
-  Where $D$ is the diffusion constant, $\varphi$ is the continuous scalar neutron flux, 
-  $\Sigma_t$ is the total cross section, $\chi$ is the effective fission neutron 
-  spectrum, $\keff$ is the effective neutron multiplication factor, $\Sigma_f$ 
-  is the fission cross section, $\nu_f$ is the neutron yield per fission, and 
-  $\Sigma_s(\vr,E' \rightarrow E)$ is the scattering cross section for neutrons 
-  at position $\vr$ scattering from energy $E'$ to $E$.
+  Where $D$ is the diffusion constant, $\varphi$ is the continuous scalar 
+  neutron flux, $\Sigma_t$ is the total cross section, $\chi$ is the effective 
+  fission neutron spectrum, $\keff$ is the effective neutron multiplication 
+  factor, $\Sigma_f$ is the fission cross section, $\nu_f$ is the neutron yield 
+  per fission, and $\Sigma_s(\vr,E' \rightarrow E)$ is the scattering cross 
+  section for neutrons at position $\vr$ scattering from energy $E'$ to $E$.
   
   The neutron diffusion equation must be discretized in space and 
   energy to be solved numerically. Energy discretization is relatively 
@@ -54,7 +55,8 @@
       \Sigma_f(\vr,E) \varphi(\vr,E)\;dE}{\int_{E_g}^{E_{g-1}} 
       \varphi(\vr,E)\;dE} \\
     \Sigma_{s,g\rightarrow g'}(\vr) &= \frac{\int_{E_g'}^{E_{g'-1}} 
-      \int_{E_g}^{E_{g-1}} \Sigma_s(\vr,E' \rightarrow E) \varphi(\vr,E')\;dE\;dE'}
+      \int_{E_g}^{E_{g-1}} \Sigma_s(\vr,E' \rightarrow E) 
+      \varphi(\vr,E')\;dE\;dE'}
       {\int_{E_g}^{E_{g-1}} \varphi(\vr,E)\;dE}  \\
     \chi_g(\vr) &= \int_{E_g}^{E_{g-1}} \chi(\vr,E) \; dE \\
     \phi_g(\vr) &= \int_{E_g}^{E_{g-1}} \varphi(\vr,E) \; dE
@@ -90,8 +92,8 @@
   \begin{equation} \label{eq:multigroup_removal}
     - \grad \cdot( D_g(\vr) \grad \phi_g(\vr)) + \Sigma_{r,g}(\vr) \phi_g(\vr) = 
       \frac{\chi_g(\vr)}{\keff} \sum_{g'=1}^{G} \nu\Sigma_{f,g'}(\vr) 
-      \phi_{g'}(\vr) + \sum_{g'=1, g' \ne g}^{G} \Sigma_{s,g' \rightarrow g}(\vr) 
-      \phi_{g'}(\vr)
+      \phi_{g'}(\vr) + \sum_{g'=1, g' \ne g}^{G} 
+      \Sigma_{s,g' \rightarrow g}(\vr) \phi_{g'}(\vr)
   \end{equation}
   Where $\Sigma_{r,g}$ is the removal cross section defined as 
   $\Sigma_{r,g}(\vr) = \Sigma_{t,g}(\vr) - \Sigma_{s,g\rightarrow g}(\vr)$. For
@@ -101,27 +103,32 @@
     - \grad \cdot( D_g(\vr) \grad \phi_g(\vr)) + \Sigma_{r,g}(\vr) \phi_g(\vr) = 
       q_g(\vr)
   \end{equation}
-  % todo review this
   Where $q_g(\vr)$ is the combined neutron source at position $\vr$ for energy 
-  group $g$. \eref{eq:multigroup_source} is useful for solution of the
-  multigroup neutron diffusion problem for an arbitrary number of groups. The
-  equation is solved for each energy group and interaction between groups is
-  described in the term $q_g(\vr)$. In other implementations, the problem can be
-  solved for each group simultaneously using a method where interaction between
-  groups is treated explicitly. By solving each group independently (as done
-  here) the method remains general. Additionally, for many group energy
-  structures as common to fast reactor applications solving each group
-  independently is typically more computationally efficient.
+  group $g$. The combined source form is useful for solving the
+  multigroup neutron diffusion problem for an arbitrary number of groups.
+  \eref{eq:multigroup_source}
+  is solved for each energy group and interaction between groups is
+  described in the source term, $q_g(\vr)$. In other literature, the multigroup
+  equation may be
+  solved for each group simultaneously by treating interaction between groups
+  explicitly. By solving each group independently (as done here) the method 
+  remains general. Additionally, for many-group energy structures, as common to
+  fast reactor applications, solving each group independently is typically more
+  computationally efficient as linear systems have favorable conditioning and
+  remain smaller.
   
   It is sometimes desirable to partition $q$ into contributions due 
   to fission ($q_{fiss}$), up-scattering ($q_{up}$) when a neutron increases in 
   energy, and down-scattering when a neutron decreases in energy ($q_{down}$).
   \begin{align}
     q_g(\vr) &= q_{fiss,g}(\vr) + q_{up,g}(\vr) + q_{down,g}(\vr) \\
+    \label{eq:qfiss}
     q_{fiss,g}(\vr) &= \frac{\chi_g(\vr)}{\keff} \sum_{g'=1}^{G} 
       \nu \Sigma_{f,g'}(\vr) \phi_{g'}(\vr) \\
+    \label{eq:qup}
     q_{up,g}(\vr) &= \sum_{g'=g+1}^{G} \Sigma_{s,g' \rightarrow g}(\vr)
       \phi_{g'}(\vr) \\
+    \label{eq:qdown}
     q_{down,g}(\vr) &= \sum_{g'=1}^{g-1} \Sigma_{s,g' \rightarrow g}(\vr)
       \phi_{g'}(\vr)
   \end{align}
@@ -236,8 +243,11 @@
     nodes minus any nodes for which the flux is fixed (e.g. zero-flux nodes).
     Typically, these basis functions have unit magnitude and are centered at the
     node  points so the coefficients $\beta_i$ are the approximated solution at
-    the nodes. Basis functions are typically polynomials of arbitrary degree. 
-    For selected elements, basis functions will be defined explicitly in
+    the nodes. It is also convenient for basis functions to have compact
+    support. That is, basis functions are created such that they are non-zero in
+    only one element and zero in all other elements.
+    Basis functions are typically piecewise continuous polynomials of arbitrary 
+    degree. For selected elements, basis functions will be defined explicitly in
     \sref{sec:matrix_quantities}.
     Linear and quadratic polynomials are common but for the application 
     presented here, only linear basis functions are explored.
@@ -531,6 +541,7 @@
     be it a line, triangle, quadrilateral, or wedge. Integration in the 
     FEM is performed on an arbitrary element in space. Therefore, it is 
     necessary to perform a coordinate transform when using a quadrature set.
+    % get VERY explicit here so someone else can actually solve the problem...
     \begin{equation}
       \int_{\Omega} f(\vx) \;d\Omega = 
         \int_{\Omega_{ref}} f(\vx) \lvert \mj \rvert \;d\Omega \approx
@@ -571,6 +582,38 @@
   The resulting effective neutron multiplication factor, $\keff$, is written to
   an output file. The multigroup neutron flux is written to a different results
   VTK file for easy visualization.
+
+  \subsection{Power Iterations}
+    \label{sec:power_iterations}
+    The FEM is used to solve a fixed source problem for a given source
+    distribution $q_g(\vr)$. However, for multigroup problems with scattering, 
+    the problem is not a fixed source problem as the source is not known
+    explicitly due to interaction between groups. The method of Power Iterations
+    allows this multigroup problem to be solved iteratively.
+
+    Recall \eref{eq:multigroup_source} noting the term $q_g(\vr)$. Expanding the
+    term $q_g(\vr)$ into its component parts given in \eref{eq:qfiss},
+    \eref{eq:qup}, and \eref{eq:qdown}. 
+    \begin{equation} \label{eq:multigroup_source_expand}
+      -\grad \cdot (D_g(\vr) \grad \phi_g(\vr)) + \Sigma_{r,g}(\vr) \phi_g(\vr) 
+        = q_{fiss,g}(\vr) + q_{up,g}(\vr) + q_{down,g}(\vr)
+    \end{equation}
+    Recall from the definitions of the source components that their calculation
+    requires the flux $\phi_g(\vr)$. The source components each require
+    different energy groups of the flux distribution to be known. The fission
+    component $q_{fiss,g}(\vr)$ requires all groups. The up-scatter component
+    $q_{up,g}(\vr)$ requires lower energy groups (i.e. $g' > g$). The
+    down-scatter component $q_{down,g}(\vr)$ requires higher energy groups (i.e.
+    $g' < g$). Based on these requirements, these source components can be
+    calculated based on different power iterations of $\phi_g(\vr)$. This is
+    described in Algorithm \ref{algorithm:general}.
+    \eref{eq:multigroup_source_expand} is then more explicitly written.
+    \begin{equation} \label{eq:multigroup_power_iterations}
+      -\grad \cdot (D_g(\vr) \grad \phi_g^{(s)}(\vr)) + \Sigma_{r,g}(\vr)
+      \phi_g^{(s)}(\vr) = q_{fiss,g}^{(s-1)}(\vr) + q_{up,g}^{(s-1)}(\vr) +
+      q_{down,g}^{(s)}(\vr)
+    \end{equation}
+
   \subsection{Algorithm}
     The algorithm for this solution to the diffusion equation is similar to most
     implementations of the multigroup neutron diffusion method. The algorithm 
@@ -596,15 +639,15 @@
       \label{algorithm:general}
       \begin{algorithmic}[1]
       \State Initialize $\phiavg^{(0)}$.
-      \State Order the nodes of the mesh into RCM order \cite{rcm}. 
+      \State Order the nodes of the mesh into RCM order.
         \label{state:rcm}
       \State Calculate $\Sigma_s$, $\Sigma_t$, and $\nu \Sigma_f$ for each 
         element.
       \State Calculate finite element matrix $\ma_g$ for each group. Store this. 
         \label{state:fem_matrix}
       \While{Power Iteration}
-      	\State Update the iteration counter. $s=s+1$
-      	\State Update $q_{fiss}$ and $q_{up}$ from previous data
+        \State Update the iteration counter. $s=s+1$
+        \State Update $q_{fiss}$ and $q_{up}$ from previous data
           $\phiavg^{(s-1)}$.
         \State Update $\chi$ in each element using previous data
         \For{$g=1,G$}
@@ -628,6 +671,7 @@
     generated once at the beginning of the problem and stored for the duration 
     of the calculation.
     \FloatBarrier % make sure the algorithm is in the correct section
+
   \subsection{Memory and Storage}
     The finite element matrix $\ma$ is large and sparse so a sparse storage and
     sparse solution to the linear system are required. Many sparse matrix 
@@ -963,7 +1007,7 @@
       \end{table}
     \subsubsection{One-Dimension, Two-Group, Criticality }
       In addition to the one-group problem in \sref{sec:1d1g}, this problem
-      tests the solution of mulitgroup problems. The results presented are the 
+      tests the solution of multigroup problems. The results presented are the 
       convergece of $\keff$ and the ratio of relative magnitude of thermal to 
       fast flux $\phi_2/\phi_1$.
       The exact solutions are derived in \sref{sec:deriv_1d2g} and
