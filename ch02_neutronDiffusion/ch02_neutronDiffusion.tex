@@ -365,15 +365,15 @@
     \subsubsection{Linear Triangles}
       Linear triangles are common to two-dimensional finite element methods and
       have been investigated in many applications \cite{Hosseini2017} 
-      \cite{Hosseini2013} \cite{Hosseini2015}. This is a triangle  defined by
-      three corner coordinates with basis functions located on each corner
-      \cite{vtk}. The triangle from the VTK toolkit is described in 
-      \fref{fig:vtk_triangle} \cite{vtk}.
+      \cite{Hosseini2013} \cite{Hosseini2015}. The linear triangle element is a
+      triangle  defined by three corner coordinates with basis functions located 
+      on each corner. A triangle element is sketched in 
+      \fref{fig:sketch_triangle}.
       \begin{figure}
         \centering
-        \includegraphics[width=0.3\textwidth]{vtk_triangle}
-        \caption{VTK Description of Triangle Element.}
-        \label{fig:vtk_triangle}
+        \includegraphics[width=0.3\textwidth]{sketch_triangle}
+        \caption{Description of Triangle Element.}
+        \label{fig:sketch_triangle}
       \end{figure}
       The reference triangle $T_{ref}$ is located in
       $\xi \in [0,1]$ and $\eta \in [0,1-\xi]$. The basis functions for the 
@@ -397,11 +397,21 @@
           \frac{A_e}{12} (1+\delta_{ij}) \\
         \int_{\Omega_e} \basis_i(\vr) \;d\Omega_e &= \frac{A_e}{3} \\
         \int_{\partial \Omega_e} \basis_i(\vr) \basis_j(\vr) \;ds &=
-          \frac{L_e}{6}(1+\delta_{ij}) 
+          \frac{L_e}{6}(1+\delta_{ij}) \\
       \end{align}
-      Where $A_e$ is the area of the triangular element $L_e$ is the length of 
-      the edge between node $i$ and node$j$, and $\delta_{ij}$ is the Kronecker
-      delta such that
+      Where $A_e$ is the area of the triangular element, $L_e$ is the length of 
+      the edge between node $i$ and node $j$, and $\delta_{ij}$ is the Kronecker
+      delta. The area of a triangle in three dimensions is calculated for a
+      triangle with corners $\vc_i = (x_i, y_i, z_i)$ with $i=1,2,3$ where
+      $\vc_i$ is a coordinate vector for notational simplicity.
+      \begin{align}
+        \va &= \vc_2 - \vc_1 \\
+        \vb &= \vc_3 - \vc_1 \\
+        A_e &= \half \lvert \va \times \vc \rvert \\
+        &= \half \sqrt{ (a_2 b_3 - a_3 b_2)^2 + (a_3 b_1 - a_1 b_3)^2 +
+          (a_1 b_2 - a_2 b_1)^2}
+      \end{align}
+      The Kronecker delta is defined as
       \begin{equation} \label{eq:kroneker_delta}
         \delta_{ij} =
         \begin{cases}
@@ -417,13 +427,13 @@
       pentahedron or a triangular prism. However, their exact geometric
       relation is not fixed and the nodes are free to expand and distort. These 
       shapes are unique because three of the faces are quadrilateral and two of
-      the faces are triangular. The wedge from the VTK toolkit is described in
-      \fref{fig:vtk_wedge} \cite{vtk}.
+      the faces are triangular. A typical (left) and distorted (right) wedge
+      element is described in \fref{fig:sketch_wedge}.
       \begin{figure}
         \centering
-        \includegraphics[width=0.3\textwidth]{vtk_wedge}
-        \caption{VTK Description of Wedge Element.}
-        \label{fig:vtk_wedge}
+        \includegraphics[width=0.6\textwidth]{sketch_wedge}
+        \caption{Description of Typical and Distorted Wedge Elements.}
+        \label{fig:sketch_wedge}
       \end{figure}
       The reference wedge $W_{ref}$ is located in 
       $\xi \in [0,1]$, $\eta \in [0,1-\xi]$, and $\zeta \in [-1,1]$. The basis
