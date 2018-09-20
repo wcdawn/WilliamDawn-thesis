@@ -468,6 +468,7 @@
       The values presented herein are not found in literature and are 
       calculated by the author.
       \begin{align}
+        \label{eq:bigmat}
         \int_{\Omega_e} \basis_i(\vr) \basis_j(\vr) \;d\Omega_e &= 
           \frac{V_e}{2}
           \begin{pmatrix}
@@ -493,7 +494,15 @@
               \text{if quadrilateral}
           \end{cases}
       \end{align}
-      Where $V_e$ is the volume of the element. This matrix is indexed $A_{ij}$
+      Where $V_e$ is the volume of the element. For a simple extruded triangle,
+      the volume calculation is straightforward. However, allowing the nodes to
+      move with respect to each other makes the volume of the element difficult
+      to calculate. Instead, the Jacobian is used to calculate $V_e$. The
+      relationship is given in \tref{tab:jacobi}. The element is isoparametric
+      (has constant Jacobian determinant) for any point within the reference
+      wedge, such as (0,0,0). Then $V_e = 2 \lvert \mj \rvert$.
+      
+      This matrix in \eref{eq:bigmat} is indexed $M_{ij}$
       and is presented as a matrix because of its irregular form. Notice the 
       integral containing the gradient operator has been omitted because if 
       it could be computed analytically, it would be less computationally 
@@ -516,16 +525,18 @@
     For one-dimensional integrals, the Gaussian quadrature is common and the 
     most compact quadrature. The Gaussian quadrature exactly integrates a 
     polynomial of order $n$ using exactly $n$ points. Weights and coordinates
-    for this quadrature set are presented in \cite{gaussianQuadrature}. For this
-    quadrature, $n=N$.
+    for this quadrature set are presented in \cite{gaussianQuadrature}. These
+    are standard values and can be easily calculated by the definition of the
+    quadrature. For this quadrature, $n=N$.
     
     Two-dimensional and three-dimensional quadratures are necessary for the 
     FEM. Triangular quadratures are not as simply derived 
     as line quadratures and the number of points need not equal the order of the
     polynomial integrated. The triangular quadrature as implemented here is 
     symmetric and open. That is, there are no points on the boundary of the 
-    triangle. The structure for this triangular quadrature is found in 
-    \cite{triangleQuadrature}.
+    triangle. The weights and coordinates for this triangular quadrature are 
+    found in \cite{triangleQuadrature}. Any triangular quadrature will suffice
+    that exactly integrates polynomials of a given order.
     
     Quadrilateral quadrature sets are simply tensor products of two line 
     Gaussian quadratures. For an order $N$ polynomial, now $n^2$ points are 
@@ -604,13 +615,18 @@
 \section{Implementation}
   A Finite Element neutron diffusion solution method has been developed using 
   the above formulae. The program begins with a geometry description specified
-  in a plain text VTK file. Cross sections are specified in either a plain text
+  in a plain text VTK file \cite{vtk}. The VTK format is chosen because it is a
+  standard that can be used with visualization tools such as ParaView and VisIt
+  \cite{here}. Additionally, open-source C and Python packages exist for easy
+  manipulation of the format. Cross sections are specified in either a plain text
   user format or the ISOTXS format as common to fast reactor applications 
   and the multigroup cross section generator \mcc. The multigroup neutron 
-  diffusion equation is then solved according to \eref{eq:multigroup_source}.
+  diffusion equation is solved according to \eref{eq:multigroup_source}.
   The resulting effective neutron multiplication factor, $\keff$, is written to
   an output file. The multigroup neutron flux is written to a different results
   VTK file for easy visualization.
+
+  % todo insert figure here
 
   \subsection{Power Iterations}
     \label{sec:power_iterations}
@@ -644,7 +660,7 @@
     \end{equation}
 
   \subsection{Algorithm}
-    The algorithm for this solution to the diffusion equation is similar to most
+    The algorithm for the solution to the diffusion equation is similar to most
     implementations of the multigroup neutron diffusion method. The algorithm 
     itself is presented in Algorithm \ref{algorithm:general}. The steps unique 
     to the FEM are steps \ref{state:fem_matrix} and \ref{state:fem_vector}. 
