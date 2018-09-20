@@ -613,20 +613,26 @@
       \end{center}
     \end{table}
 \section{Implementation}
-  A Finite Element neutron diffusion solution method has been developed using 
+  A FEM neutron diffusion solution has been developed using 
   the above formulae. The program begins with a geometry description specified
   in a plain text VTK file \cite{vtk}. The VTK format is chosen because it is a
-  standard that can be used with visualization tools such as ParaView and VisIt
-  \cite{here}. Additionally, open-source C and Python packages exist for easy
-  manipulation of the format. Cross sections are specified in either a plain text
-  user format or the ISOTXS format as common to fast reactor applications 
-  and the multigroup cross section generator \mcc. The multigroup neutron 
-  diffusion equation is solved according to \eref{eq:multigroup_source}.
-  The resulting effective neutron multiplication factor, $\keff$, is written to
-  an output file. The multigroup neutron flux is written to a different results
-  VTK file for easy visualization.
+  standard that can be used with visualization tools such as ParaView
+  \cite{ParaView} and VisIt \cite{VisIt}. Additionally, open-source C and Python
+  packages exist for easy manipulation of the format. Cross sections are 
+  specified in either a plain text user format or the ISOTXS format as common to 
+  fast reactor applications and the multigroup cross section generator \mcc 
+  \cite{mcc}. The multigroup neutron diffusion equation is solved according to 
+  \eref{eq:multigroup_source}. The resulting effective neutron multiplication 
+  factor, $\keff$, is written to an output file. The multigroup neutron flux is
+  written to a different results VTK file for easy visualization. A typical flux 
+  visualization is shown in \fref{fig:snr_paraview}.
 
-  % todo insert figure here
+  \begin{figure}
+    \centering
+    \includegraphics[width=0.7\textwidth]{snr_paraview}
+    \caption{Typical Flux Visualization.}
+    \label{fig:snr_paraview}
+  \end{figure}
 
   \subsection{Power Iterations}
     \label{sec:power_iterations}
@@ -683,6 +689,7 @@
       \caption{General Iteration Scheme}
       \label{algorithm:general}
       \begin{algorithmic}[1]
+      \State Read mesh from VTK.
       \State Initialize $\phiavg^{(0)}$.
       \State Order the nodes of the mesh into RCM order.
         \label{state:rcm}
@@ -692,15 +699,16 @@
         \label{state:fem_matrix}
       \While{Power Iteration}
         \State Update the iteration counter. $s=s+1$
-        \State Update $q_{fiss}$ and $q_{up}$ from previous data
-          $\phiavg^{(s-1)}$.
-        \State Update $\chi$ in each element using previous data
+        \State Update $q_{fiss,g}$ and $q_{up,g}$ for all gropus from previous 
+          data $\phiavg^{(s-1)}$.
+        \State Update $\chi$ in each element using previous data.
         \For{$g=1,G$}
-          \State Update $q_{down}$ from current data $\phiavg^{(s)}$
+          \State Update $q_{down,g}$ from current data $\phiavg^{(s)}$
           \State Calculate total effective source in each element.
-          \State Update Finite Element Vector $\vf_g$ with new source.
+          \State Update finite element Vector $\vf_g$ with new source.
             \label{state:fem_vector}
-          \State Solve $\ma \vu = \vf$ using an iterative technique.
+          \State Solve $\ma \vu = \vf$ using an iterative technique (See
+            \sref{sec:linear_system_solution}).
           \State Parse $\vu$ for $\phi$ nodal solution.
           \State Calculate element-average $\phiavg$.
         \EndFor
@@ -710,7 +718,7 @@
       \end{algorithmic}
     \end{algorithm}
     
-    Note that the Finite Element vector $\vf$ must be updated on each power
+    Note that the finite element vector $\vf$ must be updated on each power
     iteration of the solution whereas the matrix $\ma$ is described entirely by 
     geometry and the material cross sections. For this reason, $\ma$ can be 
     generated once at the beginning of the problem and stored for the duration 
@@ -751,8 +759,8 @@
     necessary in the solution of the linear system.
   \subsection{Boundary Conditions}
     \label{sec:boundary_conditions}
-    Boundary conditions deserve brief consideration. There are many way to treat 
-    of boundary conditions and all result in mathematically the same 
+    Boundary conditions deserve brief consideration. There are many ways to 
+    implement boundary conditions and all result in mathematically the same 
     answer. The choices made for this application are presented below. Mirror 
     boundary conditions require $\grad \phi_g(\vr) = 0$ for 
     $\vr \in \partial \Omega$. These are also known as ``natural'' boundary
@@ -767,10 +775,10 @@
     expressed in \sref{sec:matrix_quantities} or by quadratures 
     \sref{sec:quadratures}.
     
-    Zero Flux boundary conditions require $\phi(\vr) = 0$ for 
+    Zero-flux boundary conditions require $\phi(\vr) = 0$ for 
     $\vr \in \partial \Omega$. These are treated by removing these entries from
     the finite element matrix $\ma$. Entries are removed by using an index 
-    vector. In a natural system (see Mirror boundary conditions above) each node
+    vector. In a natural system (see mirror boundary conditions above) each node
     corresponds to a row/column of the matrix. With entries removed, node number
     and index number may not exactly agree. A vector \texttt{ID} is introduced
     \cite{textbookjohnson}. Nodes with non-zero flux boundary conditions are set
@@ -785,6 +793,7 @@
     conditions can be represented as $\albedo \rightarrow \infty$.
     
   \subsection{Linear System Solution}
+    \label{sec:linear_system_solution}
     For a non-singular linear system $\ma \vu = \vf$, where $\ma$ is a square 
     matrix, there exists a unique solution. Many strategies have been proposed 
     to solve this system in an efficient manner. Options are restricted in this
@@ -794,9 +803,12 @@
     unique properties to select a favorable solution method.
     
     The finite element matrix $\ma$ for the problem described in 
-    \eref{eq:multigroup_source} is Symmetric Positive Definite (SPD). Symmetry
-    condition is straight-forward and is observed in the elemental matrix 
-    description \eref{eq:matrix_population}. Briefly, $A_{i,j,g,e}=A_{j,i,g,e}$.
+    \eref{eq:multigroup_source} is Symmetric Positive Definite (SPD) if the
+    multigroup equations are solved one group at a time. Note, the matrix will
+    not have this especially useful property if all the groups are solved
+    simultaneously. Symmetry condition is straight-forward and is observed in 
+    the elemental matrix description \eref{eq:matrix_population}. Briefly,
+    $A_{i,j,g,e}=A_{j,i,g,e}$.
     Positive definiteness is a particularly useful condition but is often 
     difficult to prove. $\ma$ is sometimes diagonally dominant for conveniently
     ordered meshes composed certain elements but generally, the matrix is not 
@@ -849,11 +861,11 @@
     
     Conventional methods to solve a linear system described by an SPD matrix 
     include Gauss-Seidel iteration with Successive Over-Relaxation (SOR) and
-    the Conjugate Gradient (CG) Krylov subspace method. SOR requires a priori 
+    the Conjugate Gradient (CG) Krylov subspace method. SOR requires 	extit{a priori} 
     knowledge of the optimized  over-relaxation factor $\omega_{opt}$. In 
     practice, this is performed analytically with contrived solutions 
     or in a modified guess-and-check method. For this application, the
-    CG method is chosen because it requires no a priori knowledge and produced
+    CG method is chosen because it requires no 	extit{a priori} knowledge and produced
     a solution to the same tolerance in a comparable wall-time without the need
     for guess-and-check iterations.
     
@@ -1391,7 +1403,7 @@
       measurements appear insensitive to fission spectrum. 
 
       Reference data can be found in \tref{tab:monjukeff}. Results from the
-      Finite Element application are presented in \tref{tab:monju}. The error
+      finite element application are presented in \tref{tab:monju}. The error
       (difference between reference and calculated results) are presented in
       parenthesis next to the quantities. 
       \begin{table}
@@ -1423,7 +1435,7 @@
       some of the numerical differences in the results but general trends are
       reflected. In addition to the comparison to the reference transport
       solution, the neutron diffusion equation is solved with DIF3D and the
-      Finite Element results are comporable to the finite difference solution. 
+      finite element results are comporable to the finite difference solution. 
 
       Reference data can be found in \tref{tab:knkkeff}. Results from the Finite
       Element neutron diffusion application are presented in \tref{tab:knk}. The
