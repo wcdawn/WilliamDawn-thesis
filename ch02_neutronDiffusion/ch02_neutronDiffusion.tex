@@ -375,17 +375,24 @@
         \caption{Description of Triangle Element.}
         \label{fig:sketch_triangle}
       \end{figure}
+      It is difficult to analytically calculate the desired integral quantities
+      for an arbitrary triangle. Instead, a simplified reference element is
+      created and quantities are calculated for the reference element and then
+      translated to the arbitrary element using a Jacobian. 
       The reference triangle $T_{ref}$ is located in
-      $\xi \in [0,1]$ and $\eta \in [0,1-\xi]$. The basis functions for the 
-      reference linear triangle are provided.
+      $\xi \in [0,1]$ and $\eta \in [0,1-\xi]$. The basis functions are zero
+      outside of the reference triangle and within the reference triangle, 
+      basis functions for the are provided.
       \begin{align}
+        \basis_i(\xi,\eta) &= 0 \; \forall \; (\xi,\eta) \notin T_{ref} \\
         \basis_1(\xi,\eta) &= \xi \\
         \basis_2(\xi,\eta) &= \eta \\
         \basis_3(\xi,\eta) &= 1-\xi-\eta
       \end{align}
       
-      Originally proposed in \cite{textbookwhite}, there are simple expressions
-      for the integral quantities for an arbitrary triangle. The expression for
+      There are simple expressions
+      for the integral quantities for an arbitrary triangle that are originally
+      proposed in \cite{textbookwhite}. The expression for
       the line integral is found in \cite{computerLab}. For a triangle with 
       corners $\{ x_i,y_i \}$ with $i=1,2,3$.
       \begin{align}
@@ -423,12 +430,20 @@
       quadrature.
     \subsubsection{Linear Wedges}
       Wedge elements have not achieved the same commonality as triangular 
-      elements but are simply extruded triangles. Geometrically, the shape is a 
-      pentahedron or a triangular prism. However, their exact geometric
-      relation is not fixed and the nodes are free to expand and distort. These 
-      shapes are unique because three of the faces are quadrilateral and two of
-      the faces are triangular. A typical (left) and distorted (right) wedge
-      element is described in \fref{fig:sketch_wedge}.
+      elements but are, in their simplest form, extruded triangles. The general
+      wedge, however, is more general than extrusion. In this application,
+      wedges are useful to describe hexagonal geometries such as fast spectrum
+      reactors. Reactor geometries are also typically described in lattices so
+      the wedge element allows for easily ``stacking'' lattices on top of each
+      other.
+
+      Geometrically, the wedge element is a pentahedron with six corner nodes,
+      sometimes referred to as a triangular prism. However,
+      their exact geometric relation is not fixed and the nodes are free to 
+      expand and distort. That is, each node is free to move independently of
+      all other nodes. These shapes are unique because three of the faces are
+      quadrilateral and two of the faces are triangular. A typical (left) and 
+      distorted (right) wedge element is described in \fref{fig:sketch_wedge}.
       \begin{figure}
         \centering
         \includegraphics[width=0.6\textwidth]{sketch_wedge}
@@ -437,8 +452,11 @@
       \end{figure}
       The reference wedge $W_{ref}$ is located in 
       $\xi \in [0,1]$, $\eta \in [0,1-\xi]$, and $\zeta \in [-1,1]$. The basis
-      functions for the reference wedge are provided.
+      functions are, again, zero outside of the reference wedge and are provided
+      within the reference wedge.
       \begin{align}
+        \basis_i(\xi,\eta,\zeta) &= 0 \; \forall \; (\xi,\eta,\zeta)
+          \notin W_{ref} \\
         \basis_1(\xi,\eta,\zeta) &= \half (1-\zeta)(1-\xi-\eta) \\
         \basis_2(\xi,\eta,\zeta) &= \half (1-\zeta)\xi \\
         \basis_3(\xi,\eta,\zeta) &= \half (1-\zeta)\eta \\
@@ -447,8 +465,8 @@
         \basis_6(\xi,\eta,\zeta) &= \half (1+\zeta)\eta 
       \end{align}
 
-      The values presented herein are not yet found in literature and are 
-      calculated by there author and published here for the first time.
+      The values presented herein are not found in literature and are 
+      calculated by the author.
       \begin{align}
         \int_{\Omega_e} \basis_i(\vr) \basis_j(\vr) \;d\Omega_e &= 
           \frac{V_e}{2}
@@ -487,12 +505,13 @@
     $\{w_i\}$ and a set of coordinates $\{\vx\}$, the quadrature can be 
     expressed as follows.
     \begin{equation}
+      \label{eq:quadrature}
       \int_{\Omega} f(\vx) \;d\Omega \approx \sum_{i=1}^{N} w_i f(\vx_i)
     \end{equation}
-    where $\Omega$ is an arbitrary domain described by $\{\vx_i\}$. The above
-    quadrature will exactly integrate a polynomial of the order of the 
-    quadrature. It is not necessarily true that $N$ be the order of the 
-    quadrature.
+    where $\Omega$ is an arbitrary domain described by $\{\vx_i\}$. The 
+    quadratures in \eref{eq:quadrature} will exactly integrate a polynomial of
+    the order of the quadrature. It is not necessarily true that $N$ be the 
+    order of the quadrature.
     
     For one-dimensional integrals, the Gaussian quadrature is common and the 
     most compact quadrature. The Gaussian quadrature exactly integrates a 
@@ -501,7 +520,7 @@
     quadrature, $n=N$.
     
     Two-dimensional and three-dimensional quadratures are necessary for the 
-    solution of this problem. Triangular quadratures are not as simply derived 
+    FEM. Triangular quadratures are not as simply derived 
     as line quadratures and the number of points need not equal the order of the
     polynomial integrated. The triangular quadrature as implemented here is 
     symmetric and open. That is, there are no points on the boundary of the 
