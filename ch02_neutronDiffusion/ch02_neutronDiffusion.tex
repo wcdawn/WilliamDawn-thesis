@@ -629,7 +629,7 @@
 
   \begin{figure}
     \centering
-    \includegraphics[width=0.7\textwidth]{snr_paraview}
+    \includegraphics[width=\textwidth]{snr_paraview}
     \caption{Typical Flux Visualization.}
     \label{fig:snr_paraview}
   \end{figure}
@@ -747,16 +747,37 @@
     to 0.0 such that an index of -1 corresponds to a null entry in the 
     matrix. \texttt{IDX} is then populated with a modified adjacency graph. 
     Values in \texttt{IDX} indicate the column in which the \texttt{VAL} entry
-    occurs. For example, the following descriptions are equivalent.
-    \begin{align}
-      \texttt{IDX}(7,3) &= 8 \\
-      \texttt{VAL}(7,3) &= 12.0 \\
-      A_{7,8} &= 12.0
-    \end{align}
-    All of these representations indicate that the value of matrix $\ma$ in the
-    seventh row in the eighth column is 12.0. This will allow for simple row 
+    occurs. An example unstructured mesh is given in \fref{fig:adjacency_graph}. 
+    Then, for node 5, the table \texttt{IDX} may resemble \eref{eq:idx_example}.
+    \begin{equation}
+      \label{eq:idx_example}
+      \texttt{IDX}(5,:) = (8, 200, 48, 96, 5 )
+    \end{equation}
+    \begin{figure}
+      \centering
+      \includegraphics[width=0.5\textwidth]{adjacency_graph}
+      \caption{Example Unstructured Mesh.}
+      \label{fig:adjacency_graph}
+    \end{figure}
+    \eref{eq:idx_example} only an example because the order of the nodes in row
+    5 is arbitrary. Similarly, a numeric example is provided in 
+    \eref{eq:idx_number} (note that the value ``3'' is arbitrary).
+    \begin{equation}
+      \label{eq:idx_number}
+      \left.
+      \begin{array}{c}
+        \texttt{IDX}(7,3) = 8 \\
+        \texttt{VAL}(7,3) = 12.1
+      \end{array}
+      \right\}
+      \implies
+      A_{7,8} = 12.1
+    \end{equation}
+    \eref{eq:idx_number} indicates that the value of matrix $\ma$ in the
+    seventh row in the eighth column is 12.1. This will allow for simple row 
     operations and efficient matrix vector multiplication which will be 
     necessary in the solution of the linear system.
+
   \subsection{Boundary Conditions}
     \label{sec:boundary_conditions}
     Boundary conditions deserve brief consideration. There are many ways to 
@@ -859,15 +880,15 @@
     analysis purposes, these operations are computationally expensive. Instead,
     this is verified here for the general matrix and not tested on-the-fly.
     
-    Conventional methods to solve a linear system described by an SPD matrix 
-    include Gauss-Seidel iteration with Successive Over-Relaxation (SOR) and
-    the Conjugate Gradient (CG) Krylov subspace method. SOR requires 	extit{a priori} 
-    knowledge of the optimized  over-relaxation factor $\omega_{opt}$. In 
-    practice, this is performed analytically with contrived solutions 
-    or in a modified guess-and-check method. For this application, the
-    CG method is chosen because it requires no 	extit{a priori} knowledge and produced
-    a solution to the same tolerance in a comparable wall-time without the need
-    for guess-and-check iterations.
+    Conventional methods used to solve a linear system described by an SPD
+    matrix include Gauss-Seidel iteration with Successive Over-Relaxation (SOR) 
+    and the Conjugate Gradient (CG) Krylov subspace method. SOR needs
+    \textit{a priori} knowledge of the optimized over-relaxation factor
+    $\omega_{opt}$ for good performanc. In practice, this is performed 
+    analytically with contrived solutions or in a modified guess-and-check 
+    method. For this application, the CG method is chosen because it requires no 
+    \textit{a priori} knowledge and produced a solution to the same tolerance in 
+    a comparable wall-time without the need for guess-and-check iterations.
     
     A simple recipe for the CG method is presented in Algorithm 2.4.1
     \cite{Kelley1995IterativeEquations} and its implementation in this 
@@ -898,9 +919,14 @@
       \end{algorithmic}
     \end{algorithm}
     
-    Where $\epsilon$ is a tolerance set by the user and the square of the 
-    two-norm is most efficiently replaced by the inner-product. It is noted 
-    that this method requires minimal storage with only four vectors 
+    In Algorithm \ref{algorithm:CG}, $\epsilon$ is a tolerance set by the user 
+    and the square of the two-norm is most efficiently replaced by the 
+    inner-product as in \eref{eq:two_norm_inner}. 
+    \begin{equation}
+      \label{eq:two_norm_inner}
+      \|\vr\|_2^2 = \vr^{T} \vr
+    \end{equation}
+    It is noted that this method requires minimal storage with only four vectors 
     required ($\vx, \vw, \vp,$ and $\vr$). Additionally, two scalar products 
     are required and a single matrix-vector product which proves to be the most 
     computationally expensive \cite{Kelley1995IterativeEquations}. As most of 
@@ -908,9 +934,9 @@
     system solution, is is crucial that this process be efficient.
 \section{Reference Results}
   This application of the FEM has been benchmarked against reference 
-  reactor-type problems as well as manufactured solutions. Comparison
+  reactor-type problems as well as analytic solutions. Comparison
   against reactor-type problems demonstrates an ability to solve problems for
-  which this application was intended. Comparison against manufactured solutions 
+  which this application was intended. Comparison against analytic solutions 
   allows for more detailed error and convergence analysis as not only the system
   $\keff$ but also the exact flux solution is known.
   
@@ -952,9 +978,9 @@
     \label{fig:hex_description}
   \end{figure}
   
-  For manufactured solutions, the error of the function $\phi$ itself can be 
+  For analytic solutions, the error of the function $\phi$ itself can be 
   analyzed because the function is known exactly. The derivations of the exact 
-  functions are presented in \apref{ap:analyticSolutions}. For all manufactured 
+  functions are presented in \apref{ap:analyticSolutions}. For all analytic 
   problems, the Root Mean Squared (RMS) error as in \eref{eq:rms} is calculated
   for the error vector $\ve$ and is presented. The ratio between refinements 
   should assume the expected rate.
@@ -968,9 +994,9 @@
   \end{equation}
   For criticality  problems, $\keff$ is also presented and the ration between
   refinements should assume the expected rate.
-  \subsection{Triangular Element Manufactured Solutions}
+  \subsection{Triangular Element Analytic Solutions}
     As a demonstration of the proper implementation of and solution to the 
-    diffusion equation for triangular elements, manufactured solutions are 
+    diffusion equation for triangular elements, analytic solutions are 
     derived and then numerically computed. These are one-dimensional and
     two-dimensional problems. All of these are on a rectangular domain 
     $[0,L_x] \times [0,L_y]$. For one-dimension problems, the top and 
@@ -1363,7 +1389,7 @@
           \end{threeparttable}
         \end{center}
       \end{table}
-  \subsection{Wedge Element Manufactured Solution Finite Cylinder}
+  \subsection{Wedge Element Analytic Solution Finite Cylinder}
       A three-dimension problem is presented that is contrived and has an 
       analytic solution. This problem is a finite cylinder with zero-flux
       boundary conditions. The cylinder is three-dimensional but the solution
