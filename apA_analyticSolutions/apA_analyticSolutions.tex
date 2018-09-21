@@ -42,7 +42,7 @@
 \section{One-Dimension, One-Group, Fixed Source}
   \label{sec:deriv_1dfixedsrc}
   This one-dimension problem is in the domain $x \in [0,L_x]$. The material is
-  homogeneous within the problem.
+  homogeneous within the problem and has fixed coefficient properties.
   The problem is specified in \eref{eq:1dfixed}, \eref{eq:1dfixed_bc1}, and 
   \eref{eq:1dfixed_bc2}.
   \begin{equation}
@@ -55,6 +55,52 @@
     \label{eq:1dfixed_bc2}
     \phi(L_x) &= 0
   \end{align}
+  Begin the solution by allowing to be composed of homogeneous and particular
+  solutions. 
+  \begin{equation} 
+    \phi(x) = \phi_h(x) + \phi_p(x)
+  \end{equation}
+  The homogeneous solution satisfies equation \eref{eq:1dfixed_homog}.
+  \begin{equation}
+    \label{eq:1dfixed_homog}
+    -D \grad^2 \phi_h(x) + \Sigma_r \phi_h(x) = 0
+  \end{equation}
+  The homogeneous solution $\phi_h(x)$ has form \eref{eq:1dfixed_homog_form}.
+  \begin{equation}
+    \label{eq:1dfixed_homog_form}
+    \phi_h(x) = c_1 \, \cosh(\Sigma_r \, x) + c_2 \, \sinh(\Sigma_r \, x)
+  \end{equation}
+  The particular solution is given for a constant value $q_{fixed}$ in
+  \eref{eq:1dfixed_particular}.
+  \begin{equation}
+    \label{eq:1dfixed_particular}
+    \phi_p(x) = \frac{q_{fixed}}{\Sigma_r}
+  \end{equation}
+  Combining homogeneous and particular solutions.
+  \begin{equation}
+    \label{eq:1dfixed_constants}
+    \phi(x) = c_1 \, \cosh(\Sigma_r x) + c_2 \, \sinh(\Sigma_r x) + 
+      \frac{q_{fixed}}{\Sigma_r}
+  \end{equation}
+  Next, boundary conditions are considered with \eref{eq:1dfixed_constants}.
+  Beginning with the boundary at $x=0$ as specified in \eref{eq:1dfixed_bc1}.
+  \begin{align}
+    \phi(0) &= 0 \\
+    &= c_1 + \frac{q_{fixed}}{\Sigma_r} \\
+    \label{eq:1dfixed_c1}
+    c_1 &= - \frac{q_{fixed}}{\Sigma_r}
+  \end{align}
+  \eref{eq:1dfixed_c1} is then inserted into \eref{eq:1dfixed_constants}.
+  \begin{align}
+    \phi(x) &= - \frac{q_{fixed}}{\Sigma_r} \, \cosh(\Sigma_r x) + c_2 \,
+      \sinh(\Sigma_r x) + \frac{q_fixed}{\Sigma_r} \\
+    \phi(x) &= \frac{q_{fixed}}{\Sigma_r} \left( 1 - \cosh(\Sigma_r x) \right)
+      + c_2 \sinh(\Sigma_r x)
+  \end{align}
+
+
+
+
   
 \section{One-Dimension, One-Group, Criticality} 
   \label{sec:deriv_1d1g}
