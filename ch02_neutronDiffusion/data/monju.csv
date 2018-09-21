@@ -1,4 +1,0 @@
-Pattern,keff(0refine),rodworth(DK),roddiff(percDK),keff_err[pcm],rod_worth_error[relative],rod_diff_err[percDK(subtract)]
-A,1.056816,,,-1548.39,,
-B,1.031623,0.023,2.52,-1477.68,(2.51E-5),(-0.07)
-C,1.006519,0.047,5.03,-1588.14,(1.77E-3),(0.04)

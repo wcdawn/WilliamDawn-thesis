@@ -2,9 +2,9 @@
 \label{ap:analyticSolutions}
 
 \section{Introduction}
-  The following is a manufactured solution designed for verification of one,
-  two, and three-dimension numerical neutron diffusion equation solvers.
-  one-group and two-group problems are also addressed.
+  The following is a manufactured solution designed for verification of one-,
+  two-, and three-dimension numerical neutron diffusion equation solvers.
+  One-group and two-group problems are also addressed.
   
   For the reference problems, the one-group neutron diffusion problem is written
   below.
@@ -13,7 +13,7 @@
       q_{fixed}
   \end{equation}
   Where $\grad^2 \phi = \grad \cdot (\grad \phi)$ and is used to simplify 
-  notaiton. For two-group neutron diffusion problems, the two-group neutron 
+  notation. For two-group neutron diffusion problems, the two-group neutron 
   diffusion problem is written below.
   \begin{align} 
     \label{eq:twogroup1}
@@ -41,66 +41,20 @@
 
 \section{One-Dimension, One-Group, Fixed Source}
   \label{sec:deriv_1dfixedsrc}
-  This one-dimension problem is in the domain $x \in [0,L]$. For this problem, 
-  the following one-group coefficients are used.
-  \begin{align*}
-    D &= 1\\
-    \Sigma_r &= 1\\
-    \nu \Sigma_f &= 0\\
-    q_{fixed} &= 1
-  \end{align*}
-  Then, \eref{eq:onegroup} is written
-  \begin{equation} \label{eq:fixed_source}
-    - \grad^2 \phi(x) + \phi(x) = 1 
-  \end{equation}
-  \eref{eq:fixed_source} can also be rewritten.
-  \begin{equation} \label{eq:diffusion_simplified}
-    \grad^2 \phi(x) - B^2 \phi(x) = S
-  \end{equation}
-  where $B = 1$ and $S=-1$.
-  The solution is composed of a particular and general solution.
+  This one-dimension problem is in the domain $x \in [0,L_x]$. The material is
+  homogeneous within the problem.
+  The problem is specified in \eref{eq:1dfixed}, \eref{eq:1dfixed_bc1}, and 
+  \eref{eq:1dfixed_bc2}.
   \begin{equation}
-    \phi(x) = \phi_g(x) + \phi_p(x)
+    \label{eq:1dfixed}
+    -D \frac{d^2}{dx^2} \phi(x) + \Sigma_r \phi(x) = q_{fixed}
   \end{equation}
-  For problems of the form of \eref{eq:diffusion_simplified} the general 
-  solution has exponential or hyperbolic trigonometric form.
-  \begin{equation} \label{eq:fixedsource_general}
-    \phi_g(x) = c_1 \cosh(Bx) + c_2 \sinh(Bx)
-  \end{equation}
-  Where $c_1$ and $c_2$ are problem dependent constants. For $S=1$ as constant
-  in the problem domain, the particular solution has given form.
-  \begin{align} \label{eq:particular}
-    \phi_p(x) &= -S/B \\
-           &= 1
-  \end{align}
-  Then, the combined solution has the given form.
-  \begin{equation} 
-    \phi(x) = c_1 \cosh(Bx) + c_2 \sinh(Bx) + 1
-  \end{equation}
-  The only remaining step is to solve for constants $c_1$ and $c_2$. These are
-  zero-flux boundary conditions at the problem boundaries.
   \begin{align}
-    \label{eq:bcx0}
-    \phi(0) &= 0\\
-    \label{eq:bcxL}
-    \phi(L) &= 0
-  \end{align}
-  Evaluating the solution at 0, 
-  \begin{align}
+    \label{eq:1dfixed_bc1}
     \phi(0) &= 0 \\
-    &= c_1 + 1\\
-    c_1 &= -1
+    \label{eq:1dfixed_bc2}
+    \phi(L_x) &= 0
   \end{align}
-  Evaluating the solution at $L$
-  \begin{align}
-    \phi(L) &= 0\\
-    &= c_2 \sinh(BL) - \cosh(BL)-1\\
-    c_2 &= \frac{\cosh(BL)-1}{\sinh(BL)}
-  \end{align}
-  The final solution is 
-  \begin{equation} \label{eq:analytic_1dfixedsrc}
-    \phi(x) = -\cosh(Bx) + \frac{\cosh(BL)-1}{\sinh(BL)} \sinh(Bx) +1
-  \end{equation}
   
 \section{One-Dimension, One-Group, Criticality} 
   \label{sec:deriv_1d1g}

@@ -933,26 +933,40 @@
     the computational time of the diffusion solutions is spent in the linear 
     system solution, is is crucial that this process be efficient.
 \section{Reference Results}
-  This application of the FEM has been benchmarked against reference 
-  reactor-type problems as well as analytic solutions. Comparison
-  against reactor-type problems demonstrates an ability to solve problems for
+  This application of the FEM has been compared against reference 
+  benchmark problems as well as analytic solutions. Comparison
+  against benchmark problems demonstrates an ability to solve problems for
   which this application was intended. Comparison against analytic solutions 
   allows for more detailed error and convergence analysis as not only the system
-  $\keff$ but also the exact flux solution is known.
+  $\keff$ but also the exact flux solution are known exactly. 
+
+  Running these comparisons serves as a verification and validation of this
+  implementation of the FEM. The strategy used comes from \cite{oberkampf}. The
+  first step is ``solution verification.'' Solution verification compares
+  computational results to exact analytic results. Verification serves to
+  demonstrate that the code itself is solving the correct equations as designed.
+  This will be demonstrated with convergence to the analytic answer at the
+  expected rate. The second step is ``solution validation.'' Solution validation
+  compares computational results to benchmark results which may have been
+  calculated computationally via another method or may come from experimental
+  data. Validation demonstrates an ability to solve problems for which the
+  method was originally intended. The data of the benchmark is not exact, but
+  typically the solution has been verified by others previously.
   
   For all reference problems presented, a convergence study is presented. It has 
   been shown that for a bounded second spatial derivative within the problem 
-  domain, the FEM derived above is second order convergent \cite{textbookli} 
-  (Remark 7.13).
+  domain, the FEM derived above is second-order convergent in space
+  \cite{textbookli} (Remark 7.13).
   \begin{equation} \label{eq:error_bound}
     \|\ve\|_{\infty} \le c h^2 \| \grad^2 \phi(\vr) \|_{\infty}
   \end{equation}
   Where $\ve$ is the error vector such that $\ve = \phi(\vr) - \phi_{FEM}$ and
-  $\phi_{FEM}$ is solution to the finite element system of equations. Then,
-  $h$ is the characteristic mesh size, and $c$ is a constant. 
-  \eref{eq:error_bound} implies that if a characteristic mesh size is halved, 
-  the error is quartered. This relationship is useful as a proper implementation 
-  of the FEM will converge to the correct answer and do so at the correct rate.
+  $\phi_{FEM}$ is solution to the finite element system of equations. In
+  \eref{eq:error_bound} $h$ is the characteristic mesh size, and $c$ is a 
+  constant.  \eref{eq:error_bound} implies that if a characteristic mesh size is 
+  halved, the error is quartered. This relationship is useful as a proper 
+  implementation of the FEM will converge to the correct answer and do so at the 
+  correct rate.
   
   Mesh refinement studies are presented herein. For each refinement, $h$ is 
   halved by introducing new elements and placing new nodes at the midway point
@@ -960,14 +974,14 @@
   \begin{equation}
     x = 4 = \frac{x^{(r-1)}}{x^{(r)}}
   \end{equation}
-  Such that for some quantity $x$, the error decreases by a factor of four for 
-  each refinement. As these are numerical solutions, the ratio rarely equals 
-  exactly four. It is observed that a few refinements are often necessary 
-  before the ratio approaches the expected value. This is especially the case
-  when the second derivative is not bounded in problems with heterogeneous 
-  materials.
+  Such that for some quantity $x$, the error should theoretically decrease by a
+  factor of four for each refinement. As these are numerical solutions, the 
+  ratio rarely equals exactly four. It is observed that a few refinements are 
+  often necessary before the ratio approaches the expected value. This is 
+  especially the case when the second derivative is not bounded in problems with 
+  heterogeneous materials.
   
-  For reactor-type problems, only $\keff$ is analyzed and expected to converge
+  For benchmark problems, only $\keff$ is analyzed and expected to converge
   at the appropriate rate. When assembly powers were available, these are also
   presented graphically. In the graphical power representation, the key is 
   presented in \fref{fig:hex_description}.
@@ -992,18 +1006,27 @@
   \begin{equation} \label{eq:infnorm}
     \|\ve\|_{\infty} = \max_{i=1,2,\ldots,N} \lvert e_i \rvert
   \end{equation}
-  For criticality  problems, $\keff$ is also presented and the ration between
-  refinements should assume the expected rate.
-  \subsection{Triangular Element Analytic Solutions}
+  For criticality  problems, $\keff$ is also presented and the ratio between
+  refinements should assume the expected rate. $\keff$ error is calculated with
+  \eref{eq:keff_err} in units of Percent Mille \units{pcm} from \eref{eq:pcm}.
+  \begin{align}
+    \label{eq:keff_err}
+    \keff \; \text{ error } &= \kref - \keff \\
+    \label{eq:pcm}
+    x \units{pcm} &= x \; 10^5
+  \end{align}
+
+  \subsection{Analytic Solutions}
     As a demonstration of the proper implementation of and solution to the 
     diffusion equation for triangular elements, analytic solutions are 
-    derived and then numerically computed. These are one-dimensional and
-    two-dimensional problems. All of these are on a rectangular domain 
-    $[0,L_x] \times [0,L_y]$. For one-dimension problems, the top and 
-    bottom edges $y=0$ and $y=L_x$ are mirror boundary conditions to reduce the
-    dimension of the problem. To verify there was no error obscured by this 
-    process, the results were reproduced for a rotated problem with the left and 
-    right edges set to mirror boundary conditions.
+    derived and then numerically computed. These are one-dimensional,
+    two-dimensional, and three-dimensional problems. These problems exercise
+    both triangle and wedge elements. For one-dimension problems a rectangular
+    domain is used and, the top and bottom edges $y=0$ and $y=L_x$ are mirror
+    boundary conditions to reduce the dimension of the problem. 
+    To verify there was no error obscured by this process, the results were 
+    reproduced for a rotated problem with the left and right edges set to mirror
+    boundary conditions as well.
     \subsubsection{One-Dimension, One-Group, Fixed Source}
       \label{sec:1dfixedsrc}
       Arguably the simplest solution to the neutron diffusion equation, this 
@@ -1031,10 +1054,9 @@
       \end{table}
     \subsubsection{One-Dimension, One-Group, Criticality}
       \label{sec:1d1g}
-      In addition to the fixed source problem in \sref{sec:1dfixedsrc}, this 
-      problem tests the calculation of the source term and the general iteration
-      implementation in the solution method. This problem solves a fissile 
-      material in the domain $x \in [0,100]$.
+      This problem tests the calculation of the source term and the general 
+      iteration implementation in the solution method. This problem solves a 
+      fissile material in the domain $x \in [0,100]$.
       The exact solution is derived in \sref{sec:deriv_1d1g} and
       presented in \eref{eq:analytic_1d1g}. Results from
       the convergence study are presented in \tref{tab:1d1g}. The exact value 
@@ -1061,8 +1083,7 @@
         \end{center}
       \end{table}
     \subsubsection{Two-Dimension, One-Group, Criticality}
-      In addition to the one-dimension problem in \sref{sec:1d1g}, this problem
-      tests the ability to solve truly two-dimensional problems.
+      This problem tests the ability to solve truly two-dimensional problems.
       The exact solution is derived in \sref{sec:deriv_2d1g} and
        presented in \eref{eq:analytic_2d1g}. Results from
       the convergence study are presented in \tref{tab:2d1g}. The exact value 
@@ -1089,10 +1110,9 @@
         \end{center}
       \end{table}
     \subsubsection{One-Dimension, Two-Group, Criticality }
-      In addition to the one-group problem in \sref{sec:1d1g}, this problem
-      tests the solution of multigroup problems. The results presented are the 
-      convergece of $\keff$ and the ratio of relative magnitude of thermal to 
-      fast flux $\phi_2/\phi_1$.
+      This problem tests the solution of multigroup problems. The results 
+      presented are the convergence of $\keff$ and the ratio of relative 
+      magnitude of thermal to fast flux $\phi_2/\phi_1$.
       The exact solutions are derived in \sref{sec:deriv_1d2g} and
       the solutions are presented in \eref{eq:twogroupflux1} and
       \eref{eq:twogroupflux2}. Results from the convergence study are presented in 
@@ -1121,8 +1141,7 @@
         \end{center}
       \end{table}
     \subsubsection{One-Dimension, One-Group, Two-Region, Criticality}
-      In addition to the homogenous problem in \sref{sec:1d1g}, this problem
-      tests the mapping of materials to regions within the problem.
+      This problem tests the mapping of materials to regions within the problem.
       The exact solution is derived in \sref{sec:deriv_2reg} and
       presented in \eref{eq:analytic_2reg}. Results from
       the convergence study are presented in \tref{tab:2reg}. The exact value 
@@ -1148,20 +1167,49 @@
           \end{tabular}
         \end{center}
       \end{table}
-  \subsection{Two Dimension Reactors}
-    The application presented here was originally designed with the intention to 
+    \subsubsection{Three-Dimension, One-Group, Finite Cylinder}
+        This problem is a finite cylinder with zero-flux
+        boundary conditions. The cylinder is three-dimensional but the solution
+        can be reduced to two dimensions (radial and axial directions). 
+        The exact solution is derived in \sref{sec:deriv_finite_cyl} and the
+        solution is presented in \eref{eq:analytic_finite_cyl}. Results from the
+        convergence study are presented in \tref{tab:finite_cyl}. The exact value
+        for the effective multiplication factor is $\kref = 0.996711$.
+        \begin{table}
+          \caption{Finite Cylinder Convergence Study Results.}
+          \label{tab:finite_cyl}
+          \begin{center}
+            \begin{tabular}{cccccccccc}
+              \toprule
+              Refine & $\keff$ & $\keff$ error \units{pcm} & $\keff$ ratio & RMS & 
+                RMS ratio  & $\|e\|_{\infty}$ & $\|e\|_{\infty}$ ratio \\
+              \midrule
+              \csvreader[
+                late after line=\\,
+                late after last line=\\,]
+                {ch02_neutronDiffusion/data/finite_cyl.csv}{}
+                {\csvcoli & \csvcolii & \csvcoliii & \csvcoliv & \csvcolv & 
+                \csvcolvi & \csvcolxi & \csvcolxii}
+              Ref. & 0.996711 \\
+              \bottomrule
+            \end{tabular}
+          \end{center}
+        \end{table}
+  \subsection{Benchmark Solutions}
+    The application presented here was designed 
     simulate power reactors. As such, two-dimension problems with similar
     reactor physics phenomena have been examined here. These two-dimension
     problems come from existing benchmarks based on hexagonal geometry. These
     benchmarks represent various energy group structures, geometries, assembly
     sizes,  boundary conditions, as well as other properties. Data used in these
-    problems is consisely presented in \apref{ap:benchmarks}. 
+    problems is concisely presented in \apref{ap:benchmarks}. 
     \subsubsection{VVER440}
       Proposed in \cite{chao} and described in \sref{sec:vver440}, this
-      reactor-type, two-dimension problem is based on a
+      benchmark, two-dimensional problem is based on a
       VVER-440 reactor. The VVER-440 is a 
       light-water moderated reactor and operates principally with thermal 
-      neutrons. Cross sections are provided for a two-group energy structure.
+      neutron spectrum. Cross sections are provided for a two-group energy 
+      structure.
       
       Power comparison between the most refined mesh and the reference solution 
       are presented graphically in \fref{fig:diffusion_vver440} according to the
@@ -1198,7 +1246,7 @@
       \end{table}
     \subsubsection{SNR}
       Proposed in \cite{argonneBenchmark} and described in \sref{sec:snr}, this
-      reactor-type, two-dimensional problem is based on a SNR reactor. The SNR
+      benchmark, two-dimensional problem is based on a SNR reactor. The SNR
       is a sodium cooled fast reactor and operates principly with thermal
       neutrons. Cross sections are provided for a four-group energy structure.
 
@@ -1237,7 +1285,7 @@
       \end{table}
     \subsubsection{HWR}
       Proposed in \cite{chao} and described in \sref{sec:hwr}, this
-      reactor-type, two-dimensional problem is based on a large Heavy Water
+      benchmark, two-dimensional problem is based on a large Heavy Water
       Reactor (HWR). This is a heavy water moderated reactor and operates
       principly with thermal neutrons. Cross sections are provided for a
       two-group energy structure.
@@ -1280,7 +1328,7 @@
       reactory-type, two-dimensional problem was originally based on a cartesian
       grid two-dimensional Pressurized Water Reactor (PWR) but was converted to
       hexagonal geometry in \cite{chao}. As it is based on a PWR deisgn, the
-      reactor operates principally with thermal neturons. Cross sections are
+      reactor operates principally with thermal spectrum. Cross sections are
       provided for a two-group energy structure.
 
       The reactor is presented in four scenarios; both with and without
@@ -1389,70 +1437,56 @@
           \end{threeparttable}
         \end{center}
       \end{table}
-  \subsection{Wedge Element Analytic Solution Finite Cylinder}
-      A three-dimension problem is presented that is contrived and has an 
-      analytic solution. This problem is a finite cylinder with zero-flux
-      boundary conditions. The cylinder is three-dimensional but the solution
-      can be reduced to two dimensions (radial and axial directions). 
-      The exact solution is derived in \sref{sec:deriv_finite_cyl} and the
-      solution is presented in \eref{eq:analytic_finite_cyl}. Results from the
-      convergence study are presented in \tref{tab:finite_cyl}. The exact value
-      for the effective multiplication factor is $\kref = 0.996711$.
-      \begin{table}
-        \caption{Finite Cylinder Convergence Study Results.}
-        \label{tab:finite_cyl}
-        \begin{center}
-          \begin{tabular}{cccccccccc}
-            \toprule
-            Refine & $\keff$ & $\keff$ error \units{pcm} & $\keff$ ratio & RMS & 
-              RMS ratio  & $\|e\|_{\infty}$ & $\|e\|_{\infty}$ ratio \\
-            \midrule
-            \csvreader[
-              late after line=\\,
-              late after last line=\\,]
-              {ch02_neutronDiffusion/data/finite_cyl.csv}{}
-              {\csvcoli & \csvcolii & \csvcoliii & \csvcoliv & \csvcolv & 
-              \csvcolvi & \csvcolxi & \csvcolxii}
-            Ref. & 0.996711 \\
-            \bottomrule
-          \end{tabular}
-        \end{center}
-      \end{table}
-  \subsection{Three Dimension Reactors}
     \subsubsection{MONJU}
       Proposed in \cite{monjuBenchmark} and described in \sref{sec:monju}, this 
       three-dimension, reactory-type problem is based on a Sodium-cooled Fast
       Reactor (SFR) operating principally with fast neutrons. Cross sections are
       provided for a three-group energy structure. However, the fission spectrum
-      is not provided and is seelcted for benchmark agreement. This fission
-      spectrum is presented in \tref{tab:monjuchi}. The rod worth
+      is not provided and is selcted for benchmark agreement. This assumed
+      fission spectrum is presented in \tref{tab:monjuchi}. The rod worth
       measurements appear insensitive to fission spectrum. 
 
       Reference data can be found in \tref{tab:monjukeff}. Results from the
       finite element application are presented in \tref{tab:monju}. The error
       (difference between reference and calculated results) are presented in
       parenthesis next to the quantities. 
+
+      Rod Worth is presented in units \units{$\Delta$ k} and calculated in
+      \eref{eq:rodworth} for $x = \{B,C\}$. Rod Difference is presented in units 
+      \units{\%$\Delta$k} where $x \units{\%$\Delta$k} = x \cdot 100$ and is
+      calculated in \eref{eq:roddifference} for $x = \{B,C\}$.
+      \begin{align}
+        \label{eq:rodworth}
+        \text{Rod Worth}_x = \frac{k_A - k_x}{k_A k_x} \\
+        \label{eq:roddifference}
+        \text{Rod Difference}_x = k_A - k_x
+      \end{align}
       \begin{table}
-        \caption{MONJU Benchmark Rod Worth Results. \cite{monjuBenchmark}}
-        \label{tab:monju}
         \begin{center}
-          \begin{tabular}{ccll}
-            \toprule
-            Pattern & $\keff$ & Rod Worth \units{$\Delta k$} & 
-              Rod Difference \units{\%$\Delta k$} \\
-            \midrule
-            \csvreader[
-              late after line=\\,
-              late after last line=\\\bottomrule,]
-              {ch02_neutronDiffusion/data/monju.csv}{}
-              {\csvcoli & \csvcolii & \csvcoliii \; \csvcolvi
-              & \csvcoliv \; \csvcolvii}
-          \end{tabular}
+          \caption{MONJU Benchmark Rod Worth Results. \cite{monjuBenchmark}}
+          \label{tab:monju}
+          \begin{threeparttable}
+            \begin{tabular}{ccll}
+              \toprule
+              Pattern & $\keff$ & Rod Worth \units{$\Delta k$} & 
+                Rod Difference \units{\%$\Delta k$} \\
+              \midrule
+              A&1.056816&               &            \\
+              B&1.031623&0.023 (2.51E-5) \tnote{$\dagger$} &2.52 (-0.07)\\
+              C&1.006519&0.047 (1.77E-3)&5.03 (0.04) \\
+              \bottomrule
+            \end{tabular}
+            \begin{tablenotes}
+              \item[$\dagger$] Value in parentheses is difference to reference
+                value from \cite{monjuBenchmark} as presented in 
+                \sref{sec:monju}.
+            \end{tablenotes}
+          \end{threeparttable}
         \end{center}
       \end{table}
     \subsubsection{KNK}
       Proposed in \cite{takedaBenchmark} and described in \sref{sec:knk}, this
-      three-dimension, reactor-type problem is based on a SFR and is a model of
+      three-dimension, benchmark problem is based on a SFR and is a model of
       the KNK-II core. Cross sections are provided for a four-group energy
       structure. There are many materials specified in the problem so it also
       aids in testing material mapping in a code. However, the reference data is
@@ -1467,21 +1501,31 @@
       Element neutron diffusion application are presented in \tref{tab:knk}. The
       error (difference between reference and calculated results) are presented
       in parenthesis next to the quantities.
+
+      Rod Worth is presented in units \units{$\Delta$ k} and calculated in
+      \eref{eq:rodworth} for $x = \{B,C\}$. Rod Difference is presented in units 
+      \units{\%$\Delta$k} where $x \units{\%$\Delta$k} = x \cdot 100$ and is
+      calculated in \eref{eq:roddifference} for $x = \{B,C\}$.
       \begin{table}
-        \caption{KNK Benchmark Rod Worth Results. \cite{takedaBenchmark}}
-        \label{tab:knk}
         \begin{center}
-          \begin{tabular}{ccll}
-            \toprule
-            Pattern & $\keff$ & Rod Worth \units{$\Delta k$} & 
-              Rod Difference \units{\%$\Delta k$} \\
-            \midrule
-            \csvreader[
-              late after line=\\,
-              late after last line=\\\bottomrule,]
-              {ch02_neutronDiffusion/data/knk.csv}{}
-              {\csvcoli & \csvcolii & \csvcoliii \; \csvcolvi
-              & \csvcoliv \; \csvcolvii}
-          \end{tabular}
+          \caption{KNK Benchmark Rod Worth Results.}
+          \label{tab:knk}
+          \begin{threeparttable}
+            \begin{tabular}{ccll}
+              \toprule
+              Pattern & $\keff$ & Rod Worth \units{$\Delta k$} & 
+                Rod Difference \units{\%$\Delta k$} \\
+              \midrule
+              A&1.061752&               &            \\
+              B&0.942404&0.119 (1.55E-2) \tnote{$\dagger$} &11.93 (0.75)\\
+              C&0.829829&0.263 (3.99E-2)&23.19 (1.67)\\
+              \bottomrule
+            \end{tabular}
+            \begin{tablenotes}
+              \item[$\dagger$] Value in parentheses is difference to reference
+                value from \cite{takedaBenchmark} as presented in 
+                \sref{sec:knk}.
+            \end{tablenotes}
+          \end{threeparttable}
         \end{center}
       \end{table}
