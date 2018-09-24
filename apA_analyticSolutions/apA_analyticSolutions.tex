@@ -199,7 +199,7 @@
     B \, L_x &= n \, \pi \\
     B &= \frac{n \, \pi}{L_x}
   \end{align}
-  For the fundamental mode, $n=1$.
+  Where $n$ is an integer. For the fundamental mode, $n=1$.
   \begin{equation}
     \label{eq:1d1g_buckle_geom}
     B = \frac{\pi}{L_x}
@@ -219,7 +219,7 @@
     \frac{\pi}{L_x} &= 
       \sqrt{\frac{\frac{1}{\keff} \nu \Sigma_f - \Sigma_r}{D}} \\
     \label{eq:keff1d}
-    \keff &= \frac{\nu \Sigma_f}{D \left(\frac{\pi}{L_x}\right)^2 = \Sigma_r}
+    \keff &= \frac{\nu \Sigma_f}{D \left(\frac{\pi}{L_x}\right)^2 + \Sigma_r}
   \end{align}
   Using material properties given in \tref{tab:1group_simple} and $L_x =
   \units{cm}$, then
@@ -316,61 +316,103 @@
   terms must also be equal to a constant \cite{lamarsh1966}. Splitting
   \eref{eq:2d1g_divide_sum} into two equations yields
   \begin{align}
+    \label{eq:2d1g_x}
     \frac{1}{X(x)} \, \frac{d^2}{d x^2} X(x) + \alpha^2 &= 0 \\
+    \label{eq:2d1g_y}
     \frac{1}{Y(y)} \, \frac{d^2}{d y^2} Y(y) + \beta^2 &= 0
   \end{align}
   where $\alpha$ and $\beta$ are constants such that
   \begin{equation}
+    \label{eq:2d1g_buckle_alphabeta}
     \alpha^2 + \beta^2 = B^2
   \end{equation}
-
-
-
-
-  The same material coefficients are used for this problem as in the 
-  one-dimension, criticality problem. For this problem, the domain is in the 
-  rectangle $[0,L_x]\times[0,L_y]$. Similar to the one-dimension problem, 
-  this problem has basic solution of $\sin(x/L)$. The problem is separable in 
-  the two spatial dimensions. 
+  Consider \eref{eq:2d1g_x} and boundary conditions specified in
+  \eref{eq:2d1g_bc1} and \eref{eq:2d1g_bc2}. Then, \eref{eq:2d1g_x} can be
+  rewritten
   \begin{equation}
-    \phi(x,y) = X(x) Y(y) 
+    \frac{d^2}{dx^2} X(x) + \alpha^2 X(x) = 0
   \end{equation}
-  Beginning with equation \eref{eq:onegroup}.
+  this is similar to the previous problem in \eref{eq:1d1g_buckle} which has 
+  general solution of the form
+  \begin{equation}
+    \label{eq:2d1g_x_general}
+    X(x) = c_1 \, \cos(\alpha \, x) + c_2 \, \sin(\alpha \, x)
+  \end{equation}
+  Consider the boundary condition at $x=0$ as specified in \eref{eq:2d1g_bc1}.
   \begin{align}
-    -D \grad^2 \phi(x,y) + \Sigma_r \phi(x,y) &= \nu \Sigma_f \phi(x,y) \\
-    - \grad^2 \phi(x,y) - \phi(x,y) &= 0 \\
-    \grad^2 \phi(x,y) + \phi(x,y) &= 0 \\
-    \frac{\partial^2}{\partial x^2} \phi(x,y) + 
-      \frac{\partial^2}{\partial y^2} \phi(x,y) +
-      \phi(x,y) &= 0\\
-    Y(y)\frac{\partial^2}{\partial x^2}X(x) +
-      X(x) \frac{\partial^2}{\partial y^2} Y(y) + X(x)Y(y) &= 0\\
-    Y(y)\left(\frac{\partial^2}{\partial x^2}X(x) + \frac{1}{2} X(x)\right)+
-      X(x)\left(\frac{\partial^2}{\partial y^2}Y(y) + \frac{1}{2}Y(y)
-      \right) &= 0
+    X(0) &= 0 \\
+    &= c_1 \\
+    \label{eq:2d1g_x_c1}
+    c_1 &= 0
   \end{align}
-  For non-trivial solutions $X(x) \ne 0$ and $Y(y) \ne 0$ then the following
-  second order ordinary differential equations can be solved.
+  Inserting the result \eref{eq:2d1g_x_c1} into \eref{eq:2d1g_x_general}.
+  \begin{equation}
+    \label{eq:2d1g_x_sin}
+    X(x) = c_2 \, \sin( \alpha x)
+  \end{equation}
+  Then considering the boundary condition at $x=L_x$ as specified in
+  \eref{eq:2d1g_bc2}.
   \begin{align}
-    \frac{d^2}{dx^2} X(x) + \frac{1}{2} X(x) &= 0 \\
-    \frac{d^2}{dy^2} Y(y) + \frac{1}{2} Y(y) &= 0 \\
+    X(L_x) &= 0 \\
+    &= c_2 \, \sin(\alpha \, L_x)
   \end{align}
-  The solution to these problems is the product of the solutions from the 
-  previous problem presented in \eref{eq:analytic_1d1g}. The solution is
-  \begin{equation} \label{eq:analytic_2d1g}
-    \phi(x,y) = \sin(x/A) \sin(y/B)
-  \end{equation}
-  Where $L_x$ is the horizontal extent of the rectangular domain and $L_y$ is 
-  the vertical extent of the rectangular domain. Extending the concept of 
-  geometric buckling to the two spatial dimensions where $B_x = \frac{1}{L_x}$
-  and $B_y = \frac{1}{L_y}$. If $B=B_x=B_y$; that is, $L_x=L_y$, $\keff$ can 
-  be calculated as
+  For non-trivial solution $X(x)$, this is an eigenvalue problem with $\alpha$
+  specified by the boundary condition. This implies $c_2$ is arbitrary and the
+  magnitude of the function can be normalized to a constant. For simplicity,
+  allow $c_2 = 1$. Then, recall the zeros of the sine function.
+  \begin{align}
+    \alpha \, L_x &= n \, \pi \\
+    \alpha &= \frac{n \, \pi}{L_x}
+  \end{align}
+  Where $n$ is an integer. For the fundamental mode $n=1$.
+  \begin{align}
+    \label{eq:2d1g_x_alpha}
+    \alpha = \frac{\pi}{L_x}
+  \end{align}
+  Substitute \eref{eq:2d1g_x_alpha} into \eref{eq:2d1g_x_sin} for the solution
+  to the fundamental mode of $X(x)$.
   \begin{equation}
-    \keff = \frac{\nu \Sigma_f}{2DB^2 + \Sigma_r} 
+    \label{eq:2d1g_x_solution}
+    X(x) = \sin\left(\frac{\pi}{L_x} x \right)
   \end{equation}
-  Then, for $A=B = 100 \units{cm}$
+  Similar procedure is performed to solve for $Y(y)$.
   \begin{equation}
-    \keff = 1.9960599356
+    \label{eq:2d1g_y_solution}
+    Y(y) = \sin\left(\frac{\pi}{L_y} y \right)
+  \end{equation}
+  \eref{eq:2d1g_x_solution} and \eref{eq:2d1g_y_solution} are substituted into
+  \eref{eq:2d1g_separable}.
+  \begin{equation}
+    \label{eq:analytic_2d1g}
+    \phi(x,y) = \sin\left(\frac{\pi}{L_x} x\right) \, 
+      \sin\left(\frac{\pi}{L_y} y\right)
+  \end{equation}
+  The flux shape in \eref{eq:analytic_2d1g} is plotted in \fref{fig:2d1g}.
+  \begin{figure}
+    \centering
+    \includegraphics[width=0.7\textwidth]{2d1g}
+    \caption{Two-Dimension Criticality Flux Shape.}
+    \label{fig:2d1g}
+  \end{figure}
+  Using \eref{eq:2d1g_buckle_alphabeta} along with \eref{eq:2d1g_x_alpha} and a
+  similar expression for $\beta$, the buckling can be written geometrically.
+  \begin{equation}
+    \label{eq:2d1g_buckle_geom}
+    B^2 = \left(\frac{\pi}{L_x}\right)^2 + \left(\frac{pi}{L_y}\right)^2
+  \end{equation}.
+  Setting \eref{eq:2d1g_buckle_geom} equal to \eref{eq:2d1g_b2} yields an
+  expression for $\keff$.
+  \begin{align}
+    \left(\frac{\pi}{L_x}\right)^2 + \left(\frac{pi}{L_y}\right)^2 &=
+      \frac{\frac{1}{\keff} \nu \Sigma_f - \Sigma_r}{D} \\
+    \keff &= \frac{\nu \Sigma_f}{D \left( \left(\frac{\pi}{L_x}\right)^2 + 
+      \left( \frac{\pi}{L_y}\right)^2 \right) + \Sigma_r}
+  \end{align}
+  For material coefficients specified in \tref{tab:1group_simple} and
+  $L_x=L_y=100 \units{cm}$, 
+  \begin{equation}
+    \label{eq:keff2d}
+    \keff = 1.996060
   \end{equation}
   
 \section{One-Dimension, Two-Group, Criticality}
