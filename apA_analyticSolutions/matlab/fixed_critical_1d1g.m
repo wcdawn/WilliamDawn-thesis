@@ -2,6 +2,7 @@ clear
 close all
 
 Lx = 1;
+LW = 2;
 ntest = 100;
 
 diffusion = 1;
@@ -28,7 +29,9 @@ ytestc = ytestc * norm(ytestf,inf);
 figure
 hold on
 title('One-Dimension, One-Group, Fixed and Critical')
-plot(xtest,ytestc,'LineWidth',2)
-plot(xtest,ytestf,'LineWidth',2)
+plot(xtest,ytestc,'LineWidth',LW)
+plot(xtest,ytestf,'LineWidth',LW)
+xlabel('x [cm]')
+ylabel('\phi(x)')
 legend({'Fixed Source', 'Criticality'})
 hold off

@@ -444,7 +444,7 @@
   Then, inserting \eref{eq:twogroupflux1} and \eref{eq:twogroupflux2} into 
   \eref{eq:twogroup2} and dividing the equation by $\sin(Bx)$
   \begin{equation}
-    D_2 B^2 c_2 + \Sigma_{r2} c_2 = \Sigma{s1\rightarrow2} c_1
+    D_2 B^2 c_2 + \Sigma_{r2} c_2 = \Sigma_{s1\rightarrow2} c_1
   \end{equation}
   Then, the ratio can be expressed
   \begin{equation} \label{eq:fluxratio}
@@ -487,34 +487,202 @@
   
 \section{One-Dimension, One-Group, Two Region, Criticality}
   \label{sec:deriv_2reg}
-  This final analytic problem was designed to test the materials mapping of a
-  solver. The problem is proposed as a slab reactor with a fuel and reflector
-  region. The neutron diffusion equation is given in  \eref{eq:onegroup}. 
-  Geometry is described in \fref{fig:2reg_geom}. Fuel Material (subscript F) 
-  is located in $x \in [0,a]$ and Reflector Material (subscript R) is located in
-  $x \in [a,b]$.
+  This one-dimension problem is meant to simulate a reactor with reflective
+  material at the edge of the reactor. This has the benefit of testing the
+  materials mapping of the solver. The problem is in the domain $x \in [0,L_R]$. 
+  Geometry is described in \fref{fig:2reg_geom}. Fuel material (subscript F) is
+  located in $x \in [0,L_F]$ and reflector material (subscript R) is located in 
+  $ x \in [L_F,L_R]$. The material is homogeneous within each respective section
+  and has fixed coefficient properties in their region. The problem is specified
+  in \eref{eq:2regF}, \eref{eq:2regR}, \eref{eq:2reg_bc0},
+  \eref{eq:2reg_flux_continuity}, \eref{eq:2reg_current_continuity},
+  \eref{eq:2reg_bcLR}.
   \begin{figure}
     \centering
-    \includegraphics[width=0.6\textwidth]{2reg_geom}
+    \includegraphics[width=0.5\textwidth]{2reg_geom}
     \caption{Geometry for Two Region Problem.}
     \label{fig:2reg_geom}
   \end{figure}
-  Boundary conditions on the horizontal surfaces (top/bottom) are reflective
-  to reduce the problem to one-dimension. Other boundary conditions are given
-  below. Noting $\phi'(x) = \frac{d \phi}{dx}$.
   \begin{align}
-    \label{eq:2reg_mirror}
-    \phi'_F(0)&=0\\
-    \label{eq:2reg_continuity}
-    D_F\phi'_F(a)&=D_R\phi'_R(a) \\
-    \label{eq:2reg_fluxcontinuity}
-    \phi_F(a) &= \phi_R(a) \\
-    \label{eq:2reg_zeroflux}
-    \phi_R(b)&=0
+    \label{eq:2regF}
+    -D_F \frac{d^2}{dx^2} \phi_F(x) + \Sigma_{rF} &= \frac{1}{\keff} \nu
+      \Sigma_{fF} \phi_F(x) \qquad \forall \; x \in [0,L_F] \\
+    \label{eq:2regR}
+    -D_R \frac{d^2}{dx^2} \phi_R(x) + \Sigma_{rR} &= 0 \qquad \forall 
+      \; x \in [L_F,L_R]
   \end{align}
-  These represent mirror condition at $x=0$, current continuity at $x=a$, flux
-  continuity at $x=a$, and zero-flux at $x=b$. The material properties are 
-  specified in \tref{tab:2reg_constants}.
+  \begin{align}
+    \label{eq:2reg_bc0}
+    \left. \frac{d}{dx} \phi_F(x) \right|_{x=0} &= 0 \\
+    \label{eq:2reg_flux_continuity}
+    \phi_F(L_F) &= \phi_R(L_F) \\
+    \label{eq:2reg_current_continuity}
+    D_F \left. \frac{d}{dx} \phi_F(x) \right|{x=L_F} &= 
+      D_R \left. \frac{d}{dx} \phi_R(x) \right|{x=L_F} \\
+    \label{eq:2reg_bcLR}
+    \phi_R(L_R) &= 0
+  \end{align}
+  Beginning in the fueled region. The diffusion equation \eref{eq:2regF} can be
+  rewritten with a buckling term $B_F$.
+  \begin{equation}
+    \label{eq:2regF_buckle}
+    \frac{d^2}{dx^2} \phi_F(x) + B_F^2 \phi_F(x) = 0 
+  \end{equation}
+  Where $B_F^2$ is given in \eref{eq:2regF_b2}.
+  \begin{equation}
+    \label{eq:2regF_b2}
+    B_F^2 = \frac{\frac{1}{\keff} \nu \Sigma_{fF} - \Sigma_{rF}}{D_F}
+  \end{equation}
+  \eref{eq:2regF_buckle} has general solution of the form
+  \begin{equation}
+    \label{eq:2regF_general}
+    \phi_F(x) = c_{1F} \, \cos(B_F\,x) + c_{2F} \, \sin(B_F\,x)
+  \end{equation}
+  The derivative of \eref{eq:2regF_general} is also provided as it will be
+  useful for evaluating boundary conditions.
+  \begin{equation}
+    \label{eq:2regF_general_derivative}
+    \frac{d}{dx}\phi_F(x) = -c_{1F} \, B_F \, \sin(B_F\,x) + 
+      c_{2F} \, B_F \, \cos(B_F\,x)
+  \end{equation}
+  Using \eref{eq:2regF_general_derivative}, the boundary condition is evaluated
+  at $x=0$ as specified in \eref{eq:2reg_bc0}.
+  \begin{align}
+    \phi_F(0) &= 0 \\
+    &= c_{2F} \, B_F \\
+    \label{eq:2reg_c2f}
+    c_{2F} &= 0
+  \end{align}
+  \eref{eq:2reg_c2f} is inserted into \eref{eq:2regF_general}
+  \begin{equation}
+    \label{eq:2regF_cos}
+    \phi_F(x) = c_{1F} \, \cos(B_F\, x)
+  \end{equation}
+  and its derivative is provided.
+  \begin{equation}
+    \label{eq:2regF_cos_derivative}
+    \frac{d}{dx} \phi_F(x) = -c_{1F} \, B_F \, \sin(B_F \, x)
+  \end{equation}
+
+  Next, the reflector region is considered as in \eref{eq:2regR}. This equation
+  can be rewritten.
+  \begin{equation}
+    \label{eq:2regR_buckle}
+    \frac{d^2}{dx^2} \phi_R(x) - B_R^2 \phi_R(x) = 0
+  \end{equation}
+  Where $B_R^2$ is given in \eref{eq:2regR_b2}
+  \begin{equation}
+    \label{eq:2regR_b2}
+    B_R^2 = \frac{\Sigma_{rR}}{D_R}
+  \end{equation}
+  \eref{eq:2regR_buckle} has general solution of the form
+  \begin{equation}
+    \label{eq:2regR_general}
+    \phi_R(x) = c_{1R} \, \cosh(B_R\, (x-L_F)) + c_{2R} \, \sinh(B_R\,(x-L_F))
+  \end{equation}
+  Note the use of $(x-L_F)$ instead of $x$ in \eref{eq:2regR_general}. This
+  choice is valid because $\cosh()$ and $\sinh()$ can be rewritten as
+  exponential functions and the subtraction in the argument is equivalent to
+  multiplication by a constant.
+  The derivative of \eref{eq:2regR_general} is also provided as it will be
+  useful for evaluating boundary conditions.
+  \begin{equation}
+    \label{eq:2regR_general_derivative}
+    \frac{d}{dx} \phi_R(x) = c_{1R} \, B_R \, \sinh(B_R \, (x-L_F)) + 
+      c_{2R} \, B_R \, \cosh(B_R \, (x-L_F))
+  \end{equation}
+  The zero-flux boundary condition at $x=L_R$ is treated as specified in
+  \eref{eq:2reg_bcLR}.
+  \begin{align}
+    \phi_R(L_R) &= 0 \\
+    &= c_{1R} \, \cosh(B_R \, (L_R - L_F)) + c_{2R} \sinh(B_R \, (L_R-L_F)) \\
+    c_{2R} &= \frac{-c_{1R}\,\cosh(B_R\,(L_R - L_F))}{\sinh(B_R \,(L_R-L_F))} \\
+    \label{eq:2reg_c2r_a}
+    c_{2R} &= -c_{1R} \frac{1}{\tanh(B_R\,(L_R-L_F))}
+  \end{align}
+  Next, the current continuity condition at $x=L_F$ is considered as specified
+  in \eref{eq:2reg_current_continuity}. \eref{eq:2regF_cos_derivative} and
+  \eref{eq:2regR_general_derivative} are used to evaluate the functions.
+  \begin{align}
+    \left. D_F \frac{d}{dx} \phi_F(x) \right|_{x=L_F} &= 
+      \left. D_R \frac{d}{dx} \phi_R(x) \right|_{L_f} \\
+    -D_F \, c_{1F} \, B_F \, \sin(B_F \, L_F) &= D_R \, B_R \, c_{2R} \\
+    \label{eq:2reg_c2r_b}
+    c_{2R} &= \frac{-D_F \, c_{1F} \, B_F \, \sin(B_F \, L_F)}{D_R\,B_R}
+  \end{align}
+  Next, the flux continuity condition at $x=L_F$ is considered as specified in 
+  \eref{eq:2reg_flux_continuity}. \eref{eq:2regF_cos} and 
+  \eref{eq:2regR_general} are used to evaluate the functions.
+  \begin{align}
+    \phi_F(L_F) &= \phi_R(L_F) \\
+    c_{1F} \, \cos(B_f \, L_F) &= c_{1R} \\
+    \label{eq:2reg_c1r}
+    c_{1R} &= c_{1F} \, \cos(B_F \, L_F)
+  \end{align}
+
+  Now coefficients $c$ are solved. Setting \eref{eq:2reg_c2r_a} equal to
+  \eref{eq:2reg_c2r_b}.
+  \begin{align}
+    -c_{1R} \frac{1}{\tanh(B_R\,(L_R-L_F))}
+      &= \frac{-D_F \, c_{1F} \, B_F \, \sin(B_F \, L_F)}{D_R\,B_R} \\
+    c_{1R} \frac{1}{\tanh(B_R\,(L_R-L_F))}
+      &= \frac{D_F \, c_{1F} \, B_F \, \sin(B_F \, L_F)}{D_R\,B_R} \\
+  \end{align}
+  Inserting the expression for $c_{1R}$ from \eref{eq:2reg_c1r}.
+  \begin{equation}
+    \label{eq:2reg_c1f_arbitrary}
+    \frac{c_{1F} \, \cos(B_F \, L_F)}{\tanh(B_R \, (L_R-L_F))} =
+      \frac{D_F \, c_{1F} \, B_F \, \sin(B_F \, L_F)}{D_R \, B_R}
+  \end{equation}
+  \eref{eq:2reg_c1f_arbitrary} shows that coefficient $c_{1F}$ is arbitrary.
+  This is an expected result of an eigenvalue problem. Continuing with the
+  derivation.
+  \begin{align}
+    \frac{\cos(B_F \, L_F)}{\tanh(B_R \, (L_R-L_F))} &=
+      \frac{D_F \, B_F \, \sin(B_F \, L_F)}{D_R \, B_R} \\
+    \frac{D_R \, B_R}{D_F \, \tanh(B_R \, (L_R - L_F))} &= 
+      \frac{B_F \, \sin(B_F \, L_F)}{\cos(B_F \, L_F)} \\
+    \label{eq:2reg_bf}
+    B_F \, \tan(B_F \, L_F) &= \frac{D_R \, B_R}{D_F \, \tanh(B_R \, (L_R-L_F))}
+  \end{align}
+  Recalling \eref{eq:2regR_b2}. 
+  \eref{eq:2reg_bf} is the most simplified solution for $B_F$. Unfortunately,
+  there is no analytic expression for $B_F$. Therefore, a numeric solver must be
+  used such as MATLAB's \verb|vpasolve()| or a generic bisection search. The 
+  $\tan()$ function causes the solution $B_F$ to be especially sensitive to the
+  starting guess or bounds of the search. Once, $B_F$ is known, the eigenvalue, 
+  $\keff$ can be solved using \eref{eq:2regF_b2}.
+  \begin{equation}
+    \label{eq:keff2reg}
+    \keff = \frac{\nu \Sigma_{fF}}{D_F B_F^2 + \Sigma_{rF}}
+  \end{equation}
+  The fundamental eigenmode can be expressed compactly as well recalling the
+  general forms \eref{eq:2regF_cos} and \eref{eq:2regR_general} as well as
+  coefficients \eref{eq:2reg_c1r} and \eref{eq:2reg_c2r_b}.
+  \begin{align}
+    \phi_F(x) &= \phi_0 \, \cos(B_F \, x) \\
+    \phi_R(x) &= \phi_0 \, \cos(B_f \, L_F) \, \cosh(B_R \, (x-L_F)) - 
+      \frac{\phi_0 \, D_F \, \sin(B_f\,L_F)}{D_R \, B_R} \, 
+      \sinh(B_R\,(x-L_F)) \\
+    \label{eq:analytic_2reg}
+    \phi(x) &= H(x-L_F) \, \phi_R(x) + H(L_F-x) \, \phi_F(x)
+  \end{align}
+  Where $\phi_0$ is the arbitrary normalization constant and $\phi_0 = \phi(0)$.
+  $H(x)$ is the Heaviside step function such that
+  \begin{equation}
+    H(x) =
+    \begin{cases}
+      0 & x < 0 \\
+      1 & x \ge 0
+    \end{cases}
+  \end{equation}
+  For $L_F = 50 \units{cm}$ and $L_F = 100 \units{cm}$ and material constants
+  given in \tref{tab:2reg_constants}, the following are solutions. Additionally,
+  a representative flux shape is provided in \fref{fig:2reg}.
+  \begin{align}
+    B_F &= 0.0255922 \\
+    \keff &= 0.962188
+  \end{align}
   \begin{table}
     \caption{Two Region Material Constants.}
     \label{tab:2reg_constants}
@@ -523,103 +691,20 @@
         \toprule
         & Fuel & Reflector \\
         \midrule
-        $D$ & 1.2 & 0.7 \\
-        $\Sigma_r$ & 0.02 & 0.015 \\
-        $\nu \Sigma_f$ & 0.02 & 0 \\
-        $q_{fixed}$ & 0 & 0 \\
+        $D \units{$\frac{1}{\text{cm}}$}$ & 1.2 & 0.7 \\
+        $\Sigma_r \units{cm}$ & 0.02 & 0.015 \\
+        $\nu \Sigma_f \units{cm}$ & 0.02 & 0 \\
         \bottomrule
       \end{tabular}
     \end{center}
   \end{table}
-  
-  The general form of the solution in the fueled region has form similar to 
-  \eref{eq:1d1g_buckle}.
-  \begin{equation}
-    \phi_F(x) = c_{1F} \cos(B_F x) + c_{2F} \sin(B_F x)
-  \end{equation}
-  Then, using the mirror boundary condition at $x=0$ \eref{eq:2reg_mirror}.
-  \begin{align}
-    \phi_F(x) &= c_{1F} \cos(B_F x) + c_{2F} \sin(B_F x) \\
-    \phi'_F(x) &= -B_F c_{1F} \sin(B_F x) + B_F c_{2F} \cos(B_F x) \\
-    \phi'_F(0) &= 0\\
-    &=B_F c_{2F}
-  \end{align}
-  Therefore, $c_{2F}=0$ and
-  \begin{equation}
-    \phi_F(x) = c_{1F} \cos(B_F x)
-  \end{equation}
-  Because this is an eigenvalue problem, $c_{1F}$ is arbitrary and $B_F$ 
-  represents the buckling factor in the Fuel Material.
-  
-  Now for the solution in the reflector region. The solution has general form
-  similar to \eref{eq:1dfixed_homog_form}
-  \begin{equation}
-    \phi_R(x) = c_{1R} \cosh(B_R (x-a)) + c_{2R} \sinh(B_R (x-a))
-  \end{equation}
-  The coordinate transform $(x-a)$ is equivalent to multiplying by a constant 
-  because $\sinh$ and $\cosh$ can be rewritten as exponentials and due to 
-  exponential properties. Treating the zero-flux boundary condition at $x=b$ 
-  \eref{eq:2reg_zeroflux}.
-  \begin{align}
-    \phi_R(x) &= c_{1R} \cosh(B_R (x-a)) + c_{2R} \sinh(B_R (x-a))\\
-    \phi_R(b) &= 0 \\
-    &= c_{1R} \cosh(B_R(b-a)) + c_{2R} \sinh(B_R(b-a))\\
-    c_{1R} &= -c_{2R} \frac{\sinh(B_R(b-a))}{\cosh(B_R(b-a))}\\
-    c_{1R} &= -c_{2R} \tanh(B_R(b-a))\\
-    c_{2R} &= -c_{1R} \frac{1}{\tanh(B_R(b-a))} \label{eq:c2rnumber1}
-  \end{align}
-  Treating the current continuity boundary condition at $x=a$ 
-  \eref{eq:2reg_continuity}.
-  \begin{align}
-    D_F \phi'_F(a) &= D_R \phi'_R(a) \\
-    -D_F c_{1F} B_F \sin(B_F a) &= D_R B_R c_{2R} \\
-    c_{2R} &= -\frac{D_F c_{1F} B_F \sin(B_F a)}{D_R B_R} \label{eq:c2rnumber2}
-  \end{align}
-  Treating the flux continuity boundary condition at $x=a$ 
-  \eref{eq:2reg_fluxcontinuity}.
-  \begin{align}
-    \phi_F(a)&=\phi_R(a) \\
-    c_{1F} \cos(B_F a) &= c_{1R} \\
-    c_{1R} &= c_{1F} \cos(B_F a) \label{eq:c1r}
-  \end{align}
-  Setting equations \eref{eq:c2rnumber1} and \eref{eq:c2rnumber2} equal.
-  \begin{equation}
-    - \frac{D_F c_{1F} B_F \sin(B_F a)}{D_R B_R} = -c_{1R} \tanh(B_R(b-a))
-  \end{equation}
-  Using the the expression for $c_{1R}$ from \eref{eq:c1r}
-  \begin{align}
-    - \frac{D_F c_{1F} B_F \sin(B_F a)}{D_R B_R} &=
-      - \frac{c_{1F} \cos(B_F a)}{\tanh(B_R(b-a))}\\
-    \frac{D_F B_F \sin(B_F a)}{D_R B_R} &= 
-      \frac{\cos(B_F a)}{\tanh(B_R(b-a))} \\
-    B_F \tan(B_F a) &= \frac{D_R B_R}{D_F \tanh(B_R(b-a))}
-  \end{align}
-  By material definition,  ${B_R = \sqrt{\Sigma_{rR}/D_R}}$.
-  
-  This is the most simplified solution. Unfortunately, there is no analytic
-  expression for $B_F$. Therefore, a numeric solver must be used such as 
-  MATLAB's \texttt{vpasolve()} or a generic bisection/binary search. The $\tan()$ 
-  function causes the solution to $B_F$ is especially sensitive to the starting
-  guess.
-  
-  Once $B_F$ is known, the problem is solved.
-  \begin{align}
-    \phi_F(x) &= \phi_0 \cos(B_F x)\\
-    \phi_R(x) &= \phi_0 \cos(B_F a) \cosh(B_R (x-a)) 
-      - \frac{D_F \phi_0 \sin(B_F a)}{D_R B_R} \sinh(B_R (x-a))\\
-    \label{eq:analytic_2reg}
-    \phi(x) &= H(x-a)\phi_R(x) + H(a-x)\phi_F(x)
-  \end{align}
-  Where $H(x)$ is the Heaviside step function.  
-  
-  The eigenvalue for this problem can be expressed for a known $B_F$. Similar 
-  to \eref{eq:keff1d}. In this problem, for $a=50 \units{cm}$ and
-  $b=100 \units{cm}$ and material constants given in \tref{tab:2reg_constants}.
-  \begin{align}
-    B_F &= 0.0255922048213879 \\
-    \keff &= \frac{\nu\Sigma_{fF}}{D_F B_F^2 + \Sigma_{rF}} \\
-    &= 0.9621882561
-  \end{align}
+  \begin{figure}
+    \centering
+    \includegraphics[width=0.7\textwidth]{2reg}
+    \caption{Two Region Flux Shape.}
+    \label{fig:2reg}
+  \end{figure}
+
 \section{Finite-Cylinder, One-Group, Criticality}
   \label{sec:deriv_finite_cyl}
   The finite cylinder is an example of a truly three-dimension problem with

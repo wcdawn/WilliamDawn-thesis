@@ -26,4 +26,6 @@ surf(xtest,ytest,val,'EdgeColor','none')
 view([0,90])
 colormap(coolwarm)
 colorbar
+xlabel('x [cm]')
+ylabel('y [cm]')
 title('Two-Dimension, One-Group, Ciriticality')
