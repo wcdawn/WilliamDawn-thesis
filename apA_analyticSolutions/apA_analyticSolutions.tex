@@ -224,7 +224,7 @@
   Using material properties given in \tref{tab:1group_simple} and $L_x =
   \units{cm}$, then
   \begin{equation}
-    \keff = 1.996060
+    \keff = 1.998028
   \end{equation}
 
   \begin{table}
@@ -245,6 +245,88 @@
 
 \section{Two-Dimension, One-Group, Criticality}
   \label{sec:deriv_2d1g}
+  This two-dimension problem is in the rectangular domain $[0,L_x] \times
+  [0,L_y]$. That is, $x \in [0,L_x]$ and $y \in [0,L_y]$. The material is
+  homogeneous within the problem and has fixed coefficient properties. The
+  problem is specified in \eref{eq:2d1g}, \eref{eq:2d1g_bc1},
+  \eref{eq:2d1g_bc2}, \eref{eq:2d1g_bc3}, and \eref{eq:2d1g_bc4}.
+  \begin{equation}
+    \label{eq:2d1g}
+    -D \grad^2 \phi(x,y) + \Sigma_r \phi(x,y) = 
+      \frac{1}{\keff} \nu \Sigma_f \phi(x,y)
+  \end{equation}
+  \begin{align}
+    \label{eq:2d1g_bc1}
+    \phi(0,y) &= 0 \\
+    \label{eq:2d1g_bc2}
+    \phi(L_x,y) &= 0 \\
+    \label{eq:2d1g_bc3}
+    \phi(x,0) &= 0 \\
+    \label{eq:2d1g_bc4}
+    \phi(x,L_y) &= 0
+  \end{align}
+  Noting in \eref{eq:2d1g} that $\grad^2 \phi = \grad \cdot (\grad \phi)$.
+  \eref{eq:2d1g} can be rewritten as
+  \begin{equation}
+    \label{eq:2d1g_buckle}
+    \grad^2 \phi(x,y) + B^2 \phi(x,y) = 0
+  \end{equation}
+  Where $B$ is the buckling term and is given for this problem in
+  \eref{eq:2d1g_b2}.
+  \begin{equation}
+    \label{eq:2d1g_b2}
+    B^2 = \frac{\frac{1}{\keff} \nu \Sigma_f - \Sigma_r}{D}
+  \end{equation}
+  The Laplacian $\grad^2$ in \eref{eq:2d1g_buckle} is then expanded into partial
+  derivatives.
+  \begin{equation}
+    \label{eq:2d1g_partial}
+    \frac{\partial^2}{\partial x^2} \phi(x,y) + \frac{\partial^2}{\partial y^2}
+      \phi(x,y) + B^2 \phi(x,y) = 0
+  \end{equation}
+  The method of separation of variables will be used to solve
+  \eref{eq:2d1g_partial}. Begin by assuming that $\phi(x,y)$ is separable as in
+  \eref{eq:2d1g_separable}.
+  \begin{equation}
+    \label{eq:2d1g_separable}
+    \phi(x,y) = X(x)\,Y(y)
+  \end{equation}
+  Then, inserting \eref{eq:2d1g_separable} into \eref{eq:2d1g_partial}.
+  \begin{align}
+    \frac{\partial^2}{\partial x^2} \left( X(x)\,Y(y) \right) + 
+      \frac{\partial^2}{\partial y^2} \left( X(x)\,Y(y) \right) + 
+      B^2 X(x)\,Y(y) &= 0 \\
+    \label{eq:2d1g_above}
+    Y(y) \frac{\partial^2}{\partial x^2} X(x) + 
+      X(y) \frac{\partial^2}{\partial y^2} Y(x) + 
+      B^2 X(x) \, Y(y) &= 0
+  \end{align}
+  Divide \eref{eq:2d1g_above} by the quantity $X(x)\,Y(y)$.
+  \begin{equation}
+    \label{eq:2d1g_divide_sum}
+    \frac{1}{X(x)} \, \frac{d^2}{d x^2} X(x) + 
+      \frac{1}{Y(y)} \, \frac{d^2}{d y^2} Y(y) + 
+      B^2 = 0
+  \end{equation}
+  Each of the partial derivatives operates on a function of only one variable so
+  the derivatives become standard derivatives.
+
+  The first two terms of \eref{eq:2d1g_divide_sum} are function of only $x$ and
+  $y$ respectively, and their sum is equal to a constant. Therefore, both of the
+  terms must also be equal to a constant \cite{lamarsh1966}. Splitting
+  \eref{eq:2d1g_divide_sum} into two equations yields
+  \begin{align}
+    \frac{1}{X(x)} \, \frac{d^2}{d x^2} X(x) + \alpha^2 &= 0 \\
+    \frac{1}{Y(y)} \, \frac{d^2}{d y^2} Y(y) + \beta^2 &= 0
+  \end{align}
+  where $\alpha$ and $\beta$ are constants such that
+  \begin{equation}
+    \alpha^2 + \beta^2 = B^2
+  \end{equation}
+
+
+
+
   The same material coefficients are used for this problem as in the 
   one-dimension, criticality problem. For this problem, the domain is in the 
   rectangle $[0,L_x]\times[0,L_y]$. Similar to the one-dimension problem, 
