@@ -707,6 +707,42 @@
 
 \section{Finite-Cylinder, One-Group, Criticality}
   \label{sec:deriv_finite_cyl}
+  This three-dimension problem can be simulated in three Cartesian dimensions 
+  and reduced to two cylindrical dimensions for easier analytic solution. This
+  problem is located in $r \in [0,T]$ and $z \in [0,H]$. The material is
+  homogeneous within the probem and has fixed coefficient properties. The
+  problem is specified in \eref{eq:finite_cyl}, \eref{eq:finite_cyl_bcz0},
+  \eref{eq:finite_cyl_bczH}, \eref{eq:finite_cyl_bcrT}, and
+  \eref{eq:finite_cyl_bcr0}.
+  \begin{equation}
+    \label{eq:finite_cyl}
+    -D \grad^2 \phi(r,z) + \Sigma_r \phi(r,z) = \frac{1}{\keff} \nu \Sigma_f
+      \phi(r,z)
+  \end{equation}
+  \begin{align}
+    \label{eq:finite_cyl_bcz0}
+    \phi(r,0) &= 0 \\
+    \label{eq:finite_cyl_bczH}
+    \phi(r,H) &= 0 \\
+    \label{eq:finite_cyl_bcrT}
+    \phi(T,z) &= 0 \\
+    \label{eq:finite_cyl_bcr0}
+    \phi(0,z) & \text{ is Finite}
+  \end{align}
+
+
+
+
+
+
+
+
+
+
+
+
+  MY NAME IS WILLIAM.
+
   The finite cylinder is an example of a truly three-dimension problem with
   an analytic solution. This is a homogeneous cylinder with zero-flux boundary
   conditions on the edge of the cylinder. The cylinder has height $H$ and 
