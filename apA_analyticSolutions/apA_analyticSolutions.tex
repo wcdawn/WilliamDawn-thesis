@@ -526,84 +526,48 @@
   \end{align}
   Divide the top and bottom of the ration by $c_1$.
   \begin{equation}
+    \label{eq:1d2g_keff}
     \keff = \frac{\nu \Sigma_{f1} + \nu \Sigma_{f2} \, \frac{c_2}{c_1}}
       {\left(\frac{\pi}{L_x}\right)^2 \, D_1 + \Sigma_{r1}}
   \end{equation}
   Recalling the quantity $\frac{c_2}{c_1}$ from \eref{eq:1d2g_ratio}.
 
-  The flux shape is described in 
-
-    
-
-
-  
-  MY NAME IS WILLIAM.
-
-  A two-group neutron diffusion problem is considered for a one-dimension
-  homogeneous slab in the domain $x \in [0,L]$. Energy group 1 is higher energy
-  than energy group 2. It is assumed all fission neutrons are  produced in the
-  fast group (i.e. $\chi_1=1$ and $\chi_2=0$). Additionally, it is assumed that 
-  there is no up-scattering  (i.e. $\Sigma_{2\rightarrow1}=0$).  Then, the
-  two-group neutron diffusion equations are given in \eref{eq:twogroup1} and 
-  \eref{eq:twogroup2}.
-  
-  Referring to the problem posed by Section \sref{sec:deriv_1d1g}, the flux 
-  solutions have form given in equation \eref{eq:1d1g_sin}. Then
+  The flux shape is described in \eref{eq:1d2g_sin}. An example flux shape is
+  plotted in \fref{fig:1d2g}. The coefficient $c_1$ is
+  arbitrary and the ratio $\frac{c_2}{c_1}$ is given in \eref{eq:1d2g_ratio}.
+  Finally $\keff$ is given \eref{eq:1d2g_keff}. The VVER440 benchmark in
+  \sref{sec:vver440} MAT1 is used for this problem. For simplicity, the cross
+  sections are also presented in \tref{tab:1d2g_vver440}. For the specified
+  cross sections and $L_x = 100 \units{cm}$, the following solutions apply.
   \begin{align}
-    \label{eq:twogroupflux1}
-    \phi_1(x) &= c_1 \sin(Bx) \\
-    \label{eq:twogroupflux2}
-    \phi_2(x) &= c_2 \sin(Bx)
+    \frac{c_2}{c_1} &= 0.0261324 \\
+    \keff &= 0.892349
   \end{align}
-  Where $B$ is the geometric buckling term. For this geometry, the geometric 
-  buckling of the fundamental mode is given by 
-  \begin{equation}
-    B = \pi/L_x
-  \end{equation}
-  Then, inserting \eref{eq:twogroupflux1} and \eref{eq:twogroupflux2} into 
-  \eref{eq:twogroup2} and dividing the equation by $\sin(Bx)$
-  \begin{equation}
-    D_2 B^2 c_2 + \Sigma_{r2} c_2 = \Sigma_{s1\rightarrow2} c_1
-  \end{equation}
-  Then, the ratio can be expressed
-  \begin{equation} \label{eq:fluxratio}
-    \frac{c_2}{c_1} = \frac{\Sigma_{s1\rightarrow2}}{D_2 B^2 + \Sigma_{r2}}
-  \end{equation}
-  The ratio $\frac{c_2}{c_1}$ represents the relative magnitude of thermal to 
-  fast flux. Returning to \eref{eq:twogroup1}, and using in 
-  \eref{eq:twogroupflux1} and \eref{eq:twogroupflux2} and again dividing both
-  sides by  $\sin(Bx)$
-  \begin{align}
-    D_1 B^2 c_1 &= \frac{1}{\keff} \left( \nu \Sigma_{f1} c_1 + 
-      \nu \Sigma_{f2} c_2\right)\\
-    \keff &= \frac{\nu \Sigma_{f1} c_1 + \nu \Sigma_{f2} c_2}
-      {D_1 B^2 c_1 + \Sigma{r1} c_1}\\
-    \keff &= \frac{\nu \Sigma_{f1} + \nu \Sigma_{f2} c_2/c_1}
-      {D_1 B^2 + \Sigma{r1}}
-  \end{align}
-  Inserting the expression from \eref{eq:fluxratio}
-  \begin{equation}
-    \keff = \frac{\nu \Sigma_{f1} + \nu \Sigma_{f2} 
-      \left(\frac{\Sigma_{s1\rightarrow2}}{D_2B^2+\Sigma_{r2}}\right)}
-      {D_1 B^2 + \Sigma{r1}}
-  \end{equation}
-  From the VVER-440 benchmark \sref{sec:vver440}, material 1,
-  \begin{align*}
-    D_1 &= 1.3466  \\
-    D_2 &= 0.37169 \\
-    \Sigma_{r1} &= 2.5255\text{E}-2\\
-    \Sigma_{r2} &= 6.4277\text{E}-2\\
-    \nu \Sigma_{f1}  &= 4.4488\text{E}-3\\
-    \nu \Sigma_{f2}  &= 7.3753\text{E}-2\\
-    \Sigma_{s1\rightarrow2} &= 1.6893\text{E}-2 \\
-    k_{\infty} &= 0.943664259
-  \end{align*}
-  For a 100 \units{cm} slab.
-  \begin{align}
-    \frac{c_2}{c_1} &= 0.26132419 \\
-    \keff &= 0.892349025
-  \end{align}
-  
+  \begin{figure}
+    \centering
+    \includegraphics[width=0.7\textwidth]{1d2g}
+    \caption{Example Two-Group Flux Plot.}
+    \label{fig:1d2g}
+  \end{figure}
+  \begin{table}
+    \caption{Two-Group VVER440 Material Constants.}
+    \label{tab:1d2g_vver440}
+    \begin{center}
+      \begin{tabular}{cr}
+        \toprule
+        & MAT1 \\
+        \midrule
+        $D_1 \units{$\frac{1}{\text{cm}}$}$ & 1.346600E+00 \\
+        $D_2 \units{$\frac{1}{\text{cm}}$}$ & 3.716900E-01 \\
+        $\Sigma_{r1} \units{cm}$ & 2.525500E-02 \\
+        $\Sigma_{r2} \units{cm}$ & 6.427700E-02 \\
+        $\nu \Sigma_{f1} \units{cm}$ & 4.448800E-03 \\
+        $\nu \Sigma_{f2} \units{cm}$ & 7.375300E-02 \\
+        \bottomrule
+      \end{tabular}
+    \end{center}
+  \end{table}
+
 \section{One-Dimension, One-Group, Two Region, Criticality}
   \label{sec:deriv_2reg}
   This one-dimension problem is meant to simulate a reactor with reflective

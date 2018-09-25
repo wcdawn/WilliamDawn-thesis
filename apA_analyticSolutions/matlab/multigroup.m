@@ -15,6 +15,7 @@ sigma_1to2 = 1.6893e-2;
 
 B = pi/Lx;
 c = sigma_1to2/ (D2*B^2+sigma_r2);
+keff = (nusf1+nusf2*c)/(D1*B^2+sigma_r1);
 
 fun1 = @(x)(sin((pi/Lx)*x));
 fun2 = @(x)(c*sin((pi/Lx)*x));
