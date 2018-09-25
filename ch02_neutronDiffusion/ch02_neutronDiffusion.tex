@@ -621,10 +621,32 @@
     determinant. For the quadrature integration of derivative quantities as
     necessary in the FEM, the derivatives must also be translated from the
     reference element to the spatial element. This is performed according to 
+    ...
     \eref{eq:deriv_integral}
-    \begin{align}
-      \vd_{i,\,(\xi,\zeta,\eta)} &= \left. \grad_{(\xi,\zeta,\eta)} \basis_i
+
+    \begin{algorithm}
+      \caption{Integral of Derivative with Jacobian Method.}
+      \label{algorithm:deriv_int}
+      \begin{algorithmic}[1]
+        \State Read mesh from VTK.
+        \For{$p=1,N_P$}
+          \State Calculate the Jacobian $\mj$.
+          \State Calculate the vector $\vd_{i,\,(\xi,\zeta,\eta)}$ at quadrature
+            point $\vx_p$.
+          \State Calculate the vector $\vd_{j,\,(\xi,\zeta,\eta)}$ at quadrature
+            point $\vx_p$.
+          \State Invert the Jacobian $\mj^{-1}$.
+          \State Calculate
+        \EndFor
+      \end{algorithmic}
+    \end{algorithm}
+
+
+    \begin{equation}
+      \vd_{i,\,(\xi,\zeta,\eta)} = \left. \grad_{(\xi,\zeta,\eta)} \basis_i
         \right|_{\vx_p}\\
+    \end{equation}
+    \begin{align}
       \vd_{i,\,(x,y,z)} &= \left. \grad_{(x,y,z)} \basis_i \right|_{\vr} \\
       \vd_{i,\,(x,y,z)} &= \vd_{i,\,(\xi,\zeta,\eta)} \mj^{-1} \\
       \label{eq:deriv_integral}
@@ -632,7 +654,6 @@
       \sum_{p=1}^{N}
       \vd_{i,\,(x,y,z)}^{T} \vd_{j,\,(x,y,z)} \, w_p \, \lvert \mj \rvert
     \end{align}
-
 
 \section{Implementation}
   A FEM neutron diffusion solution has been developed using 
