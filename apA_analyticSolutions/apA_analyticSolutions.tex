@@ -69,24 +69,24 @@
   Begin the solution by allowing to be composed of homogeneous and particular
   solutions. 
   \begin{equation} 
-    \phi(x) = \phi_h(x) + \phi_p(x)
+    \phi(x) = \phi_H(x) + \phi_P(x)
   \end{equation}
   Using the form of \eref{eq:1dfixed_buckle}, the homogeneous solution satisfies 
   equation \eref{eq:1dfixed_homog}.
   \begin{equation}
     \label{eq:1dfixed_homog}
-    \frac{d^2}{dx^2} \phi_x(x) - B^2 \phi_h(x) = 0
+    \frac{d^2}{dx^2} \phi_x(x) - B^2 \phi_H(x) = 0
   \end{equation}
-  The homogeneous solution $\phi_h(x)$ has form \eref{eq:1dfixed_homog_form}.
+  The homogeneous solution $\phi_H(x)$ has form \eref{eq:1dfixed_homog_form}.
   \begin{equation}
     \label{eq:1dfixed_homog_form}
-    \phi_h(x) = c_1 \, \cosh(B \, x) + c_2 \, \sinh(B \, x)
+    \phi_H(x) = c_1 \, \cosh(B \, x) + c_2 \, \sinh(B \, x)
   \end{equation}
   The particular solution is given for a constant value $q_{fixed}$ in
   \eref{eq:1dfixed_particular}.
   \begin{equation}
     \label{eq:1dfixed_particular}
-    \phi_p(x) = -\frac{q_{fixed}}{B^2}
+    \phi_P(x) = -\frac{q_{fixed}}{B^2}
   \end{equation}
   Where $B^2$ comes from \eref{eq:1dfixed_b2}. Combining homogeneous and 
   particular solutions.
@@ -417,9 +417,37 @@
   
 \section{One-Dimension, Two-Group, Criticality}
   \label{sec:deriv_1d2g}
-  Much of this section is drawn from course notes prepared by Dr. Scott 
-  Palmtag \cite{analytic2g}.
+  This one-dimension problem is meant to test the multigroup solution method of
+  the solver. The problem is in the domain $x \in [0,L_x]$ and has two energy
+  groups $E_1 > E_2$. The integer subscripts correspond to the energy group. 
+  The material is homogeneous within the problem and has fixed coefficient 
+  properties. The following assumptions are used to simplify the problem.
+  \begin{itemize}
+    \item All fission neutrons created at fast energy ($\chi_1 = 1$, $\chi_2 =
+      0$).
+    \item No up-scatter ($\Sigma_{s 2 \rightarrow 1} = 0$).
+  \end{itemize}
+  The using these assumptions, the neutron diffusion diffusion problem is given
+  in \eref{eq:1d2g_1}, \eref{eq:1d2g_2}, \eref{eq:1d2g_bc0}, and
+  \eref{eq:1d2g_bcLx}.
+  \begin{align}
+    \label{eq:1d2g_1}
+    - D_1 \frac{d^2}{dx^2} \phi_1(x) + \Sigma_{r1} \, \phi_1(x) &= 
+      \frac{1}{\keff} \left( \nu \Sigma_{f1} \phi_1(x) + \nu \Sigma_{f2}
+      \phi_2(x) \right) \\
+    \label{eq:1d2g_2}
+    -D_2 \frac{d^2}{dx^2} \phi_2(x) + \Sigma_{r2} \phi_2(x) &= 
+      \Sigma_{s 1 \rightarrow 2} \phi_1(x)
+  \end{align}
+  \begin{align}
+    \label{eq:1d2g_bc0}
+    \phi_g(0) &= 0 \\
+    \label{eq:1d2g_bcLx}
+    \phi_g(L_x) &= 0
+  \end{align}
   
+  MY NAME IS WILLIAM.
+
   A two-group neutron diffusion problem is considered for a one-dimension
   homogeneous slab in the domain $x \in [0,L]$. Energy group 1 is higher energy
   than energy group 2. It is assumed all fission neutrons are  produced in the
@@ -506,9 +534,9 @@
   \begin{align}
     \label{eq:2regF}
     -D_F \frac{d^2}{dx^2} \phi_F(x) + \Sigma_{rF} &= \frac{1}{\keff} \nu
-      \Sigma_{fF} \phi_F(x) \qquad \forall \; x \in [0,L_F] \\
+      \Sigma_{fF} \phi_F(x) \qquad &\forall \; x \in [0,L_F] \\
     \label{eq:2regR}
-    -D_R \frac{d^2}{dx^2} \phi_R(x) + \Sigma_{rR} &= 0 \qquad \forall 
+    -D_R \frac{d^2}{dx^2} \phi_R(x) + \Sigma_{rR} &= 0 \qquad &\forall 
       \; x \in [L_F,L_R]
   \end{align}
   \begin{align}
