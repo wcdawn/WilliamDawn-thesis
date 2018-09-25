@@ -446,6 +446,97 @@
     \phi_g(L_x) &= 0
   \end{align}
   
+  The solution to \eref{eq:1d2g_1} and \eref{eq:1d2g_2} has form common to
+  criticality problems \cite{textbookhenry}.
+  \begin{equation}
+    \label{eq:multigroup_buckle}
+    \frac{d^2}{dx^2} \phi_g(x) + B^2 \phi_g(x) = 0 \qquad \text{for } g=1,2
+  \end{equation}
+  where $B$ is the buckling term and is common to both energy groups (not group
+  specific). \eref{eq:multigroup_buckle} has solution of the form
+  \eref{eq:multigroup_general}.
+  \begin{equation}
+    \label{eq:multigroup_general}
+    \phi_g(x) = c_{1g} \, \cos(B\,x) + c_{2g} \, \sin(B\,x)
+  \end{equation}
+  Boundary conditions are applied next. Beginning with the boundary condition at
+  $x=0$ as specified in \eref{eq:1d2g_bc0}.
+  \begin{align}
+    \phi_g(0) &= 0 \\
+    &= c_{1g} \\
+    \label{eq:1d2g_c1g}
+    c_{1g} &= 0
+  \end{align}
+  Then, using \eref{eq:1d2g_c1g}, \eref{eq:multigroup_general} can be rewritten.
+  \begin{equation}
+    \label{eq:1d2g_sin}
+    \phi_g(x) = c_g \, \sin(B\,x)
+  \end{equation}
+  Evaluating the boundary condition at $x=L_x$ as specified in
+  \eref{eq:1d2g_bcLx}.
+  \begin{align}
+    \phi_g(L_x) &= 0 \\
+    &= c_g \, \sin(B \, L_x)
+  \end{align}
+  For non-trivial solution $\phi_g(x)$, this is an eigenvalue problem with $c_g$
+  arbitrary. The buckling $B$ is then specified by the zeros of the $\sin()$
+  function. 
+  \begin{equation}
+    \label{eq:1d2g_buckle_geom}
+    B = \frac{\pi}{L_x}
+  \end{equation}
+  Differentiate \eref{eq:1d2g_sin} twice.
+  \begin{equation}
+    \label{eq:1d2g_sin_d2}
+    \frac{d^2}{dx^2} \phi_g(x) = - c_g \, B^2 \, \sin(B\,x)
+  \end{equation}
+  Insert \eref{eq:1d2g_sin} and \eref{eq:1d2g_sin_d2} into \eref{eq:1d2g_1} and
+  \eref{eq:1d2g_2}.
+  \begin{align}
+    D_1 \, c_1 \, B^2 \, \sin(B\,x) + \Sigma_{r1} \, c_1 \, \sin(B\,x) &=
+      \frac{1}{\keff} \left( \nu \Sigma_{f1} \, c_1 \, \sin(B \, x) + \nu
+      \Sigma_{f2} \, c_2 \, \sin(B\,x) \right) \\
+    D_2 \, c_2 \, B^2 \, \sin(B\,x) + \Sigma_{r2} \, s_2 \, \sin(B\,x) &=
+      \Sigma_{s 1\rightarrow 2} \, c_1 \, \sin(B\,x)
+  \end{align}
+  Dividing through the equations by $\sin(B\,x)$.
+  \begin{align}
+    \label{eq:1d2g_expression1}
+    D_1\,c_2\,B^2 + \Sigma_{r1}\,c_1 &= \frac{1}{\keff} \left( \nu \Sigma_{f1}
+      \, c_1 + \nu \Sigma_{f2} \, c_2 \right) \\
+    \label{eq:1d2g_expression2}
+    D_2\,c_2\,B^2 + \Sigma_{r2}\,c_2 &= \Sigma_{s 1\rightarrow 2} \, c_1
+  \end{align}
+  Beginning with \eref{eq:1d2g_expression2} and solving for the quantity
+  $\frac{c_2}{c_1}$ and recalling \eref{eq:1d2g_buckle_geom}.
+  \begin{align}
+    \frac{c_2}{c_1} &= \frac{\Sigma_{s 1\rightarrow 2}}{D_2 \, B^2 + \Sigma_{r2}}
+      \\
+    \label{eq:1d2g_ratio}
+    \frac{c_2}{c_1} &= \frac{\Sigma_{s 1\rightarrow 2}}{D_2 \,
+      \left(\frac{\pi}{L_x}\right)^2 + \Sigma_{r2}}
+  \end{align}
+  Returning to \eref{eq:1d2g_expression2} and solving for the eigenvalue
+  $\keff$.
+  \begin{align}
+    \keff &= \frac{\nu \Sigma_{f1} \, c_1 + \nu \Sigma_{f2} \, c_2}
+      {B^2 \, D_1 \, c_1 + \Sigma_{r1} \, c_1 }\\
+    \keff &= \frac{\nu \Sigma_{f1} \, c_1 + \nu \Sigma_{f2} \, c_2}
+      {\left(\frac{\pi}{L_x}\right)^2 \, D_1 \, c_1 + \Sigma_{r1} \, c_1}
+  \end{align}
+  Divide the top and bottom of the ration by $c_1$.
+  \begin{equation}
+    \keff = \frac{\nu \Sigma_{f1} + \nu \Sigma_{f2} \, \frac{c_2}{c_1}}
+      {\left(\frac{\pi}{L_x}\right)^2 \, D_1 + \Sigma_{r1}}
+  \end{equation}
+  Recalling the quantity $\frac{c_2}{c_1}$ from \eref{eq:1d2g_ratio}.
+
+  The flux shape is described in 
+
+    
+
+
+  
   MY NAME IS WILLIAM.
 
   A two-group neutron diffusion problem is considered for a one-dimension
