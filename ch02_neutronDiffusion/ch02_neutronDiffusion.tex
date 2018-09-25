@@ -584,14 +584,14 @@
     % get VERY explicit here so someone else can actually solve the problem...
     \begin{equation}
       \int_{\Omega} f(\vx) \;d\Omega = 
-        \int_{\Omega_{ref}} f(\vx) \lvert \mj \rvert \;d\Omega \approx
+        \int_{\Omega_{ref}} f(\vx) \lvert \mj \rvert \;d\Omega_{ref} \approx
         \sum_{i=1}^{N} w_i f(\vx_i) \lvert \mj_i \rvert
     \end{equation}
     where $\mj$ is the Jacobian matrix, $\mj_i$ is the Jacobian matrix at 
     quadrature coordinate $\vx_i$, and $\lvert \cdot \rvert$ represents
     the matrix determinant. Notationally, $J=\lvert \mj \rvert$ and is termed
     the Jacobi.
-    
+
     For simple elements, the Jacobi is constant over the element and can be
     precalculated to save from populating, and evaluating the 
     determinant of a matrix for each integration point. For the elements of 
@@ -612,6 +612,28 @@
         \end{tabular}
       \end{center}
     \end{table}
+
+    For the general element, the Jacobian matrix, $\mj$, is calculated at each
+    point of the quadrature $(x_i,y_i,z_i)$ as described in
+    \eref{eq:calcJacobian}.
+
+    With the Jacobian calculated, $J=\lvert\mj\rvert$ is simply the matrix 
+    determinant. For the quadrature integration of derivative quantities as
+    necessary in the FEM, the derivatives must also be translated from the
+    reference element to the spatial element. This is performed according to 
+    \eref{eq:deriv_integral}
+    \begin{align}
+      \vd_{i,\,(\xi,\zeta,\eta)} &= \left. \grad_{(\xi,\zeta,\eta)} \basis_i
+        \right|_{\vx_p}\\
+      \vd_{i,\,(x,y,z)} &= \left. \grad_{(x,y,z)} \basis_i \right|_{\vr} \\
+      \vd_{i,\,(x,y,z)} &= \vd_{i,\,(\xi,\zeta,\eta)} \mj^{-1} \\
+      \label{eq:deriv_integral}
+      \int_{\Omega_e} \basis_i(\vr) \basis_j(\vr) \; d\Omega_e &\approx
+      \sum_{p=1}^{N}
+      \vd_{i,\,(x,y,z)}^{T} \vd_{j,\,(x,y,z)} \, w_p \, \lvert \mj \rvert
+    \end{align}
+
+
 \section{Implementation}
   A FEM neutron diffusion solution has been developed using 
   the above formulae. The program begins with a geometry description specified
@@ -699,9 +721,10 @@
         \label{state:fem_matrix}
       \While{Power Iteration}
         \State Update the iteration counter. $s=s+1$
-        \State Update $q_{fiss,g}$ and $q_{up,g}$ for all gropus from previous 
+        \State Update $q_{fiss,g}$ and $q_{up,g}$ for all groups from previous 
           data $\phiavg^{(s-1)}$.
         \State Update $\chi$ in each element using previous data.
+          \label{state:chi_collapse}
         \For{$g=1,G$}
           \State Update $q_{down,g}$ from current data $\phiavg^{(s)}$
           \State Calculate total effective source in each element.
@@ -717,12 +740,44 @@
       \EndWhile
       \end{algorithmic}
     \end{algorithm}
+
+    State \ref{state:chi_collapse} normalizes $\chi$ to preserve the fission
+    rate in each group in each element of the problem. Typically, reactor
+    materials are described isotopically and $\chi$ may be specified
+    isotopically. However, for calculating the fission neutron source
+    $q_{fiss,g}$, an effective $\chi$ for the element is needed. From an
+    isotopic description, $q_{fiss,g}$ is given in \eref{eq:isotopic_chi}.
+    \begin{equation}
+      \label{eq:isotopic_chi}
+      q_{fiss,g}(\vr) = \sum_{i=1}^{N_I} \widetilde{\chi_{i,g}}(\vr)
+        \Sigma_{f,i,g}(\vr) \phi_g(\vr)
+    \end{equation}
+    Where $\widetilde{\chi_{i,g}}$ is the isotopic $\chi$ and $N_I$ is the 
+    number of isotopes at position $\vr$. Next, require $q_{fiss,g}$ to have the 
+    form of
+    \eref{eq:element_chi}.
+    \begin{equation}
+      \label{eq:element_chi}
+      q_{fiss,g}(\vr) = \chi_g(\vr) \, \sum_{i=1}^{N_I} \Sigma_{f,i,g}(\vr)
+        \phi_g(\vr)
+    \end{equation}
+    Setting \eref{eq:isotopic_chi} equal to \eref{eq:element_chi} yields the
+    expression for $\chi_g$ based on isotopic data.
+    \begin{equation}
+      \label{eq:chi_collapse}
+      \chi_g(\vr) = \frac{\sum_{i=1}^{N_I} \widetilde{\chi_{i,g}}(\vr)
+        \Sigma_{f,i,g}(\vr) \phi_g(\vr)}{\sum_{i=1}^{N_I} \Sigma_{f,i,g}(\vr)
+        \phi_g(\vr)}
+    \end{equation}
+    Noting that \eref{eq:chi_collapse} requires the solution $\phi_g(\vr)$. This
+    means that $\chi_g$ must be calculated for each element for each power
+    iteration.
     
-    Note that the finite element vector $\vf$ must be updated on each power
-    iteration of the solution whereas the matrix $\ma$ is described entirely by 
-    geometry and the material cross sections. For this reason, $\ma$ can be 
-    generated once at the beginning of the problem and stored for the duration 
-    of the calculation.
+    A benefit of this implementation is that the finite element vector $\vf$ 
+    must be updated on each power iteration of the solution whereas the matrix 
+    $\ma$ is described entirely by geometry and the material cross sections. For
+    this reason, $\ma$ can be generated once at the beginning of the problem and 
+    stored for the duration of the calculation.
     \FloatBarrier % make sure the algorithm is in the correct section
 
   \subsection{Memory and Storage}
