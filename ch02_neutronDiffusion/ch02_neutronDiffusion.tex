@@ -616,44 +616,67 @@
     For the general element, the Jacobian matrix, $\mj$, is calculated at each
     point of the quadrature $(x_i,y_i,z_i)$ as described in
     \eref{eq:calcJacobian}.
+    \begin{equation}
+      \label{eq:calcJacobian}
+      \mj = 
+      \begin{pmatrix}
+        \sum_{k=1}^P \frac{\partial \basis_k}{\partial \xi} x_k   &
+        \sum_{k=1}^P \frac{\partial \basis_k}{\partial \zeta} x_k &
+        \sum_{k=1}^P \frac{\partial \basis_k}{\partial \eta} x_k   \\
+        \sum_{k=1}^P \frac{\partial \basis_k}{\partial \xi} y_k   &
+        \sum_{k=1}^P \frac{\partial \basis_k}{\partial \zeta} y_k &
+        \sum_{k=1}^P \frac{\partial \basis_k}{\partial \eta} y_k   \\
+        \sum_{k=1}^P \frac{\partial \basis_k}{\partial \xi} z_k   &
+        \sum_{k=1}^P \frac{\partial \basis_k}{\partial \zeta} z_k &
+        \sum_{k=1}^P \frac{\partial \basis_k}{\partial \eta} z_k   \\
+      \end{pmatrix}
+    \end{equation}
+    Where $P$ is the number of points in the element, $\basis_k$ is the basis
+    function centered at the $k^{th}$ corner, and for corner cordinates 
+    $\{x_k,y_k,z_k\}$ for $k = 1,2,\ldots,P$.
 
     With the Jacobian calculated, $J=\lvert\mj\rvert$ is simply the matrix 
     determinant. For the quadrature integration of derivative quantities as
     necessary in the FEM, the derivatives must also be translated from the
     reference element to the spatial element. This is performed according to 
-    ...
-    \eref{eq:deriv_integral}
+    Algorithm \ref{algorithm:deriv_int}. The notation is dense as the method
+    requires two sets of coordinates. First, the coordinate in the reference
+    element $(\xi,\zeta,\eta)$ and second, the coordinate in Cartesian space
+    $(x,y,z)$.
+    Then, the vector $\vd_{i,\,(\xi,\zeta,\eta)}$ is the gradient vector for
+    $\basis_i$ with respect to the reference coordinates $(\xi,\zeta,\eta)$.
+    Vector $\vd_{i,\,(x,y,z)}$ is the gradient vector for $\basis_i$ with
+    respect to the Cartesian coordinates $(x,y,z)$. In Algorithm
+    \ref{algorithm:deriv_int}, the quadrature has points $\{\vx_p\}$ and weights
+    $\{w_p\}$ for $p = 1,2,\ldots,N_P$ and the value of the integral is
+    represented by \eref{eq:deriv_integral}.
+    \begin{equation}
+      \label{eq:deriv_integral}
+      v = \int_{\Omega_e} \grad \basis_i(\vr) \cdot \grad \basis_j(\vr) \;
+      d\Omega_e
+    \end{equation}
 
     \begin{algorithm}
       \caption{Integral of Derivative with Jacobian Method.}
       \label{algorithm:deriv_int}
       \begin{algorithmic}[1]
-        \State Read mesh from VTK.
+        \State $v=0$
         \For{$p=1,N_P$}
-          \State Calculate the Jacobian $\mj$.
+          \State Calculate the Jacobian $\mj$ as in \eref{eq:calcJacobian}.
           \State Calculate the vector $\vd_{i,\,(\xi,\zeta,\eta)}$ at quadrature
             point $\vx_p$.
           \State Calculate the vector $\vd_{j,\,(\xi,\zeta,\eta)}$ at quadrature
             point $\vx_p$.
-          \State Invert the Jacobian $\mj^{-1}$.
-          \State Calculate
+          \State Invert and store the Jacobian $\mj^{-1}$.
+          \State Calculate the vector $\vd_{i,\,(x,y,z)} =
+            \vd_{i,\,(\xi,\zeta,\eta)} \mj^{-1}$.
+          \State Calculate the vector $\vd_{j,\,(x,y,z)} =
+            \vd_{j,\,(\xi,\zeta,\eta)} \mj^{-1}$.
+          \State $v = v + \left(\vd_{i,\,(x,y,z)}^{T} \vd_{j,\,(x,y,z)}\right)
+            \, w_p \, \lvert \mj \rvert$
         \EndFor
       \end{algorithmic}
     \end{algorithm}
-
-
-    \begin{equation}
-      \vd_{i,\,(\xi,\zeta,\eta)} = \left. \grad_{(\xi,\zeta,\eta)} \basis_i
-        \right|_{\vx_p}\\
-    \end{equation}
-    \begin{align}
-      \vd_{i,\,(x,y,z)} &= \left. \grad_{(x,y,z)} \basis_i \right|_{\vr} \\
-      \vd_{i,\,(x,y,z)} &= \vd_{i,\,(\xi,\zeta,\eta)} \mj^{-1} \\
-      \label{eq:deriv_integral}
-      \int_{\Omega_e} \basis_i(\vr) \basis_j(\vr) \; d\Omega_e &\approx
-      \sum_{p=1}^{N}
-      \vd_{i,\,(x,y,z)}^{T} \vd_{j,\,(x,y,z)} \, w_p \, \lvert \mj \rvert
-    \end{align}
 
 \section{Implementation}
   A FEM neutron diffusion solution has been developed using 
