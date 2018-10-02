@@ -785,16 +785,18 @@
       \end{algorithmic}
     \end{algorithm}
 
-    State \ref{state:chi_collapse} normalizes $\chi$ to preserve the fission
-    rate in each group in each element of the problem. Typically, reactor
-    materials are described isotopically and $\chi$ may be specified
-    isotopically. However, for calculating the fission neutron source
-    $q_{fiss,g}$, an effective $\chi$ for the element is needed. From an
-    isotopic description, $q_{fiss,g}$ is given in \eref{eq:isotopic_chi}.
+    State \ref{state:chi_collapse} normalizes $\chi$ to preserve the 
+    neutron production rate due to fission in each group in each element of the
+    problem recalling the definition of $q_{fiss,g}$ as provided in
+    \eref{eq:qfiss}. Typically, reactor materials are described isotopically and 
+    $\chi$ may be specified isotopically. However, for calculating the fission 
+    neutron source $q_{fiss,g}$, an effective $\chi$ for the element is needed. 
+    From an isotopic description, $q_{fiss,g}$ is given in 
+    \eref{eq:isotopic_chi}.
     \begin{equation}
       \label{eq:isotopic_chi}
       q_{fiss,g}(\vr) = \sum_{i=1}^{N_I} \widetilde{\chi_{i,g}}(\vr)
-        \Sigma_{f,i,g}(\vr) \phi_g(\vr)
+        \nu \Sigma_{f,i,g}(\vr) \phi_g(\vr)
     \end{equation}
     Where $\widetilde{\chi_{i,g}}$ is the isotopic $\chi$ and $N_I$ is the 
     number of isotopes at position $\vr$. Next, require $q_{fiss,g}$ to have the 
@@ -802,7 +804,7 @@
     \eref{eq:element_chi}.
     \begin{equation}
       \label{eq:element_chi}
-      q_{fiss,g}(\vr) = \chi_g(\vr) \, \sum_{i=1}^{N_I} \Sigma_{f,i,g}(\vr)
+      q_{fiss,g}(\vr) = \chi_g(\vr) \, \sum_{i=1}^{N_I} \nu \Sigma_{f,i,g}(\vr)
         \phi_g(\vr)
     \end{equation}
     Setting \eref{eq:isotopic_chi} equal to \eref{eq:element_chi} yields the
@@ -810,8 +812,8 @@
     \begin{equation}
       \label{eq:chi_collapse}
       \chi_g(\vr) = \frac{\sum_{i=1}^{N_I} \widetilde{\chi_{i,g}}(\vr)
-        \Sigma_{f,i,g}(\vr) \phi_g(\vr)}{\sum_{i=1}^{N_I} \Sigma_{f,i,g}(\vr)
-        \phi_g(\vr)}
+        \nu \Sigma_{f,i,g}(\vr) \phi_g(\vr)}
+        {\sum_{i=1}^{N_I} \nu \Sigma_{f,i,g}(\vr) \phi_g(\vr)}
     \end{equation}
     Noting that \eref{eq:chi_collapse} requires the solution $\phi_g(\vr)$. This
     means that $\chi_g$ must be calculated for each element for each power
