@@ -13,7 +13,12 @@
       q_{fixed}
   \end{equation}
   Where $\grad^2 \phi = \grad \cdot (\grad \phi)$ and is used to simplify 
-  notation. For two-group neutron diffusion problems, the two-group neutron 
+  notation. This is useful for problems with constant $D$ as the constant can be
+  removed from the derivative. For problems considered here, material constants
+  such as $D$ are constant in some region, either the entire problem or a finite
+  region.
+  
+  For two-group neutron diffusion problems, the two-group neutron 
   diffusion problem is written below.
   \begin{align} 
     \label{eq:twogroup1}
@@ -36,101 +41,100 @@
   conditions. For true two-dimensions problems, all of the boundary conditions 
   are set to zero-flux conditions.
   
-  These formula are common to second order partial differential equations but
+  These formula are common to second order partial differential equations, but
   the formulation here is based in part from \cite{textbooklewis}.
 
 \section{One-Dimension, One-Group, Fixed Source}
   \label{sec:deriv_1dfixedsrc}
   This one-dimension problem is in the domain $x \in [0,L_x]$. The material is
   homogeneous within the problem and has fixed coefficient properties.
-  The problem is specified in \eref{eq:1dfixed}, \eref{eq:1dfixed_bc1}, and 
-  \eref{eq:1dfixed_bc2}.
+  The diffusion equation for this problem is 
   \begin{equation}
     \label{eq:1dfixed}
     -D \frac{d^2}{dx^2} \phi(x) + \Sigma_r \phi(x) = q_{fixed}
   \end{equation}
+  with boundary conditions specified as
   \begin{align}
     \label{eq:1dfixed_bc1}
-    \phi(0) &= 0 \\
+    \phi(0) &= 0, \\
     \label{eq:1dfixed_bc2}
-    \phi(L_x) &= 0
+    \phi(L_x) &= 0.
   \end{align}
   \eref{eq:1dfixed} can be rewritten as
   \begin{equation}
     \label{eq:1dfixed_buckle}
-    \frac{d^2}{dx^2} \phi(x) - B^2 \phi(x) = q_{fixed}
+    \frac{d^2}{dx^2} \phi(x) - \kappa^2 \phi(x) = - \frac{q_{fixed}}{D}
   \end{equation}
-  Where $B$ is the buckling term and is given for this problem in
-  \eref{eq:1dfixed_b2}.
+  Where $\kappa$ is a shape term and is given for this problem as
   \begin{equation}
     \label{eq:1dfixed_b2}
-    B^2 = \frac{\Sigma_r}{D}
+    \kappa^2 = \frac{\Sigma_r}{D}.
   \end{equation}
-  Begin the solution by allowing to be composed of homogeneous and particular
+  Begin by allowing the solution to be composed of homogeneous and particular
   solutions. 
   \begin{equation} 
     \phi(x) = \phi_H(x) + \phi_P(x)
   \end{equation}
   Using the form of \eref{eq:1dfixed_buckle}, the homogeneous solution satisfies 
-  equation \eref{eq:1dfixed_homog}.
   \begin{equation}
     \label{eq:1dfixed_homog}
-    \frac{d^2}{dx^2} \phi_x(x) - B^2 \phi_H(x) = 0
+    \frac{d^2}{dx^2} \phi_x(x) - \kappa^2 \phi_H(x) = 0.
   \end{equation}
-  The homogeneous solution $\phi_H(x)$ has form \eref{eq:1dfixed_homog_form}.
+  The homogeneous solution $\phi_H(x)$ has form 
   \begin{equation}
     \label{eq:1dfixed_homog_form}
-    \phi_H(x) = c_1 \, \cosh(B \, x) + c_2 \, \sinh(B \, x)
+    \phi_H(x) = c_1 \, \cosh(\kappa \, x) + c_2 \, \sinh(\kappa \, x)
   \end{equation}
-  The particular solution is given for a constant value $q_{fixed}$ in
-  \eref{eq:1dfixed_particular}.
+  where $c_1$ and $c_2$ are unknown constants.
+  The particular solution is given for a constant value $q_{fixed}$.
   \begin{equation}
     \label{eq:1dfixed_particular}
-    \phi_P(x) = -\frac{q_{fixed}}{B^2}
+    \phi_P(x) = -\frac{q_{fixed}}{D}
   \end{equation}
-  Where $B^2$ comes from \eref{eq:1dfixed_b2}. Combining homogeneous and 
-  particular solutions.
+  Combining the homogeneous and particular solutions.
   \begin{equation}
     \label{eq:1dfixed_constants}
-    \phi(x) = c_1 \, \cosh(B \, x) + c_2 \, \sinh(B \, x) -
-      \frac{q_{fixed}}{B^2}
+    \phi(x) = c_1 \, \cosh(\kappa \, x) + c_2 \, \sinh(\kappa \, x) -
+      \frac{q_{fixed}}{D}
   \end{equation}
-  Next, boundary conditions are considered with \eref{eq:1dfixed_constants}.
-  Beginning with the boundary at $x=0$ as specified in \eref{eq:1dfixed_bc1}.
+  Next, boundary conditions are considered to solve for the unknown coefficients
+  in \eref{eq:1dfixed_constants}. Beginning with the boundary at $x=0$ as 
+  specified in \eref{eq:1dfixed_bc1}.
   \begin{align}
     \phi(0) &= 0 \\
-    &= c_1 - \frac{q_{fixed}}{B^2} \\
+    &= c_1 - \frac{q_{fixed}}{D} \\
     \label{eq:1dfixed_c1}
-    c_1 &= \frac{q_{fixed}}{B^2}
+    \therefore \; c_1 &= \frac{q_{fixed}}{D}
   \end{align}
   \eref{eq:1dfixed_c1} is then inserted into \eref{eq:1dfixed_constants}.
   \begin{align}
-    \phi(x) &= \frac{q_{fixed}}{B^2} \, \cosh(B\, x) + c_2 \,
-      \sinh(B \, x) - \frac{q_{fixed}}{B^2} \\
-    \phi(x) &= \frac{q_{fixed}}{B^2} \left( \cosh(B\, x) -1 \right)
-      + c_2 \, \sinh(B \, x)
+    \phi(x) &= \frac{q_{fixed}}{D} \, \cosh(\kappa \, x) + c_2 \,
+      \sinh(\kappa \, x) - \frac{q_{fixed}}{D} \\
+    \phi(x) &= \frac{q_{fixed}}{D} \left( \cosh(\kappa \, x) -1 \right)
+      + c_2 \, \sinh(\kappa \, x)
   \end{align}
   The next boundary condition is evaluated at $x=L_x$ as apecified in
   \eref{eq:1dfixed_bc2}.
   \begin{align}
     \phi(L_x) &= 0 \\
-    &= \frac{q_{fixed}}{B^2} \left( \cosh(B \, L_x ) - 1 \right) + c_2 \,
-      \sinh(B \, L_x) \\
+    &= \frac{q_{fixed}}{D} \left( \cosh(\kappa \, L_x ) - 1 \right) + 
+      c_2 \, \sinh(\kappa \, L_x) \\
     \label{eq:1dfixed_c2}
-    c_2 &= \frac{\frac{q_{fixed}}{B^2} \left(\cosh(B \, L_x) -1 \right)}
-      {\sinh(B \, L_x)}
+    \therefore c_2 &= \frac{\frac{q_{fixed}}{D} \left(\cosh(\kappa \, L_x) -
+      1 \right)} {\sinh(\kappa \, L_x)}
   \end{align}
   All constants of the problem are now specified in \eref{eq:1dfixed_c1} and 
   \eref{eq:1dfixed_c2} and can be substitued into \eref{eq:1dfixed_constants}.
   \begin{equation}
     \label{eq:analytic_1dfixedsrc}
-    \phi(x) = \frac{q_{fixed}}{B^2} \left( \cosh(B\,x)-1 \right) +
-    \frac{\frac{q_{fixed}}{B^2} \left(\cosh(B\,L_x)-1\right)}{\sinh(B\,L_x)}
-    \sinh(B\,x)
+    \phi(x) = \frac{q_{fixed}}{D} \left( \cosh(\kappa\,x)-1 \right) +
+    \frac{\frac{q_{fixed}}{D} 
+    \left(\cosh(\kappa\,L_x)-1\right)}{\sinh(\kappa\,L_x)} \sinh(\kappa\,x)
   \end{equation}
-  The result in \eref{eq:analytic_1dfixedsrc} is presented in
+  A typical result of \eref{eq:analytic_1dfixedsrc} is presented in
   \fref{fig:fixed_critical}. Note that the magnitude of the function is not
-  arbitrary and is specified by the coefficients of the problem.
+  arbitrary and is specified by the magnitude of the external source
+  $q_{fixed}$.
   \begin{figure}
     \centering
     \includegraphics[width=0.7\textwidth]{fixed_critical}
@@ -143,86 +147,95 @@
   \label{sec:deriv_1d1g}
   This one-dimension problem is in the domain $x \in [0,L_x]$. The material
   is homogeneous within the problem and has fixed coefficient properties. The
-  problem is specified in \eref{eq:1d1g}, \eref{eq:1d1g_bc1}, and
-  \eref{eq:1d1g_bc2}.
+  diffusion equation for this problem is
   \begin{equation}
     \label{eq:1d1g}
     -D \frac{d^2}{dx^2} \phi(x) + \Sigma_r \phi(x) = 
       \frac{1}{\keff} \nu \Sigma_f \phi(x)
   \end{equation}
+  with boundary conditions
   \begin{align}
     \label{eq:1d1g_bc1}
-    \phi(0) &= 0 \\
+    \phi(0) &= 0 ,\\
     \label{eq:1d1g_bc2}
-    \phi(L_x) &= 0
+    \phi(L_x) &= 0.
   \end{align}
   \eref{eq:1d1g} can be rewritten as
   \begin{equation}
     \label{eq:1d1g_buckle}
     \frac{d^2}{dx^2} \phi(x) + B^2 \phi(x) = 0
   \end{equation}
-  Where $B$ is the buckling term and is given for this problem in
-  \eref{eq:1d1g_b2}.
+  Where $B$ is the buckling term defined as
   \begin{equation}
     \label{eq:1d1g_b2}
-    B^2 = \frac{\frac{1}{\keff} \nu \Sigma_f - \Sigma_r}{D}
+    B^2 = \frac{\frac{1}{\keff} \nu \Sigma_f - \Sigma_r}{D}.
   \end{equation}
-  \eref{eq:1d1g_buckle} has general solution given in \eref{eq:1d1g_general}.
+  \eref{eq:1d1g_buckle} has general solution 
   \begin{equation}
     \label{eq:1d1g_general}
     \phi(x) = c_1 \, \cos(B \, x) + c_s \, \sin(B \, x)
   \end{equation}
-  Using \eref{eq:1d1g_general}, the boundary condition is applied at $x=0$ as
-  specified in \eref{eq:1d1g_bc1}.
+  where $c_1$ and $c_2$ are unknown constants.
+  Using \eref{eq:1d1g_general}, the first boundary condition is applied at $x=0$
+  as specified in \eref{eq:1d1g_bc1}.
   \begin{align}
     \phi(0) &= 0 \\
     &= c_1 \\
     \label{eq:1d1g_c1}
-    c_1 &= 0
+    \therefore \; c_1 &= 0
   \end{align}
-  \eref{eq:1d1g_c1} is then inserted into \eref{eq:1d1g_general}.
+  \eref{eq:1d1g_c1} is then inserted into \eref{eq:1d1g_general}, giving
   \begin{equation}
     \label{eq:1d1g_sin}
-    \phi(x) = c_2 \, \sin(B \, x)
+    \phi(x) = c_2 \, \sin(B \, x).
   \end{equation}
-  Next, the boundary condition is evaluated at $x=L_x$ as specified in
+  Next, the second boundary condition is evaluated at $x=L_x$ as specified in
   \eref{eq:1d1g_bc2}.
   \begin{align}
     \phi(L_x) &= 0 \\
     &= c_2 \, \sin(B \, L_x)
   \end{align}
   For a non-trivial solution, this problem is an eigenvalue problem with $B$
-  specified by the boundary condition. This implies $c_2$ is arbitrary and the
+  determined by the boundary condition such that 
+  \begin{equation}
+    0 = \sin(B_g \, L_x)
+  \end{equation}
+  where $B_g$ is the geometric buckling which is specified by the geometry of
+  the problem. This term is only zero for specific values of $B_g$.
+  This implies $c_2$ is arbitrary and the
   magnitude of the flux can be normalized to a constant. For simplicity, allow
-  $c_2 = 1$. Then, recall the zeros of the sine function.
+  $c_2 = \phi_0$. Then, recall the zeros of the sine function.
   \begin{align}
-    B \, L_x &= n \, \pi \\
-    B &= \frac{n \, \pi}{L_x}
+    B_g \, L_x &= n \, \pi \\
+    B_g &= \frac{n \, \pi}{L_x}
   \end{align}
   Where $n$ is an integer. For the fundamental mode, $n=1$.
   \begin{equation}
     \label{eq:1d1g_buckle_geom}
-    B = \frac{\pi}{L_x}
+    B_g = \frac{\pi}{L_x}
   \end{equation}
   Substitute \eref{eq:1d1g_buckle_geom} into \eref{eq:1d1g_sin} for the final
   solution to the fundamental eigenmode.
   \begin{equation}
     \label{eq:analytic_1d1g}
-    \phi(x) = \sin\left(\frac{\pi}{L_x} x \right)
+    \phi(x) = \phi_0 \, \sin\left(\frac{\pi}{L_x} x \right)
   \end{equation}
-  This flux shape is plotted in \fref{fig:fixed_critical}. Recall that the
-  magnitude is arbitrary so the flux is normalized to have maximum equal to the
-  fixed solution for visualization purposes.
+  A typical flux shape is plotted in \fref{fig:fixed_critical} along with the
+  solution for a fixed-source problem. Recall that the magnitude is arbitrary so 
+  the flux is normalized to have the maximum equal to the fixed solution for 
+  visualization purposes.
   Recalling the definition of $B$ from \eref{eq:1d1g_b2}, the fundamental
-  eigenvalue of the problem, $\keff$, can be solved.
+  eigenvalue of the problem, $\keff$, can be solved for by setting buckling
+  equal to geometric bucling.
   \begin{align}
-    \frac{\pi}{L_x} &= 
-      \sqrt{\frac{\frac{1}{\keff} \nu \Sigma_f - \Sigma_r}{D}} \\
+    B_g &= B \\
+    \left( \frac{\pi}{L_x} \right)^2 &= 
+      \frac{\frac{1}{\keff} \nu \Sigma_f - \Sigma_r}{D} \\
     \label{eq:keff1d}
     \keff &= \frac{\nu \Sigma_f}{D \left(\frac{\pi}{L_x}\right)^2 + \Sigma_r}
   \end{align}
-  Using material properties given in \tref{tab:1group_simple} and $L_x =
-  \units{cm}$, then
+  For a problem with material properties given in \tref{tab:1group_simple} and 
+  $L_x = 100 \units{cm}$, then
   \begin{equation}
     \keff = 1.998028
   \end{equation}
@@ -235,9 +248,9 @@
         \toprule
         Cross Section & Value \\
         \midrule
-        $D \units{$\frac{1}{\text{cm}}$} $ & 1 \\
-        $\Sigma_r \units{cm}$& 1 \\
-        $ \nu \Sigma_{f} \units{cm} $ & 2 \\
+        $D \units{cm}$ & 1 \\
+        $\Sigma_r       \units{$\frac{1}{\text{cm}}$}$& 1 \\
+        $\nu \Sigma_{f} \units{$\frac{1}{\text{cm}}$}$& 2 \\
         \bottomrule
       \end{tabular}
     \end{center}
@@ -248,45 +261,43 @@
   This two-dimension problem is in the rectangular domain $[0,L_x] \times
   [0,L_y]$. That is, $x \in [0,L_x]$ and $y \in [0,L_y]$. The material is
   homogeneous within the problem and has fixed coefficient properties. The
-  problem is specified in \eref{eq:2d1g}, \eref{eq:2d1g_bc1},
-  \eref{eq:2d1g_bc2}, \eref{eq:2d1g_bc3}, and \eref{eq:2d1g_bc4}.
+  diffusion equation for this problem is 
   \begin{equation}
     \label{eq:2d1g}
     -D \grad^2 \phi(x,y) + \Sigma_r \phi(x,y) = 
       \frac{1}{\keff} \nu \Sigma_f \phi(x,y)
   \end{equation}
+  with boundary conditions
   \begin{align}
     \label{eq:2d1g_bc1}
-    \phi(0,y) &= 0 \\
+    \phi(0,y) &= 0 ,\\
     \label{eq:2d1g_bc2}
-    \phi(L_x,y) &= 0 \\
+    \phi(L_x,y) &= 0 ,\\
     \label{eq:2d1g_bc3}
-    \phi(x,0) &= 0 \\
+    \phi(x,0) &= 0 ,\\
     \label{eq:2d1g_bc4}
-    \phi(x,L_y) &= 0
+    \phi(x,L_y) &= 0.
   \end{align}
-  Noting in \eref{eq:2d1g} that $\grad^2 \phi = \grad \cdot (\grad \phi)$.
   \eref{eq:2d1g} can be rewritten as
   \begin{equation}
     \label{eq:2d1g_buckle}
     \grad^2 \phi(x,y) + B^2 \phi(x,y) = 0
   \end{equation}
-  Where $B$ is the buckling term and is given for this problem in
-  \eref{eq:2d1g_b2}.
+  Where $B$ is the buckling term and is given for this problem is given as
   \begin{equation}
     \label{eq:2d1g_b2}
-    B^2 = \frac{\frac{1}{\keff} \nu \Sigma_f - \Sigma_r}{D}
+    B^2 = \frac{\frac{1}{\keff} \nu \Sigma_f - \Sigma_r}{D}.
   \end{equation}
-  The Laplacian $\grad^2$ in \eref{eq:2d1g_buckle} is then expanded into partial
-  derivatives.
+  The Laplacian $\grad^2$ in \eref{eq:2d1g_buckle} for two-dimensional Cartesian
+  geometry is then expanded into partial derivatives.
   \begin{equation}
     \label{eq:2d1g_partial}
     \frac{\partial^2}{\partial x^2} \phi(x,y) + \frac{\partial^2}{\partial y^2}
       \phi(x,y) + B^2 \phi(x,y) = 0
   \end{equation}
-  The method of separation of variables will be used to solve
-  \eref{eq:2d1g_partial}. Begin by assuming that $\phi(x,y)$ is separable as in
-  \eref{eq:2d1g_separable}.
+  The method of separation of variables is used to solve
+  \eref{eq:2d1g_partial}. Begin by assuming that $\phi(x,y)$ is separable as
+  functions of $x$ and $y$.
   \begin{equation}
     \label{eq:2d1g_separable}
     \phi(x,y) = X(x)\,Y(y)
@@ -301,17 +312,17 @@
       X(y) \frac{\partial^2}{\partial y^2} Y(x) + 
       B^2 X(x) \, Y(y) &= 0
   \end{align}
-  Divide \eref{eq:2d1g_above} by the quantity $X(x)\,Y(y)$.
+  Divide by the quantity $X(x)\,Y(y)$ yields
   \begin{equation}
     \label{eq:2d1g_divide_sum}
     \frac{1}{X(x)} \, \frac{d^2}{d x^2} X(x) + 
       \frac{1}{Y(y)} \, \frac{d^2}{d y^2} Y(y) + 
       B^2 = 0
   \end{equation}
-  Each of the partial derivatives operates on a function of only one variable so
-  the derivatives become standard derivatives.
+  Each of the partial derivatives operates on a function of only one variable,
+  so the derivatives become standard derivatives.
 
-  The first two terms of \eref{eq:2d1g_divide_sum} are function of only $x$ and
+  The first two terms of \eref{eq:2d1g_divide_sum} are functions of only $x$ and
   $y$ respectively, and their sum is equal to a constant. Therefore, both of the
   terms must also be equal to a constant \cite{lamarsh1966}. Splitting
   \eref{eq:2d1g_divide_sum} into two equations yields
@@ -343,12 +354,12 @@
     X(0) &= 0 \\
     &= c_1 \\
     \label{eq:2d1g_x_c1}
-    c_1 &= 0
+    \therefore \; c_1 &= 0
   \end{align}
-  Inserting the result \eref{eq:2d1g_x_c1} into \eref{eq:2d1g_x_general}.
+  Inserting this result into \eref{eq:2d1g_x_general} gives
   \begin{equation}
     \label{eq:2d1g_x_sin}
-    X(x) = c_2 \, \sin( \alpha x)
+    X(x) = c_2 \, \sin( \alpha x).
   \end{equation}
   Then considering the boundary condition at $x=L_x$ as specified in
   \eref{eq:2d1g_bc2}.
@@ -356,10 +367,10 @@
     X(L_x) &= 0 \\
     &= c_2 \, \sin(\alpha \, L_x)
   \end{align}
-  For non-trivial solution $X(x)$, this is an eigenvalue problem with $\alpha$
-  specified by the boundary condition. This implies $c_2$ is arbitrary and the
+  For a non-trivial solution $X(x)$, this is an eigenvalue problem with $\alpha$
+  specified by the core size. This implies $c_2$ is arbitrary and the
   magnitude of the function can be normalized to a constant. For simplicity,
-  allow $c_2 = 1$. Then, recall the zeros of the sine function.
+  allow $c_2 = \phi_0$. Then, recall the zeros of the sine function.
   \begin{align}
     \alpha \, L_x &= n \, \pi \\
     \alpha &= \frac{n \, \pi}{L_x}
@@ -375,10 +386,15 @@
     \label{eq:2d1g_x_solution}
     X(x) = \sin\left(\frac{\pi}{L_x} x \right)
   \end{equation}
-  Similar procedure is performed to solve for $Y(y)$.
+  Similar procedure is performed to solve for $Y(y)$ giving
   \begin{equation}
     \label{eq:2d1g_y_solution}
     Y(y) = \sin\left(\frac{\pi}{L_y} y \right)
+  \end{equation}
+  and 
+  \begin{equation}
+    \label{eq:2d1g_y_beta}
+    \beta = \frac{\pi}{L_y}.
   \end{equation}
   \eref{eq:2d1g_x_solution} and \eref{eq:2d1g_y_solution} are substituted into
   \eref{eq:2d1g_separable}.
@@ -387,7 +403,8 @@
     \phi(x,y) = \sin\left(\frac{\pi}{L_x} x\right) \, 
       \sin\left(\frac{\pi}{L_y} y\right)
   \end{equation}
-  The flux shape in \eref{eq:analytic_2d1g} is plotted in \fref{fig:2d1g}.
+  A typical flux shape given by \eref{eq:analytic_2d1g} is plotted
+  in \fref{fig:2d1g}.
   \begin{figure}
     \centering
     \includegraphics[width=0.7\textwidth]{2d1g}
@@ -399,7 +416,7 @@
   \begin{equation}
     \label{eq:2d1g_buckle_geom}
     B^2 = \left(\frac{\pi}{L_x}\right)^2 + \left(\frac{\pi}{L_y}\right)^2
-  \end{equation}.
+  \end{equation}
   Setting \eref{eq:2d1g_buckle_geom} equal to \eref{eq:2d1g_b2} yields an
   expression for $\keff$.
   \begin{align}
@@ -408,28 +425,20 @@
     \keff &= \frac{\nu \Sigma_f}{D \left( \left(\frac{\pi}{L_x}\right)^2 + 
       \left( \frac{\pi}{L_y}\right)^2 \right) + \Sigma_r}
   \end{align}
-  For material coefficients specified in \tref{tab:1group_simple} and
-  $L_x=L_y=100 \units{cm}$, 
+  Using the material coefficients specified in \tref{tab:1group_simple}, and
+  $L_x=L_y=100 \units{cm}$ gives 
   \begin{equation}
     \label{eq:keff2d}
-    \keff = 1.996060
+    \keff = 1.996060.
   \end{equation}
   
 \section{One-Dimension, Two-Group, Criticality}
   \label{sec:deriv_1d2g}
   This one-dimension problem is meant to test the multigroup solution method of
   the solver. The problem is in the domain $x \in [0,L_x]$ and has two energy
-  groups $E_1 > E_2$. The integer subscripts correspond to the energy group. 
-  The material is homogeneous within the problem and has fixed coefficient 
-  properties. The following assumptions are used to simplify the problem.
-  \begin{itemize}
-    \item All fission neutrons created at fast energy ($\chi_1 = 1$, $\chi_2 =
-      0$).
-    \item No up-scatter ($\Sigma_{s 2 \rightarrow 1} = 0$).
-  \end{itemize}
-  The using these assumptions, the neutron diffusion diffusion problem is given
-  in \eref{eq:1d2g_1}, \eref{eq:1d2g_2}, \eref{eq:1d2g_bc0}, and
-  \eref{eq:1d2g_bcLx}.
+  groups. The material is homogeneous within the problem and has fixed
+  coefficient properties. With this geometry, \eref{eq:twogroup1} and
+  \eref{eq:twogroup2} become
   \begin{align}
     \label{eq:1d2g_1}
     - D_1 \frac{d^2}{dx^2} \phi_1(x) + \Sigma_{r1} \, \phi_1(x) &= 
@@ -439,33 +448,34 @@
     -D_2 \frac{d^2}{dx^2} \phi_2(x) + \Sigma_{r2} \phi_2(x) &= 
       \Sigma_{s 1 \rightarrow 2} \phi_1(x)
   \end{align}
+  with boundary conditions
   \begin{align}
     \label{eq:1d2g_bc0}
-    \phi_g(0) &= 0 \\
+    \phi_g(0) &= 0 ,\\
     \label{eq:1d2g_bcLx}
-    \phi_g(L_x) &= 0
+    \phi_g(L_x) &= 0.
   \end{align}
   
-  The solution to \eref{eq:1d2g_1} and \eref{eq:1d2g_2} has form common to
-  criticality problems \cite{textbookhenry}.
+  Since this is a bare core problem ($\phi=0$ on all boundaries), the general
+  solution to \eref{eq:1d2g_1} and \eref{eq:1d2g_2} has the form common to
+  one-group bare core problems.
   \begin{equation}
     \label{eq:multigroup_buckle}
     \frac{d^2}{dx^2} \phi_g(x) + B^2 \phi_g(x) = 0 \qquad \text{for } g=1,2
   \end{equation}
-  where $B$ is the buckling term and is common to both energy groups (not group
-  specific). \eref{eq:multigroup_buckle} has solution of the form
-  \eref{eq:multigroup_general}.
+  where $B$ is a buckling term common to both energy groups (not group
+  specific) \cite{textbookhenry}. The general solution to this equation is
   \begin{equation}
     \label{eq:multigroup_general}
-    \phi_g(x) = c_{1g} \, \cos(B\,x) + c_{2g} \, \sin(B\,x)
+    \phi_g(x) = c_{1g} \, \cos(B\,x) + c_{2g} \, \sin(B\,x).
   \end{equation}
   Boundary conditions are applied next. Beginning with the boundary condition at
-  $x=0$ as specified in \eref{eq:1d2g_bc0}.
+  $x=0$ as specified in \eref{eq:1d2g_bc0} gives
   \begin{align}
     \phi_g(0) &= 0 \\
     &= c_{1g} \\
     \label{eq:1d2g_c1g}
-    c_{1g} &= 0
+    \therefore \; c_{1g} &= 0
   \end{align}
   Then, using \eref{eq:1d2g_c1g}, \eref{eq:multigroup_general} can be rewritten.
   \begin{equation}
@@ -478,34 +488,33 @@
     \phi_g(L_x) &= 0 \\
     &= c_g \, \sin(B \, L_x)
   \end{align}
-  For non-trivial solution $\phi_g(x)$, this is an eigenvalue problem with $c_g$
-  arbitrary. The buckling $B$ is then specified by the zeros of the $\sin()$
-  function. 
+  The buckling $B$ is then specified by the zeros of the $\sin()$ function. 
   \begin{equation}
     \label{eq:1d2g_buckle_geom}
     B = \frac{\pi}{L_x}
   \end{equation}
-  Differentiate \eref{eq:1d2g_sin} twice.
+  To find the unknown coefficients $c_g$, differentiate \eref{eq:1d2g_sin}
+  twice.
   \begin{equation}
     \label{eq:1d2g_sin_d2}
-    \frac{d^2}{dx^2} \phi_g(x) = - c_g \, B^2 \, \sin(B\,x)
+    \frac{d^2}{dx^2} \phi_g(x) = - B^2 \, c_g \, \sin(B\,x)
   \end{equation}
   Insert \eref{eq:1d2g_sin} and \eref{eq:1d2g_sin_d2} into \eref{eq:1d2g_1} and
   \eref{eq:1d2g_2}.
   \begin{align}
-    D_1 \, c_1 \, B^2 \, \sin(B\,x) + \Sigma_{r1} \, c_1 \, \sin(B\,x) &=
+    D_1 \, B^2 \, c_1 \, \sin(B\,x) + \Sigma_{r1} \, c_1 \, \sin(B\,x) &=
       \frac{1}{\keff} \left( \nu \Sigma_{f1} \, c_1 \, \sin(B \, x) + \nu
       \Sigma_{f2} \, c_2 \, \sin(B\,x) \right) \\
-    D_2 \, c_2 \, B^2 \, \sin(B\,x) + \Sigma_{r2} \, s_2 \, \sin(B\,x) &=
+    D_2 \, B^2 \, c_2 \sin(B\,x) + \Sigma_{r2} \, c_2 \, \sin(B\,x) &=
       \Sigma_{s 1\rightarrow 2} \, c_1 \, \sin(B\,x)
   \end{align}
   Dividing through the equations by $\sin(B\,x)$.
   \begin{align}
     \label{eq:1d2g_expression1}
-    D_1\,c_2\,B^2 + \Sigma_{r1}\,c_1 &= \frac{1}{\keff} \left( \nu \Sigma_{f1}
+    D_1 \, B^2 \,c_1+ \Sigma_{r1}\,c_1 &= \frac{1}{\keff} \left( \nu \Sigma_{f1}
       \, c_1 + \nu \Sigma_{f2} \, c_2 \right) \\
     \label{eq:1d2g_expression2}
-    D_2\,c_2\,B^2 + \Sigma_{r2}\,c_2 &= \Sigma_{s 1\rightarrow 2} \, c_1
+    D_2 \, B^2 \, c_2 + \Sigma_{r2}\,c_2 &= \Sigma_{s 1\rightarrow 2} \, c_1
   \end{align}
   Beginning with \eref{eq:1d2g_expression2} and solving for the quantity
   $\frac{c_2}{c_1}$ and recalling \eref{eq:1d2g_buckle_geom}.
@@ -516,32 +525,41 @@
     \frac{c_2}{c_1} &= \frac{\Sigma_{s 1\rightarrow 2}}{D_2 \,
       \left(\frac{\pi}{L_x}\right)^2 + \Sigma_{r2}}
   \end{align}
-  Returning to \eref{eq:1d2g_expression2} and solving for the eigenvalue
+  Returning to \eref{eq:1d2g_expression1} and solving for the eigenvalue
   $\keff$.
   \begin{align}
     \keff &= \frac{\nu \Sigma_{f1} \, c_1 + \nu \Sigma_{f2} \, c_2}
-      {B^2 \, D_1 \, c_1 + \Sigma_{r1} \, c_1 }\\
+      {D_1 \, B^2 c_1 + \Sigma_{r1} \, c_1 }\\
     \keff &= \frac{\nu \Sigma_{f1} \, c_1 + \nu \Sigma_{f2} \, c_2}
-      {\left(\frac{\pi}{L_x}\right)^2 \, D_1 \, c_1 + \Sigma_{r1} \, c_1}
+      {D_1 \, \left(\frac{\pi}{L_x}\right)^2 \, c_1 + \Sigma_{r1} \, c_1}
   \end{align}
-  Divide the top and bottom of the ration by $c_1$.
+  Divide the top and bottom of the ratio by $c_1$.
   \begin{equation}
     \label{eq:1d2g_keff}
     \keff = \frac{\nu \Sigma_{f1} + \nu \Sigma_{f2} \, \frac{c_2}{c_1}}
-      {\left(\frac{\pi}{L_x}\right)^2 \, D_1 + \Sigma_{r1}}
+      {D_1 \, \left(\frac{\pi}{L_x}\right)^2 + \Sigma_{r1}}
   \end{equation}
   Recalling the quantity $\frac{c_2}{c_1}$ from \eref{eq:1d2g_ratio}.
 
-  The flux shape is described in \eref{eq:1d2g_sin}. An example flux shape is
-  plotted in \fref{fig:1d2g}. The coefficient $c_1$ is
-  arbitrary and the ratio $\frac{c_2}{c_1}$ is given in \eref{eq:1d2g_ratio}.
-  Finally $\keff$ is given \eref{eq:1d2g_keff}. The VVER440 benchmark in
-  \sref{sec:vver440} MAT1 is used for this problem. For simplicity, the cross
-  sections are also presented in \tref{tab:1d2g_vver440}. For the specified
-  cross sections and $L_x = 100 \units{cm}$, the following solutions apply.
+  The flux shape for $\phi_1(x)$ and $\phi_2(x)$ are given by combining
+  \eref{eq:1d2g_sin}, \eref{eq:1d2g_buckle_geom}, and \eref{eq:1d2g_ratio}.
+  Combining these equations and rewriting yields
   \begin{align}
-    \frac{c_2}{c_1} &= 0.0261324 \\
-    \keff &= 0.892349
+    \phi_1(x) &= \phi_0 \, \sin\left(\frac{\pi}{L_x} x \right) \\
+    \phi_2(x) &= \frac{c_2}{c_1} \, \phi_0 \, \sin\left(\frac{\pi}{L_x} x
+      \right)
+  \end{align}
+  where $\phi_0$ is an arbitrary constant.
+  An example solution is plotted in \fref{fig:1d2g}. The coefficient $c_1$ is
+  arbitrary and the ratio $\frac{c_2}{c_1}$ is given in \eref{eq:1d2g_ratio}.
+  Finally, $\keff$ is given in \eref{eq:1d2g_keff}. The cross sections from 
+  VVER440 benchmark in \sref{sec:vver440} MAT1 are used for this problem. For 
+  ease of reference, the cross sections are also presented in 
+  \tref{tab:1d2g_vver440}. For the specified cross sections and 
+  $L_x = 100 \units{cm}$, the solutions are
+  \begin{align}
+    \frac{c_2}{c_1} &= 0.0261324, \\
+    \keff &= 0.892349.
   \end{align}
   \begin{figure}
     \centering
@@ -557,12 +575,12 @@
         \toprule
         & MAT1 \\
         \midrule
-        $D_1 \units{$\frac{1}{\text{cm}}$}$ & 1.346600E+00 \\
-        $D_2 \units{$\frac{1}{\text{cm}}$}$ & 3.716900E-01 \\
-        $\Sigma_{r1} \units{cm}$ & 2.525500E-02 \\
-        $\Sigma_{r2} \units{cm}$ & 6.427700E-02 \\
-        $\nu \Sigma_{f1} \units{cm}$ & 4.448800E-03 \\
-        $\nu \Sigma_{f2} \units{cm}$ & 7.375300E-02 \\
+        $D_1 \units{cm}$ & 1.346600E+00 \\
+        $D_2 \units{cm}$ & 3.716900E-01 \\
+        $\Sigma_{r1} \units{$\frac{1}{\text{cm}}$}$ & 2.525500E-02 \\
+        $\Sigma_{r2} \units{$\frac{1}{\text{cm}}$}$ & 6.427700E-02 \\
+        $\nu \Sigma_{f1} \units{$\frac{1}{\text{cm}}$}$ & 4.448800E-03 \\
+        $\nu \Sigma_{f2} \units{$\frac{1}{\text{cm}}$}$ & 7.375300E-02 \\
         \bottomrule
       \end{tabular}
     \end{center}
@@ -571,21 +589,14 @@
 \section{One-Dimension, One-Group, Two Region, Criticality}
   \label{sec:deriv_2reg}
   This one-dimension problem is meant to simulate a reactor with reflective
-  material at the edge of the reactor. This has the benefit of testing the
-  materials mapping of the solver. The problem is in the domain $x \in [0,L_R]$. 
-  Geometry is described in \fref{fig:2reg_geom}. Fuel material (subscript F) is
-  located in $x \in [0,L_F]$ and reflector material (subscript R) is located in 
-  $ x \in [L_F,L_R]$. The material is homogeneous within each respective section
-  and has fixed coefficient properties in their region. The problem is specified
-  in \eref{eq:2regF}, \eref{eq:2regR}, \eref{eq:2reg_bc0},
-  \eref{eq:2reg_flux_continuity}, \eref{eq:2reg_current_continuity},
-  \eref{eq:2reg_bcLR}.
-  \begin{figure}
-    \centering
-    \includegraphics[width=0.5\textwidth]{2reg_geom}
-    \caption{Geometry for Two Region Problem.}
-    \label{fig:2reg_geom}
-  \end{figure}
+  material at the edge of the reactor. The purpose of this problem is to test
+  the materials mapping of the solver. The problem is in the domain 
+  $x \in [0,L_R]$. Geometry is shown in \fref{fig:2reg_geom}. Fuel material 
+  (subscript F) is located in $x \in [0,L_F]$ and reflector material 
+  (subscript R) is located in $ x \in [L_F,L_R]$. The material is homogeneous 
+  within each respective section, and has fixed coefficient properties in each
+  region.
+  The diffusion equation for this problem is 
   \begin{align}
     \label{eq:2regF}
     -D_F \frac{d^2}{dx^2} \phi_F(x) + \Sigma_{rF} &= \frac{1}{\keff} \nu
@@ -594,35 +605,44 @@
     -D_R \frac{d^2}{dx^2} \phi_R(x) + \Sigma_{rR} &= 0 \qquad &\forall 
       \; x \in [L_F,L_R]
   \end{align}
+  with boundary and interfacial conditions
   \begin{align}
     \label{eq:2reg_bc0}
-    \left. \frac{d}{dx} \phi_F(x) \right|_{x=0} &= 0 \\
+    \left. \frac{d}{dx} \phi_F(x) \right|_{x=0} &= 0, \\
     \label{eq:2reg_flux_continuity}
-    \phi_F(L_F) &= \phi_R(L_F) \\
+    \phi_F(L_F) &= \phi_R(L_F) ,\\
     \label{eq:2reg_current_continuity}
-    D_F \left. \frac{d}{dx} \phi_F(x) \right|{x=L_F} &= 
-      D_R \left. \frac{d}{dx} \phi_R(x) \right|{x=L_F} \\
+    D_F \left. \frac{d}{dx} \phi_F(x) \right|_{x=L_F} &= 
+      D_R \left. \frac{d}{dx} \phi_R(x) \right|_{x=L_F} ,\\
     \label{eq:2reg_bcLR}
-    \phi_R(L_R) &= 0
+    \phi_R(L_R) &= 0.
   \end{align}
-  Beginning in the fueled region. The diffusion equation \eref{eq:2regF} can be
+  \begin{figure}
+    \centering
+    \includegraphics[width=0.5\textwidth]{2reg_geom}
+    \caption{Geometry for Two Region Problem.}
+    \label{fig:2reg_geom}
+  \end{figure}
+
+  Beginning in the fueled region, the diffusion equation \eref{eq:2regF} can be
   rewritten with a buckling term $B_F$.
   \begin{equation}
     \label{eq:2regF_buckle}
     \frac{d^2}{dx^2} \phi_F(x) + B_F^2 \phi_F(x) = 0 
   \end{equation}
-  Where $B_F^2$ is given in \eref{eq:2regF_b2}.
+  Where $B_F^2$ is given by
   \begin{equation}
     \label{eq:2regF_b2}
-    B_F^2 = \frac{\frac{1}{\keff} \nu \Sigma_{fF} - \Sigma_{rF}}{D_F}
+    B_F^2 = \frac{\frac{1}{\keff} \nu \Sigma_{fF} - \Sigma_{rF}}{D_F}.
   \end{equation}
   \eref{eq:2regF_buckle} has general solution of the form
   \begin{equation}
     \label{eq:2regF_general}
     \phi_F(x) = c_{1F} \, \cos(B_F\,x) + c_{2F} \, \sin(B_F\,x)
   \end{equation}
+  where $c_{1F}$ and $c_{2F}$ are unknown constant coefficients.
   The derivative of \eref{eq:2regF_general} is also provided as it will be
-  useful for evaluating boundary conditions.
+  useful for evaluating boundary and interface conditions.
   \begin{equation}
     \label{eq:2regF_general_derivative}
     \frac{d}{dx}\phi_F(x) = -c_{1F} \, B_F \, \sin(B_F\,x) + 
@@ -631,10 +651,10 @@
   Using \eref{eq:2regF_general_derivative}, the boundary condition is evaluated
   at $x=0$ as specified in \eref{eq:2reg_bc0}.
   \begin{align}
-    \phi_F(0) &= 0 \\
+    \left. \frac{d}{dx} \phi_F(x) \right|_{x=0} &= 0 \\
     &= c_{2F} \, B_F \\
     \label{eq:2reg_c2f}
-    c_{2F} &= 0
+    \therefore \; c_{2F} &= 0
   \end{align}
   \eref{eq:2reg_c2f} is inserted into \eref{eq:2regF_general}
   \begin{equation}
@@ -648,21 +668,22 @@
   \end{equation}
 
   Next, the reflector region is considered as in \eref{eq:2regR}. This equation
-  can be rewritten.
+  can be rewritten as
   \begin{equation}
     \label{eq:2regR_buckle}
     \frac{d^2}{dx^2} \phi_R(x) - B_R^2 \phi_R(x) = 0
   \end{equation}
-  Where $B_R^2$ is given in \eref{eq:2regR_b2}
+  where $B_R^2$ is given as
   \begin{equation}
     \label{eq:2regR_b2}
-    B_R^2 = \frac{\Sigma_{rR}}{D_R}
+    B_R^2 = \frac{\Sigma_{rR}}{D_R}.
   \end{equation}
   \eref{eq:2regR_buckle} has general solution of the form
   \begin{equation}
     \label{eq:2regR_general}
     \phi_R(x) = c_{1R} \, \cosh(B_R\, (x-L_F)) + c_{2R} \, \sinh(B_R\,(x-L_F))
   \end{equation}
+  where $c_{1R}$ and $c_{2R}$ are unknown constant coefficients.
   Note the use of $(x-L_F)$ instead of $x$ in \eref{eq:2regR_general}. This
   choice is valid because $\cosh()$ and $\sinh()$ can be rewritten as
   exponential functions and the subtraction in the argument is equivalent to
@@ -678,7 +699,10 @@
   \eref{eq:2reg_bcLR}.
   \begin{align}
     \phi_R(L_R) &= 0 \\
-    &= c_{1R} \, \cosh(B_R \, (L_R - L_F)) + c_{2R} \sinh(B_R \, (L_R-L_F)) \\
+    &= c_{1R} \, \cosh(B_R \, (L_R - L_F)) + c_{2R} \sinh(B_R \, (L_R-L_F))
+  \end{align}
+  Then, solving for $c_{2R}$.
+  \begin{align}
     c_{2R} &= \frac{-c_{1R}\,\cosh(B_R\,(L_R - L_F))}{\sinh(B_R \,(L_R-L_F))} \\
     \label{eq:2reg_c2r_a}
     c_{2R} &= -c_{1R} \frac{1}{\tanh(B_R\,(L_R-L_F))}
@@ -688,11 +712,14 @@
   \eref{eq:2regR_general_derivative} are used to evaluate the functions.
   \begin{align}
     \left. D_F \frac{d}{dx} \phi_F(x) \right|_{x=L_F} &= 
-      \left. D_R \frac{d}{dx} \phi_R(x) \right|_{L_f} \\
-    -D_F \, c_{1F} \, B_F \, \sin(B_F \, L_F) &= D_R \, B_R \, c_{2R} \\
-    \label{eq:2reg_c2r_b}
-    c_{2R} &= \frac{-D_F \, c_{1F} \, B_F \, \sin(B_F \, L_F)}{D_R\,B_R}
+      \left. D_R \frac{d}{dx} \phi_R(x) \right|_{x=L_F} \\
+    -D_F \, c_{1F} \, B_F \, \sin(B_F \, L_F) &= D_R \, B_R \, c_{2R}
   \end{align}
+  Then, solving for $c_{2R}$.
+  \begin{equation}
+    \label{eq:2reg_c2r_b}
+    c_{2R} = \frac{-D_F \, c_{1F} \, B_F \, \sin(B_F \, L_F)}{D_R\,B_R}
+  \end{equation}
   Next, the flux continuity condition at $x=L_F$ is considered as specified in 
   \eref{eq:2reg_flux_continuity}. \eref{eq:2regF_cos} and 
   \eref{eq:2regR_general} are used to evaluate the functions.
@@ -704,12 +731,12 @@
   \end{align}
 
   Now coefficients $c$ are solved. Setting \eref{eq:2reg_c2r_a} equal to
-  \eref{eq:2reg_c2r_b}.
+  \eref{eq:2reg_c2r_b} gives
   \begin{align}
     -c_{1R} \frac{1}{\tanh(B_R\,(L_R-L_F))}
       &= \frac{-D_F \, c_{1F} \, B_F \, \sin(B_F \, L_F)}{D_R\,B_R} \\
     c_{1R} \frac{1}{\tanh(B_R\,(L_R-L_F))}
-      &= \frac{D_F \, c_{1F} \, B_F \, \sin(B_F \, L_F)}{D_R\,B_R} \\
+      &= \frac{D_F \, c_{1F} \, B_F \, \sin(B_F \, L_F)}{D_R\,B_R}.
   \end{align}
   Inserting the expression for $c_{1R}$ from \eref{eq:2reg_c1r}.
   \begin{equation}
@@ -717,24 +744,28 @@
     \frac{c_{1F} \, \cos(B_F \, L_F)}{\tanh(B_R \, (L_R-L_F))} =
       \frac{D_F \, c_{1F} \, B_F \, \sin(B_F \, L_F)}{D_R \, B_R}
   \end{equation}
-  \eref{eq:2reg_c1f_arbitrary} shows that coefficient $c_{1F}$ is arbitrary.
+  In \eref{eq:2reg_c1f_arbitrary}, $c_{1F}$ cancels and is arbitrary. For
+  simplicity, allow $c_{1F} = \phi_0$.
   This is an expected result of an eigenvalue problem. Continuing with the
   derivation.
   \begin{align}
     \frac{\cos(B_F \, L_F)}{\tanh(B_R \, (L_R-L_F))} &=
       \frac{D_F \, B_F \, \sin(B_F \, L_F)}{D_R \, B_R} \\
     \frac{D_R \, B_R}{D_F \, \tanh(B_R \, (L_R - L_F))} &= 
-      \frac{B_F \, \sin(B_F \, L_F)}{\cos(B_F \, L_F)} \\
-    \label{eq:2reg_bf}
-    B_F \, \tan(B_F \, L_F) &= \frac{D_R \, B_R}{D_F \, \tanh(B_R \, (L_R-L_F))}
+      \frac{B_F \, \sin(B_F \, L_F)}{\cos(B_F \, L_F)}
   \end{align}
-  Recalling \eref{eq:2regR_b2}. 
+  Leading to the transcendental function
+  \begin{equation}
+    \label{eq:2reg_bf}
+    B_F \, \tan(B_F \, L_F) = \frac{D_R \, B_R}{D_F \, \tanh(B_R \, (L_R-L_F))}
+  \end{equation}
+  where $B_R$ is defined according to \eref{eq:2regR_b2}. 
   \eref{eq:2reg_bf} is the most simplified solution for $B_F$. Unfortunately,
-  there is no analytic expression for $B_F$. Therefore, a numeric solver must be
-  used such as MATLAB's \verb|vpasolve()| or a generic bisection search. The 
-  $\tan()$ function causes the solution $B_F$ to be especially sensitive to the
-  starting guess or bounds of the search. Once, $B_F$ is known, the eigenvalue, 
-  $\keff$ can be solved using \eref{eq:2regF_b2}.
+  there is no analytic expression for $B_F$. Therefore, a numeric solver 
+  such as MATLAB's \verb|vpasolve()| or a generic bisection search must be used.
+  The $\tan()$ function causes the solution $B_F$ to be especially sensitive to 
+  the starting guess or bounds of the search. Once, $B_F$ is known, the 
+  eigenvalue, $\keff$ can be solved using \eref{eq:2regF_b2}.
   \begin{equation}
     \label{eq:keff2reg}
     \keff = \frac{\nu \Sigma_{fF}}{D_F B_F^2 + \Sigma_{rF}}
@@ -748,22 +779,29 @@
       \frac{\phi_0 \, D_F \, \sin(B_f\,L_F)}{D_R \, B_R} \, 
       \sinh(B_R\,(x-L_F)) \\
     \label{eq:analytic_2reg}
-    \phi(x) &= H(x-L_F) \, \phi_R(x) + H(L_F-x) \, \phi_F(x)
+    %\phi(x) &= H(x-L_F) \, \phi_R(x) + H(L_F-x) \, \phi_F(x)
+    \phi(x) &=
+    \begin{cases}
+      \phi_F(x) & 0   \le x \le L_F \\
+      \phi_R(x) & L_F \le x \le L_R
+    \end{cases}
   \end{align}
   Where $\phi_0$ is the arbitrary normalization constant and $\phi_0 = \phi(0)$.
-  $H(x)$ is the Heaviside step function such that
-  \begin{equation}
-    H(x) =
-    \begin{cases}
-      0 & x < 0 \\
-      1 & x \ge 0
-    \end{cases}
-  \end{equation}
+%
+%  $H(x)$ is the Heaviside step function such that
+%  \begin{equation}
+%    H(x) =
+%    \begin{cases}
+%      0 & x < 0 \\
+%      1 & x \ge 0
+%    \end{cases}
+%  \end{equation}
+%
   For $L_F = 50 \units{cm}$ and $L_F = 100 \units{cm}$ and material constants
   given in \tref{tab:2reg_constants}, the following are solutions. Additionally,
-  a representative flux shape is provided in \fref{fig:2reg}.
+  a flux shape is shown in \fref{fig:2reg}.
   \begin{align}
-    B_F &= 0.0255922 \\
+    B_F &= 0.0255922 \units{$\frac{1}{\text{cm}}$} \\
     \keff &= 0.962188
   \end{align}
   \begin{table}
@@ -774,8 +812,8 @@
         \toprule
         & Fuel & Reflector \\
         \midrule
-        $D \units{$\frac{1}{\text{cm}}$}$ & 1.2 & 0.7 \\
-        $\Sigma_r \units{cm}$ & 0.02 & 0.015 \\
+        $D \units{cm} $& 1.2 & 0.7 \\
+        $\Sigma_r \units{$\frac{1}{\text{cm}}$}$ & 0.02 & 0.015 \\
         $\nu \Sigma_f \units{cm}$ & 0.02 & 0 \\
         \bottomrule
       \end{tabular}
@@ -791,26 +829,25 @@
 \section{Finite-Cylinder, One-Group, Criticality}
   \label{sec:deriv_finite_cyl}
   This three-dimension problem can be simulated in three Cartesian dimensions 
-  and reduced to two cylindrical dimensions for easier analytic solution. This
-  problem is located in $r \in [0,T]$ and $z \in [0,H]$. The material is
-  homogeneous within the probem and has fixed coefficient properties. The
-  problem is specified in \eref{eq:finite_cyl}, \eref{eq:finite_cyl_bcz0},
-  \eref{eq:finite_cyl_bczH}, \eref{eq:finite_cyl_bcrT}, and
-  \eref{eq:finite_cyl_bcr0}.
+  and,using symmetry, reduced to two cylindrical dimensions for easier analytic 
+  solution. This problem is located in $r \in [0,T]$ and $z \in [0,H]$. The 
+  material is homogeneous within the problem and has fixed coefficient 
+  properties. The diffusion equation for this problem is 
   \begin{equation}
     \label{eq:finite_cyl}
     -D \grad^2 \phi(r,z) + \Sigma_r \phi(r,z) = \frac{1}{\keff} \nu \Sigma_f
       \phi(r,z)
   \end{equation}
+  with boundary conditions
   \begin{align}
     \label{eq:finite_cyl_bcz0}
-    \phi(r,0) &= 0 \\
+    \phi(r,0) &= 0 ,\\
     \label{eq:finite_cyl_bczH}
-    \phi(r,H) &= 0 \\
+    \phi(r,H) &= 0 ,\\
     \label{eq:finite_cyl_bcrT}
-    \phi(T,z) &= 0 \\
+    \phi(T,z) &= 0 ,\\
     \label{eq:finite_cyl_bcr0}
-    \phi(0,z) & \text{ is Finite}
+    \phi(0,z) & \text{ is Finite}.
   \end{align}
   \eref{eq:finite_cyl} can be rewritten. 
   \begin{equation}
@@ -900,7 +937,7 @@
   \begin{align}
     \lim_{r \rightarrow 0} Y_0(r) &= - \infty \\
     \label{eq:finite_cyl_c2}
-    c_2 &= 0
+    \therefore \; c_2 &= 0
   \end{align}
   \eref{eq:finite_cyl_c2} is inserted into \eref{eq:finite_cyl_bessel_general}.
   \begin{equation}
@@ -945,7 +982,7 @@
     Z(0) &= 0 \\
     &= c_3 \\
     \label{eq:finite_cyl_c3}
-    c_3 &= 0
+    \therefore \; c_3 &= 0
   \end{align}
   Substituting \eref{eq:finite_cyl_c3} into \eref{eq:finite_cyl_z_general}.
   \begin{equation}
@@ -958,8 +995,8 @@
     Z(H) &= 0 \\
     &= c_4 \sin(\gamma H)
   \end{align}
-  For non-trivial $Z(z)$, this is an eigenvalue problem with $c_4$ trivial and
-  $\gamma$ specified by geometry. 
+  For non-trivial $Z(z)$, the term $\sin(\gamma H)=0$ is required and $c_4$ is
+  trivial and $\gamma$ specified by geometry. 
   \begin{align}
     \gamma H &= n \pi \\
     \gamma &= \frac{n \pi}{H} \\
@@ -967,8 +1004,8 @@
     \gamma &= \frac{\pi}{H}
   \end{align}
   Where $n$ is an integer and $n \pi$ are the roots of the $\sin()$ function.
-  Then the fundamental mode is specified for $n=1$. Coefficient $c_3$ is
-  arbitrary so allow $c_3 = 1$. Then
+  Then the fundamental mode is specified for $n=1$. Coefficient $c_4$ is
+  arbitrary so allow $c_4 = \phi_0$. Then
   \begin{equation}
     \label{eq:finite_cyl_Z}
     Z(z) = \sin\left(\frac{\pi}{H} z\right)
@@ -981,12 +1018,7 @@
     \phi(r,z) = J_0\left(\frac{\alpha_0}{T} r\right) \sin\left(\frac{\pi}{H} z
       \right)
   \end{equation}
-  An example flux plot is provided in \fref{fig:finite_cyl}.
-  The shape of the boundary is extremely important for a circular (or curved)
-  boundary. A simple example of this is shown in \fref{fig:circle_meshes}.
-  In a mesh refinement study, the mesh must be regenerated with a halved mesh 
-  parameter  $h$ for each refinement, rather than simply splitting nodes as 
-  splitting nodes would not improve the description of the boundary.
+  An example flux plot is shown in \fref{fig:finite_cyl}.
   Recall \eref{eq:finite_cyl_b2} and the form \eref{eq:finite_cyl_b2_sum}.
   Coefficients $\beta$ and $\gamma$ are given in \eref{eq:finite_cyl_beta} and
   \eref{eq:finite_cyl_gamma}. Then, an expression for $\keff$ can be
@@ -1001,6 +1033,13 @@
   \begin{equation}
     \keff = 0.996711
   \end{equation}
+  
+  The shape of the boundary as described by the discrete mesh  is extremely 
+  important for a circular (or curved) boundary. A simple example of this is 
+  shown in \fref{fig:circle_meshes}. In a mesh refinement study, the mesh must 
+  be regenerated with a halved mesh parameter $h$ for each refinement, rather 
+  than simply splitting nodes as splitting nodes would not improve the 
+  description of the boundary.
 
   \begin{figure}
     \centering
@@ -1024,13 +1063,11 @@
         \toprule
         Cross Section & Value \\
         \midrule
-        $D \units{$\frac{1}{\text{cm}}$} $ & 1 \\
-        $\Sigma_r \units{cm}$& 1 \\
-        $ \nu \Sigma_{f} \units{cm} $ & 1 \\
+        $D \units{cm} $ & 1 \\
+        $\Sigma_r \units{$\frac{1}{\text{cm}}$}$& 1 \\
+        $ \nu \Sigma_{f} \units{$\frac{1}{\text{cm}}$} $ & 1 \\
         \bottomrule
       \end{tabular}
     \end{center}
   \end{table}
-
-
 

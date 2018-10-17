@@ -8,7 +8,7 @@
 %%----------------------------------------------------------------------------%%
 
 \usepackage{booktabs}  % professionally typeset tables
-\usepackage{amsmath}%,amssymb,amsfonts}
+\usepackage{amsmath,amssymb,amsfonts}
 \usepackage{textcomp}  % better copyright sign, among other things
 \usepackage{lipsum}    % filler text
 \usepackage{subfig}    % composite figures
@@ -16,9 +16,9 @@
 % user defined packages
 \usepackage{algorithm}
 \usepackage[noend]{algpseudocode}
-\renewcommand{\thealgorithm}{\arabic{chapter}.\arabic{algorithm}}
 \usepackage{csvsimple}
-\usepackage{threeparttable}
+\usepackage{threeparttable} % for table with footnote
+\usepackage{amssymb} % for \therefore and \implies
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%%%%%%%% Hack for alphanumeric bibliography
@@ -315,6 +315,8 @@ Method}
 \newcommand{\sref}[1]{Sec.~\ref{#1}}
 \newcommand{\chref}[1]{Chapter ~\ref{#1}}
 \newcommand{\apref}[1]{Appendix ~\ref{#1}}
+% add chapter number to algorithm
+\renewcommand{\thealgorithm}{\arabic{chapter}.\arabic{algorithm}}
 
 \usepackage{color}
 \newcommand{\NEW}[1]{#1}
