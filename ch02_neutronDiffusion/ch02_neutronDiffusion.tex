@@ -797,7 +797,7 @@
   shown in \cite{gehinThesis}.
   \begin{equation}
     \label{eq:gehin_notation}
-    \mb(\vPhi,\keff) \vPhi = \frac{1}{\keff} \mm \Phi
+    \mb(\vPhi,\keff) \vPhi = \frac{1}{\keff} \mm \vPhi
   \end{equation}
   where $\vPhi$ is the vector of the flux containing all energy groups, $\mb$
   contains the diffusion, removal, and all scattering terms, and $\mm$ includes
@@ -805,7 +805,7 @@
   exists and has all positive elements \cite{nakamura}. Therefore,
   \eref{eq:gehin_notation} can be rewritten as
   \begin{equation}
-    \label{eq:gehin_solutaion}
+    \label{eq:gehin_solution}
     \vPhi = \frac{1}{\keff} \mr \vPhi
   \end{equation}
   where
@@ -823,22 +823,64 @@
     \label{eq:power_iteration_e1}
     \vPhi^{(s+1)} &= \frac{1}{\keff^{(s)}} \mr \vPhi^{(s)} \\
     \label{eq:power_iteration_e2}
-    \keff^{(s+1)} &= keff^{(s)} \frac{\vw^{T} \vPhi^{(s+1)}}
+    \keff^{(s+1)} &= \keff^{(s)} \frac{\vw^{T} \vPhi^{(s+1)}}
       {\vw^{T} \vPhi^{(s)}} \qquad s = 1,2,\ldots,\infty
   \end{align}
   where $s$ is the iteration counter, $\vw$ is the weighting vector and 
   $\vw^{T} \vPhi$ is the vector inner-product. According to the Perron-Frobenius
   theorem, a matrix with the properties of $\mr$ has a unique, positive
   eigenvalue greater in magnitude than the modulus of all other eigenvalues of
-  the matrix.
+  the matrix. The weighting vector $\vw$ is arbitrary but does affect
+  convergence rate. For this application $\vw = \{\nu \Sigma_f\}$ such that the
+  inner product $\{\nu \Sigma_f\}^T \vPhi$ represents the summation of the
+  fission source throughout all energy groups and all elements. 
   
   % todo add discussion on decay of eigenmodes
   
-  It is then shown in \cite{nakamura} that the power method
+  It can then be shown in that the power method
   described in \eref{eq:power_iteration_e1} and \eref{eq:power_iteration_e2}
-  along with matrix $\mr$ converges to the largest eigenvalue, $\keff$, and 
+  along with matrix $\mr$ converges to the largest eigenvalue, $\keff$, and
+  unique positive eigenvector \cite{nakamura}. For notation and enumeration,
+  allow the eigenvalue to be rewritten as
+  \begin{equation}
+    \label{eq:lambda}
+    \lambda = \frac{1}{\keff}
+  \end{equation}
+  The eigenvectors $\vu_n$ and
+  corresponding eigenvalues $\lambda_n$ of $\mr$ are defined by
+  \begin{equation}
+    \label{eq:eigen_definition}
+    \vu_n = \lambda_n \, \mr \, \vu_n
+  \end{equation}
+  It may be proven that all eigenvalues $\lambda$ are real, positive, and 
+  distinct. The eigenvalues are then numbered in the sequence:
+  \[ \lambda_0 < \lambda_1 < \lambda_2 < \cdots < \lambda_I\]
+  where $I$ is the rank of the problem. The eigenvectors have the orthogonality
+  relations:
+  \begin{equation}
+    \label{eq:eigen_orthogonality}
+    \vu^T_n \vu= 0  \qquad \text{for } n \ne m
+  \end{equation}
+  where $\Phi^T \Phi$ is the scalar inner-product. Assume eigenvectors are
+  normalized such that:
+  \begin{equation}
+    \label{eq:eigen_normalization}
+    \vu_n^T \vu_n = 1 \qquad \text{for } n = 1, 2, \ldots, I
+  \end{equation}
+  The initial vector $\Phi^{(0)}$ may be expressed as an expansion onto the
+  eigenvectors using a linear superposition of eigenvectors.
+  \begin{equation}
+    \label{eq:eigen_expansion}
+    \Phi^{(0)} = \sum_n c_n^{(0)} \vu_n
+  \end{equation}
+  where $c_n^{(0)}$ is a coefficient given by the orthogonality relationship
+  from \eref{eq:eigen_orthogonality}.
+  \begin{equation}
+    \label{eq:eigen_cn}
+    c_n^{(0)} = \vu_n^T \Phi^{(0)}
+  \end{equation}
 
-  % discuss setting \vw
+
 
   % do something with this
   \begin{equation} \label{eq:multigroup_source_expand}
