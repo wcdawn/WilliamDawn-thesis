@@ -30,7 +30,7 @@
   several reasons. It allows for easily increasing the spatial convergence order
   of the method by increasing the order of the elements without refining the
   mesh. For example, for the same mesh, quadratic elements instead of linear
-  elements could be used to improve the solution. Coordinates of nodes and 
+  elements could be used to refine the solution. Coordinates of nodes and 
   elements can be easily updated to reflect physical phenomena, such as thermal 
   expansion (\chref{ch:thermalExpansion}). Additionally, material properties are 
   calculated on an element basis allowing for fine detail updates to the 
@@ -41,11 +41,13 @@
   energy by convention.
   \[ 0 < E_G < E_{G-1} < \ldots < E_2 < E_1 < E_0 \]
   Then, multigroup constants can be calculated based on the energy group 
-  structure and the known cross sections. Multigroup constants are calculated to
-  preserve the number of neutrons produced or destroyed. That is, the 
-  calculation preserves reaction rates where the reaction rate for reaction $x$
-  is defined as $R_x=\Sigma_x \varphi$. A formal derivation is given in 
-  \cite{duderstathamilton} and the results are presented below.
+  structure, known cross sections, and a representative flux spectrum.
+  Multigroup constants are calculated to preserve the number of neutrons 
+  produced or destroyed. That is, the calculation preserves reaction rates where
+  the reaction rate for reaction $x$ is defined as $R_x=\Sigma_x \varphi$. 
+  A formal derivation of multigroup constants consistent with
+  \eref{eq:continuous_diffusion} is given in \cite{duderstathamilton}. The
+  results of this derivation are provided.
   \begin{align}
     D_g(\vr) &= \frac{\int_{E_g}^{E_{g-1}} D(\vr,E') \grad \varphi(\vr,E)\;dE}
       {\int_{E_g}^{E_{g-1}} \grad \varphi(\vr,E)\;dE} \\
@@ -61,20 +63,54 @@
     \chi_g(\vr) &= \int_{E_g}^{E_{g-1}} \chi(\vr,E) \; dE \\
     \phi_g(\vr) &= \int_{E_g}^{E_{g-1}} \varphi(\vr,E) \; dE
   \end{align}
+
+  It is crucial to note that the equations from \cite{duderstathamilton} are not
+  how cross sections are calculated for this application as they require exact
+  solution of $\varphi(\vr,E)$, $\grad \varphi(\vr,E)$, and functional forms of
+  cross sections for all arbitrary compositions. Instead, a many-group transport
+  problem is solved for simplified geometry to create representative microscopic
+  cross sections. For this application, \mcc is used to calculate microscopic
+  cross sections. \mcc uses an infinite homogeneous geometry removing spatial
+  dependence of flux and cross sections. The fine-group structure employed by 
+  \mcc is composed of 2,082 energy groups and output group structures can be
+  defined by the user. For this application, the standard 33-group structure is
+  used.
+  In practice, microscopic cross sections are calculated as follows for a
+  fine-group energy structure 
+  \[ 0 < E_G < E_{G-1} < \ldots < E_2 < E_1 < E_0 \]
+  and the notation $E_j \in E_g$ implies each fine-group $E_j$ within
+  coarse-group $E_g$.
+  \begin{align}
+    \sigma_{tr,g} &= \frac{\sum_{E_j \in E_g} \sigma_{tr,j} \varphi_j}
+      {\sum_{E_j \in E_g} \varphi_j} \\
+    \sigma_{t,g} &= \frac{\sum_{E_j \in E_g} \sigma_{t,j} \varphi_j}
+      {\sum_{E_j \in E_g} \varphi_j} \\
+    \nu \sigma_{f,g} &= \frac{\sum_{E_j \in E_g} \nu_{f,j} \sigma_{f,j}
+      \varphi_j}{\sum_{E_j \in E_g} \varphi_j} \\
+    \sigma_{s,g \rightarrow g'} &= \frac{\sum_{E_j' \in E_g'} \sum_{E_j \in E_g}
+      \sigma_{s,j \rightarrow j'} \varphi_{j'}}{\sum_{E_j \in E_g} \varphi_j} \\
+    \chi_g &= \sum_{E_j \in E_g} \chi_j
+  \end{align}
+  where $\sigma_{tr}$ is the transport cross section.
+  With given microscopic cross sections, macroscopic cross sections are
+  calculated by homogenizing microscopic with some number densities $N_i$. 
+  For the $x$ reaction type
+  \begin{equation}
+    \Sigma_{x,g} = \sum_{i} N_i \sigma_{x,g,i}.
+  \end{equation}
+  Finally, the transport cross section is used to calculate the diffusion
+  constant.
+  \begin{equation}
+    D_g = \frac{1}{3 \Sigma_{tr,g}}
+  \end{equation}
+
   Note that cross sections $\nu_f(\vr,E)$ and $\Sigma_f(\vr,E)$ have been 
   combined. This is a convenient mathematical representation of the group
-  collapse to preserve the rate of neutrons produced. This is not, however, how
-  multigroup constants are actually calculated. The derivation assumes that
-  material cross sections and flux distributions are known continuously with
-  respect to energy. This is never the case as material cross sections are
-  measured from experiments and flux distributions are only known continuously
-  for select problems. More typically, these multigroup constants are measured
-  experimentally for a many group structure and then a group collapse is
-  performed discretely. For the purposes of this application, it is sufficient
-  to assume that the constants are provided from some higher order flux
-  calculation method.
+  collapse to preserve the rate of neutrons produced.
 
-  \eref{eq:continuous_diffusion} can be discretized in energy as
+  Integrating \eref{eq:continuous_diffusion} over a single energy group, and
+  using multigroup constants calculated as previously described, the multigroup
+  neutron diffusion equation can be written as.
   \begin{align}\label{eq:multigroup_diffusion}
     - \grad \cdot ( D_g(\vr) \grad \phi_g(\vr)) + \Sigma_{t,g}(\vr) \phi_g(\vr)= 
       \frac{\chi_g(\vr)}{\keff} \sum_{g'=1}^{G} \nu\Sigma_{f,g'}(\vr) 
@@ -83,12 +119,12 @@
   \end{align}
   The neutron diffusion equation has now been discretized in energy.
   Spatial dicretization will be based on the Finite Element Method (FEM) and 
-  will be discussed in \sref{sec:formulation:derivation}.
+  will be discussed in \sref{sec:formulation}.
   
   The total neutron cross section includes the contribution due to 
   self-scattering. That is, due to $\Sigma_{s,g\rightarrow g}$. This can be 
-  removed from \eref{eq:multigroup_diffusion} for simplicity and numeric
-  efficiency.
+  subtracted from both sides of \eref{eq:multigroup_diffusion} for simplicity 
+  and numeric efficiency.
   \begin{equation} \label{eq:multigroup_removal}
     - \grad \cdot( D_g(\vr) \grad \phi_g(\vr)) + \Sigma_{r,g}(\vr) \phi_g(\vr) = 
       \frac{\chi_g(\vr)}{\keff} \sum_{g'=1}^{G} \nu\Sigma_{f,g'}(\vr) 
@@ -103,25 +139,15 @@
     - \grad \cdot( D_g(\vr) \grad \phi_g(\vr)) + \Sigma_{r,g}(\vr) \phi_g(\vr) = 
       q_g(\vr)
   \end{equation}
-  Where $q_g(\vr)$ is the combined neutron source at position $\vr$ for energy 
-  group $g$. The combined source form is useful for solving the
-  multigroup neutron diffusion problem for an arbitrary number of groups.
-  \eref{eq:multigroup_source}
-  is solved for each energy group and interaction between groups is
-  described in the source term, $q_g(\vr)$. In other literature, the multigroup
-  equation may be
-  solved for each group simultaneously by treating interaction between groups
-  explicitly. By solving each group independently (as done here) the method 
-  remains general. Additionally, for many-group energy structures, as common to
-  fast reactor applications, solving each group independently is typically more
-  computationally efficient as linear systems have favorable conditioning and
-  remain smaller.
-  
-  It is sometimes desirable to partition $q$ into contributions due 
-  to fission ($q_{fiss}$), up-scattering ($q_{up}$) when a neutron increases in 
-  energy, and down-scattering when a neutron decreases in energy ($q_{down}$).
+  where $q_g(\vr)$ is the combined neutron source at position $\vr$ for energy
+  group $g$ and is
+  expressed as
+  \begin{equation}
+    \label{eq:q}
+    q_g(\vr) = q_{fiss,g}(\vr) + q_{up,g}(\vr) + q_{down,g}(\vr) \\
+  \end{equation}
+  with contributing terms
   \begin{align}
-    q_g(\vr) &= q_{fiss,g}(\vr) + q_{up,g}(\vr) + q_{down,g}(\vr) \\
     \label{eq:qfiss}
     q_{fiss,g}(\vr) &= \frac{\chi_g(\vr)}{\keff} \sum_{g'=1}^{G} 
       \nu \Sigma_{f,g'}(\vr) \phi_{g'}(\vr) \\
@@ -138,7 +164,22 @@
   sources to use a different flux iterate than down-scatter so this division
   will prove useful.
 
+  The combined source form is useful for solving the
+  multigroup neutron diffusion problem for an arbitrary number of groups.
+  \eref{eq:multigroup_source}
+  is solved for each energy group and interaction between groups is
+  described in the source term, $q_g(\vr)$. In other literature, the multigroup
+  equation may be solved for all groups simultaneously by treating interaction 
+  between groups explicitly. By solving each group independently (as done here)
+  the method remains general. Additionally, for many-group energy structures, as
+  common to fast reactor applications, solving each group independently is 
+  typically more computationally efficient as linear systems have favorable 
+  conditioning and remain smaller. Fast reactors also are dominated by
+  down-scatter as opposed to thermal reactors which experience significant
+  up-scatter.
+
 \section{Formulation of Finite Element Equations}
+  \label{sec:formulation}
   \subsection{Derivation}
     \label{sec:formulation:derivation}
     The only remaining continuous variable in the problem to be discretized is 
@@ -148,12 +189,15 @@
     domain where some boundary condition is specified. Boundary condition 
     options provided include
     \begin{enumerate}
-      \item Mirror. $\grad \phi_g(\vr) = 0$ for $\vr \in \partial \Omega$.
-      \item Albedo. $D_g(\vr) \grad \phi_g(\vr) + \albedo \phi_g(\vr)=0$ for 
-        $\vr \in \partial \Omega$ where $\albedo$ is a real constant specified
+      \item Mirror. $\grad \phi_g(\vr) \cdot \nhat = 0$ for 
+        $\vr \in \partial \Omega$.
+      \item Albedo. $D_g(\vr) \grad \phi_g(\vr) \cdot \nhat + 
+        \albedo \phi_g(\vr)=0$ for $\vr \in \partial \Omega$ 
+        where $\albedo$ is a real constant specified
         by the user. For vacuum conditions, $\albedo = \half$.
       \item Zero Flux. $\phi_g(\vr) = 0$ for $\vr \in \partial \Omega$.
     \end{enumerate}
+    where $\nhat$ represents the outward normal vector at the boundary.
     (Note: the order of the above list corresponds to the order of boundary 
     condition precedent in code with the greater the integer, the greater the 
     precedent.)
@@ -163,12 +207,14 @@
     \[ \Omega = \Omega_1 \cup \Omega_2 \cup \Omega_3 \cup \ldots \cup
       \Omega_{N_E} \]
     where $\{\Omega_e\}$ for $e = 1,2,\ldots,N_E$ is a set of
-    nonoverlapping elements and $N_E$ is the number of elements in the problem.
-    Elements are in an unstructured grid and can be generated by any method to
-    describe the geometry of the problem.
+    non-overlapping elements $\Omega_i \cap \Omega_j = \emptyset$ for $i \ne j$ 
+    and $N_E$ is the number of elements in the problem.
+    Elements are in an unstructured grid and can be generated by a general
+    method to describe the geometry of the problem.
     
     Finite element derivation begins with \eref{eq:multigroup_source}.
-    The equation is multiplied by a testing function $v(\vr) \in H_1(\Omega)$ 
+    Proceeding with the Galerkin Finite Element Method, the equation is 
+    multiplied by a testing function $v(\vr) \in H_1(\Omega)$ 
     Where $H$ is the Sobolev Space. 
     \begin{equation}
       -\grad \cdot (D_g(\vr) \grad \phi_g(\vr)) v(\vr) + 
@@ -179,14 +225,35 @@
     yields the Weak Form or Variational Form of the problem.
     \begin{equation}
       - \int_{\Omega} \grad \cdot (D_g(\vr) \grad \phi_g(\vr)) v(\vr) \; d\Omega
-        \int_{\Omega} \Sigma_{r,g}(\vr) \phi_g(\vr) v(\vr) \;d\Omega =
+        + \int_{\Omega} \Sigma_{r,g}(\vr) \phi_g(\vr) v(\vr) \;d\Omega =
         \int_{\Omega} q_g(\vr) v(\vr) \;d\Omega
     \end{equation}
     
     For the purposes of this application, material cross sections and the
-    neutron source are assumed to be constant within an element. Then, the 
-    integral can be partitioned into a sum of integrals over the elements in the
-    domain assuming the set of elements 
+    neutron source $q_{g,e}$ are assumed to be constant within an element. 
+    To calculate a constant neutron source within an element, \eref{eq:q} is
+    used for the average flux in an element.
+    \begin{align}
+      q_{g,e} &= q_{fiss,g,e} + q_{up,g,e} + q_{down,g,e} \\
+      q_{fiss,g,e} &= \frac{\chi_{g,e}}{\keff} \sum_{g'=1}^G \nu
+        \Sigma_{f,g',e} \phiavg_{g',e} \\
+      q_{up,g,e} &= \sum_{g'=g+1}^G \Sigma{s,g' \rightarrow g,e}
+        \phiavg_{g',e}\\
+      q_{down,g,e} &= \sum_{g'=1}^{g-1} \Sigma_{s,g' \rightarrow g,e}
+        \phiavg_{g',e}
+    \end{align}
+    For first-order, linear implementations of the FEM, the exact
+    element-average flux $\phiavg_{g,e}$ is
+    \begin{equation}
+      \label{eq:phiavg}
+      \phiavg_{g,e} = \frac{1}{N_p} \sum_{i \in \Omega_e} \phi_{i,g}
+    \end{equation}
+    where $N_p$ is the number of solution nodes on the element. For example, a
+    triangle has $N_p = 3$.
+
+    Given material properties and neutron sources constant over the element, 
+    the integral can be partitioned into a sum of integrals over the 
+    elements in the domain assuming the set of elements 
     \begin{equation} \label{eq:element_by_element}
       -\sum_{e=1}^{N_E} D_{g,e} 
         \int_{\Omega_e} \grad \cdot \grad \phi_g(\vr) v(\vr) \; d\Omega_e +
@@ -194,7 +261,7 @@
         \;d\Omega_e = \sum_{e=1}^{N_E} q_{g,e} \int_{\Omega_e} v(\vr) 
         \; d\Omega_e
     \end{equation}
-    The Second Green's Theorem is used to simplify the integral in the first
+    The Second Green's Theorem is used to rewrite the integral in the first
     term. A proof can be found in \cite{textbookli} in Theorem 9.2. The Second 
     Green's Theorem is in \eref{eq:greens}.
     \begin{equation} \label{eq:greens}
@@ -211,12 +278,12 @@
     specified in a boundary condition. Specifically, the albedo boundary 
     condition which has the following form for $\vr \in \partial \Omega$. 
     \begin{align}
-      D_g(\vr) \grad \phi_g(\vr) + \albedo \phi_g(\vr) &= 0 \\
-      D_g(\vr) \grad \phi_g(\vr) &= -\albedo \phi_g(\vr)
+      D_g(\vr) \grad \phi_g(\vr) \cdot \nhat + \albedo \phi_g(\vr) &= 0 \\
+      D_g(\vr) \grad \phi_g(\vr) \cdot \nhat &= -\albedo \phi_g(\vr)
     \end{align}
     Substituting \eref{eq:greens} into  \eref{eq:element_by_element} and 
     assuming the outward normal derivative is specified in the form of an albedo
-    boundary condition.
+    boundary condition with $\albedo$ constant throughout the problem.
     \begin{multline} 
       -\sum_{e=1}^{N_E} D_{g,e} \int_{\partial \Omega_e} v(\vr) 
         \frac{\partial \phi_g(\vr)}{\partial \vn} \;ds + \sum_{e=1}^{N_E} D_{g,e}
@@ -233,12 +300,12 @@
         \; d\Omega_e =
         \sum_{e=1}^{N_E} q_{g,e} \int_{\Omega_e} v(\vr) \; d\Omega_e
     \end{multline}
-    Now the function of interest $\phi_g(\vr)$ is assumed to be a linear 
+    Next, the function of interest $\phi_g(\vr)$ is assumed to be a linear 
     combination of chosen basis functions $\{\basis_i\}$.
     \begin{equation} \label{eq:linear_combination}
       \phi_g(\vr) = \sum_{i=1}^{DOF} \beta_{g,i} \basis_i(\vr)
     \end{equation}
-    Where coefficients $\{\beta_i\}$ are unknown and will be determined and $DOF$
+    Where coefficients $\{\beta_{g,i}\}$ are unknown and will be determined and $DOF$
     is the degree of freedom of the problem. Typically $DOF$ is the number of
     nodes minus any nodes for which the flux is fixed (e.g. zero-flux nodes).
     Typically, these basis functions have unit magnitude and are centered at the
@@ -251,17 +318,19 @@
     \sref{sec:matrix_quantities}.
     Linear and quadratic polynomials are common but for the application 
     presented here, only linear basis functions are explored.
+
     The test function $v(\vr)$ is also chosen as a linear combination of the 
     basis functions.
     \begin{equation} \label{eq:linear_superposition}
       v(\vr) = \sum_{j=1}^{DOF} \basis_j(\vr)
     \end{equation}
-    The testing function is arbitrary so the magnitude is fixed to the magnitude
-    of the basis function.
+    The magnitude of the testing function is arbitrary so the magnitude is fixed
+    to the magnitude of the basis function.
     
     \eref{eq:linear_combination} and \eref{eq:linear_superposition} are inserted 
     into \eref{eq:element_boundary}.
     \begin{multline}
+      \label{eq:this_above}
       \sum_{e=1}^{N_E} \albedo \sum_{i=1}^{N} \beta_{i,g}
         \int_{\partial \Omega_e}
         \basis_i(\vr)  \basis_j(\vr) \;ds +
@@ -269,11 +338,12 @@
         \int_{\Omega_e} \grad \basis_i(\vr) \cdot \grad \basis_i(\vr)\;d\Omega_e
         + \\
         \sum_{e=1}^{N_E} \Sigma_{r,g,e} \sum_{i=1}^{N} \beta_{i,g}
-        \int_{\Omega_e} \basis_i(\vr) \basis_i(\vr) \; d\Omega_e =
+        \int_{\Omega_e} \basis_i(\vr) \basis_j(\vr) \; d\Omega_e =
         \sum_{e=1}^{N_E} q_{g,e} \sum_{i=1}^{N} 
         \int_{\Omega_e} \basis_i(\vr) \; d\Omega_e
     \end{multline}
-    This can be rearranged as a linear system of equations.
+    Combining all elements, \eref{eq:this_above} can be rearranged as a linear
+    system of equations.
     \begin{multline}
       \sum_{i=1}^{N} \beta_{i,g} \sum_{j=1}^{N} \left(
         \sum_{e=1}^{N_E} \albedo \int_{\partial \Omega_e}
@@ -289,35 +359,38 @@
         \sum_{e=1}^{N_E} q_{g,e} 
         \int_{\Omega_e} \basis_i(\vr) \; d\Omega_e \right)
     \end{multline}
-    Which can be written in matrix format as
-    \begin{equation}
-      \label{eq:fem_notation}
-      a(\basis_i,\basis_j) = f(\basis_i)
-    \end{equation}
-    Or in the notation common to the FEM
+    Which can be written in the notation common to the FEM
+      \begin{equation}
+        \label{eq:fem_notation}
+        a(\basis_i,\basis_j) = f(\basis_i)
+      \end{equation}
+    where $a(\basis_i,\basis_j)$ is the bilinear form and $f(\basis_i)$ is the 
+    linear form of the finite element system.
+    Or in matrix format as
     \begin{equation}
       \label{eq:matrix_notation}
       \ma \vu = \vf
     \end{equation}
-    $a(\basis_i,\basis_j)$ is the bilinear form and $f(\basis_i)$ is the linear 
-    form of the finite element system. The notation of \eref{eq:fem_notation} is
-    common to mathematical discussions of the FEM. The diffusion coefficient 
-    $D_g(\vr)$ is non-zero and bounded and the removal cross section 
-    $\Sigma_{r,g}(\vr)$ is bounded. The Lax-Milgram Lemma implies the solution
-    to the FEM as derived here is both unique and bounded (See Theorem 9.3
-    \cite{textbookli}). This is 
+    The notation of \eref{eq:fem_notation} is common to mathematical discussions
+    of the FEM. 
+    
+    The diffusion coefficient $D_g(\vr)$ is non-zero and bounded and
+    the removal cross section $\Sigma_{r,g}(\vr)$ is bounded. The Lax-Milgram 
+    Lemma implies the solution to the FEM as derived here is both unique and 
+    bounded (See Theorem 9.3 \cite{textbookli}). This is 
     not the entire description as the source function $q_g(\vr)$ is updated on 
-    each power iteration. What the satisfaction of the Lax Milgram Lemma does 
+    each power iteration. What the satisfaction of the Lax-Milgram Lemma does 
     imply in this instance is that for a fixed source on a given problem 
     iteration, a unique solution exists. The global problem remains an 
     eigenvalue problem as described in \cite{duderstathamilton}. The power
     iteration method will 
     return the fundamental eigenvalue $\keff$ and the fundamental 
-    eigenmode $\phi$ which may be normalized by an arbitrary constant.
+    eigenmode $\phi$ which may be normalized by an arbitrary constant to be
+    discussed in depth in \sref{sec:power_iterations}.
     
-    In matrix notation \eref{eq:matrix_notation}. Matrix $\ma$ is 
+    In matrix notation \eref{eq:matrix_notation}, matrix $\ma$ is 
     described by integral quantities, vector $\vu$ is the unknown magnitudes of
-    the basis functions $\{\beta_i\}$, and vector $\vf$ is described by the 
+    the basis functions $\{\beta_{g,i}\}$, and vector $\vf$ is described by the 
     source integral quantity. Inspecting the matrix $\ma$ and the vector $\vf$
     reveals the following.
     \begin{align}
@@ -358,8 +431,8 @@
     \eref{eq:matrix_population} and \eref{eq:vector_population} have exact 
     analytic forms. For this application, linear triangles and linear wedges
     are investigated and many of the integrals have exact expressions. If these 
-    quantities cannot be expressed exactly or doing so would be computationally
-    difficult, quadratures can be used and for certain problems, these 
+    quantities cannot be expressed exactly, or doing so would be computationally
+    difficult, quadratures can be used. For certain problems, these 
     quadratures can express the integrals exactly. This will be discussed in 
     \sref{sec:quadratures}.
     \subsubsection{Linear Triangles}
@@ -375,14 +448,21 @@
         \caption{Description of Triangle Element.}
         \label{fig:sketch_triangle}
       \end{figure}
+      \begin{figure}
+        \centering
+        \includegraphics[width=0.4\textwidth]{Tref}
+        \caption{Description of Reference Triangle.}
+        \label{fig:Tref}
+      \end{figure}
       It is difficult to analytically calculate the desired integral quantities
       for an arbitrary triangle. Instead, a simplified reference element is
       created and quantities are calculated for the reference element and then
       translated to the arbitrary element using a Jacobian. 
       The reference triangle $T_{ref}$ is located in
-      $\xi \in [0,1]$ and $\eta \in [0,1-\xi]$. The basis functions are zero
-      outside of the reference triangle and within the reference triangle, 
-      basis functions for the are provided.
+      $\xi \in [0,1]$ and $\eta \in [0,1-\xi]$ as shown in \fref{fig:Tref}. The
+      basis functions are zero outside of the reference triangle and within the
+      reference triangle, basis functions for the are provided in the
+      coordinates of $T_{ref}$ (see \fref{fig:Tref}).
       \begin{align}
         \basis_i(\xi,\eta) &= 0 \; \forall \; (\xi,\eta) \notin T_{ref} \\
         \basis_1(\xi,\eta) &= \xi \\
@@ -409,15 +489,18 @@
       Where $A_e$ is the area of the triangular element, $L_e$ is the length of 
       the edge between node $i$ and node $j$, and $\delta_{ij}$ is the Kronecker
       delta. The area of a triangle in three dimensions is calculated for a
-      triangle with corners $\vc_i = (x_i, y_i, z_i)$ with $i=1,2,3$ where
-      $\vc_i$ is a coordinate vector for notational simplicity.
+      triangle with corner coordinates $\vc_i = (x_i, y_i, z_i)$ with $i=1,2,3$.
+      That is, $\vc_i$ is the coordinates of corner $i$.
       \begin{align}
         \va &= \vc_2 - \vc_1 \\
         \vb &= \vc_3 - \vc_1 \\
         A_e &= \half \lvert \va \times \vc \rvert \\
-        &= \half \sqrt{ (a_2 b_3 - a_3 b_2)^2 + (a_3 b_1 - a_1 b_3)^2 +
+        \label{eq:area_triangle}
+        A_e &= \half \sqrt{ (a_2 b_3 - a_3 b_2)^2 + (a_3 b_1 - a_1 b_3)^2 +
           (a_1 b_2 - a_2 b_1)^2}
       \end{align}
+      where $a_i$ is the $i^{th}$ component of vector $\va$ and $b_i$ is the
+      $i^{th}$ component of vector $\vb$.
       The Kronecker delta is defined as
       \begin{equation} \label{eq:kroneker_delta}
         \delta_{ij} =
@@ -426,34 +509,48 @@
           1 & \text{if } i = j
         \end{cases}
       \end{equation}
-      For higher order triangular elements, it will be necessary to employ a 
-      quadrature.
+      For higher order triangular elements, it may be necessary to employ a 
+      quadrature to calculate the integrals.
     \subsubsection{Linear Wedges}
-      Wedge elements have not achieved the same commonality as triangular 
-      elements but are, in their simplest form, extruded triangles. The general
-      wedge, however, is more general than extrusion. In this application,
-      wedges are useful to describe hexagonal geometries such as fast spectrum
-      reactors. Reactor geometries are also typically described in lattices so
-      the wedge element allows for easily ``stacking'' lattices on top of each
-      other.
+      A Wedge element is a pentahedron with six corner nodes, and is sometimes
+      referred to as a triangular prism. A simple example of a wedge is an
+      extruded triangle. However, unlike an extruded triangle, the exact 
+      geometric relation of corner nodes in a wedge is not fixed and the nodes 
+      are free to expand and distort. All corner nodes are free to move
+      independently of other nodes. An example of a typical and a distorted
+      wedge element is shown in \fref{fig:sketch_wedge}. These elements are
+      unique because there are two different types of faces. Three faces are
+      quadrilateral and two are triangular. 
 
-      Geometrically, the wedge element is a pentahedron with six corner nodes,
-      sometimes referred to as a triangular prism. However,
-      their exact geometric relation is not fixed and the nodes are free to 
-      expand and distort. That is, each node is free to move independently of
-      all other nodes. These shapes are unique because three of the faces are
-      quadrilateral and two of the faces are triangular. A typical (left) and 
-      distorted (right) wedge element is described in \fref{fig:sketch_wedge}.
       \begin{figure}
         \centering
         \includegraphics[width=0.6\textwidth]{sketch_wedge}
-        \caption{Description of Typical and Distorted Wedge Elements.}
+        \caption{Description of Typical (left) and Distorted (right) Wedge 
+          Elements.}
         \label{fig:sketch_wedge}
       \end{figure}
+
+      In this application,
+      wedges are useful to describe hexagonal geometries such as fast spectrum
+      reactors. Fast reactors are typically hexagonal-z geometry so wedge
+      elements are a natural choice for this coordinate system. In addition,
+      wedges can build geometries in a manner similar to triangular
+      elements. Reactor geometries are also typically described in lattices so
+      the wedge element allows for easily ``stacking'' lattices on top of each
+      other.
+
+      \begin{figure}
+        \centering
+        \includegraphics[width=0.5\textwidth]{Wref}
+        \caption{Description of Reference Wedge.}
+        \label{fig:Wref}
+      \end{figure}
+
       The reference wedge $W_{ref}$ is located in 
-      $\xi \in [0,1]$, $\eta \in [0,1-\xi]$, and $\zeta \in [-1,1]$. The basis
-      functions are, again, zero outside of the reference wedge and are provided
-      within the reference wedge.
+      $\xi \in [0,1]$, $\eta \in [0,1-\xi]$, and $\zeta \in [-1,1]$. The
+      coordinate system of the reference wedge is shown in \fref{fig:Wref}. The
+      basis functions are, again, zero outside of the reference wedge and are 
+      provided within the reference wedge.
       \begin{align}
         \basis_i(\xi,\eta,\zeta) &= 0 \; \forall \; (\xi,\eta,\zeta)
           \notin W_{ref} \\
@@ -465,54 +562,59 @@
         \basis_6(\xi,\eta,\zeta) &= \half (1+\zeta)\eta 
       \end{align}
 
-      The values presented herein are not found in literature and are 
-      calculated by the author.
+      The integrals of the basis function over the element are given in
+      \eref{eq:bigmat} through \eref{eq:wedge_surface_integral}. The values
+      presented herein are not found in literature and have been calculated by
+      the author
       \begin{align}
         \label{eq:bigmat}
         \int_{\Omega_e} \basis_i(\vr) \basis_j(\vr) \;d\Omega_e &= 
-          \frac{V_e}{2}
+          \frac{V_e}{144}
           \begin{pmatrix}
-            \frac{1}{18} & \frac{1}{36} & \frac{1}{36} & \frac{1}{36} & 
-              \frac{1}{72} & \frac{1}{72} \\
-            \frac{1}{36} & \frac{1}{18} & \frac{1}{36} & \frac{1}{72} & 
-              \frac{1}{36} & \frac{1}{72} \\
-            \frac{1}{36} & \frac{1}{36} & \frac{1}{18} & \frac{1}{72} & 
-              \frac{1}{72} & \frac{1}{36} \\
-            \frac{1}{36} & \frac{1}{72} & \frac{1}{72} & \frac{1}{18} & 
-              \frac{1}{36} & \frac{1}{36} \\
-            \frac{1}{72} & \frac{1}{36} & \frac{1}{72} & \frac{1}{36} & 
-              \frac{1}{18} & \frac{1}{36} \\
-            \frac{1}{72} & \frac{1}{72} & \frac{1}{36} & \frac{1}{36} & 
-              \frac{1}{36} & \frac{1}{18} 
+            4 & 2 & 2 & 2 & 1 & 1 \\
+            2 & 4 & 2 & 1 & 2 & 1 \\
+            2 & 2 & 4 & 1 & 1 & 2 \\
+            2 & 1 & 1 & 4 & 2 & 2 \\
+            1 & 2 & 1 & 2 & 4 & 2 \\
+            1 & 1 & 2 & 2 & 2 & 4 
           \end{pmatrix} \\
         \int_{\Omega_e} \basis_i(\vr) \;d\Omega_e &= \frac{V_e}{12} \\
+        \label{eq:wedge_surface_integral}
         \int_{\partial \Omega_e} \basis_i(\vr) 
           \basis_j(\vr) \;d\partial\Omega_e &= 
           \begin{cases}
-            \frac{A_{\Delta}}{12}(1+\delta_{ij}) & \text{if triangle} \\
+            \frac{A_{\Delta}}{12}(1+\delta_{ij})&\text{if triangular surface} \\
             \frac{A_{\Box}}{36}(1+\delta_{ij})(1-\half \delta_{i,(5-j)}) &
-              \text{if quadrilateral}
+              \text{if quadrilateral surface}
           \end{cases}
       \end{align}
-      Where $V_e$ is the volume of the element. For a simple extruded triangle,
-      the volume calculation is straightforward. However, allowing the nodes to
-      move with respect to each other makes the volume of the element difficult
-      to calculate. Instead, the Jacobian is used to calculate $V_e$. The
-      relationship is given in \tref{tab:jacobi}. The element is isoparametric
-      (has constant Jacobian determinant) for any point within the reference
-      wedge, such as (0,0,0). Then $V_e = 2 \lvert \mj \rvert$.
+      Where $V_e$ is the volume of the element, $A_{\Delta}$ is the area of the
+      triangular surface, and $A_{\Box}$ is the area of the quadrilateral
+      element. $A_{\Delta}$ is computed according to \eref{eq:area_triangle} and
+      $A_{\Box}$ is computed as the sum of the area of two triangles, employing
+      the same formula.
       
-      This matrix in \eref{eq:bigmat} is indexed $M_{ij}$
+      For a simple extruded triangle,
+      the volume calculation is straightforward and is the product of triangular
+      area and linear height. However, allowing the nodes to
+      move with respect to each other makes the volume of the element difficult
+      to calculate. Therefore, the Jacobian is used to calculate $V_e$. For more
+      detail, see \sref{sec:quadratures}, especially \tref{tab:jacobi}.
+
+      The
+      relationship is given in \tref{tab:jacobi}.
+      
+      The matrix in \eref{eq:bigmat} is indexed $M_{ij}$
       and is presented as a matrix because of its irregular form. Notice the 
-      integral containing the gradient operator has been omitted because if 
-      it could be computed analytically, it would be less computationally 
-      efficient than using a quadrature.
+      integral containing the gradient operator has been omitted because it is
+      computed using a quadrature. If it could be computed analytically, it 
+      would be less computationally efficient than using a quadrature.
   \subsection{Quadratures}
     \label{sec:quadratures}
     Quadratures are sets of coordinates and weights which allow for the exact 
     integration of polynomials of given order. For a given set of weights 
-    $\{w_i\}$ and a set of coordinates $\{\vx\}$, the quadrature can be 
-    expressed as follows.
+    $\{w_i\}$ and a set of coordinates $\{\vx\}$, an integral can be represented
+    as the sum
     \begin{equation}
       \label{eq:quadrature}
       \int_{\Omega} f(\vx) \;d\Omega \approx \sum_{i=1}^{N} w_i f(\vx_i)
@@ -530,7 +632,7 @@
     quadrature. For this quadrature, $n=N$.
     
     Two-dimensional and three-dimensional quadratures are necessary for the 
-    FEM. Triangular quadratures are not as simply derived 
+    FEM. Triangular quadratures are not as simple to derive
     as line quadratures and the number of points need not equal the order of the
     polynomial integrated. The triangular quadrature as implemented here is 
     symmetric and open. That is, there are no points on the boundary of the 
@@ -592,8 +694,8 @@
     the matrix determinant. Notationally, $J=\lvert \mj \rvert$ and is termed
     the Jacobi.
 
-    For simple elements, the Jacobi is constant over the element and can be
-    precalculated to save from populating, and evaluating the 
+    For isoparametric elements, the Jacobi is constant over the element and can
+    be precalculated to save from populating, and evaluating the 
     determinant of a matrix for each integration point. For the elements of 
     concern, these values are presented in \tref{tab:jacobi} as found in 
     \cite{textbookcolorado}.
@@ -639,16 +741,16 @@
     determinant. For the quadrature integration of derivative quantities as
     necessary in the FEM, the derivatives must also be translated from the
     reference element to the spatial element. This is performed according to 
-    Algorithm \ref{algorithm:deriv_int}. The notation is dense as the method
+    \algref{algorithm:deriv_int}. The notation is dense as the method
     requires two sets of coordinates. First, the coordinate in the reference
     element $(\xi,\zeta,\eta)$ and second, the coordinate in Cartesian space
     $(x,y,z)$.
     Then, the vector $\vd_{i,\,(\xi,\zeta,\eta)}$ is the gradient vector for
     $\basis_i$ with respect to the reference coordinates $(\xi,\zeta,\eta)$.
     Vector $\vd_{i,\,(x,y,z)}$ is the gradient vector for $\basis_i$ with
-    respect to the Cartesian coordinates $(x,y,z)$. In Algorithm
-    \ref{algorithm:deriv_int}, the quadrature has points $\{\vx_p\}$ and weights
-    $\{w_p\}$ for $p = 1,2,\ldots,N_P$ and the value of the integral is
+    respect to the Cartesian coordinates $(x,y,z)$. In 
+    \algref{algorithm:deriv_int}, the quadrature has points $\{\vx_p\}$ and 
+    weights $\{w_p\}$ for $p = 1,2,\ldots,N_P$ and the value of the integral is
     represented by \eref{eq:deriv_integral}.
     \begin{equation}
       \label{eq:deriv_integral}
