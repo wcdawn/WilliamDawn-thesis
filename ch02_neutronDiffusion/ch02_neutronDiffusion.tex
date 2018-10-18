@@ -81,14 +81,14 @@
   and the notation $E_j \in E_g$ implies each fine-group $E_j$ within
   coarse-group $E_g$.
   \begin{align}
-    \sigma_{tr,g} &= \frac{\sum_{E_j \in E_g} \sigma_{tr,j} \varphi_j}
-      {\sum_{E_j \in E_g} \varphi_j} \\
-    \sigma_{t,g} &= \frac{\sum_{E_j \in E_g} \sigma_{t,j} \varphi_j}
-      {\sum_{E_j \in E_g} \varphi_j} \\
+    \sigma_{tr,g} &= \frac{\sum_{E_j \in E_g} \sigma_{tr,j} \Phi_j}
+      {\sum_{E_j \in E_g} \Phi_j} \\
+    \sigma_{t,g} &= \frac{\sum_{E_j \in E_g} \sigma_{t,j} \Phi_j}
+      {\sum_{E_j \in E_g} \Phi_j} \\
     \nu \sigma_{f,g} &= \frac{\sum_{E_j \in E_g} \nu_{f,j} \sigma_{f,j}
-      \varphi_j}{\sum_{E_j \in E_g} \varphi_j} \\
+      \Phi_j}{\sum_{E_j \in E_g} \Phi_j} \\
     \sigma_{s,g \rightarrow g'} &= \frac{\sum_{E_j' \in E_g'} \sum_{E_j \in E_g}
-      \sigma_{s,j \rightarrow j'} \varphi_{j'}}{\sum_{E_j \in E_g} \varphi_j} \\
+      \sigma_{s,j \rightarrow j'} \Phi_{j'}}{\sum_{E_j \in E_g} \Phi_j} \\
     \chi_g &= \sum_{E_j \in E_g} \chi_j
   \end{align}
   where $\sigma_{tr}$ is the transport cross section.
@@ -111,12 +111,13 @@
   Integrating \eref{eq:continuous_diffusion} over a single energy group, and
   using multigroup constants calculated as previously described, the multigroup
   neutron diffusion equation can be written as.
-  \begin{align}\label{eq:multigroup_diffusion}
+  \begin{equation}
+    \label{eq:multigroup_diffusion}
     - \grad \cdot ( D_g(\vr) \grad \phi_g(\vr)) + \Sigma_{t,g}(\vr) \phi_g(\vr)= 
       \frac{\chi_g(\vr)}{\keff} \sum_{g'=1}^{G} \nu\Sigma_{f,g'}(\vr) 
       \phi_{g'}(\vr) + \sum_{g'=1}^{G} \Sigma_{s,g' \rightarrow g}(\vr) 
       \phi_{g'}(\vr)
-  \end{align}
+  \end{equation}
   The neutron diffusion equation has now been discretized in energy.
   Spatial dicretization will be based on the Finite Element Method (FEM) and 
   will be discussed in \sref{sec:formulation}.
@@ -235,10 +236,13 @@
     used for the average flux in an element.
     \begin{align}
       q_{g,e} &= q_{fiss,g,e} + q_{up,g,e} + q_{down,g,e} \\
+      \label{eq:qelement_fiss}
       q_{fiss,g,e} &= \frac{\chi_{g,e}}{\keff} \sum_{g'=1}^G \nu
         \Sigma_{f,g',e} \phiavg_{g',e} \\
+      \label{eq:qelement_up}
       q_{up,g,e} &= \sum_{g'=g+1}^G \Sigma{s,g' \rightarrow g,e}
         \phiavg_{g',e}\\
+      \label{eq:qelement_down}
       q_{down,g,e} &= \sum_{g'=1}^{g-1} \Sigma_{s,g' \rightarrow g,e}
         \phiavg_{g',e}
     \end{align}
@@ -267,15 +271,15 @@
     \begin{equation} \label{eq:greens}
       -\int_{\Omega_e} \grad \cdot \grad \phi_g(\vr) v(\vr) \;d\Omega_e =
         -\int_{\partial \Omega_e}  
-        \frac{\partial \phi_g(\vr)}{\partial \vn} v(\vr)\; ds + \int_{\Omega_e} 
-        \grad \phi_g(\vr) \cdot \grad v(\vr) \; d\Omega_e
+        \frac{\partial \phi_g(\vr)}{\partial \nhat} v(\vr)\; ds +
+        \int_{\Omega_e} \grad \phi_g(\vr) \cdot \grad v(\vr) \; d\Omega_e
     \end{equation}
-    Where $\frac{\partial \phi_g(\vr)}{\partial \vn}$ is the outward normal 
-    derivative, sometimes written $\grad_{\vn} \phi_g(\vr)$, and the integral 
-    $ds$ is a line integral in two dimensions or a surface integral in three 
-    dimensions. Recognizing that this quantity will only be relevant on the 
-    boundary of the problem, the value of the outward normal derivative may be 
-    specified in a boundary condition. Specifically, the albedo boundary 
+    Where $\frac{\partial \phi_g(\vr)}{\partial \nhat}$ is the outward normal 
+    derivative, sometimes written $\grad \phi_g(\vr) \cdot \nhat$, and the 
+    integral $ds$ is a line integral in two dimensions or a surface integral in 
+    three dimensions. Recognizing that this quantity will only be relevant on 
+    the boundary of the problem, the value of the outward normal derivative may 
+    be specified in a boundary condition. Specifically, the albedo boundary 
     condition which has the following form for $\vr \in \partial \Omega$. 
     \begin{align}
       D_g(\vr) \grad \phi_g(\vr) \cdot \nhat + \albedo \phi_g(\vr) &= 0 \\
@@ -601,14 +605,12 @@
       to calculate. Therefore, the Jacobian is used to calculate $V_e$. For more
       detail, see \sref{sec:quadratures}, especially \tref{tab:jacobi}.
 
-      The
-      relationship is given in \tref{tab:jacobi}.
-      
       The matrix in \eref{eq:bigmat} is indexed $M_{ij}$
       and is presented as a matrix because of its irregular form. Notice the 
       integral containing the gradient operator has been omitted because it is
       computed using a quadrature. If it could be computed analytically, it 
       would be less computationally efficient than using a quadrature.
+
   \subsection{Quadratures}
     \label{sec:quadratures}
     Quadratures are sets of coordinates and weights which allow for the exact 
@@ -780,6 +782,86 @@
       \end{algorithmic}
     \end{algorithm}
 
+\subsection{Power Iterations}
+  \label{sec:power_iterations}
+  The FEM is used to solve a fixed source problem for a given source
+  distribution $q_g(\vr)$. However, for multigroup problems with scattering, 
+  the problem is not a fixed-source problem as the source is not known
+  explicitly due to interaction between groups. For eigenvalue problems, the
+  problem is also not a fixed-source problem and has many solutions. The method 
+  of Power Iterations allows these problem to be solved iteratively and in the
+  case of the eigenvalue problem, to solve for the fundamental eigenmode.
+
+  Noting the FEM equations can be written as matrix form
+  \eref{eq:matrix_notation}, the finite diffusion equation can be rewritten as
+  shown in \cite{gehinThesis}.
+  \begin{equation}
+    \label{eq:gehin_notation}
+    \mb(\vPhi,\keff) \vPhi = \frac{1}{\keff} \mm \Phi
+  \end{equation}
+  where $\vPhi$ is the vector of the flux containing all energy groups, $\mb$
+  contains the diffusion, removal, and all scattering terms, and $\mm$ includes
+  all fission generation. $\mb$ is an S-matrix and its inverse, $\mb^{-1}$
+  exists and has all positive elements \cite{nakamura}. Therefore,
+  \eref{eq:gehin_notation} can be rewritten as
+  \begin{equation}
+    \label{eq:gehin_solutaion}
+    \vPhi = \frac{1}{\keff} \mr \vPhi
+  \end{equation}
+  where
+  \begin{equation}
+    \label{eq:gehin_r}
+    \mr = \mb^{-1} \mm.
+  \end{equation}
+  Matrix $\mm$ is non-symmetric and is non-negative; therefor, $\mr$ is a
+  non-symmetric, non-negative matrix.
+
+  In the solution of \eref{eq:multigroup_diffusion}, the largest eigenvalue,
+  $\keff$, is desired. The solution can be found using the power method which 
+  can be written as 
+  \begin{align}
+    \label{eq:power_iteration_e1}
+    \vPhi^{(s+1)} &= \frac{1}{\keff^{(s)}} \mr \vPhi^{(s)} \\
+    \label{eq:power_iteration_e2}
+    \keff^{(s+1)} &= keff^{(s)} \frac{\vw^{T} \vPhi^{(s+1)}}
+      {\vw^{T} \vPhi^{(s)}} \qquad s = 1,2,\ldots,\infty
+  \end{align}
+  where $s$ is the iteration counter, $\vw$ is the weighting vector and 
+  $\vw^{T} \vPhi$ is the vector inner-product. According to the Perron-Frobenius
+  theorem, a matrix with the properties of $\mr$ has a unique, positive
+  eigenvalue greater in magnitude than the modulus of all other eigenvalues of
+  the matrix.
+  
+  % todo add discussion on decay of eigenmodes
+  
+  It is then shown in \cite{nakamura} that the power method
+  described in \eref{eq:power_iteration_e1} and \eref{eq:power_iteration_e2}
+  along with matrix $\mr$ converges to the largest eigenvalue, $\keff$, and 
+
+  % discuss setting \vw
+
+  % do something with this
+  \begin{equation} \label{eq:multigroup_source_expand}
+    -\grad \cdot (D_g(\vr) \grad \phi_g^{(s)}(\vr)) + \Sigma_{r,g}(\vr)
+    \phi_g^{(s)}(\vr) = q_{fiss,g}(\vr) + q_{up,g}(\vr) + q_{down,g}(\vr)
+  \end{equation}
+
+  Recall from the definitions of the source components that their calculation
+  requires the flux $\phi_g(\vr)$. The source components each require
+  different energy groups of the flux distribution to be known. The fission
+  component $q_{fiss,g}(\vr)$ requires all groups. The up-scatter component
+  $q_{up,g}(\vr)$ requires lower energy groups (i.e. $g' > g$). The
+  down-scatter component $q_{down,g}(\vr)$ requires higher energy groups (i.e.
+  $g' < g$). Based on these requirements, these source components can be
+  calculated based on different power iterations of $\phi_g(\vr)$. This is
+  described in Algorithm \ref{algorithm:general}.
+  \eref{eq:multigroup_source_expand} is then more explicitly written.
+  \begin{equation} \label{eq:multigroup_power_iterations}
+    -\grad \cdot (D_g(\vr) \grad \phi_g^{(s)}(\vr)) + \Sigma_{r,g}(\vr)
+    \phi_g^{(s)}(\vr) = q_{fiss,g}^{(s-1)}(\vr) + q_{up,g}^{(s-1)}(\vr) +
+    q_{down,g}^{(s)}(\vr)
+  \end{equation}
+
 \section{Implementation}
   A FEM neutron diffusion solution has been developed using 
   the above formulae. The program begins with a geometry description specified
@@ -798,40 +880,9 @@
   \begin{figure}
     \centering
     \includegraphics[width=\textwidth]{snr_paraview}
-    \caption{Typical Flux Visualization.}
+    \caption{Typical Two-Dimension Flux Visualization.}
     \label{fig:snr_paraview}
   \end{figure}
-
-  \subsection{Power Iterations}
-    \label{sec:power_iterations}
-    The FEM is used to solve a fixed source problem for a given source
-    distribution $q_g(\vr)$. However, for multigroup problems with scattering, 
-    the problem is not a fixed source problem as the source is not known
-    explicitly due to interaction between groups. The method of Power Iterations
-    allows this multigroup problem to be solved iteratively.
-
-    Recall \eref{eq:multigroup_source} noting the term $q_g(\vr)$. Expanding the
-    term $q_g(\vr)$ into its component parts given in \eref{eq:qfiss},
-    \eref{eq:qup}, and \eref{eq:qdown}. 
-    \begin{equation} \label{eq:multigroup_source_expand}
-      -\grad \cdot (D_g(\vr) \grad \phi_g(\vr)) + \Sigma_{r,g}(\vr) \phi_g(\vr) 
-        = q_{fiss,g}(\vr) + q_{up,g}(\vr) + q_{down,g}(\vr)
-    \end{equation}
-    Recall from the definitions of the source components that their calculation
-    requires the flux $\phi_g(\vr)$. The source components each require
-    different energy groups of the flux distribution to be known. The fission
-    component $q_{fiss,g}(\vr)$ requires all groups. The up-scatter component
-    $q_{up,g}(\vr)$ requires lower energy groups (i.e. $g' > g$). The
-    down-scatter component $q_{down,g}(\vr)$ requires higher energy groups (i.e.
-    $g' < g$). Based on these requirements, these source components can be
-    calculated based on different power iterations of $\phi_g(\vr)$. This is
-    described in Algorithm \ref{algorithm:general}.
-    \eref{eq:multigroup_source_expand} is then more explicitly written.
-    \begin{equation} \label{eq:multigroup_power_iterations}
-      -\grad \cdot (D_g(\vr) \grad \phi_g^{(s)}(\vr)) + \Sigma_{r,g}(\vr)
-      \phi_g^{(s)}(\vr) = q_{fiss,g}^{(s-1)}(\vr) + q_{up,g}^{(s-1)}(\vr) +
-      q_{down,g}^{(s)}(\vr)
-    \end{equation}
 
   \subsection{Algorithm}
     The algorithm for the solution to the diffusion equation is similar to most
