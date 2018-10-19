@@ -1,0 +1,615 @@
+\chapter{Neutron Diffusion Results}
+\label{ch:diffusionResults}
+
+\section{Introduction}
+  This application of the FEM has been compared against reference 
+  benchmark problems as well as analytic solutions. Comparison
+  against benchmark problems demonstrates an ability to solve problems for
+  which this application was intended. Comparison against analytic solutions 
+  allows for more detailed error and convergence analysis as not only the system
+  $\keff$ but also the exact flux solution are known exactly. 
+
+  Running these comparisons serves as a verification and validation of this
+  implementation of the FEM. The strategy used comes from \cite{oberkampf}. The
+  first step is ``solution verification.'' Solution verification compares
+  computational results to exact analytic results. Verification serves to
+  demonstrate that the code itself is solving the correct equations as designed.
+  This will be demonstrated with convergence to the analytic answer at the
+  expected rate. The second step is ``solution validation.'' Solution validation
+  compares computational results to benchmark results which may have been
+  calculated computationally via another method or may come from experimental
+  data. Validation demonstrates an ability to solve problems for which the
+  method was originally intended. The data of the benchmark is not exact, but
+  typically the solution has been verified by others previously.
+
+  \begin{figure}
+    \centering
+    \includegraphics[width=\textwidth]{snr_paraview}
+    \caption{Typical Two-Dimension Flux Visualization.}
+    \label{fig:snr_paraview}
+  \end{figure}
+
+  \begin{figure}
+    \centering
+    \includegraphics[width=\textwidth]{monju3da_paraview}
+    \caption{Typical Three-Dimension Flux Visualization.}
+    \label{fig:monju3da_paraview}
+  \end{figure}
+
+\section{Reference Results}
+  For all reference problems presented, a convergence study is presented. It has 
+  been shown that for a bounded second spatial derivative within the problem 
+  domain, the FEM derived above is second-order convergent in space
+  \cite{textbookli} (Remark 7.13).
+  \begin{equation} \label{eq:error_bound}
+    \|\ve\|_{\infty} \le c h^2 \| \grad^2 \phi(\vr) \|_{\infty}
+  \end{equation}
+  Where $\ve$ is the error vector such that $\ve = \phi(\vr) - \phi_{FEM}$ and
+  $\phi_{FEM}$ is solution to the finite element system of equations. In
+  \eref{eq:error_bound} $h$ is the characteristic mesh size, and $c$ is a 
+  constant.  \eref{eq:error_bound} implies that if a characteristic mesh size is 
+  halved, the error is quartered. This relationship is useful as a proper 
+  implementation of the FEM will converge to the correct answer and do so at the 
+  correct rate.
+  
+  Mesh refinement studies are presented herein. For each refinement, $h$ is 
+  halved by introducing new elements and placing new nodes at the midway point
+  between existing nodes. Then, let $r$ be the refinement index.
+  \begin{equation}
+    x = 4 = \frac{x^{(r-1)}}{x^{(r)}}
+  \end{equation}
+  Such that for some quantity $x$, the error should theoretically decrease by a
+  factor of four for each refinement. As these are numerical solutions, the 
+  ratio rarely equals exactly four. It is observed that a few refinements are 
+  often necessary before the ratio approaches the expected value. This is 
+  especially the case when the second derivative is not bounded in problems with 
+  heterogeneous materials.
+  
+  For benchmark problems, only $\keff$ is analyzed and expected to converge
+  at the appropriate rate. When assembly powers were available, these are also
+  presented graphically. In the graphical power representation, the key is 
+  presented in \fref{fig:hex_description}.
+  \begin{figure}
+    \centering
+    \includegraphics[width=0.25\textwidth]{hex_description}
+    \caption{Key for Hexagonal Power Plots.}
+    \label{fig:hex_description}
+  \end{figure}
+  
+  For analytic solutions, the error of the function $\phi$ itself can be 
+  analyzed because the function is known exactly. The derivations of the exact 
+  functions are presented in \apref{ap:analyticSolutions}. For all analytic 
+  problems, the Root Mean Squared (RMS) error as in \eref{eq:rms} is calculated
+  for the error vector $\ve$ and is presented. The ratio between refinements 
+  should assume the expected rate.
+  \begin{equation} \label{eq:rms}
+    \text{RMS}(\ve) = \sqrt{\frac{1}{N} \sum_{i=1}^{N} e_i}
+  \end{equation}
+  The maximal norm $\| \cdot \|_{\infty}$ is also presented and the ratio 
+  between refinements should assume the expected rate.
+  \begin{equation} \label{eq:infnorm}
+    \|\ve\|_{\infty} = \max_{i=1,2,\ldots,N} \lvert e_i \rvert
+  \end{equation}
+  For criticality  problems, $\keff$ is also presented and the ratio between
+  refinements should assume the expected rate. $\keff$ error is calculated with
+  \eref{eq:keff_err} in units of Percent Mille \units{pcm} from \eref{eq:pcm}.
+  \begin{align}
+    \label{eq:keff_err}
+    \keff \; \text{ error } &= \kref - \keff \\
+    \label{eq:pcm}
+    x \units{pcm} &= x \; 10^5
+  \end{align}
+
+  \subsection{Analytic Solutions}
+    As a demonstration of the proper implementation of and solution to the 
+    diffusion equation for triangular elements, analytic solutions are 
+    derived and then numerically computed. These are one-dimensional,
+    two-dimensional, and three-dimensional problems. These problems exercise
+    both triangle and wedge elements. For one-dimension problems a rectangular
+    domain is used and, the top and bottom edges $y=0$ and $y=L_x$ are mirror
+    boundary conditions to reduce the dimension of the problem. 
+    To verify there was no error obscured by this process, the results were 
+    reproduced for a rotated problem with the left and right edges set to mirror
+    boundary conditions as well.
+    \subsubsection{One-Dimension, One-Group, Fixed Source}
+      \label{sec:1dfixedsrc}
+      Arguably the simplest solution to the neutron diffusion equation, this 
+      problem  solves a domain $x \in [0,1]$ for a fixed unit source throughout
+      the  problem. The exact solution is derived in \sref{sec:deriv_1dfixedsrc}
+      and is presented in \eref{eq:analytic_1dfixedsrc}. Results 
+      from the convergence study are presented in \tref{tab:1dfixedsrc}.
+      \begin{table}
+        \caption{One-Dimension, One-Group, Fixed Source Convergence Study 
+          Results.}
+        \label{tab:1dfixedsrc}
+        \begin{center}
+          \begin{tabular}{ccccc}
+            \toprule
+            Refine & RMS & RMS ratio & $\|e\|_{\infty}$ & 
+              $\|e\|_{\infty}$ ratio \\
+            \midrule
+            \csvreader[
+              late after line=\\,
+              late after last line=\\\bottomrule,]
+              {ch02_neutronDiffusion/data/1dfixedsrc.csv}{}
+              {\csvcoli & \csvcolii & \csvcoliii & \csvcolviii & \csvcolix}
+          \end{tabular}
+        \end{center}
+      \end{table}
+    \subsubsection{One-Dimension, One-Group, Criticality}
+      \label{sec:1d1g}
+      This problem tests the calculation of the source term and the general 
+      iteration implementation in the solution method. This problem solves a 
+      fissile material in the domain $x \in [0,100]$.
+      The exact solution is derived in \sref{sec:deriv_1d1g} and
+      presented in \eref{eq:analytic_1d1g}. Results from
+      the convergence study are presented in \tref{tab:1d1g}. The exact value 
+      for the effective multiplication factor is $\kref = 1.998028$.
+      \begin{table}
+        \caption{One-Dimension, One-Group, Criticality Convergence Study
+          Results.}
+        \label{tab:1d1g}
+        \begin{center}
+          \begin{tabular}{cccccccccc}
+            \toprule
+            Refine & $\keff$ & $\keff$ error \units{pcm} & $\keff$ ratio & RMS & 
+              RMS ratio  & $\|e\|_{\infty}$ & $\|e\|_{\infty}$ ratio \\
+            \midrule
+            \csvreader[
+              late after line=\\,
+              late after last line=\\,]
+              {ch02_neutronDiffusion/data/1d1g.csv}{}
+              {\csvcoli & \csvcolii & \csvcoliii & \csvcoliv & \csvcolv & 
+              \csvcolvi & \csvcolxi & \csvcolxii}
+            Ref. & 1.998028 \\
+            \bottomrule
+          \end{tabular}
+        \end{center}
+      \end{table}
+    \subsubsection{Two-Dimension, One-Group, Criticality}
+      This problem tests the ability to solve truly two-dimensional problems.
+      The exact solution is derived in \sref{sec:deriv_2d1g} and
+       presented in \eref{eq:analytic_2d1g}. Results from
+      the convergence study are presented in \tref{tab:2d1g}. The exact value 
+      for the effective multiplication factor is $\kref = 1.996060$.
+      \begin{table}
+        \caption{Two-Dimension, One-Group, Criticality Convergence Study
+          Results.}
+        \label{tab:2d1g}
+        \begin{center}
+          \begin{tabular}{cccccccccc}
+            \toprule
+            Refine & $\keff$ & $\keff$ error \units{pcm} & $\keff$ ratio & RMS & 
+              RMS ratio  & $\|e\|_{\infty}$ & $\|e\|_{\infty}$ ratio \\
+            \midrule
+            \csvreader[
+              late after line=\\,
+              late after last line=\\,]
+              {ch02_neutronDiffusion/data/2d1g.csv}{}
+              {\csvcoli & \csvcolii & \csvcoliii & \csvcoliv & \csvcolv & 
+              \csvcolvi & \csvcolxi & \csvcolxii}
+            Ref. & 1.996060  \\
+            \bottomrule
+          \end{tabular}
+        \end{center}
+      \end{table}
+    \subsubsection{One-Dimension, Two-Group, Criticality }
+      This problem tests the solution of multigroup problems. The results 
+      presented are the convergence of $\keff$ and the ratio of relative 
+      magnitude of thermal to fast flux $\phi_2/\phi_1$.
+      The exact solutions are derived in \sref{sec:deriv_1d2g} and
+      the solutions are presented in \eref{eq:1d2g_1} and
+      \eref{eq:1d2g_2}. Results from the convergence study are presented in 
+      \tref{tab:1d2g}. The exact value for the effective multiplication factor 
+      is $\kref = 0.892349$ and the exact value for the relative flux ratio
+      is $(\phi_2/\phi_1)_{ref} = 0.261324$.
+      \begin{table}
+        \caption{One-Dimension, Two-Group, Criticality Convergence Study
+          Results.}
+        \label{tab:1d2g}
+        \begin{center}
+          \begin{tabular}{ccccccc}
+            \toprule
+            Refine & $\keff$ & $\keff$ error \units{pcm} & $\keff$ ratio & 
+              $\phi_2/\phi_1$ & $\phi_2/\phi_1$ error & $\phi_2/\phi_1$ ratio \\
+            \midrule
+            \csvreader[
+              late after line=\\,
+              late after last line=\\,]
+              {ch02_neutronDiffusion/data/1d2g.csv}{}
+              {\csvcoli & \csvcolii & \csvcoliii & \csvcoliv & \csvcolv & 
+              \csvcolvi & \csvcolvii}
+            Ref. & 0.892349 &  &  & 0.261324 \\
+            \bottomrule
+          \end{tabular}
+        \end{center}
+      \end{table}
+    \subsubsection{One-Dimension, One-Group, Two-Region, Criticality}
+      This problem tests the mapping of materials to regions within the problem.
+      The exact solution is derived in \sref{sec:deriv_2reg} and
+      presented in \eref{eq:analytic_2reg}. Results from
+      the convergence study are presented in \tref{tab:2reg}. The exact value 
+      for the effective multiplication factor is $\kref = 0.962188$.
+      \begin{table}
+        \caption{One-Dimension, One-Group, Two-Region, Criticality Convergence
+          Study Results.}
+        \label{tab:2reg}
+        \begin{center}
+          \begin{tabular}{cccccccccc}
+            \toprule
+            Refine & $\keff$ & $\keff$ error \units{pcm} & $\keff$ ratio & RMS & 
+              RMS ratio  & $\|e\|_{\infty}$ & $\|e\|_{\infty}$ ratio \\
+            \midrule
+            \csvreader[
+              late after line=\\,
+              late after last line=\\,]
+              {ch02_neutronDiffusion/data/2reg.csv}{}
+              {\csvcoli & \csvcolii & \csvcoliii & \csvcoliv & \csvcolv & 
+              \csvcolvi & \csvcolxi & \csvcolxii}
+            Ref. & 0.962188 \\
+            \bottomrule
+          \end{tabular}
+        \end{center}
+      \end{table}
+    \subsubsection{Three-Dimension, One-Group, Finite Cylinder}
+        This problem is a finite cylinder with zero-flux
+        boundary conditions. The cylinder is three-dimensional but the solution
+        can be reduced to two dimensions (radial and axial directions). 
+        The exact solution is derived in \sref{sec:deriv_finite_cyl} and the
+        solution is presented in \eref{eq:analytic_finite_cyl}. Results from the
+        convergence study are presented in \tref{tab:finite_cyl}. The exact value
+        for the effective multiplication factor is $\kref = 0.996711$.
+        \begin{table}
+          \caption{Finite Cylinder Convergence Study Results.}
+          \label{tab:finite_cyl}
+          \begin{center}
+            \begin{tabular}{cccccccccc}
+              \toprule
+              Refine & $\keff$ & $\keff$ error \units{pcm} & $\keff$ ratio & RMS & 
+                RMS ratio  & $\|e\|_{\infty}$ & $\|e\|_{\infty}$ ratio \\
+              \midrule
+              \csvreader[
+                late after line=\\,
+                late after last line=\\,]
+                {ch02_neutronDiffusion/data/finite_cyl.csv}{}
+                {\csvcoli & \csvcolii & \csvcoliii & \csvcoliv & \csvcolv & 
+                \csvcolvi & \csvcolxi & \csvcolxii}
+              Ref. & 0.996711 \\
+              \bottomrule
+            \end{tabular}
+          \end{center}
+        \end{table}
+  \subsection{Benchmark Solutions}
+    The application presented here was designed 
+    simulate power reactors. As such, two-dimension problems with similar
+    reactor physics phenomena have been examined here. These two-dimension
+    problems come from existing benchmarks based on hexagonal geometry. These
+    benchmarks represent various energy group structures, geometries, assembly
+    sizes,  boundary conditions, as well as other properties. Data used in these
+    problems is concisely presented in \apref{ap:benchmarks}. 
+    \subsubsection{VVER440}
+      Proposed in \cite{chao} and described in \sref{sec:vver440}, this
+      benchmark, two-dimensional problem is based on a
+      VVER-440 reactor. The VVER-440 is a 
+      light-water moderated reactor and operates principally with thermal 
+      neutron spectrum. Cross sections are provided for a two-group energy 
+      structure.
+      
+      Power comparison between the most refined mesh and the reference solution 
+      are presented graphically in \fref{fig:diffusion_vver440} according to the
+      key in \fref{fig:hex_description}. Numerical mesh convergence study for 
+      the quantity $\keff$ is presented in \tref{tab:vver440}.
+      \begin{figure}
+        \centering
+        \includegraphics[width=\textwidth]{diffusion_vver440}
+        \caption{VVER440 Benchmark Power Comparison for Most Refined Mesh.}
+        \label{fig:diffusion_vver440}
+      \end{figure}
+      \begin{table}
+        \begin{center}
+          \caption{VVER440 Benchmark Convergence Study.}
+          \label{tab:vver440}
+          \begin{threeparttable}
+            \begin{tabular}{cccc}
+              \toprule
+              Refine & $\keff$ & $\keff$ error \units{pcm} & $\keff$ ratio \\
+              \midrule
+              \csvreader[
+                late after line=\\,
+                late after last line=\\,]
+                {ch02_neutronDiffusion/data/vver440.csv}{}
+                {\csvcoli & \csvcolvi & \csvcolvii & \csvcolviii}
+              Ref.\tnote{$\dagger$}  & 1.009700 \\
+              \bottomrule
+            \end{tabular}
+            \begin{tablenotes}
+              \item[$\dagger$] See \cite{chao}.
+            \end{tablenotes}
+          \end{threeparttable}
+        \end{center}
+      \end{table}
+    \subsubsection{SNR}
+      Proposed in \cite{argonneBenchmark} and described in \sref{sec:snr}, this
+      benchmark, two-dimensional problem is based on a SNR reactor. The SNR
+      is a sodium cooled fast reactor and operates principly with thermal
+      neutrons. Cross sections are provided for a four-group energy structure.
+
+      Power comparision between the most refined mesh and numerical solution
+      given by DIF3D are presented graphicall in \fref{fig:diffusion_snr}
+      according to the key in \fref{fig:hex_description}. Numerical mesh
+      convergence study for the quantity $\keff$ is presented in \tref{tab:snr}.
+      \begin{figure}
+        \centering
+        \includegraphics[width=\textwidth]{diffusion_snr}
+        \caption{SNR Benchmark Power Comparison for Most Refined Mesh.}
+        \label{fig:diffusion_snr}
+      \end{figure}
+      \begin{table}
+        \begin{center}
+          \caption{SNR Benchmark Convergence Study.}
+          \label{tab:snr}
+          \begin{threeparttable}
+            \begin{tabular}{cccc}
+              \toprule
+              Refine & $\keff$ & $\keff$ error \units{pcm} & $\keff$ ratio \\
+              \midrule
+              \csvreader[
+                late after line=\\,
+                late after last line=\\,]
+                {ch02_neutronDiffusion/data/snr.csv}{}
+                {\csvcoli & \csvcolvi & \csvcolvii & \csvcolviii}
+              Ref. \tnote{$\dagger$} & 1.124000 \\
+              \bottomrule
+            \end{tabular}
+            \begin{tablenotes}
+              \item[$\dagger$] See \cite{argonneBenchmark}.
+            \end{tablenotes}
+          \end{threeparttable}
+        \end{center}
+      \end{table}
+    \subsubsection{HWR}
+      Proposed in \cite{chao} and described in \sref{sec:hwr}, this
+      benchmark, two-dimensional problem is based on a large Heavy Water
+      Reactor (HWR). This is a heavy water moderated reactor and operates
+      principly with thermal neutrons. Cross sections are provided for a
+      two-group energy structure.
+
+      Power comparison between the most refined mesh and the reference solution 
+      are presented graphically in \fref{fig:diffusion_hwr} according to the
+      key in \fref{fig:hex_description}. Numerical mesh convergence study for 
+      the quantity $\keff$ is presented in \tref{tab:hwr}.
+      \begin{figure}
+        \centering
+        \includegraphics[width=\textwidth]{diffusion_hwr}
+        \caption{HWR Benchmark Power Comparison for Most Refined Mesh.}
+        \label{fig:diffusion_hwr}
+      \end{figure}
+      \begin{table}
+        \begin{center}
+          \caption{HWR Benchmark Convergence Study.}
+          \label{tab:hwr}
+          \begin{threeparttable}
+            \begin{tabular}{cccc}
+              \toprule
+              Refine & $\keff$ & $\keff$ error \units{pcm} & $\keff$ ratio \\
+              \midrule
+              \csvreader[
+                late after line=\\,
+                late after last line=\\,]
+                {ch02_neutronDiffusion/data/hwr.csv}{}
+                {\csvcoli & \csvcolvi & \csvcolvii & \csvcolviii}
+              Ref.\tnote{$\dagger$} & 0.991965  \\
+              \bottomrule
+            \end{tabular}
+            \begin{tablenotes}
+              \item[$\dagger$] See \cite{chao}.
+            \end{tablenotes}
+          \end{threeparttable}
+        \end{center}
+      \end{table}
+    \subsubsection{IAEA}
+      Proposed in \cite{chao} and described in \sref{sec:iaea}, this
+      reactory-type, two-dimensional problem was originally based on a cartesian
+      grid two-dimensional Pressurized Water Reactor (PWR) but was converted to
+      hexagonal geometry in \cite{chao}. As it is based on a PWR deisgn, the
+      reactor operates principally with thermal spectrum. Cross sections are
+      provided for a two-group energy structure.
+
+      The reactor is presented in four scenarios; both with and without
+      reflective assemblies as well as with $\albedo = 0.125$ and $\albedo =
+      0.5$. Numerical mesh convergence studies are presented for the quantity
+      $\keff$ for each case in each of \tref{tab:iaea_nore0125},
+      \tref{tab:iaea_nore0500}, \tref{tab:iaea_refl0125}, and
+      \tref{tab:iaea_refl0500}.
+      % nore0125
+      \begin{table}
+        \begin{center}
+          \caption{IAEA Benchmark Convergence Study. No Reflector. $\albedo = 
+            0.125$.}
+          \label{tab:iaea_nore0125}
+          \begin{threeparttable}
+            \begin{tabular}{cccc}
+              \toprule
+              Refine & $\keff$ & $\keff$ error \units{pcm} & $\keff$ ratio \\
+              \midrule
+              \csvreader[
+                late after line=\\,
+                late after last line=\\,]
+                {ch02_neutronDiffusion/data/iaea_nore0125.csv}{}
+                {\csvcoli & \csvcolvi & \csvcolvii & \csvcolviii}
+              Ref. \tnote{$\dagger$} & 0.991378 \\
+              \bottomrule
+            \end{tabular}
+            \begin{tablenotes}
+              \item[$\dagger$] See \cite{chao}.
+            \end{tablenotes}
+          \end{threeparttable}
+        \end{center}
+      \end{table}
+      % nore0500
+      \begin{table}
+        \begin{center}
+          \caption{IAEA Benchmark Convergence Study. No Reflector. $\albedo = 
+            0.500$.}
+          \label{tab:iaea_nore0500}
+          \begin{threeparttable}
+            \begin{tabular}{cccc}
+              \toprule
+              Refine & $\keff$ & $\keff$ error \units{pcm} & $\keff$ ratio \\
+              \midrule
+              \csvreader[
+                late after line=\\,
+                late after last line=\\,]
+                {ch02_neutronDiffusion/data/iaea_nore0500.csv}{}
+                {\csvcoli & \csvcolvi & \csvcolvii & \csvcolviii}
+              Ref. \tnote{$\dagger$} & 0.978077 \\
+              \bottomrule
+            \end{tabular}
+            \begin{tablenotes}
+              \item[$\dagger$] See \cite{chao}.
+            \end{tablenotes}
+          \end{threeparttable}
+        \end{center}
+      \end{table}
+      % refl0125
+      \begin{table}
+        \begin{center}
+          \caption{IAEA Benchmark Convergence Study. With Reflector. $\albedo = 
+            0.125$.}
+          \label{tab:iaea_refl0125}
+          \begin{threeparttable}
+            \begin{tabular}{cccc}
+              \toprule
+              Refine & $\keff$ & $\keff$ error \units{pcm} & $\keff$ ratio \\
+              \midrule
+              \csvreader[
+                late after line=\\,
+                late after last line=\\,]
+                {ch02_neutronDiffusion/data/iaea_refl0125.csv}{}
+                {\csvcoli & \csvcolvi & \csvcolvii & \csvcolviii}
+              Ref. \tnote{$\dagger$} & 1.006630 \\
+              \bottomrule
+            \end{tabular}
+            \begin{tablenotes}
+              \item[$\dagger$] See \cite{chao}.
+            \end{tablenotes}
+          \end{threeparttable}
+        \end{center}
+      \end{table}
+      % refl0500
+      \begin{table}
+        \begin{center}
+        \caption{IAEA Benchmark Convergence Study. With Reflector. $\albedo = 
+          0.500$.}
+        \label{tab:iaea_refl0500}
+          \begin{threeparttable}
+            \begin{tabular}{cccc}
+              \toprule
+              Refine & $\keff$ & $\keff$ error \units{pcm} & $\keff$ ratio \\
+              \midrule
+              \csvreader[
+                late after line=\\,
+                late after last line=\\,]
+                {ch02_neutronDiffusion/data/iaea_refl0500.csv}{}
+                {\csvcoli & \csvcolvi & \csvcolvii & \csvcolviii}
+              Ref. \tnote{$\dagger$} & 1.005507 \\
+              \bottomrule
+            \end{tabular}
+            \begin{tablenotes}
+              \item[$\dagger$] See \cite{chao}.
+            \end{tablenotes}
+          \end{threeparttable}
+        \end{center}
+      \end{table}
+    \subsubsection{MONJU}
+      Proposed in \cite{monjuBenchmark} and described in \sref{sec:monju}, this 
+      three-dimension, reactory-type problem is based on a Sodium-cooled Fast
+      Reactor (SFR) operating principally with fast neutrons. Cross sections are
+      provided for a three-group energy structure. However, the fission spectrum
+      is not provided and is selcted for benchmark agreement. This assumed
+      fission spectrum is presented in \tref{tab:monjuchi}. The rod worth
+      measurements appear insensitive to fission spectrum. 
+
+      Reference data can be found in \tref{tab:monjukeff}. Results from the
+      finite element application are presented in \tref{tab:monju}. The error
+      (difference between reference and calculated results) are presented in
+      parenthesis next to the quantities. 
+
+      Rod Worth is presented in units \units{$\Delta$ k} and calculated in
+      \eref{eq:rodworth} for $x = \{B,C\}$. Rod Difference is presented in units 
+      \units{\%$\Delta$k} where $x \units{\%$\Delta$k} = x \cdot 100$ and is
+      calculated in \eref{eq:roddifference} for $x = \{B,C\}$.
+      \begin{align}
+        \label{eq:rodworth}
+        \text{Rod Worth}_x = \frac{k_A - k_x}{k_A k_x} \\
+        \label{eq:roddifference}
+        \text{Rod Difference}_x = k_A - k_x
+      \end{align}
+      \begin{table}
+        \begin{center}
+          \caption{MONJU Benchmark Rod Worth Results. \cite{monjuBenchmark}}
+          \label{tab:monju}
+          \begin{threeparttable}
+            \begin{tabular}{ccll}
+              \toprule
+              Pattern & $\keff$ & Rod Worth \units{$\Delta k$} & 
+                Rod Difference \units{\%$\Delta k$} \\
+              \midrule
+              A&1.056816&               &            \\
+              B&1.031623&0.023 (2.51E-5) \tnote{$\dagger$} &2.52 (-0.07)\\
+              C&1.006519&0.047 (1.77E-3)&5.03 (0.04) \\
+              \bottomrule
+            \end{tabular}
+            \begin{tablenotes}
+              \item[$\dagger$] Value in parentheses is difference to reference
+                value from \cite{monjuBenchmark} as presented in 
+                \sref{sec:monju}.
+            \end{tablenotes}
+          \end{threeparttable}
+        \end{center}
+      \end{table}
+    \subsubsection{KNK}
+      Proposed in \cite{takedaBenchmark} and described in \sref{sec:knk}, this
+      three-dimension, benchmark problem is based on a SFR and is a model of
+      the KNK-II core. Cross sections are provided for a four-group energy
+      structure. There are many materials specified in the problem so it also
+      aids in testing material mapping in a code. However, the reference data is
+      for a transport solution. In this application, the transport cross
+      sections are used to solve the neutron diffusion equation. This explains
+      some of the numerical differences in the results but general trends are
+      reflected. In addition to the comparison to the reference transport
+      solution, the neutron diffusion equation is solved with DIF3D and the
+      finite element results are comporable to the finite difference solution. 
+
+      Reference data can be found in \tref{tab:knkkeff}. Results from the Finite
+      Element neutron diffusion application are presented in \tref{tab:knk}. The
+      error (difference between reference and calculated results) are presented
+      in parenthesis next to the quantities.
+
+      Rod Worth is presented in units \units{$\Delta$ k} and calculated in
+      \eref{eq:rodworth} for $x = \{B,C\}$. Rod Difference is presented in units 
+      \units{\%$\Delta$k} where $x \units{\%$\Delta$k} = x \cdot 100$ and is
+      calculated in \eref{eq:roddifference} for $x = \{B,C\}$.
+      \begin{table}
+        \begin{center}
+          \caption{KNK Benchmark Rod Worth Results.}
+          \label{tab:knk}
+          \begin{threeparttable}
+            \begin{tabular}{ccll}
+              \toprule
+              Pattern & $\keff$ & Rod Worth \units{$\Delta k$} & 
+                Rod Difference \units{\%$\Delta k$} \\
+              \midrule
+              A&1.061752&               &            \\
+              B&0.942404&0.119 (1.55E-2) \tnote{$\dagger$} &11.93 (0.75)\\
+              C&0.829829&0.263 (3.99E-2)&23.19 (1.67)\\
+              \bottomrule
+            \end{tabular}
+            \begin{tablenotes}
+              \item[$\dagger$] Value in parentheses is difference to reference
+                value from \cite{takedaBenchmark} as presented in 
+                \sref{sec:knk}.
+            \end{tablenotes}
+          \end{threeparttable}
+        \end{center}
+      \end{table}
