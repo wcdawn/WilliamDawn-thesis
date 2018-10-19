@@ -292,8 +292,9 @@
     boundary condition with $\albedo$ constant throughout the problem.
     \begin{multline} 
       -\sum_{e=1}^{N_E} D_{g,e} \int_{\partial \Omega_e} v(\vr) 
-        \frac{\partial \phi_g(\vr)}{\partial \vn} \;ds + \sum_{e=1}^{N_E} D_{g,e}
-        \int_{\Omega_e} \grad \phi_g(\vr) \cdot \grad v(\vr) \; d\Omega_e + \\
+        \frac{\partial \phi_g(\vr)}{\partial \nhat} \;ds + \sum_{e=1}^{N_E} 
+        D_{g,e} \int_{\Omega_e} \grad \phi_g(\vr) \cdot \grad v(\vr) 
+        \; d\Omega_e + \\
         \sum_{e=1}^{N_E} \Sigma_{r,g,e} \int_{\Omega_e} \phi_g(\vr) v(\vr) 
         \; d\Omega_e =
         \sum_{e=1}^{N_E} q_{g,e} \int_{\Omega_e} v(\vr) \; d\Omega_e
