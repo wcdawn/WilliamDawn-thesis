@@ -18,6 +18,7 @@
   pin-conduction model to calculate cladding, sodium bond, and fuel temperatures
   based on the heat conduction equation.
 
+\section{Geometric Description}
   For the purposes of the thermal hydraulics model, geometry is described in
   \fref{fig:radial_model}. This model represents a cylindrical fuel pellet,
   surrounded by sodium bond, enclosed in steel cladding, with sodium coolant
@@ -29,6 +30,45 @@
   $T_B$ and clad surface temperature is $T_C$. $T_{\infty}$ represents the bulk
   coolant temperature. In this model, heat is generated exclusively in the fuel
   with volumetric heat generation rate $q'''$. 
+
+  In a cross-sectional assembly view, dimensions are presented in
+  \fref{fig:pin_model} and \fref{fig:hex_can}. In \fref{fig:hex_can}, $Th_{Box}$
+  is the thickness of the assembly box, F2F is the flat-to-flat measurement of
+  the outside of the hexagonal can, and Pitch is the distance between the
+  center of two pins. In future notation, the quantity ``Pitch'' is also noted
+  $S$. Using the geometry described in these figures, the material
+  cross-sectional areas are calculated according to the given formulae where
+  $N_{pin}$ is the number of pins in the assembly.
+  \begin{align}
+    A_{total} &= \frac{\sqrt{3}}{2} F2F^2 \\
+    A_{can} &= A_{total} - \frac{\sqrt{3}}{2} 
+      \left(  F2F - 2 \, Th_{Box} \right) \\
+    A_{wrap} &= N_{pin} \frac{\pi}{4} D_{wrap}^2 \\
+    A_{clad} &= N_{pin} \pi (R_C^2 - R_B^2) \\
+    A_{bond} &= N_{pin} \pi (R_B^2 - R_F^2) \\
+    A_{fuel} &= N_{pin} \pi R_F^2 \\
+    A_{cool} &= A_{total} - A_{can} - A_{wrap} - A_{clad} - A_{bond} - A_{fuel}
+  \end{align}
+  Calculating the areas as above allows for calculation of cross-sectional area
+  fractions. Assuming constant dimensions within an element in the axial
+  direction, these area fractions are equivalent to volume fractions and are
+  useful for neutron cross section calculations. Additionally, these formulae
+  allow for thermal expansion calculations as the liquid sodium in the bond and
+  the coolant are allowed to vary to allow for the expansion of other materials.
+
+  \begin{figure}
+    \centering
+    \includegraphics[width=0.5\textwidth]{pin_model}
+    \caption{Dimensions of Thermal Hydraulic Pin Model.}
+    \label{fig:pin_model}
+  \end{figure}
+
+  \begin{figure}
+    \centering
+    \includegraphics[width=0.5\textwidth]{hex_can}
+    \caption{Dimensions of Hexagonal Can.}
+    \label{fig:hex_can}
+  \end{figure}
   
   \begin{figure}
     \centering
@@ -46,14 +86,6 @@
   hexagonal assemblies in a reactor. Though the term ``hex'' is used, there is
   no assumption made in any of the calculations that the assembly is indeed
   hexagonal. Square one-dimensional assemblies would be simulated similarly.
-
-  The user must specify $Q_{Rx}$ as the total heat output by the reactor and
-  $\mdot_{Rx}$ as the total coolant mass flow into the reactor. Mass flow is
-  then partitioned into each channel assuming constant mass flux at the reactor
-  inlet. That is, the mass flow per unit area is assumed constant at the reactor
-  inlet and the mass flow in a channel is the product of the mass flux and the
-  channel flow area. The user must also input $T_{inlet}$ as the temperature at
-  the inlet to the reactor.
 
   The concept of ``chunks'' is also introduced to aid in the discretization of
   the thermal hydraulic model. A chunk is the set of all elements in a channel
@@ -79,9 +111,9 @@
   iteration method returns the largest eigenvalue $\keff$ and unique positive
   eigenvector $\phi_g$ (see \sref{sec:power_iterations}). The flux calculated
   according to this method can be normalized to an arbitrary constant. For a
-  specified value $Q_{Rx}$ the normalization constant can be calculated. For
-  un-normalized neutron flux $\widetilde{\phi_{g,e}}$ with group $g$ in element
-  $e$, the normalization constant is written as
+  specified total reactor power, $Q_{Rx}$ the normalization constant can be 
+  calculated. For un-normalized neutron flux $\widetilde{\phi_{g,e}}$ with group
+  $g$ in element $e$, the normalization constant is written as
   \begin{equation}
     \label{eq:normalization_c}
     c = \frac{Q_{Rx}}{\sum_{g}^{G} \sum_{e}^{N_E} \kappa \Sigma_{f,g,e} \,
@@ -124,6 +156,18 @@
   \end{align}
 
 \section{Axial Convection Model}
+  First, the channel mass flow $\mdot_h$ must be calculated for a user specified
+  total reactor mass flow rate $\mdot_{Rx}$.  Mass flow is partitioned into each
+  channel assuming constant mass flux at the reactor inlet according to 
+  \begin{equation}
+    \label{eq:mass_flow_split}
+    \mdot_h = \mdot_{Rx} \frac{A_{cool,h}}{A_{cool,Rx}}
+  \end{equation}
+  where $A_{cool,h}$ is the coolant flow area for channel $h$ and $A_{cool,Rx}$
+  is the coolant flow area for the reactor.  That is, the mass 
+  flow per unit area is assumed constant at the reactor inlet and the mass flow 
+  in a channel is the product of the mass flux and the channel flow area. 
+  
   The coolant enthalpy for an axial location $z$ within the channel is expressed
   by a simple heat balance equation as
   \begin{equation}
@@ -132,15 +176,17 @@
   \end{equation}
   where $h$ is the specific enthalpy, $h_{in}$ is the inlet enthalpy, $\mdot_h$
   is the mass flow rate within the channel, and $q'_h(x)$ is the linear heat 
-  generation rate for channel $h$ at elevation $z$. $h_{in}$ is related to
-  $T_{inlet}$ by a state relationship for the coolant. The integral in
-  \eref{eq:continuous_heat_balance} can be discretized along the channel and
-  converted to a summation.
+  generation rate for channel $h$ at elevation $z$. $h_{in}$ is related to a
+  user specified 
+  $T_{inlet}$ by a state relationship for the coolant $h_{in} = h(T_{inlet})$.
+  The integral in \eref{eq:continuous_heat_balance} can be discretized along the
+  channel and converted to a summation.
   \begin{equation}
     \label{eq:heat_balance}
     h_c = h_{in} + \frac{1}{\mdot_h} \sum_{i}^{N_z} q'_{i,h} \Delta z_{i,h}
   \end{equation}
-  where $q'_{i,h}$ is the linear heat generation rate at axial level $i$ in 
+  where $q'_{i,h}$ is the linear heat generation rate in the chunk located at 
+  axial level $i$ in 
   channel $h$ and $\Delta z_{i,h} = z_{i+1,h} - z_{i,h}$. (Note: by indexing
   properly, $c = h + (i-1) \, N_h$.) Recognizing the 
   quantity $q'_{i,h} \Delta z_{i,h}$ is the total heat generated in channel $h$ 
@@ -148,8 +194,13 @@
   \begin{equation}
     h_c = h_{in} + \frac{1}{\mdot_h} \sum_i^{N_z} q_{i,h}
   \end{equation}
+  The final result of this model is $h_c$, the bulk coolant enthalpy in each
+  chunk $c$. This will be an input into the Radial Conduction Model,
+  \sref{sec:radial_conduction_model} to later calculate the average material
+  temperatures.
   
 \section{Radial Conduction Model}
+  \label{sec:radial_conduction_model}
   \subsection{Derivation}
   \subsection{Relations}
 \section{Cross Section Treatment}
