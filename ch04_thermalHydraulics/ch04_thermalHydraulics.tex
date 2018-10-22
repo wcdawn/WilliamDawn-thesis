@@ -25,8 +25,8 @@
   \cite{sodiumProp}. Additionally, thermal conductivity values are required for 
   cladding and fuel material. Typical cladding for fast reactor designs is HT9
   stainless steel and a functional form of the conductivity is given in
-  \cite{ht9Prop}. Fuel composition is assumed to be of the form U-Zr$x$ where
-  $x$ is the weight fraction of Zr in the fuel. A typical value for x is 10\%.
+  \cite{ht9Prop}. Fuel composition is assumed to be of the form U-XZr where
+  X is the weight fraction of Zr in the fuel. A typical value for X is 10\%.
   Fuel thermal conductivity is given in \cite{fuelProp}. For the expression of
   fuel thermal conductivity given, the integral of thermal conductivity 
   is unbounded as $T \rightarrow 0$ so thermal conductivity is assumed
@@ -93,7 +93,8 @@
   \end{figure}
 
   Used in association with an unstructured mesh, the thermal hydraulic model
-  requires mapping mesh elements to flow channels. In the user input to the
+  requires mapping mesh elements to flow channels. For the model described here,
+  a flow channel is a single fuel assembly. In the user input to the
   program, the user must specify to which one-dimensional flow channel belongs.
   Adopting the nomenclature from fast reactors, each flow channel represents a
   hexagonal-assembly or a ``hex''. In the following discussion, a hex index is
@@ -171,6 +172,7 @@
   \end{align}
 
 \section{Axial Convection Model}
+  \label{sec:axial_convection_model}
   First, the channel mass flow $\mdot_h$ must be calculated for a user specified
   total reactor mass flow rate $\mdot_{Rx}$.  Mass flow is partitioned into each
   channel assuming constant mass flux at the reactor inlet according to 
@@ -198,7 +200,8 @@
   channel and converted to a summation.
   \begin{equation}
     \label{eq:heat_balance}
-    h_c = h_{in} + \frac{1}{\mdot_h} \sum_{i}^{N_z} q'_{i,h} \Delta z_{i,h}
+    \widetilde{h_c} = 
+      h_{in} + \frac{1}{\mdot_h} \sum_{i}^{N_z} q'_{i,h} \Delta z_{i,h}
   \end{equation}
   where $q'_{i,h}$ is the linear heat generation rate in the chunk located at 
   axial level $i$ in 
@@ -207,8 +210,17 @@
   quantity $q'_{i,h} \Delta z_{i,h}$ is the total heat generated in channel $h$ 
   at axial level $h$, then \eref{eq:heat_balance} can be rewritten.
   \begin{equation}
-    h_c = h_{in} + \frac{1}{\mdot_h} \sum_i^{N_z} q_{i,h}
+    \widetilde{h_c} = h_{in} + \frac{1}{\mdot_h} \sum_i^{N_z} q_{i,h}
   \end{equation}
+  The quantity $\widetilde{h_c}$ represents the enthalpy in channel $h$ at axial
+  elevation $z_i$. Note that $z_i$ is the upper coordinate of the
+  one-dimensional heat convection node. The node-average enthalpy is instead
+  desired. To first-order approximation, then
+  \begin{equation}
+    h_c = \half (\widetilde{h_{i-1,h}} + \widetilde{h_{i,h}})
+  \end{equation}
+  where $h_c$ is the average enthalpy in chunk $c$ located in channel $h$ at
+  axial level $i$.
   The final result of this model is $h_c$, the bulk coolant enthalpy in each
   chunk $c$. Given, $h_c$, bulk coolant temperature $T_{\infty,c} = T(h_c)$ can
   be calculated using a state relationship. This will be an input into the 
@@ -218,10 +230,182 @@
 \section{Radial Conduction Model}
   \label{sec:radial_conduction_model}
   \subsection{Surface Temperature and Center-Line Temperatures}
-    \subsubsection{Clad Surface Temperature}
+    \subsubsection{Fuel Center-Line and Surface Temperatures}
+    The fueled region is the only region modeled with non-zero volumetric heat
+    generation. In this region, $q'''_c$ as specified by 
+    \eref{eq:chunkqppp_fuel} is assumed constant within the fuel. Additionally,
+    the thermal conductivity in the fuel will be assumed to have general form
+    $k_F(T)$. For this application, $k_F(T)$ is specified by the functional form
+    in \cite{fuelProp} assuming 10\% Zr by weight included in fuel.
+
+    The steady-state heat conduction equation with constant volumetric heat
+    generation rate $q'''_c$ and variable thermal conductivity $k_F(T)$ can be
+    written.
+    \begin{equation}
+      \label{eq:conduction_fuel}
+      \grad \cdot (k_F(T) \grad T_F(r)) + q'''_c = 0
+    \end{equation}
+    Noting the gradient operator in cylindrical geometry,
+    \eref{eq:conduction_fuel} is rewritten with partial derivatives.
+    \begin{equation}
+      \label{eq:conduction_fuel_cylindrical}
+      \frac{1}{r} \frac{\partial}{\partial r} \left( r \, k_F(T) \, 
+        \frac{d \, T_F}{dr} \right) + q'''_c = 0
+    \end{equation}
+    Note the inner derivative is an ordinary derivative because the only
+    function to which it applies, $T_F(r)$, is a function of one variable. The
+    outer derivative is a partial derivative because it applies to $T_F(r)$ as
+    well as $k_F(T) = k_F(T_F(r))$.
+
+    Begin solving \eref{eq:conduction_fuel_cylindrical} by multiplying the
+    equation by radial coordinate $r$.
+    \begin{equation}
+      \frac{\partial}{\partial r} \left( k_F(T_F(r)) \, \frac{d\, T_F}{dr} 
+      \right) + q'''_c = 0
+    \end{equation}
+    Integrate the equation for $r \in [0,r']$ where $r'$ is an arbitrary
+    location $r' \in (0,R_F)$.
+    \begin{align}
+      \int_0^{r'} \left( \frac{\partial}{\partial r} \left( k_F(T_F(r)) \, 
+        \frac{d\, T_F}{dr} \right) + q'''_c \right) \; dr &= 0 \\
+      \int_0^{r'} \frac{\partial}{\partial r} \left( k_F(T_F(r)) 
+        \frac{d \, T_F}{dr} \right) \; dr + \int_0^{r'} q'''_c \; dr &= 0 \\
+      \left. r \, k_F(T_F(r)) \frac{d\,T_F}{dr} \right|_{r=0}^{r=r'} + 
+        \left. \frac{q'''_c}{2} r^2 \right|_{r=0}^{r=r'} &= 0 \\
+      \left. r' k_F(T_F(r')) \frac{d\,T_F}{dr} \right|_{r=r'} + \frac{q'''_c}{2}
+        r^{\prime 2} &= 0
+    \end{align}
+    Divide by the location $r'$.
+    \begin{equation}
+      \left. k_F(T_F(r')) \frac{d \, T_F}{dr}\right|_{r=r'} + 
+        \frac{q'''_c}{2} r' = 0
+    \end{equation}
+    Next, integrate $r' \in (0,r)$.
+    \begin{align}
+      \int_0^r \left( k_F(T_F(r')) \left. \frac{d\,T_F}{dr}\right|_{r=r'} 
+        + \frac{q'''_c}{2} r' \right) \; dr' &= 0 \\
+      \int_0^r k_F(T_F(r')) \left. \frac{d\,T_F}{dr}\right|_{r=r'} \; dr' + 
+        \int_0^r \frac{q'''_c}{2} r' \; dr' &= 0 \\
+      \int_0^r k_F(T_F(r')) \left. \frac{d\,T_F}{dr}\right|_{r=r'} \; dr' + 
+        \left. \frac{q'''_c}{4} r^{\prime 2} \right|_{r'=0}^{r'=r} &= 0 \\
+      \int_0^r k_F(T_F(r')) \left. \frac{d\,T_F}{dr}\right|_{r=r'} \; dr' + 
+        \frac{q'''_c}{4} r^2 &= 0
+    \end{align}
+    The fundamental theorem of calculus allows for the expression of the first
+    integral.
+    \begin{equation}
+      \label{eq:tcl_integral}
+      \int_{T_F(0)}^{T_F(r)} k_F(T_F(r)) \; dr + \frac{q'''_c}{4} r^2 = 0
+    \end{equation}
+    In this derivation, $k_F(T)$ is allowed to be a generic function. Therefore,
+    \eref{eq:tcl_integral} does not have a simple forward expression. Solving
+    for $T_F(0)$ will require a non-linear search such as the bisection method.
+    Define the conductivity integral of the generic conductivity function
+    $k(T)$ as
+    \begin{equation}
+      \label{eq:conductivity_integral}
+      K(T) = \int_0^T k(T') \; dT'.
+    \end{equation}
+    Then, \eref{eq:tcl_integral} can be rewritten.
+    \begin{gather}
+      K_F(T_F(r)) - K_F(T_F(0)) + \frac{q'''_c}{4} r^2 = 0 \\
+      \label{eq:tfr_conductivity_integral}
+      K_F(T_F(r)) = K_F(T_F(0)) - \frac{q'''_c}{4} r^2  \\ 
+      \label{eq:tcl_conductivity_integral}
+      K_F(T_F(0)) = K_F(T_F(r)) + \frac{q'''_c}{4} r^2 \\
+    \end{gather}
+    The fuel center-line temperature can be calculated using
+    \eref{eq:tcl_conductivity_integral} given a functional form of the
+    conductivity integral $K_F(T)$ by performing a search on the function.
+    Alternatively, \eref{eq:tfr_conductivity_integral} allows for the
+    calculation of temperature at a given radial coordinate $r$ within the fuel
+    region. If more information is known about $K_F(T)$, a forward expression
+    may be possible. However, a bisection method is implemented to maintain
+    generality.
+
+    %\subsubsection{Fuel Surface Temperature}
     \subsubsection{Bond Surface Temperature}
-    \subsubsection{Fuel Surface Temperature}
-    \subsubsection{Fuel Center-Line Temperature}
+    \subsubsection{Clad Surface Temperature}
+      Clad surface temperature $T_C$ is given by Newton's Law of Cooling with
+      convective heat transfer coefficient $h_c$ specified according to the
+      Weisman Correlation. Newton's Law of Cooling may be written as
+      \begin{equation}
+        q''_{clad} = h_c (T_C - T_{\infty})
+      \end{equation}
+      where $q''_{clad}$ is the heat flux at the clad surface $R_C$, $h_c$ is
+      the convective heat transfer coefficient, $T_C$ is the clad surface
+      temperature, and $T_{\infty}$ is the bulk coolant temperature. Using the
+      relationships in \sref{sec:axial_convection_model}, $T_{\infty}$ is given
+      by the state relationship $T_{\infty} = T(h_c)$. The heat flux at the clad
+      surface is related to the volumetric heat generation rate in the fuel
+      according to 
+      \begin{equation}
+        q''_{clad} = q'''_c \frac{R_F^2}{2 R_C}
+      \end{equation}
+      where $q'''_c$ is the chunk-average volumetric heat generation rate in the
+      fuel according to \eref{eq:chunkqppp_fuel}.
+
+      The coefficient $h_c$ must be calculated via an applicable correlation.
+      The Weisman correlation is selected because it is valid for general fluid
+      flow and has parameters correlated for triangular pitch flow areas common
+      to fast reactor designs. The Weisman Correlation relates the Nusselt,
+      Reynolds, and Prandlt dimensionless numbers according to
+      \begin{equation}
+        \label{eq:weisman}
+        Nu = C \, Re^{0.8} \, Pr^{1/3}
+      \end{equation}
+      where $Nu$ is the Nusselt number, $Re$ is the Reynolds number, $Pr$ is 
+      the Prandlt number, and $C$ is a correlation coefficient specified by the
+      triangular geometry. For triangular pitch flow, the geometry is described
+      as
+      \begin{align}
+        \label{eq:weisman_c}
+        C &= 0.026 \frac{S}{2 \, R_C} - 0.006 \\
+        \label{eq:weisman_ax}
+        A_x &= \frac{\sqrt{3}}{4} S^2 - \frac{\pi R_C^2}{2} \\
+        \label{eq:weisman_pw}
+        P_w &= \pi R_C \\
+        \label{eq:weisman_de}
+        D_e &= \frac{4 \, A_x}{P_w}
+      \end{align}
+      where $S$ is the pitch between pins (see \fref{fig:hex_can}), $A_x$ is the
+      flow cross-sectional area, $P_w$ is the flow wetted perimeter, and $D_e$
+      is the effective flow diameter. The Reynolds number is defined as
+      \begin{equation}
+        \label{eq:re}
+        Re = \frac{\mdot_h \, D_e}{A_x \, \mu}
+      \end{equation}
+      where $\mdot_h$ is the assembly mass flow rate, $\mu$ is the fluid's
+      dynamic viscosity given by a state relationship, and $D_e$ and $A_x$ are 
+      defined according to \eref{eq:weisman_de} and \eref{eq:weisman_ax}
+      respectively. The Prandtl number is defined according to 
+      \begin{equation}
+        \label{eq:pr}
+        Pr = \frac{c_p \, \mu}{k}
+      \end{equation}
+      where $c_p$ is the fluid specific heat capacity at constant pressure, 
+      $\mu$ is the fluid dynamic viscosity, and $k$ is the fluid thermal 
+      conductivity. Note that each of these quantities are given by state 
+      relationships. As such, the Prandtl number can itself be correlated for a
+      given fluid as a state relationship.
+      
+      With the dimensionless quantities expressed in \eref{eq:re} and
+      \eref{eq:pr}, the Weisman correlation is used to calculate the Nusselt
+      number. Given a Nusselt number, the convective heat transfer coefficient
+      is defined as
+      \begin{equation}
+        \label{eq:hc}
+        h_c = \frac{Nu \, k}{D_e}
+      \end{equation}
+      where $Nu$ is the Nusselt number from the Weisman correlation
+      \eref{eq:weisman}, $k$ is the fluid thermal conductivity given by a state
+      relationship, and $D_e$ is the effective flow diameter given in
+      \eref{eq:weisman_de}. Finally, the clad surface temperature is expressed.
+      \begin{equation}
+        \label{eq:tc}
+        T_C = \frac{q''_{clad}}{h_c} + T_{\infty}
+      \end{equation}
+
   \subsection{Average Temperatures}
 \section{Cross Section Treatment}
   \subsection{Cross Section Library Generation}
