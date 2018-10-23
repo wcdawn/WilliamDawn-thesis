@@ -341,8 +341,8 @@
       In this region, good thermal contact is
       assumed such that $T_F(R_F)=T_B(R_F)$. That is, the temperature is 
       continuous at the material discontinuity. Additionally, constant heat flux
-      is assumed at the material discontinuity such that $k_F(T_F(r))
-      \left.\frac{d\,T_F}{dr}\right|_{r=R_F} = k_B(T_B(r))
+      is assumed at the material discontinuity such that $k_F(T_F(R_F))
+      \left.\frac{d\,T_F}{dr}\right|_{r=R_F} = k_B(T_B(R_F))
       \left.\frac{d\,T_B}{dr}\right|_{r=R_F}$.
 
       Recognizing cylindrical geometry, \eref{eq:tc_grad} can be rewritten.
@@ -351,7 +351,7 @@
         \frac{1}{r} \frac{\partial}{\partial r} \left(
           r \, k_B(T_B(r)) \frac{d \, T_B}{dr} \right) = 0
       \end{equation}
-      Begin solving \eref{eq:tb_heat_conduction} by multiplying the problem by
+      Begin solving \eref{eq:tb_heat_conduction} by multiplying the equation by
       the radial coordinate $r$.
       \begin{equation}
         \frac{\partial}{\partial r} \left( r \, k_B(T_B(r)) \frac{d \, T_B}{dr}
@@ -361,7 +361,7 @@
       location $r' \in [R_F,R_B]$.
       \begin{align}
         \int_{R_F}^{r'} \frac{\partial}{\partial r} \left( r\, k_B(T_B(r)) \, 
-          \frac{d\,T_B}{dr} \right) \; dr \\
+          \frac{d\,T_B}{dr} \right) \; dr &= 0\\
         \left. r\, k_B(T_B(r)) \frac{d\,T_B}{dr} \right|_{r=R_F}^{r=r'} &= 0 \\
         \label{eq:tf_first_integral}
         \left. r' \, k_B(T_B(r')) \frac{d\,T_B}{dr} \right|_{r=r'} - 
@@ -373,7 +373,7 @@
       valid for any $r' \in [0,R_F]$ so allow $r'=R_F$.
       \begin{align}
         \left. R_F k_F(T_F(R_F)) \frac{d\,T_F}{dr} \right|_{r=R_F} + 
-          \frac{q'''_c}{2} R_F^2 &= 0
+          \frac{q'''_c}{2} R_F^2 &= 0 \\
         \label{eq:surface_relation}
         \left. R_F k_F(T_F(R_F)) \frac{d\,T_F}{dr} \right|_{r=R_F} &= 
           - \frac{q'''_c}{2} R_F^2
@@ -419,21 +419,122 @@
       \begin{gather}
         K_B(T_B(r)) - K_B(T_B(R_F)) + \frac{q'''_c}{2} R_F^2
           \ln\left(\frac{r}{R_F}\right) = 0 \\
-        K_B(T_B(R_F)) = K_B(T_C(r)) - \frac{q'''_c}{2} R_F^2
+        K_B(T_B(R_F)) = K_B(T_C(r)) + \frac{q'''_c}{2} R_F^2
           \ln\left(\frac{r}{R_F}\right) \\
         \label{eq:tf_conductivity_integral}
-        K_B(T_F) = K_B(T_B) - \frac{q'''_c}{2} R_F^2
-          \ln\left(\frac{r}{R_F}\right)
+        K_B(T_F) = K_B(T_B) + \frac{q'''_c}{2} R_F^2
+          \ln\left(\frac{R_B}{R_F}\right)
       \end{gather}
       The fuel surface temperature can be calculated using
       \eref{eq:tf_conductivity_integral} given a functional form of the
-      conductivity integral $K_C(T)$ by performing a search on the function. In
+      conductivity integral $K_B(T)$ by performing a search on the function. In
       \eref{eq:tf_conductivity_integral}, $T_F=T_B(R_F)$ is the fuel surface 
       temperature, $T_B=T_B(R_B)$ is the bond surface temperature and must be
       given to use this expression.
 
     \subsubsection{Bond Surface Temperature}
+      Consider the heat conduction equation in the cladding region. Derivation
+      of the bond surface temperature $T_B=T_B(R_B)$ is similar to
+      the fuel surface temperature because both consider a heat conduction
+      equation with no heat generation. The steady-state heat conduction 
+      equation for this region is written as
+      \begin{equation}
+        \label{eq:clad_conduction_grad}
+        \grad \cdot (k_C(T_C(r)) \grad T_C(r)) = 0
+      \end{equation}
+      where $k_C(T)$ is a functional form of the thermal conductivity in the
+      cladding from \cite{ht9Prop}. $T_C(r)$ is the temperature within the
+      cladding region and $T_C=T_C(R_C)$ is the cladding surface temperature. 
+      In this region, good thermal contact is assumed such that
+      $T_B(R_B)=T_C(R_B)$. Additionally, constant heat flux is assumed at the
+      cladding-bond boundary such that $\left. k_B(T_B(R_C))
+      \frac{d\,T_B}{dr}\right|_{r=R_C} = \left. k_C(T_C(R_C))
+      \frac{d\,T_C}{dr}\right|_{r=R_F}$.
 
+      Rewriting the gradient for cylindrical geometry,
+      \eref{eq:clad_conduction_grad}.
+      \begin{equation}
+        \label{eq:clad_conduction}
+        \frac{1}{r} \frac{\partial}{\partial r} \left( r\, k_C(T_C(r)) 
+          \frac{d\,T_C}{dr} \right) = 0
+      \end{equation}
+      Begin solving \eref{eq:clad_conduction} by multiplying the equation by the
+      radial coordinate $r$.
+      \begin{equation}
+        \frac{\partial}{\partial r} \left( r\,k_C(T_C(r))\,\frac{d\,T_C}{dr}
+          \right) = 0
+      \end{equation}
+      Integrate the equation through $r \in [R_B,r']$ where $r'$ is an arbitrary
+      coordinate $r' \in [R_B,R_C]$.
+      \begin{align}
+        \int_{R_B}^{r'} \frac{\partial}{\partial r} \left( r \, k_C(T_C(r))
+          \frac{d\,T_C}{dr} \right) \; dr &= 0 \\
+        \left. r\,k_C(T_C(r)) \frac{d\,T_C}{dr} \right|_{r=R_B}^{r=r'} &= 0 \\
+        \label{eq:clad_before}
+        \left. r' \, k_C(T_C(r')) \frac{d\,T_C}{dr} \right|_{r=r'} - 
+          \left. R_B \, k_C(T_C(R_B)) \frac{d\,T_C}{dr} \right|_{r=R_B} &= 0
+      \end{align}
+      The assumption of constant heat flux at the material discontinuity at
+      $R_B$ allows for an expression of the derivative at $R_B$. Recall from the
+      derivation within the bond region, the expression \eref{eq:tf_first_bc}
+      can be used. The expression is valid for any $r' \in [R_F,R_B]$ so allow
+      $r'=R_B$.
+      \begin{align}
+        \left. R_B \, k_B(T_B(R_B)) \frac{d\,T_B}{dr} \right|_{r=R_B} +
+          \frac{q'''_c}{2} R_F^2 &= 0 \\
+        \label{eq:clad_bc_relation}
+        \left. R_B \, k_B(T_B(R_B)) \frac{d\,T_B}{dr} \right|_{r=R_B} &= 
+          - \frac{q'''_c}{2} R_F^2
+      \end{align}
+      Recalling again that $q'''_c$ is the average volumetric heat generation
+      rate in the fuel within chunk $c$. \eref{eq:clad_bc_relation} is
+      inserted into \eref{eq:clad_before}.
+      \begin{equation}
+        \left. r' \, k_C(T_C(r')) \frac{d\,T_C}{dr} \right|_{r=r'} + 
+          \frac{q'''_c}{2} R_F^2 = 0
+      \end{equation}
+      Divide by $r'$ because $r' \ne 0$ in this region.
+      \begin{equation}
+        \left. k_C(T_C(r')) \frac{d\,T_C}{dr} \right|_{r=r'} + 
+          \frac{q'''_c}{2} \frac{R_F^2}{r'} = 0
+      \end{equation}
+      Integrate the equation for $r' \in [R_B,r]$ where $r \in [R_B,r']$.
+      \begin{align}
+        \int_{R_B}^r \left( \left. k_C(T_C(r')) \frac{d\,T_C}{dr} \right|_{r=r'}
+          + \frac{q'''_c}{2} \frac{R_F^2}{r'} \right) \; dr' &= 0 \\
+        \int_{R_B}^r \left. k_C(T_C(r')) \frac{d\,T_C}{dr} \right|_{r=r'} \; dr'
+          + \int_{R_B}^r \frac{q'''_c}{2} \frac{R_F^2}{r'} \; dr' &= 0 \\
+        \int_{R_B}^r \left. k_C(T_C(r')) \frac{d\,T_C}{dr} \right|_{r=r'} \; dr'
+          + \frac{q'''_c}{2} R_F^2 \left. \ln(r') \right|_{r'=R_B}^{r'=r} &= 0\\
+        \int_{R_B}^r \left. k_C(T_C(r')) \frac{d\,T_C}{dr} \right|_{r=r'} \; dr'
+          + \frac{q'''_c}{2} R_F^2 (\ln(r) - \ln(R_B)) &= 0\\
+        \int_{R_B}^r \left. k_C(T_C(r')) \frac{d\,T_C}{dr} \right|_{r=r'} \; dr'
+          + \frac{q'''_c}{2} R_F^2 \ln\left(\frac{r}{R_B}\right) &= 0
+      \end{align}
+      Again, the integral term can be rewritten with use of the fundamental
+      theorem of calculus.
+      \begin{equation}
+        \label{eq:clad_integral}
+        \int_{T_C(R_B)}^{T_C(r)} k_C(T_C(r)) \; dr +
+          \frac{q'''_c}{2} R_F^2 \ln\left(\frac{r}{R_B}\right) = 0
+      \end{equation}
+      Defining a conductivity integral function $K_C(T)$ similar to
+      \eref{eq:conductivity_integral}, \eref{eq:clad_integral} can be rewritten.
+      \begin{gather}
+        K_C(T_C(r)) - K_C(T_C(R_B)) + \frac{q'''_C}{2} R_F^2
+          \ln\left(\frac{r}{R_B}\right) = 0 \\
+        K_C(T_C(R_B)) = K_C(T_C(r)) + \frac{q'''_c}{2} R_F^2
+          \ln\left(\frac{r}{R_B}\right) \\
+        \label{eq:ktb}
+        K_C(T_B) = K_C(T_C) + \frac{q'''_C}{2} R_F^2
+          \ln\left(\frac{R_C}{R_B}\right) 
+      \end{gather}
+      The bond surface temperature can be calculated using \eref{eq:ktb} given a
+      function describing the cladding conductivity integral $K_C(T)$ and
+      performing a bisection method search on the function. In \eref{eq:ktb},
+      $T_B = T_C(R_B)$ is the bond surface temperature, $T_C=T_C(R_C)$ is the
+      clad surface temperature and is calculated using a different method and
+      treated as an input to this method.  
 
     \subsubsection{Clad Surface Temperature}
       Clad surface temperature $T_C$ is given by Newton's Law of Cooling with
@@ -511,10 +612,11 @@
       \eref{eq:weisman}, $k$ is the fluid thermal conductivity given by a state
       relationship, and $D_e$ is the effective flow diameter given in
       \eref{eq:weisman_de}. Finally, the clad surface temperature is expressed.
-      \begin{equation}
+      \begin{align}
+        T_C &= \frac{q''_{clad}}{h_c} + T_{\infty} \\
         \label{eq:tc}
-        T_C = \frac{q''_{clad}}{h_c} + T_{\infty}
-      \end{equation}
+        T_C &= q'''_c \frac{R_F^2}{2\,R_c\,h_c} + T_{infty}
+      \end{align}
 
   \subsection{Average Temperatures}
 \section{Cross Section Treatment}
