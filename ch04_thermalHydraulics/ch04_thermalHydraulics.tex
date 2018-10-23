@@ -230,101 +230,211 @@
 \section{Radial Conduction Model}
   \label{sec:radial_conduction_model}
   \subsection{Surface Temperature and Center-Line Temperatures}
-    \subsubsection{Fuel Center-Line and Surface Temperatures}
-    The fueled region is the only region modeled with non-zero volumetric heat
-    generation. In this region, $q'''_c$ as specified by 
-    \eref{eq:chunkqppp_fuel} is assumed constant within the fuel. Additionally,
-    the thermal conductivity in the fuel will be assumed to have general form
-    $k_F(T)$. For this application, $k_F(T)$ is specified by the functional form
-    in \cite{fuelProp} assuming 10\% Zr by weight included in fuel.
+    \subsubsection{Fuel Center-Line Temperature}
+      The fueled region is the only region modeled with non-zero volumetric heat
+      generation. In this region, $q'''_c$ as specified by 
+      \eref{eq:chunkqppp_fuel} is assumed constant within the fuel. 
+      Additionally, the thermal conductivity in the fuel will be assumed to have
+      general form $k_F(T)$. For this application, $k_F(T)$ is specified by the
+      functional form in \cite{fuelProp} assuming 10\% Zr by weight included in
+      fuel.
 
-    The steady-state heat conduction equation with constant volumetric heat
-    generation rate $q'''_c$ and variable thermal conductivity $k_F(T)$ can be
-    written.
-    \begin{equation}
-      \label{eq:conduction_fuel}
-      \grad \cdot (k_F(T) \grad T_F(r)) + q'''_c = 0
-    \end{equation}
-    Noting the gradient operator in cylindrical geometry,
-    \eref{eq:conduction_fuel} is rewritten with partial derivatives.
-    \begin{equation}
-      \label{eq:conduction_fuel_cylindrical}
-      \frac{1}{r} \frac{\partial}{\partial r} \left( r \, k_F(T) \, 
-        \frac{d \, T_F}{dr} \right) + q'''_c = 0
-    \end{equation}
-    Note the inner derivative is an ordinary derivative because the only
-    function to which it applies, $T_F(r)$, is a function of one variable. The
-    outer derivative is a partial derivative because it applies to $T_F(r)$ as
-    well as $k_F(T) = k_F(T_F(r))$.
+      The steady-state heat conduction equation with constant volumetric heat
+      generation rate $q'''_c$ and variable thermal conductivity $k_F(T)$ can be
+      written.
+      \begin{equation}
+        \label{eq:conduction_fuel}
+        \grad \cdot (k_F(T) \grad T_F(r)) + q'''_c = 0
+      \end{equation}
+      Noting the gradient operator in cylindrical geometry,
+      \eref{eq:conduction_fuel} is rewritten with partial derivatives.
+      \begin{equation}
+        \label{eq:conduction_fuel_cylindrical}
+        \frac{1}{r} \frac{\partial}{\partial r} \left( r \, k_F(T) \, 
+          \frac{d \, T_F}{dr} \right) + q'''_c = 0
+      \end{equation}
+      Note the inner derivative is an ordinary derivative because the only
+      function to which it applies, $T_F(r)$, is a function of one variable. The
+      outer derivative is a partial derivative because it applies to $T_F(r)$ as
+      well as $k_F(T) = k_F(T_F(r))$.
 
-    Begin solving \eref{eq:conduction_fuel_cylindrical} by multiplying the
-    equation by radial coordinate $r$.
-    \begin{equation}
-      \frac{\partial}{\partial r} \left( k_F(T_F(r)) \, \frac{d\, T_F}{dr} 
-      \right) + q'''_c = 0
-    \end{equation}
-    Integrate the equation for $r \in [0,r']$ where $r'$ is an arbitrary
-    location $r' \in (0,R_F)$.
-    \begin{align}
-      \int_0^{r'} \left( \frac{\partial}{\partial r} \left( k_F(T_F(r)) \, 
-        \frac{d\, T_F}{dr} \right) + q'''_c \right) \; dr &= 0 \\
-      \int_0^{r'} \frac{\partial}{\partial r} \left( k_F(T_F(r)) 
-        \frac{d \, T_F}{dr} \right) \; dr + \int_0^{r'} q'''_c \; dr &= 0 \\
-      \left. r \, k_F(T_F(r)) \frac{d\,T_F}{dr} \right|_{r=0}^{r=r'} + 
-        \left. \frac{q'''_c}{2} r^2 \right|_{r=0}^{r=r'} &= 0 \\
-      \left. r' k_F(T_F(r')) \frac{d\,T_F}{dr} \right|_{r=r'} + \frac{q'''_c}{2}
-        r^{\prime 2} &= 0
-    \end{align}
-    Divide by the location $r'$.
-    \begin{equation}
-      \left. k_F(T_F(r')) \frac{d \, T_F}{dr}\right|_{r=r'} + 
-        \frac{q'''_c}{2} r' = 0
-    \end{equation}
-    Next, integrate $r' \in (0,r)$.
-    \begin{align}
-      \int_0^r \left( k_F(T_F(r')) \left. \frac{d\,T_F}{dr}\right|_{r=r'} 
-        + \frac{q'''_c}{2} r' \right) \; dr' &= 0 \\
-      \int_0^r k_F(T_F(r')) \left. \frac{d\,T_F}{dr}\right|_{r=r'} \; dr' + 
-        \int_0^r \frac{q'''_c}{2} r' \; dr' &= 0 \\
-      \int_0^r k_F(T_F(r')) \left. \frac{d\,T_F}{dr}\right|_{r=r'} \; dr' + 
-        \left. \frac{q'''_c}{4} r^{\prime 2} \right|_{r'=0}^{r'=r} &= 0 \\
-      \int_0^r k_F(T_F(r')) \left. \frac{d\,T_F}{dr}\right|_{r=r'} \; dr' + 
-        \frac{q'''_c}{4} r^2 &= 0
-    \end{align}
-    The fundamental theorem of calculus allows for the expression of the first
-    integral.
-    \begin{equation}
-      \label{eq:tcl_integral}
-      \int_{T_F(0)}^{T_F(r)} k_F(T_F(r)) \; dr + \frac{q'''_c}{4} r^2 = 0
-    \end{equation}
-    In this derivation, $k_F(T)$ is allowed to be a generic function. Therefore,
-    \eref{eq:tcl_integral} does not have a simple forward expression. Solving
-    for $T_F(0)$ will require a non-linear search such as the bisection method.
-    Define the conductivity integral of the generic conductivity function
-    $k(T)$ as
-    \begin{equation}
-      \label{eq:conductivity_integral}
-      K(T) = \int_0^T k(T') \; dT'.
-    \end{equation}
-    Then, \eref{eq:tcl_integral} can be rewritten.
-    \begin{gather}
-      K_F(T_F(r)) - K_F(T_F(0)) + \frac{q'''_c}{4} r^2 = 0 \\
-      \label{eq:tfr_conductivity_integral}
-      K_F(T_F(r)) = K_F(T_F(0)) - \frac{q'''_c}{4} r^2  \\ 
-      \label{eq:tcl_conductivity_integral}
-      K_F(T_F(0)) = K_F(T_F(r)) + \frac{q'''_c}{4} r^2 \\
-    \end{gather}
-    The fuel center-line temperature can be calculated using
-    \eref{eq:tcl_conductivity_integral} given a functional form of the
-    conductivity integral $K_F(T)$ by performing a search on the function.
-    Alternatively, \eref{eq:tfr_conductivity_integral} allows for the
-    calculation of temperature at a given radial coordinate $r$ within the fuel
-    region. If more information is known about $K_F(T)$, a forward expression
-    may be possible. However, a bisection method is implemented to maintain
-    generality.
+      Begin solving \eref{eq:conduction_fuel_cylindrical} by multiplying the
+      equation by radial coordinate $r$.
+      \begin{equation}
+        \frac{\partial}{\partial r} \left( k_F(T_F(r)) \, \frac{d\, T_F}{dr} 
+        \right) + q'''_c = 0
+      \end{equation}
+      Integrate the equation for $r \in [0,r']$ where $r'$ is an arbitrary
+      location $r' \in [0,R_F]$.
+      \begin{align}
+        \int_0^{r'} \left( \frac{\partial}{\partial r} \left( k_F(T_F(r)) \, 
+          \frac{d\, T_F}{dr} \right) + q'''_c \right) \; dr &= 0 \\
+        \int_0^{r'} \frac{\partial}{\partial r} \left( k_F(T_F(r)) 
+          \frac{d \, T_F}{dr} \right) \; dr + \int_0^{r'} q'''_c \; dr &= 0 \\
+        \left. r \, k_F(T_F(r)) \frac{d\,T_F}{dr} \right|_{r=0}^{r=r'} + 
+          \left. \frac{q'''_c}{2} r^2 \right|_{r=0}^{r=r'} &= 0 \\
+        \label{eq:dtdr_fuel}
+        \left. r' k_F(T_F(r')) \frac{d\,T_F}{dr} \right|_{r=r'} + 
+          \frac{q'''_c}{2} r^{\prime 2} &= 0
+      \end{align}
+      Divide by the location $r'$.
+      \begin{equation}
+        \left. k_F(T_F(r')) \frac{d \, T_F}{dr}\right|_{r=r'} + 
+          \frac{q'''_c}{2} r' = 0
+      \end{equation}
+      Next, integrate $r' \in [0,r]$.
+      \begin{align}
+        \int_0^r \left( k_F(T_F(r')) \left. \frac{d\,T_F}{dr}\right|_{r=r'} 
+          + \frac{q'''_c}{2} r' \right) \; dr' &= 0 \\
+        \int_0^r k_F(T_F(r')) \left. \frac{d\,T_F}{dr}\right|_{r=r'} \; dr' + 
+          \int_0^r \frac{q'''_c}{2} r' \; dr' &= 0 \\
+        \int_0^r k_F(T_F(r')) \left. \frac{d\,T_F}{dr}\right|_{r=r'} \; dr' + 
+          \left. \frac{q'''_c}{4} r^{\prime 2} \right|_{r'=0}^{r'=r} &= 0 \\
+        \int_0^r k_F(T_F(r')) \left. \frac{d\,T_F}{dr}\right|_{r=r'} \; dr' + 
+          \frac{q'''_c}{4} r^2 &= 0
+      \end{align}
+      The fundamental theorem of calculus allows for the expression of the first
+      integral.
+      \begin{equation}
+        \label{eq:tcl_integral}
+        \int_{T_F(0)}^{T_F(r)} k_F(T_F(r)) \; dr + \frac{q'''_c}{4} r^2 = 0
+      \end{equation}
+      In this derivation, $k_F(T)$ is allowed to be a generic function. 
+      Therefore, \eref{eq:tcl_integral} does not have a simple forward 
+      expression. Solving for $T_F(0)$ will require a non-linear search such as
+      the bisection method. Define the conductivity integral of the generic
+      conductivity function $k(T)$ as
+      \begin{equation}
+        \label{eq:conductivity_integral}
+        K(T) = \int_0^T k(T') \; dT'.
+      \end{equation}
+      Then, \eref{eq:tcl_integral} can be rewritten.
+      \begin{gather}
+        K_F(T_F(r)) - K_F(T_F(0)) + \frac{q'''_c}{4} r^2 = 0 \\
+        K_F(T_F(0)) = K_F(T_F(r)) + \frac{q'''_c}{4} r^2 \\
+        \label{eq:tcl_conductivity_integral}
+        K_F(T_F(0)) = K_F(T_F) + \frac{q'''_c}{4} R_F^2
+      \end{gather}
+      The fuel center-line temperature can be calculated using
+      \eref{eq:tcl_conductivity_integral} given a functional form of the
+      conductivity integral $K_F(T)$ by performing a search on the function
+      where $T_F(0)$ is the fuel center-line temperature, $T_F=T_F(R_F)$ is the
+      fuel surface temperature, and $R_F$ is the radius of the fuel. To
+      calculate $T_F(0)$, the fuel surface temperature must be known.
+      If more information is known about $K_F(T)$, a forward expression
+      may be possible. However, a bisection method is implemented to maintain
+      generality.
 
-    %\subsubsection{Fuel Surface Temperature}
+    \subsubsection{Fuel Surface Temperature}
+      The fuel surface temperature is calculated by considering the heat
+      conduction equation in the sodium bond region. There is no heat generation
+      in this region so $q'''=0$.
+      The steady-state heat conduction equation with no heat generation is
+      written as
+      \begin{equation}
+        \label{eq:tc_grad}
+        \grad \cdot (k_B(T_B(r)) \grad T_B(r)) = 0
+      \end{equation}
+      where $k_B(T)$ is a general expression for the thermal conductivity in the
+      sodium bond and is given by a state relationship in \cite{sodiumProp}.
+      $T_B(r)$ is the temperature within the cladding region.
+      In this region, good thermal contact is
+      assumed such that $T_F(R_F)=T_B(R_F)$. That is, the temperature is 
+      continuous at the material discontinuity. Additionally, constant heat flux
+      is assumed at the material discontinuity such that $k_F(T_F(r))
+      \left.\frac{d\,T_F}{dr}\right|_{r=R_F} = k_B(T_B(r))
+      \left.\frac{d\,T_B}{dr}\right|_{r=R_F}$.
+
+      Recognizing cylindrical geometry, \eref{eq:tc_grad} can be rewritten.
+      \begin{equation}
+        \label{eq:tb_heat_conduction}
+        \frac{1}{r} \frac{\partial}{\partial r} \left(
+          r \, k_B(T_B(r)) \frac{d \, T_B}{dr} \right) = 0
+      \end{equation}
+      Begin solving \eref{eq:tb_heat_conduction} by multiplying the problem by
+      the radial coordinate $r$.
+      \begin{equation}
+        \frac{\partial}{\partial r} \left( r \, k_B(T_B(r)) \frac{d \, T_B}{dr}
+          \right) = 0
+      \end{equation}
+      Integrate the equation for $r \in[R_F,r']$ where $r'$ is an arbitrary
+      location $r' \in [R_F,R_B]$.
+      \begin{align}
+        \int_{R_F}^{r'} \frac{\partial}{\partial r} \left( r\, k_B(T_B(r)) \, 
+          \frac{d\,T_B}{dr} \right) \; dr \\
+        \left. r\, k_B(T_B(r)) \frac{d\,T_B}{dr} \right|_{r=R_F}^{r=r'} &= 0 \\
+        \label{eq:tf_first_integral}
+        \left. r' \, k_B(T_B(r')) \frac{d\,T_B}{dr} \right|_{r=r'} - 
+          \left. R_F \, k_B(T_B(R_F)) \frac{d\,T_B}{dr} \right|_{r=R_F} &= 0
+      \end{align}
+      The assumption of constant heat flux allows for the treatment of the
+      spatial derivative at $R_F$. Recall from the derivation within the fuel
+      region, the expression \eref{eq:dtdr_fuel} is exploited. The expression is
+      valid for any $r' \in [0,R_F]$ so allow $r'=R_F$.
+      \begin{align}
+        \left. R_F k_F(T_F(R_F)) \frac{d\,T_F}{dr} \right|_{r=R_F} + 
+          \frac{q'''_c}{2} R_F^2 &= 0
+        \label{eq:surface_relation}
+        \left. R_F k_F(T_F(R_F)) \frac{d\,T_F}{dr} \right|_{r=R_F} &= 
+          - \frac{q'''_c}{2} R_F^2
+      \end{align}
+      Recall from the earlier derivation that the quantity $q'''_c$ is the
+      average volumetric heat generation rate within chunk $c$.
+      \eref{eq:surface_relation} is substituted into
+      \eref{eq:tf_first_integral}.
+      \begin{equation}
+        \label{eq:tf_first_bc}
+        \left. r' \, k_B(T_B(r')) \frac{d\,T_B}{dr} \right|_{r=r'} +
+          \frac{q'''_c}{2} R_F^2 = 0
+      \end{equation}
+      Divide \eref{eq:tf_first_integral} by the radial coordinate $r'$. This is
+      valid because $r \ne 0$ in this region.
+      \begin{equation}
+        \left. k_B(T_B(r')) \frac{d\,T_B}{dr} \right|_{r=r'} + 
+          \frac{q'''_c}{2} \frac{R_F^2}{r'} = 0
+      \end{equation}
+      Integrate the equation for $r' \in [R_F,r]$ where $r \in [R_F,r']$.
+      \begin{align}
+        \int_{R_F}^r \left( \left. k_B(T_B(r')) \frac{d\,T_B}{dr}\right|_{r=r'}
+          + \frac{q'''_c}{2} \frac{R_F^2}{r'} \right) \; dr' &= 0 \\
+        \int_{R_F}^r \left. k_B(T_B(r')) \frac{d\,T_B}{dr}\right|_{r=r'} \; dr'
+          + \int_{R_F}^r \frac{q'''_c}{2} \frac{R_F^2}{r'} \; dr' &= 0\\
+        \int_{R_F}^r \left. k_B(T_B(r')) \frac{d\,T_B}{dr}\right|_{r=r'} \; dr'
+          + \frac{q'''_c}{2} R_F^2 \left. \ln(r') \right|_{r'=R_F}^{r'=r} &= 0\\
+        \int_{R_F}^r \left. k_B(T_B(r')) \frac{d\,T_B}{dr}\right|_{r=r'} \; dr'
+          + \frac{q'''_c}{2} R_F^2 ( \ln(r) - \ln(R_F)) &= 0 \\
+        \int_{R_F}^r \left. k_B(T_B(r')) \frac{d\,T_B}{dr}\right|_{r=r'} \; dr'
+          + \frac{q'''_c}{2} R_F^2 \ln\left(\frac{r}{R_F}\right) &= 0 
+      \end{align}
+      Again, the remaining integral can be rewritten by employing the
+      fundamental theorem of calculus.
+      \begin{equation}
+        \label{eq:tf_fundamental_theorem}
+        \int_{T_B(R_F)}^{T(r)} k_B(T_B(r)) \; dT + \frac{q'''_c}{2} R_F^2 
+          \ln\left(\frac{r}{R_F}\right) = 0
+      \end{equation}
+      Defining a conductivity integral function $K_B(T)$ similar to
+      \eref{eq:conductivity_integral}, \eref{eq:tf_fundamental_theorem} can be
+      rewritten.
+      \begin{gather}
+        K_B(T_B(r)) - K_B(T_B(R_F)) + \frac{q'''_c}{2} R_F^2
+          \ln\left(\frac{r}{R_F}\right) = 0 \\
+        K_B(T_B(R_F)) = K_B(T_C(r)) - \frac{q'''_c}{2} R_F^2
+          \ln\left(\frac{r}{R_F}\right) \\
+        \label{eq:tf_conductivity_integral}
+        K_B(T_F) = K_B(T_B) - \frac{q'''_c}{2} R_F^2
+          \ln\left(\frac{r}{R_F}\right)
+      \end{gather}
+      The fuel surface temperature can be calculated using
+      \eref{eq:tf_conductivity_integral} given a functional form of the
+      conductivity integral $K_C(T)$ by performing a search on the function. In
+      \eref{eq:tf_conductivity_integral}, $T_F=T_B(R_F)$ is the fuel surface 
+      temperature, $T_B=T_B(R_B)$ is the bond surface temperature and must be
+      given to use this expression.
+
     \subsubsection{Bond Surface Temperature}
+
+
     \subsubsection{Clad Surface Temperature}
       Clad surface temperature $T_C$ is given by Newton's Law of Cooling with
       convective heat transfer coefficient $h_c$ specified according to the
