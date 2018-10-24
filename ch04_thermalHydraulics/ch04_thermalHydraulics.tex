@@ -229,7 +229,56 @@
   
 \section{Radial Conduction Model}
   \label{sec:radial_conduction_model}
+  The radial heat conduction model is intended to describe the steady-state heat
+  conduction from its generation in the fuel to the coolant. A pin model as
+  described in \fref{fig:radial_model} is assumed with explicit treatment of
+  fuel, sodium bond, and cladding regions. For this model, it is assumed that
+  $T_{\infty}$ is known within the chunk as calculated in
+  \sref{sec:axial_convection_model}. Then, the model begins by calculating
+  temperatures at key locations. Material temperature is calculated at the fuel
+  center-line, fuel surface, bond surface, and clad surface. The derivation of
+  these quantities are presented in \sref{sec:surface_temps}. With the
+  temperatures at these locations calculated, the average temperature within
+  each material is calculated. These average temperatures are essential for the
+  accurate simulation of the reactor as they influence multigroup constants. The
+  calculation of the average temperatures are presented in
+  \sref{sec:average_temps}.
+
   \subsection{Surface Temperature and Center-Line Temperatures}
+    \label{sec:surface_temps}
+    Temperatures at selected locations are calculated using the steady-state
+    heat conduction equation with variable thermal conductivity. No restrictions
+    are placed on the functional form of the materials thermal conductivities
+    and the method remains general. The process of the derivation moves outward
+    from the fuel center-line always assuming that the next temperature is
+    known. That is, derivation begins with the fuel center-line temperature,
+    assuming the fuel surface temperature is known. Then, derivation moves to
+    the fuel surface temperature assuming the bond surface temperature is known.
+    This pattern is terminated and the relationship is closed at the cladding
+    surface where, for a given $T_{\infty}$ the clad surface temperature is
+    described by Newton's law of cooling and some convective heat transfer
+    correlation. For this application, the Weisman correlation is selected for
+    its applicability to triangular-pitch flow channels.
+
+    With derivation completed, the temperatures of interest are calculated.
+    While derivation moved from fuel center-line outward to clad surface,
+    calculation moves from clad surface inward to fuel center-line. This is
+    necessary because the quantities are all unknown with the exception of
+    $T_{\infty}$ so the calculation begins there. Clad temperature is the only
+    temperature solved explicitly as it is specified by Newton's law of cooling.
+    All other temperatures are solved implicitly. In these implicit solutions,
+    the value of a conductivity is calculated. The conductivity integral is
+    described as
+    \begin{equation}
+      \label{eq:conductivity_integral}
+      K(T) = \int_0^T k(T') \; dT'
+    \end{equation}
+    where $k(T)$ is the thermal conductivity of the material. Then, for a given
+    $K(T)$, $T$ may be calculated using a numerical solution method. In this
+    application, a bisection method is implemented for its robustness. A faster
+    numerical solution method could later be implemented but the bisection
+    method was chosen for its generality and simplicity.
+
     \subsubsection{Fuel Center-Line Temperature}
       The fueled region is the only region modeled with non-zero volumetric heat
       generation. In this region, $q'''_c$ as specified by 
@@ -302,12 +351,8 @@
       In this derivation, $k_F(T)$ is allowed to be a generic function. 
       Therefore, \eref{eq:tcl_integral} does not have a simple forward 
       expression. Solving for $T_F(0)$ will require a non-linear search such as
-      the bisection method. Define the conductivity integral of the generic
-      conductivity function $k(T)$ as
-      \begin{equation}
-        \label{eq:conductivity_integral}
-        K(T) = \int_0^T k(T') \; dT'.
-      \end{equation}
+      the bisection method. Define the conductivity integral of the fuel
+      conductivity in the form \eref{eq:conductivity_integral}.
       Then, \eref{eq:tcl_integral} can be rewritten.
       \begin{gather}
         K_F(T_F(r)) - K_F(T_F(0)) + \frac{q'''_c}{4} r^2 = 0 \\
@@ -615,12 +660,27 @@
       \begin{align}
         T_C &= \frac{q''_{clad}}{h_c} + T_{\infty} \\
         \label{eq:tc}
-        T_C &= q'''_c \frac{R_F^2}{2\,R_c\,h_c} + T_{infty}
+        T_C &= q'''_c \frac{R_F^2}{2\,R_c\,h_c} + T_{\infty}
       \end{align}
+      With \eref{eq:tc}, all surface temperatures and the fuel center-line
+      temperature have been related to $T_{\infty}$ and the calculation of these
+      quantities may begin, moving from the coolant toward the fuel center-line.
 
   \subsection{Average Temperatures}
+    \label{sec:average_temps}
+
 \section{Cross Section Treatment}
   \subsection{Cross Section Library Generation}
+    State-of-the-art fast reactor simulations utilize cross sections generated
+    from \mcc. This code from Argonne National Laboratory allows for the
+    generation of mulitgroup constants useful for solution of the neutron
+    diffusion equation. The calculation in \mcc begins with a 2,082 fine-group
+    neutron library based on ENDF-VII data and can be collapsed to an
+    arbitrary, user-specified, energy group structure. For this application, the
+    recommended and default 33-group structure is used. In fissile media, the
+    energy spectrum used for the collapse is based on the fission spectrum of
+    the media. In non-fissile media, a default \isotope[238]{U} fission spectrum
+    is used. The collapse assumes an infinite 
   \subsection{Temperature Dependent Cross Section Calculation}
 
 % todo this will probably be a separate chapter and include thermal expansion
