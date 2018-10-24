@@ -18,11 +18,15 @@ data = csvread(fname);
 r = data(:,1);
 T = data(:,2);
 
-dr = r(2)-r(1); % assumed constant
 myTfuel_ave = 0.;
 myTbond_ave = 0.;
 myTclad_ave = 0.;
 for i = 1:length(T)
+    if (i > 1)
+        dr = r(i)-r(i-1);
+    else
+        dr = r(i);
+    end
     if (r(i) <= rfuel)
         myTfuel_ave = myTfuel_ave + T(i)*r(i)*dr;
     elseif (r(i) <= rbond)

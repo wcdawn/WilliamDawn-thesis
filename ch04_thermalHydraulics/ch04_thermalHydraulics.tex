@@ -3,7 +3,7 @@
 
 \section{Introduction}
   For reactor design purposes, designs are ultimately constrained by thermal
-  properties. Additionally, neutronics properties in the form of cross sections
+  properties. Additionally, neutronics properties in the form of cross-sections
   and density changes are significantly affected by system temperatures.
   Therefore, to accurately simulate the neutron distribution within the reactor,
   it is necessary to also simulate temperatures within the reactor.
@@ -55,6 +55,7 @@
   cross-sectional areas are calculated according to the given formulae where
   $N_{pin}$ is the number of pins in the assembly.
   \begin{align}
+    \label{eq:afrac_first}
     A_{total} &= \frac{\sqrt{3}}{2} F2F^2 \\
     A_{can} &= A_{total} - 
       \frac{\sqrt{3}}{2} \left(  F2F - 2 \, Th_{Box} \right) \\
@@ -62,12 +63,13 @@
     A_{clad} &= N_{pin} \pi (R_C^2 - R_B^2) \\
     A_{bond} &= N_{pin} \pi (R_B^2 - R_F^2) \\
     A_{fuel} &= N_{pin} \pi R_F^2 \\
+    \label{eq:afrac_last}
     A_{cool} &= A_{total} - A_{can} - A_{wrap} - A_{clad} - A_{bond} - A_{fuel}
   \end{align}
   Calculating the areas as above allows for calculation of cross-sectional area
   fractions. Assuming constant dimensions within an element in the axial
   direction, these area fractions are equivalent to volume fractions and are
-  useful for neutron cross section calculations. Additionally, these formulae
+  useful for neutron cross-section calculations. Additionally, these formulae
   allow for thermal expansion calculations as the liquid sodium in the bond and
   the coolant are allowed to vary to allow for the expansion of other materials.
 
@@ -145,7 +147,7 @@
   \end{equation}
   and the power distribution is 
   \begin{equation}
-    \label{eq:normalization_q}
+    \label{eq:elementpwr}
     q_{e} = \sum_g^G \kappa \Sigma_{f,e,g} \phi_{g,e}.
   \end{equation}
   For an elemental power $q_e$, then the volumetric heat generation rate within
@@ -671,7 +673,7 @@
 
 \section{Cross Section Treatment}
   \subsection{Cross Section Library Generation}
-    State-of-the-art fast reactor simulations utilize cross sections generated
+    State-of-the-art fast reactor simulations utilize cross-sections generated
     from \mcc. This code from Argonne National Laboratory allows for the
     generation of mulitgroup constants useful for solution of the neutron
     diffusion equation. The calculation in \mcc begins with a 2,082 fine-group
@@ -680,8 +682,206 @@
     recommended and default 33-group structure is used. In fissile media, the
     energy spectrum used for the collapse is based on the fission spectrum of
     the media. In non-fissile media, a default \isotope[238]{U} fission spectrum
-    is used. The collapse assumes an infinite 
+    is used \cite{mcc}.
+    
+    The collapse simplifies the geometry to an infinite and homogeneous medium.
+    To reasonably simulate the energy spectrum within the material, cross 
+    sections are collapsed assuming an infinite homogeneous mixture composed
+    of a single hexagonal assembly. Number densities are calculated for such
+    that the number density in the assembly is the number density within the
+    material region weighted by the area fraction of that region. Area fractions
+    are calculated by using \eref{eq:afrac_first} through \eref{eq:afrac_last}.
+    
+    To capture the effect of Doppler broadening, cross-section libraries are
+    generated for several different material temperatures.
+    It is known that the effect of temperature on cross-sections are most
+    significant in the fuel region where temperatures can be extreme at high
+    reactor powers. Compared to the fuel temperature, the coolant and cladding
+    temperatures change relatively little over the operating range of a
+    sodium-cooled fast reactor.
+    While fuel, clad, and coolant temperatures can be related as above (see
+    \sref{sec:radial_conduction_model}), these
+    relationships are dependent on reactor power, $Q_{Rx}$, and reactor mass 
+    flow rate, $\mdot_{Rx}$, and these values are not known before the
+    simulation for a general reactor. Instead, a simplified temperature 
+    relationship is used to generate the cross-section libraries.
+
+    In each cross-section library, the coolant is maintained at some nominal
+    temperature. For this application, that temperature is $400 \units{K}$. This
+    is acceptable because the dominant effect of temperature on the macroscopic
+    cross-sections in the coolant is the density change of the fluid, not the
+    Doppler effect. Then, the fuel temperature is varied over some range. For
+    this application, libraries are generated for average fuel temperatures of 
+    $400 \units{K}$, $600 \units{K}$, $900 \units{K}$, and $1200 \units{K}$. For
+    each fuel temperature, the clad temperature is related as 
+    \begin{equation}
+      T_{clad} = w \, T_{fuel} + (1-w) \, T_{cool}
+    \end{equation}
+    where $T_{fuel}$ is the chosen fuel temperature for the library and
+    $T_{cool}$ is the coolant temperature, $400 \units{K}$. For this application
+    a weighting of $w=0.4$ provided acceptable results. Temperature in
+    non-fissile assemblies is set to $T_{cool}$ during the collapse as there is
+    no heat generated in these assemblies and in the axial convection model,
+    non-fissile assemblies will have temperature equal to $T_{inlet}$.
+
+    \begin{table}
+      \caption{Temperatures Selected for Cross-Section Libraries.}
+      \label{tab:xstemps}
+      \begin{center}
+        \begin{tabular}{lll}
+          \toprule
+          $T_{cool} \units{K}$ & $T_{clad} \units{K}$ & $T_{fuel} \units{K}$ \\
+          \midrule
+          400 & 400 & 400  \\
+          400 & 480 & 600  \\
+          400 & 600 & 900  \\
+          400 & 720 & 1200 \\
+          \bottomrule
+        \end{tabular}
+      \end{center}
+    \end{table}
+
+    Ultimately, the cross-sections are accumulated as four separate libraries at
+    temperatures given in \tref{tab:xstemps}. These cross-sections are generated
+    at the temperatures specified and the collapses are performed assuming an
+    infinite homogeneous mixture of a single assembly. With these libraries
+    generated, the average material temperatures calculated in 
+    \sref{sec:average_temps} are used to calculate cross-sections within each
+    material.
+
   \subsection{Temperature Dependent Cross Section Calculation}
+    Given cross-section libraries calculated at temperatures, an interpolation
+    method can be used to calculate the cross-section at a specific temperature.
+    The temperature interpolation is unique for each material region and each
+    region is briefly discussed.
+
+    Temperatures are updated periodically throughout the neutron diffusion
+    calculation. The user may specify a fixed number of power iterations for
+    which the diffusion calculation will run before updating the temperatures.
+    For a discussion of power iterations, see \sref{sec:power_iterations}. When
+    the temperatures are updated, the cross-sections are also updated. Note that
+    this update of cross-sections during a power iteration makes the iterative
+    method non-linear and the convergence of the method is no longer guaranteed.
+    Experimentally, convergence behaves acceptably for typical cases. The
+    general procedure to update cross sections is given in
+    \algorithmref{algorithm:temperature_update}.
+
+    In \algorithmref{algorithm:temperature_update}, the cross-sections are
+    updated using the average material temperatures. Average material
+    temperatures are unique within each chunk. Therefor, instead of having
+    cross-sections constant throughout the reactor and only a function of
+    material, cross sections are now unique and uniquely updated within each
+    chunk.
+
+    \begin{algorithm}
+      \caption{Temperature and Cross-Section Update Procedure.}
+      \label{algorithm:temperature_update}
+      \begin{algorithmic}[1]
+        \State Calculate flux normalization constant $c$ from
+          \eref{eq:normalization_c}.
+        \State Calculate power and volumetric power in the fuel for each element
+          as in \eref{eq:elementpwr} and \eref{eq:elementqppp_fuel}.
+        \State Calculate power and volumetric power in the fuel for each chunk
+          as in \eref{eq:chunkpwr} and \eref{eq:chunkqppp_fuel}.
+        \State Calculate bulk coolant temperature in each chunk using the 
+          procedure outlined in \sref{sec:axial_convection_model}.
+        \State Calculate surface temperatures and fuel center-line temperature
+          using the procedure outlined in \sref{sec:surface_temps}.
+        \State Calculate material average temperatures using the procedure 
+          outlined in \sref{sec:average_temps}.
+        \State Update cross sections using average material temperatures.
+      \end{algorithmic}
+    \end{algorithm}
+
+    \subsubsection{Coolant Cross Sections}
+      The main effect on coolant cross sections due to temperature is the change
+      in the fluid density. The mass density of the of liquid sodium (as used in
+      sodium-cooled fast reactors) is given as a function of temperature
+      $\rho(T)$ by a state relationship in \cite{sodiumProp}. Natural sodium is
+      entirely composed of \isotope[23]{Na} and has atomic weight $M_{Na} =
+      22.989769281 \units{$\frac{\text{gram}}{\text{mol}}$}$ \cite{nuclides}.
+      Then, the number density of the coolant is given as
+      \begin{equation}
+        \label{eq:number_density_sodium}
+        N_{Na}(T) = \frac{\rho_{Na}(T) N_A}{M_{Na}}
+      \end{equation}
+      where $N_A$ is Avogadro's number. When temperatures are calculated and
+      cross sections are updated, the number density of sodium is updated and
+      cross sections are calculated. 
+      
+      In the temperature dependent cross-section library structure described in
+      \tref{tab:xstemps}, all coolant temperatures are the same. Then, the
+      macroscopic cross section in the coolant for reaction $x$ is given as
+      \begin{equation}
+        \Sigma_x = N_{Na}(T_{\infty}) \; \sigma_x
+      \end{equation}
+      where $N_{Na}$ is calculated according to \eref{eq:number_density_sodium}.
+      If, instead, the microscopic coolant temperature were varied as a function
+      of temperature, a linear interpolation is performed for $T_{i}<T<T_{i+1}$
+      according to
+      \begin{equation}
+        \Sigma_{x} = N_{Na}(T) 
+          \left( \frac{T - T_{i}}{T_{i+1}-T_{i}} 
+          (\sigma_{x,i+1} - \sigma_{x,i})  + \sigma_{x,i}\right)
+      \end{equation}
+      where $T_i$ and $T_{i+1}$ are the temperatures associated with the
+      tabulated microscopic cross sections $\sigma_i$ and $\sigma_{i+1}$
+      respectively. 
+
+    \subsubsection{Clad Cross Sections}
+      Cross-section temperature dependence within the cladding is due to the
+      Doppler effect. Macroscopic cross-sections are tabulated based on the
+      cross-section library data at temperatures specified in
+      \tref{tab:xstemps}. The Doppler effect is typically small as cladding
+      material has fewer absorption resonances than fuel material and cladding
+      material does not change temperature as extremely as other reactor
+      materials. Because this effect is relatively small, a simple linear
+      interpolation is used to interpolate macroscopic cross sections within
+      this material. For $T_i < T < T_{i+1}$, the macroscopic cross-section for
+      reaction $x$ according to the linear interpolation method is given as
+      \begin{equation}
+        \label{eq:xs_linear_interpolation}
+        \Sigma_{x} = 
+          \frac{T - T_{i}}{T_{i+1}-T_{i}} 
+          (\Sigma_{x,i+1} - \Sigma_{x,i})  + \Sigma_{x,i}
+      \end{equation}
+      where $\Sigma_{x,i}$ and $\Sigma_{x,i+1}$ are the macroscopic
+      cross-sections that correspond to temperatures $T_i$ and $T_{i+1}$
+      respectively. 
+
+    \subsubsection{Bond Cross Sections}
+      While the average bond temperature is computed, the temperature dependence
+      of bond cross sections is neglected. This is because the bond represents a
+      miniscule volume of the reactor and the sodium cross-sections within this
+      region do not dictate any larger-scale reactor physics. The bond is the 
+      same material as the coolant (sodium). If all coolant (sodium) 
+      cross-sections are provided at the same temperature as in 
+      \tref{tab:xstemps}, the bond cross sections are set to the same as the 
+      coolant cross sections. If the sodium cross sections are provided at
+      various temperatures, a linear interpolation is performed according to
+      \eref{eq:xs_linear_interpolation}. The assumption that this region has the
+      same cross-sections as the coolant has negligible effect on the solution.
+
+    \subsubsection{Fuel Cross Sections}
+      Temperature dependence of cross-sections in the fuel region is dominated
+      by the Doppler effect. This effect may be large for high fuel temperatures
+      and it is important that for realistic cross-sections, this effect be
+      simulated properly. Macroscopic cross-sections are tabulated based on
+      library data at temperatures specified in \tref{tab:xstemps}. Then, a
+      square-root interpolation method is used. The square-root interpolation is
+      commonly selected for cross-section interpolation because the Doppler
+      effect follow square-root behavior closely. For $T_i < T < T_{i+1}$, the
+      macroscopic cross-section for reaction $x$ within the fuel is calculated
+      as
+      \begin{equation}
+        \Sigma_{x} = 
+          \frac{\sqrt{T} - \sqrt{T_{i}}}{\sqrt{T_{i+1}}-\sqrt{T_{i}}}
+          (\Sigma_{x,i+1} - \Sigma_{x,i})  + \Sigma_{x,i}
+      \end{equation}
+      where $\Sigma_{x,i}$ and $\Sigma_{x,i+1}$ are the macroscopic
+      cross-sections of reaction $x$ corresponding to $T_i$ and $T_{i+q}$
+      respectively.
+      
 
 % todo this will probably be a separate chapter and include thermal expansion
 %\section{Results}

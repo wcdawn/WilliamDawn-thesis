@@ -658,6 +658,7 @@
     quantities to the precision of the quadrature and the numeric precision. The
     table of the order required for exact integration are provided in 
     \tref{tab:quadrature_orders}.
+
     \begin{table}
       \begin{center}
         \caption{Quadrature Orders for FEM Quantities.}
@@ -746,7 +747,7 @@
     determinant. For the quadrature integration of derivative quantities as
     necessary in the FEM, the derivatives must also be translated from the
     reference element to the spatial element. This is performed according to 
-    \algref{algorithm:deriv_int}. The notation is dense as the method
+    \algorithmref{algorithm:deriv_int}. The notation is dense as the method
     requires two sets of coordinates. First, the coordinate in the reference
     element $(\xi,\zeta,\eta)$ and second, the coordinate in Cartesian space
     $(x,y,z)$.
@@ -754,9 +755,9 @@
     $\basis_i$ with respect to the reference coordinates $(\xi,\zeta,\eta)$.
     Vector $\vd_{i,\,(x,y,z)}$ is the gradient vector for $\basis_i$ with
     respect to the Cartesian coordinates $(x,y,z)$. In 
-    \algref{algorithm:deriv_int}, the quadrature has points $\{\vx_p\}$ and 
-    weights $\{w_p\}$ for $p = 1,2,\ldots,N_P$ and the value of the integral is
-    represented by \eref{eq:deriv_integral}.
+    \algorithmref{algorithm:deriv_int}, the quadrature has points $\{\vx_p\}$ 
+    and weights $\{w_p\}$ for $p = 1,2,\ldots,N_P$ and the value of the integral
+    is represented by \eref{eq:deriv_integral}.
     \begin{equation}
       \label{eq:deriv_integral}
       v = \int_{\Omega_e} \grad \basis_i(\vr) \cdot \grad \basis_j(\vr) \;
@@ -968,7 +969,7 @@
     down-scatter component $q_{down,g}(\vr)$ requires higher energy groups (i.e.
     $g' < g$). Based on these requirements, these source components can be
     calculated based on different power iterations of $\phi_g(\vr)$. This is
-    described in Algorithm \ref{algorithm:general}.
+    described in \algorithmref{algorithm:general}.
     \eref{eq:multigroup_source_expand} is then more explicitly written.
     \begin{equation} \label{eq:multigroup_power_iterations}
       -\grad \cdot (D_g(\vr) \grad \phi_g^{(s)}(\vr)) + \Sigma_{r,g}(\vr)
@@ -993,7 +994,7 @@
   \subsection{Algorithm}
     The algorithm for the solution to the diffusion equation is similar to most
     implementations of the multigroup neutron diffusion method. The algorithm 
-    itself is presented in Algorithm \ref{algorithm:general}. The steps unique 
+    itself is presented in \algorithmref{algorithm:general}. The steps unique 
     to the FEM are steps \ref{state:fem_matrix} and \ref{state:fem_vector}. 
     These require the quantities previously derived and form the linear system 
     described by the FEM. 
@@ -1252,10 +1253,10 @@
     
     A simple recipe for the CG method is presented in Algorithm 2.4.1
     \cite{Kelley1995IterativeEquations} and its implementation in this 
-    application is replicated in Algorithm \ref{algorithm:CG}.
+    application is replicated in \algorithmref{algorithm:CG}.
     
     \begin{algorithm}
-      \caption{Conjugate Gradient Method}
+      \caption{Conjugate Gradient Method.}
       \label{algorithm:CG}
       \begin{algorithmic}[1]
         \State $k = 0$
@@ -1279,7 +1280,7 @@
       \end{algorithmic}
     \end{algorithm}
     
-    In Algorithm \ref{algorithm:CG}, $\epsilon$ is a tolerance set by the user 
+    In \algorithmref{algorithm:CG}, $\epsilon$ is a tolerance set by the user 
     and the square of the two-norm is most efficiently replaced by the 
     inner-product as in \eref{eq:two_norm_inner}. 
     \begin{equation}

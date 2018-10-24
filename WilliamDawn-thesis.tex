@@ -9,7 +9,6 @@
 
 \usepackage{booktabs}  % professionally typeset tables
 %\usepackage{amsmath,amssymb,amsfonts}
-\usepackage{amsmath}
 \usepackage{textcomp}  % better copyright sign, among other things
 \usepackage{lipsum}    % filler text
 \usepackage{subfig}    % composite figures
@@ -303,7 +302,7 @@ Method}
 \newcommand{\grad}{\mathbf{\nabla}}
 
 % general macros
-\newcommand{\units}[1]{\;\text{[{#1}]}}
+\newcommand{\units}[1]{\;\ensuremath{\left[\text{{#1}}\right]}}
 
 % neutronDiffusion
 \newcommand{\albedo}{\alpha}
@@ -325,9 +324,9 @@ Method}
 \newcommand{\sref}[1]{Sec.~\ref{#1}}
 \newcommand{\chref}[1]{Chapter ~\ref{#1}}
 \newcommand{\apref}[1]{Appendix ~\ref{#1}}
+\newcommand{\algorithmref}[1]{Algorithm~\ref{#1}}
 % add chapter number to algorithm
 \renewcommand{\thealgorithm}{\arabic{chapter}.\arabic{algorithm}}
-\renewcommand{\algref}[1]{Algorithm~\ref{#1}}
 
 \usepackage{color}
 \newcommand{\NEW}[1]{#1}
