@@ -670,8 +670,37 @@
 
   \subsection{Average Temperatures}
     \label{sec:average_temps}
+    Average temperatures are used to evaluate material properties such as
+    densities and cross-sections within the different material regions. The
+    derivations in this section require the fuel center-line and surface
+    temperatures from \sref{sec:surface_temps}. 
 
 \section{Cross Section Treatment}
+  Realistic cross-sections are pivotal to a realistic reactor simulation. There
+  are two basic parts to cross-section treatment. First is the generation of
+  cross-section libraries. The key to generating these libraries is using a
+  representative flux spectrum for the many-group to multigroup collapse. It is
+  impossible to know the exact spectrum at the time of library generation so an
+  approximation decision must be made.
+  For fissile compositions, the spectrum is given by the
+  fission spectrum of the composition. For non-fissile compositions, a flux
+  spectrum must be assumed.  Using these flux spectra, the libraries must
+  be generated at selected temperatures to capture the effects of Doppler
+  broadening.
+
+  The second part of cross-section treatment is the calculation of effective
+  multigroup constants given these cross-section libraries. Cross-sections
+  assume an interpolation method between the temperatures used to generate the
+  libraries. The simplest interpolation method is linear interpolation and this
+  is valid for materials minimally effected by Doppler broadening. Such 
+  materials include cladding and sodium as these materials do not change
+  temperature significantly over the operating range of the reactor and have
+  relatively few neutron absorption resonances. The fuel material is
+  interpolated according to a square-root interpolation as the Doppler effect
+  obeys square-root behavior. This square-root interpolation is necessary due to
+  relatively high fuel temperatures and the many neutron absorption resonances
+  in fuel material, specifically Uranium.
+
   \subsection{Cross Section Library Generation}
     State-of-the-art fast reactor simulations utilize cross-sections generated
     from \mcc. This code from Argonne National Laboratory allows for the
@@ -685,12 +714,13 @@
     is used \cite{mcc}.
     
     The collapse simplifies the geometry to an infinite and homogeneous medium.
-    To reasonably simulate the energy spectrum within the material, cross 
-    sections are collapsed assuming an infinite homogeneous mixture composed
-    of a single hexagonal assembly. Number densities are calculated for such
-    that the number density in the assembly is the number density within the
-    material region weighted by the area fraction of that region. Area fractions
-    are calculated by using \eref{eq:afrac_first} through \eref{eq:afrac_last}.
+    To reasonably simulate the energy spectrum within a hexagonal assembly,
+    cross-sections are collapsed assuming an infinite homogeneous mixture 
+    composed of a single hexagonal assembly. Number densities are calculated 
+    such that the number density in the assembly is the number density within
+    the material region weighted by the area fraction of that region. Area
+    fractions are calculated by using \eref{eq:afrac_first} through 
+    \eref{eq:afrac_last}.
     
     To capture the effect of Doppler broadening, cross-section libraries are
     generated for several different material temperatures.
@@ -768,7 +798,7 @@
 
     In \algorithmref{algorithm:temperature_update}, the cross-sections are
     updated using the average material temperatures. Average material
-    temperatures are unique within each chunk. Therefor, instead of having
+    temperatures are unique within each chunk. Therefore, instead of having
     cross-sections constant throughout the reactor and only a function of
     material, cross sections are now unique and uniquely updated within each
     chunk.
@@ -803,7 +833,7 @@
       Then, the number density of the coolant is given as
       \begin{equation}
         \label{eq:number_density_sodium}
-        N_{Na}(T) = \frac{\rho_{Na}(T) N_A}{M_{Na}}
+        N_{Na}(T) = \frac{\rho_{Na}(T) \, N_A}{M_{Na}}
       \end{equation}
       where $N_A$ is Avogadro's number. When temperatures are calculated and
       cross sections are updated, the number density of sodium is updated and
