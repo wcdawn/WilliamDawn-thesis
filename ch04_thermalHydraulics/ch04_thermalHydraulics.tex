@@ -358,6 +358,7 @@
       Then, \eref{eq:tcl_integral} can be rewritten.
       \begin{gather}
         K_F(T_F(r)) - K_F(T_F(0)) + \frac{q'''_c}{4} r^2 = 0 \\
+        \label{eq:tfuel_r}
         K_F(T_F(0)) = K_F(T_F(r)) + \frac{q'''_c}{4} r^2 \\
         \label{eq:tcl_conductivity_integral}
         K_F(T_F(0)) = K_F(T_F) + \frac{q'''_c}{4} R_F^2
@@ -466,7 +467,8 @@
       \begin{gather}
         K_B(T_B(r)) - K_B(T_B(R_F)) + \frac{q'''_c}{2} R_F^2
           \ln\left(\frac{r}{R_F}\right) = 0 \\
-        K_B(T_B(R_F)) = K_B(T_C(r)) + \frac{q'''_c}{2} R_F^2
+        \label{eq:tbond_r}
+        K_B(T_B(R_F)) = K_B(T_B(r)) + \frac{q'''_c}{2} R_F^2
           \ln\left(\frac{r}{R_F}\right) \\
         \label{eq:tf_conductivity_integral}
         K_B(T_F) = K_B(T_B) + \frac{q'''_c}{2} R_F^2
@@ -570,6 +572,7 @@
       \begin{gather}
         K_C(T_C(r)) - K_C(T_C(R_B)) + \frac{q'''_C}{2} R_F^2
           \ln\left(\frac{r}{R_B}\right) = 0 \\
+        \label{eq:tclad_r}
         K_C(T_C(R_B)) = K_C(T_C(r)) + \frac{q'''_c}{2} R_F^2
           \ln\left(\frac{r}{R_B}\right) \\
         \label{eq:ktb}
@@ -673,7 +676,148 @@
     Average temperatures are used to evaluate material properties such as
     densities and cross-sections within the different material regions. The
     derivations in this section require the fuel center-line and surface
-    temperatures from \sref{sec:surface_temps}. 
+    temperatures from \sref{sec:surface_temps}. The principle of the method
+    presented for estimating average temperatures is the assumption that the
+    average temperature within a material, $\overline{T}$, corresponds exactly
+    to the average value of the conductivity integral in that region,
+    $\overline{K(T(r))}$. That is, $\overline{K(T(r))} \approx K(\overline{T})$
+    such that $\overline{T} \approx K^{-1}(\overline{K(T(r))})$.
+    Generally, this need not be true. However, for the materials and associated
+    conductivity integrals presented here, this approximation is valid. In a
+    comparison case for typical reactor conditions, the numerical evaluation of
+    the average temperature agreed to this method within the tolerance of the
+    numerical solution method ($1 \units{K}$). Given this assumption, the
+    following relationships are used.
+
+    \subsubsection{Average Fuel Temperature}
+      Recall the expression for the conductivity integral $K_F(T_F(r))$ for $r
+      \in [0,R_F]$ given in \eref{eq:tfuel_r}. The equation can be rewritten as
+      \begin{equation}
+        K_F(T_F(r)) = K_F(T_0) - \frac{q'''_c}{4} r^2
+      \end{equation}
+      where $T_0=T_F(0)$ is the fuel center-line temperature calculated 
+      previously.
+      Then, the average fuel conductivity integral within the fuel material is 
+      \begin{align}
+        \overline{K_F} &= \frac{\int_0^{R_F} K_F(T_F(r)) \, r \; dr}
+          {\int_0^{R_F} r \; dr} \\
+        \label{eq:kf_integral}
+        \overline{K_F} &= \frac{\int_0^{R_F} 
+          \left( K_F(T_0) - \frac{q'''_c}{4} r^2 \right)
+          \, r \; dr}{\int_0^{R_F} r \; dr}
+      \end{align}
+      noting the extra $r$ multiplication term due to the cylindrical
+      coordinates. Begin with evaluating the integral in the denominator
+      of \eref{eq:kf_integral}.
+      \begin{align}
+        \int_0^{R_F} r \; dr &= \left. \frac{r^2}{2} \right|_{r=0}^{r=R_F} \\
+        \label{eq:kf_denominator}
+        \int_0^{R_F} r \; dr &= \frac{R_F^2}{2}
+      \end{align}
+      Next, the integral in the numerator of \eref{eq:kf_integral} is evaluated.
+      \begin{align}
+        \int_0^{R_F} \left( K_F(T_0) - \frac{q'''_c}{4} r^2 \right) \, r \; dr&=
+          \int_0^{R_F} \left( K_F(T_0) \, r - \frac{q'''_c}{4} r^3 \right) \;
+          dr\\
+        &= \left. K_F(T_0) \frac{r^2}{2} \right|_{r=0}^{r=R_F} -
+          \left. \frac{q'''_c}{4} \frac{r^4}{4} \right|_{r=0}^{r=R_F} \\
+        \label{eq:kf_numerator}
+        &= K_F(T_0) \frac{R_F^2}{2} - \frac{q'''_c}{16} R_F^4
+      \end{align}
+      Evaluating \eref{eq:kf_integral} by dividing \eref{eq:kf_numerator} by
+      \eref{eq:kf_denominator} yields an expression for the average value of the
+      conductivity integral in the fuel region.
+      \begin{equation}
+        \label{eq:kf_bar}
+        \overline{K_F} = K_F(T_0) - \frac{q'''_c}{8} R_F^2
+      \end{equation}
+      Assuming $\overline{K_F} = K_F(\overline{T_F})$, then \eref{eq:kf_bar} can
+      be solved using a numerical method to determine $\overline{T_F}$. In this
+      application, the bisection method is used to solve \eref{eq:kf_bar}.
+
+    \subsubsection{Average Bond Temperature}
+      \label{sec:average_bond_temp}
+      The value of the bond conductivity integral at position $r \in [R_F,R_B]$
+      is given in \eref{eq:tbond_r} and can be rewritten as
+      \begin{equation}
+        K_B(T_B(r)) = K_B(T_F) - \frac{q'''_c}{2} R_F^2
+          \ln\left(\frac{r}{R_F}\right)
+      \end{equation}
+      where $T_F=T_B(R_F)$ is the fuel surface temperature already calculated.
+      The average value of the bond conductivity integral within the material is 
+      \begin{align}
+        \overline{K_B} &= \frac{\int_{R_F}^{R_B} K_B(T_B(r)) \, r \; dr}
+          {\int_{R_F}^{R_B} r \; dr} \\
+        \label{eq:kb_integral}
+        \overline{K_B} &= \frac{\int_{R_F}^{R_B} \left( K_B(T_F) -
+          \frac{q'''_c}{2} R_F^2 \ln\left(\frac{r}{R_F}\right) \right) \, r \;
+          dr} {\int_{R_F}^{R_B} r \; dr}
+      \end{align}
+      with the weighting due to radial coordinates included.
+      Evaluating the denominator of \eref{eq:kb_integral}.
+      \begin{align}
+        \int_{R_F}^{R_B} r \; dr &= \left. \frac{r}{2} \right|_{r=R_F}^{r=R_B}\\
+        \label{eq:kb_denominator}
+        \int_{R_F}^{R_B} r \; dr &= \frac{R_B^2 - R_F^2}{2}
+      \end{align}
+      The integral in the numerator of \eref{eq:kb_integral} is more than a
+      simple polynomial. The integral $\int \ln(r \, \alpha) \, r \; dr$ is given
+      in a table of integrals. Then, the numerator of \eref{eq:kb_integral} can
+      be evaluated. 
+      \begin{equation}
+        \int_{R_F}^{R_B} \left( K_B(T_F) - \frac{q'''_c}{2} R_F^2
+          \ln\left(\frac{r}{R_F}\right) \right) r dr 
+          = \int_{R_F}^{R_B}
+          \left( K_B(T_F) \, r - \frac{q'''_c}{2}R_F^2
+          \ln\left(\frac{r}{R_F}\right) \, r \right) \; dr
+      \end{equation}
+      \begin{multline}
+        \int_{R_F}^{R_B} \left( K_B(T_F) - \frac{q'''_c}{2} R_F^2
+          \ln\left(\frac{r}{R_F}\right) \right) r dr =\\
+        \left. K_B(T_F) \frac{r^2}{2} \right|_{r=R_F}^{r=R_B} - 
+          \left. \frac{q'''_c}{2}R_F^2 \left( \frac{r^2}{2}
+          \ln\left(\frac{r}{R_F}\right) - \frac{r^2}{4} \right)
+          \right|_{r=R_F}^{r=r_B}
+      \end{multline}
+      \begin{multline}
+        \label{eq:kb_numerator}
+        \int_{R_F}^{R_B} \left( K_B(T_F) - \frac{q'''_c}{2} R_F^2
+          \ln\left(\frac{r}{R_F}\right) \right) r dr = \\
+        K_B(T_F) \frac{R_B^2-R_F^2}{2} - \frac{q'''_c}{2} R_F^2
+          \left( \frac{R_F^2 - R_B^2}{4} + \frac{R_B^2}{2}
+          \ln\left(\frac{R_B}{R_F}\right) \right)
+      \end{multline}
+      With these expressions, \eref{eq:kb_integral} can be evaluated by dividing
+      \eref{eq:kb_numerator} by \eref{eq:kb_denominator} and simplifying.
+      \begin{equation}
+        \label{eq:kb_bar}
+        \overline{K_B} = K_B(T_F) - \frac{q'''_c}{4} \, R_F^2 \, \left(
+          \frac{R_F^2 - R_B^2 + 2\,R_B^2 \ln\left(\frac{R_B}{R_F}\right)}
+          {R_B^2-R_F^2}\right)
+      \end{equation}
+      Using \eref{eq:kb_bar}, the average bond temperature $\overline{T_B}$ can
+      be evaluated assuming $\overline{K_B}=K_B(\overline{T_B})$. This solution
+      is performed using a numerical method. Specifically, $\overline{T_B}$ is
+      then solved using the bisection method.
+
+    \subsubsection{Average Clad Temperature}
+      The calculation of the average clad temperature is similar to the
+      calculation of the average bond temperature because both of these regions
+      have no heat generation and the expressions for the conductivity integral
+      in these regions are similar. A derivation procedure similar to
+      \sref{sec:average_bond_temp} and the result will be similar. Therefore,
+      the average value of the conductivity integral in the cladding is 
+      \begin{equation}
+        \label{eq:kc_bar}
+        \overline{K_C} = K_C(T_B) - \frac{q'''}{4} R_F^2 \left(
+          \frac{R_B^2 - R_C^2 + 2 \, R_C^2 \ln\left(\frac{R_C}{R_B}\right)}
+          {R_C^2 - R_B^2} \right)
+      \end{equation}
+      where $T_B$ is the bond surface temperature. With the use of
+      \eref{eq:kc_bar}, the average clad temperature $\overline{T_C}$ can be
+      calculated assuming $\overline{K_C} = K_C(\overline{T_C})$ using a
+      numerical solution method. In this application, value $\overline{T_C}$ is
+      evaluated using \eref{eq:kc_bar} and the bisection method.
 
 \section{Cross Section Treatment}
   Realistic cross-sections are pivotal to a realistic reactor simulation. There
@@ -912,6 +1056,50 @@
       cross-sections of reaction $x$ corresponding to $T_i$ and $T_{i+q}$
       respectively.
       
+\section{Thermal Hydraulic Results}
+  To demonstrate the expected behavior of these models, axial and radial
+  temperature plots are generated. The radial solution is only generated to
+  demonstrate the expected behavior as the radial temperature functions
+  themselves are not used in the reactor simulation. The axial solution comes
+  from a typical reactor simulation and demonstrates the expected behaviors for
+  system temperatures.
+
+  \subsection{Radial Results}
+    Radial temperatures for a single-pin model are shown in
+    \fref{fig:radial_temp_plot}. This model was generated for $q'''_c = 1.8
+    \times 10^5 \units{$\frac{\text{W}}{\text{m}^3}$}$ and $\mdot_h = 10^3
+    \units{$\frac{\text{kg}}{\text{s}}$}$ which are typical values. It is seen
+    that the temperature profile within the fuel region is approximately 
+    quadratic and temperature profiles in the bond and clad are approximately
+    linear. These are the expected behavior for a constant thermal conductivity
+    in each region. Additionally, it is seen that the average temperatures as
+    calculated above reasonably approximate the average temperature within each
+    material. For this case, it was observed that a numeric integration method
+    to calculate the average temperature and the calculation method described in
+    \sref{sec:average_temps} agreed to within $1 \units{K}$.
+
+    \begin{figure}
+      \centering
+      \includegraphics[width=0.7\textwidth]{radial_temp_plot}
+      \caption{Radial Temperatures for Typical Reactor Conditions.}
+      \label{fig:radial_temp_plot}
+    \end{figure}
+
+  \subsection{Axial Results}
+    Axial temperatures for a single assembly are shown in
+    \fref{fig:axial_temp_plot}. This plot was generated by solving the neutron
+    diffusion problem for a typical reactor to estimate a heat generation
+    profile. Then, the temperatures were calculated at each level.
+    \fref{fig:axial_temp_plot} contains average material temperatures used in
+    the calculations of cross sections for the example reactor simulation. These
+    temperatures were output by the code itself.
+
+    \begin{figure}
+      \centering
+      \includegraphics[width=0.7\textwidth]{axial_temp_plot}
+      \caption{Axial Temperatures for Typical Reactor Conditions.}
+      \label{fig:axial_temp_plot}
+    \end{figure}
 
 % todo this will probably be a separate chapter and include thermal expansion
 %\section{Results}
