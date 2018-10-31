@@ -5,9 +5,9 @@ fname = '~/dev/thesis/thermal/radial.csv';
 rfuel = 0.270510;
 rbond = 0.312420;
 rclad = 0.368300;
-Tfuel_ave = 0.715872E+03;
-Tbond_ave = 0.647786E+03;
-Tclad_ave = 0.619839E+03;
+Tfuel_ave = 0.990696E+03;
+Tbond_ave = 0.788836E+03;
+Tclad_ave = 0.676579E+03;
 
 LW = 2;
 FS = 13;
@@ -60,9 +60,9 @@ yl = ylim();
 plot([rfuel,rfuel],yl,'k','HandleVisibility','off','LineWidth',LW)
 plot([rbond,rbond],yl,'k','HandleVisibility','off','LineWidth',LW)
 plot([rclad,rclad],yl,'k','HandleVisibility','off','LineWidth',LW)
-text(0.5*rfuel,680,'Fuel','HorizontalAlignment','Center','FontSize',FS)
-text(0.5*(rfuel+rbond),620,'Bond','HorizontalAlignment','Center','FontSize',FS)
-text(0.5*(rbond+rclad),680,'Clad','HorizontalAlignment','Center','FontSize',FS)
+text(0.5*rfuel,900,'Fuel','HorizontalAlignment','Center','FontSize',FS)
+text(0.5*(rfuel+rbond),900,'Bond','HorizontalAlignment','Center','FontSize',FS)
+text(0.5*(rbond+rclad),900,'Clad','HorizontalAlignment','Center','FontSize',FS)
 
 ylim(yl);
 title('Representative Temperature Calculation')
