@@ -31,3 +31,25 @@ legend(legend_labels,'Location','NorthWest');
 ylabel('Elevation [cm]')
 xlabel('Temperature [K]')
 title('Typical Axial Temperature Plot')
+
+clad_factor = zeros(size(tfuel));
+cool_factor = zeros(size(tfuel));
+Ttbl = [400,600,900,1200];
+for i = 1:length(tfuel)
+    hi_val = min(Ttbl(Ttbl > tfuel(i)));
+    lo_val = max(Ttbl(Ttbl < tfuel(i)));
+    clad_factor(i) = tclad(i) / hi_val;
+    cool_factor(i) = tcool(i) / hi_val;
+end
+
+clad_factor = tclad./tfuel;
+cool_factor = tcool./tfuel;
+[max_tfuel,idx_tfuel] = max(tfuel);
+figure
+hold on
+plot(tfuel,clad_factor)
+plot(tfuel,cool_factor)
+plot([max_tfuel,max_tfuel],ylim(),'k')
+hold off
+fprintf('clad_factor = %.6f\n',clad_factor(idx_tfuel));
+fprintf('cool_factor = %.6f\n',cool_factor(idx_tfuel));
