@@ -3,11 +3,12 @@
 
 \section{Motivation}
   Recent interest in advanced and next-generation nuclear power reactor designs
-  has renewed the development of simulations for these reactors. A class of
-  advanced nuclear power reactors which has merited research since the dawn of
-  nuclear engineering is the Sodium-cooled Fast Reactor (SFR) which operates 
-  with liquid sodium coolant and uses high-energy (``fast'') neutrons in the
-  fission reaction. Since early development of SFRs such as the Experimental
+  has encouraged further development of simulations for these reactors. A class
+  of advanced nuclear power reactors meriting research since the dawn 
+  of nuclear engineering is the Sodium-cooled Fast Reactor (SFR) which operate
+  with liquid sodium coolant and operate with predominantly high-energy 
+  (``fast'') neutrons in the fission reaction. Since early development of SFRs 
+  such as the Experimental
   Breeder Reactor I (EBR-I) in 1951 and Fermi 1 in 1956, there have been
   significant innovations in both nuclear modeling and computational methods. As
   development of SFRs is revisited in the form of the Versatile Test Reactor
@@ -37,21 +38,21 @@
   take advantage of developments in numerical methods including the solution of
   linear systems. Additionally, the simulation allows for the incorporation of
   generalized multi-physics effects whereas current state-of-the-art simulations
-  require data processing and manual calculation of multi-physics effects. The
-  final simulation is designed to simulate an operating SFR.
+  require data processing and manual iteration to simulate multi-physics 
+  effects. The final simulation is designed to simulate an operating SFR.
 
 \section{Geometry Description}
   \label{sec:geometry_description}
   Operating with fast neutrons decreases reaction probabilities. To compensate
   for this fact, SFRs are typically designed with hexagonal,
-  triangularly-pitched, fuel assemblies to maximize the fuel packing and
-  increase the fuel-density. An example of a SFR with hexagonal geometry as
-  simulated in this method is given in \fref{fig:reactor_materials}.
-  The specification of this geometry is necessary to
-  describe material properties in the form of cross-sections as well as to
-  describe coolant flow geometries. Dimensions of assemblies are measured at
-  room temperature and will later be expanded according to the thermal expansion
-  model.
+  triangularly pitched, fuel assemblies to maximize the fuel packing and
+  increase the fuel density. An example of a SFR with hexagonal geometry as
+  simulated in this method is shown in \fref{fig:reactor_materials}.
+  A typical hexagonal fuel assembly is displayed in \fref{fig:prixm_hex}.
+  This geometry is used to describe material properties in the form of 
+  cross-sections as well as to describe coolant flow geometries. Dimensions of 
+  assemblies are measured at room temperature and will later be expanded 
+  according to the thermal expansion model in \chref{ch:thermalExpansion}.
   
   \begin{figure}
     \centering
@@ -67,25 +68,25 @@
     \label{fig:prism_hex}
   \end{figure}
 
-  In a cross section of a hexagonal assembly, dimensions are presented in
-  A cross-sectional view of a single SFR fuel assembly is shown in 
-  \fref{fig:prism_hex}. (Note: wire wrap is omitted from \fref{fig:prism_hex}.)
+  In a cross sectional representation of a hexagonal assembly, dimensions are 
+  shown in \fref{fig:prism_hex}. 
   Note the individual material pins are cylindrical and are then accumulated
   into a hexagonal assembly. The basic geometry is a fuel material within
   stainless steel cladding. The gap between the fuel and cladding is filled by
   sodium bond to improve thermal conductivity across the gap. Then the pin is
   wrapped by a steel wire to ensure separation between pins that will allow for
   coolant flow. The wire wrap also serves to encourage the mixture of coolant
-  within the assembly. Many pins are then assembled into an assembly and
-  surrounded by a hexagonal can made of steel. This can aids in structural
-  stability and prohibits cross-flow between assemblies. 
+  within the assembly. (Note: wire wrap is omitted from \fref{fig:prism_hex}.) 
+  Many pins are then assembled into an assembly and surrounded by a hexagonal 
+  can made of steel. This can aids in structural stability and prohibits 
+  cross-flow between assemblies. 
 
-  The dimensions within a single pin is shown in \fref{fig:pin_model} and the
-  dimensions within a hexagonal assembly can is shown in \fref{fig:hex_can}. In
+  The dimensions within a single pin are shown in \fref{fig:pin_model} and the
+  dimensions within a hexagonal assembly can are shown in \fref{fig:hex_can}. In
   \fref{fig:hex_can}, $T\!h_{Box}$ is the thickness of the assembly box,
   $F\!2\!F$ is the flat-to-flat measurement of the outside of the hexagonal can,
-  and Pitch is the distance between the center of two pins. In future notation,
-  the quantity ``Pitch'' is also denoted $S$. Using the geometry described in 
+  and Pitch is the distance between the center of two pins.
+  Using the geometry described in 
   these figures, the material cross-sectional areas are calculated according to 
   the given formulae where $N_{pin}$ is the number of pins in the assembly.
   \begin{align}
@@ -104,8 +105,9 @@
   fractions. Assuming constant dimensions in the axial
   direction, these area fractions are equivalent to volume fractions and are
   useful for neutron cross-section calculations. Additionally, these formulae
-  allow for thermal expansion calculations as the liquid sodium in the bond and
-  the coolant are allowed to vary to allow for the expansion of other materials.
+  allow for thermal expansion as the liquid sodium in the bond and
+  the liquid coolant are allowed to vary to allow for the expansion of other 
+  materials.
 
   \begin{figure}
     \centering
@@ -123,18 +125,13 @@
 
 \section{Cross-Section Treatment}
   \label{sec:cross_section_treatment}
-  Reactor neutron distribution and power are chosen to be simulated by the
-  neutron diffusion equation rather than a neutron transport simulation. This is
-  a standard assumption for fast neutron reactor simulations because
-  cross-sections are relatively small for these high-energy neutrons and a
-  neutron is likely to travel many mean-free paths before being absorbed. The
-  neutron diffusion equation does not accurately simulate neutron distributions
-  near material discontinuities or on short distances relative to the neutron
-  mean-free-path. Therefore, reactor materials ``smeared'' into homogeneous
-  regions. The natural choice for these homogenized regions are the hexagonal
+  Reactor materials are ``smeared'' into homogeneous regions. This assumption is 
+  common to fas reactors because of the relatively large neutron mean-free-paths
+  compared to the scale of material dimensions. 
+  The natural choice for these homogenized regions are the hexagonal
   assemblies themselves. Materials are permitted to be heterogeneous axially but
   are homogenized in the radial direction within each assembly. For a number
-  density $N_i$ within region $i$, then the homogenized number density is
+  density $N_i$ within region $i$, the homogenized number density is
   \begin{equation}
     \label{eq:homogenized_nden}
     \overline{N} = \frac{\sum_{i = 1}^{N_{reg}} N_i \, V_i}
@@ -148,85 +145,84 @@
   in each region, area fractions can be translated to volume fractions to use in
   the formula.
 
-  \subsection{Generation}
-    For benchmark and analytic problems, cross-sections are simply given as
-    constants for the problem. Realistic reactor simulations require
-    cross-sections generated from preliminary calculations. In this
-    application, multigroup microscopic cross-sections are generated using 
-    \mcc \cite{mcc}.
-    The cross-section generator uses 2,082 fine energy groups to collapse down
-    to an arbitrary number of energy-groups. For this simulation, the
-    recommended and default 33-group energy structure is used. \mcc 
-    collapses the geometry to an infinite homogeneous medium and isotopic number
-    densities are calculated and input using \eref{eq:homogenized_nden}.
-    Cross-sections for each assembly type are generated separately to accurately
-    simulate the neutron energy spectrum within the assembly. The neutron energy
-    spectrum for fissile media is generated by the media's fission spectrum. 
-    Non-fissile material uses the default \isotope[238]{U} fission spectrum. 
+  For benchmark and analytic problems, cross-sections are simply given as
+  constants for the problem. Realistic reactor simulations require
+  cross-sections generated from preliminary calculations. In this
+  application, multigroup microscopic cross-sections are generated using 
+  \mcc \cite{mcc}.
+  The cross-section generator uses 2,082 fine energy groups to collapse down
+  to an arbitrary number of energy-groups. For this simulation, the
+  recommended and default 33-group energy structure is used. \mcc 
+  collapses the geometry to an infinite homogeneous medium and isotopic number
+  densities are calculated and input using \eref{eq:homogenized_nden}.
+  Cross-sections for each assembly type are generated separately to accurately
+  simulate the neutron energy spectrum within the assembly. The neutron energy
+  spectrum for fissile media is generated by the media's fission spectrum. 
+  Non-fissile material uses the default \isotope[238]{U} fission spectrum. 
 
-    To capture the effect of Doppler broadening, cross-section libraries are
-    generated for several different material temperatures. These libraries are
-    then used during the simulation to calculate on-the-fly cross-sections as a
-    function of material temperatures.
-    While fuel, clad, and coolant temperatures can be related with a thermal
-    hydraulic model (see \chref{ch:thermalHydraulics}, these relationships are 
-    functions of reactor power and coolant mass flow rate. These parameters are
-    not known before the simulation for a general reactor. Instead, a simplified
-    temperature relationship is used to generate the cross-section libraries.
+  To capture the effect of Doppler broadening, cross-section libraries are
+  generated for several different material temperatures. These libraries are
+  then used during the simulation to calculate on-the-fly cross-sections as a
+  function of material temperatures.
+  While fuel, clad, and coolant temperatures can be related with a thermal
+  hydraulic model (see \chref{ch:thermalHydraulics}, these relationships are 
+  functions of reactor power and coolant mass flow rate. These parameters are
+  not known before the simulation for a general reactor. Instead, a simplified
+  temperature relationship is used to generate the cross-section libraries.
 
-    In each cross-section library, the coolant is maintained at some nominal
-    temperature. For this application, that temperature is $400 \units{K}$
-    (note: sodium melting temperature 371 \units{K}). Maintaining the coolant
-    temperature as constant in this manner is acceptable because the dominant 
-    effect of temperature on the macroscopic cross-sections in the coolant is 
-    the density change of the fluid, not the Doppler effect. With constant 
-    coolant temperature, the fuel temperature is then varied over some range. 
-    For this application, libraries are generated for average fuel temperatures
-    of $400 \units{K}$, $600 \units{K}$, $900 \units{K}$, and $1200 \units{K}$.
-    At each fuel temperature, the clad temperature is related as 
-    \begin{equation}
-      T_{clad} = \max \left\{ w \, T_{fuel}, T_{cool} \right\}
-    \end{equation}
-    % note: weight for T_{cool} should be 0.63 if perturbed coolant is desired
-    where $w$ is a weighting factor, $T_{fuel}$ is the chosen fuel temperature
-    for the library, and $T_{cool}$ is the chosen coolant temperature for the
-    library. A weighting of $w=0.7$ was selected based on analysis of the ratio
-    $\overline{T_C}/\overline{T_F}$ for a representative high power reactor
-    channel in an example simulation. Temperature in non-fissile assemblies is 
-    set to $T_{cool}$ during the collapse as there is no heat generation modeled
-    in these materials.
+  In each cross-section library, the coolant is maintained at some nominal
+  temperature. For this application, that temperature is $400 \units{K}$
+  (note: sodium melting temperature 371 \units{K}). Maintaining the coolant
+  temperature as constant in this manner is acceptable because the dominant 
+  effect of temperature on the macroscopic cross-sections in the coolant is 
+  the density change of the fluid, not the Doppler effect. With constant 
+  coolant temperature, the fuel temperature is then varied over some range. 
+  For this application, libraries are generated for average fuel temperatures
+  of $400 \units{K}$, $600 \units{K}$, $900 \units{K}$, and $1200 \units{K}$.
+  At each fuel temperature, the clad temperature is related as 
+  \begin{equation}
+    T_{clad} = \max \left\{ w \, T_{fuel}, T_{cool} \right\}
+  \end{equation}
+  % note: weight for T_{cool} should be 0.63 if perturbed coolant is desired
+  where $w$ is a weighting factor, $T_{fuel}$ is the chosen fuel temperature
+  for the library, and $T_{cool}$ is the chosen coolant temperature for the
+  library. A weighting of $w=0.7$ was selected based on analysis of the ratio
+  $T_{clad}/T_{fuel}$ for a representative high power channel
+  within an example reactor simulation.  Temperature in non-fissile assemblies 
+  is set to $T_{cool}$ during the collapse as there is no heat generation 
+  modeled in these materials.
 
-    \begin{table}
-      \caption{Temperatures Selected for Cross-Section Libraries.}
-      \label{tab:xstemps}
-      \begin{center}
-        \begin{tabular}{lll}
-          \toprule
-          $T_{cool} \units{K}$ & $T_{clad} \units{K}$ & $T_{fuel} \units{K}$ \\
-          \midrule
-          400 & 400 & 400  \\
-          400 & 420 & 600  \\
-          400 & 630 & 900  \\
-          400 & 840 & 1200 \\
-          \bottomrule
-        \end{tabular}
-      \end{center}
-    \end{table}
+  \begin{table}
+    \caption{Temperatures Selected for Cross-Section Libraries.}
+    \label{tab:xstemps}
+    \begin{center}
+      \begin{tabular}{lll}
+        \toprule
+        $T_{cool} \units{K}$ & $T_{clad} \units{K}$ & $T_{fuel} \units{K}$ \\
+        \midrule
+        400 & 400 & 400  \\
+        400 & 420 & 600  \\
+        400 & 630 & 900  \\
+        400 & 840 & 1200 \\
+        \bottomrule
+      \end{tabular}
+    \end{center}
+  \end{table}
 
-    Ultimately, the cross-sections are accumulated as four separate libraries at
-    temperatures given in \tref{tab:xstemps}. Then, these libraries are used to
-    calculate on-the-fly cross-sections during the simulation.
-    With given microscopic cross sections calculated by \mcc, macroscopic cross
-    sections are calculated by homogenizing microscopic with number densities
-    $N_i$.  For the $x$ reaction type, the macroscopic cross-section is defined
-    as
-    \begin{equation}
-      \Sigma_{x,g} = \sum_{i=1}^{N_{iso}} N_i \sigma_{x,g,i}.
-    \end{equation}
-    Finally, the transport cross section is used to calculate the diffusion
-    constant.
-    \begin{equation}
-      D_g = \frac{1}{3 \Sigma_{tr,g}}
-    \end{equation}
+  Ultimately, the cross-sections are accumulated as four separate libraries at
+  temperatures given in \tref{tab:xstemps}. Then, these libraries are used to
+  calculate on-the-fly cross-sections during the simulation.
+  With given microscopic cross sections calculated by \mcc, macroscopic cross
+  sections are calculated by homogenizing microscopic with number densities
+  $N_i$.  For the $x$ reaction type, the macroscopic cross-section is defined
+  as
+  \begin{equation}
+    \Sigma_{x,g} = \sum_{i=1}^{N_{iso}} N_i \sigma_{x,g,i}.
+  \end{equation}
+  Finally, the transport cross section is used to calculate the diffusion
+  constant.
+  \begin{equation}
+    D_g = \frac{1}{3 \Sigma_{tr,g}}
+  \end{equation}
 
 \section{Thesis Organization}
