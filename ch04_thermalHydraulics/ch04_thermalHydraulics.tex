@@ -819,17 +819,20 @@
       calculated and used for calculating cross-sections.
 
 \section{Cross-Section Treatment}
-  The second part of cross-section treatment is the calculation of effective
-  multigroup constants given these cross-section libraries. This calculation
-  assume an interpolation method between the temperatures used to generate the
-  libraries. The simplest interpolation method is linear interpolation and this
-  is valid for materials minimally effected by Doppler broadening. Such 
-  materials include cladding and sodium as these materials do not change
-  temperature significantly over the operating range of the reactor and have
-  relatively few neutron absorption resonances. The fuel material is
-  interpolated according to a square-root interpolation because the Doppler
+  The purpose of calculating average material temperatures is to calculate
+  cross-sections for use in the neutron diffusion equation. Cross-sections are
+  calculated by interpolating between temperatures in cross-section libraries
+  generated according to \sref{sec:cross_section_treatment}. A basic
+  interpolation method is employed to simulate the Doppler effect and its effect
+  on neutron cross-sections.
+
+  Linear interpolation is valid for materials minimally effected by Doppler 
+  broadening. Such materials include cladding and sodium as these materials do 
+  not change temperature significantly over the operating range of the reactor 
+  and have relatively few neutron absorption resonances. The fuel material is 
+  interpolated according to a square-root interpolation because the Doppler 
   effect obeys square-root behavior. This square-root interpolation is necessary
-  due to relatively high fuel temperatures and the many neutron absorption
+  due to relatively high fuel temperatures and the many neutron absorption 
   resonances in fuel material, specifically Uranium.
 
   \subsection{Temperature Dependent Cross Section Calculation}
@@ -905,7 +908,7 @@
       \tref{tab:xstemps}, all coolant temperatures are the same. Then, the
       macroscopic cross section in the coolant for reaction $x$ is given as
       \begin{equation}
-        \Sigma_x = N_{Na}(T) \; \sigma_x
+        \Sigma_{x,j} = N_{Na}(T_{\infty,j}) \; \sigma_{x,Na}
       \end{equation}
       where $N_{Na}$ is calculated according to \eref{eq:number_density_sodium}.
 
@@ -914,11 +917,11 @@
       according to
       \begin{equation}
         \label{eq:cs_cool}
-        \Sigma_{x,g} = N_{Na}(T) 
+        \Sigma_{x,j,g} = N_{Na}(T_{\infty,j}) 
           \left( \frac{T - T_{i}}{T_{i+1}-T_{i}} 
-          (\sigma_{x,g,i+1} - \sigma_{x,g,i})  + \sigma_{x,g,i}\right)
+          (\sigma_{x,Na,g,i+1} - \sigma_{x,Na,g,i})  + \sigma_{x,Na,g,i}\right)
       \end{equation}
-      where $\sigma_{x,g,i}$ and $\sigma_{x,g,i+1}$ are the microscopic 
+      where $\sigma_{x,Na,g,i}$ and $\sigma_{x,Na,g,i+1}$ are the microscopic 
       cross-sections for reaction $x$ in energy group $g$ that correspond to 
       temperatures $T_i$ and $T_{i+1}$ respectively.
 
@@ -931,13 +934,13 @@
       material does not change temperature as extremely as other reactor
       materials. Because this effect is relatively small, a simple linear
       interpolation is used to interpolate macroscopic cross sections within
-      this material. For $T_i < T < T_{i+1}$, the macroscopic cross-section for
-      reaction $x$ and energy group $g$ according to the linear interpolation
-      method is given as
+      this material. For $T_i < \overline{T_{C,j}} < T_{i+1}$, the macroscopic 
+      cross-section for reaction $x$ and energy group $g$ according to the 
+      linear interpolation method is given as
       \begin{equation}
         \label{eq:xs_linear_interpolation}
-        \Sigma_{x,g} = 
-          \frac{T - T_{i}}{T_{i+1}-T_{i}} 
+        \Sigma_{x,j,g} = 
+          \frac{\overline{T_{C,j}} - T_{i}}{T_{i+1}-T_{i}} 
           (\Sigma_{x,g,i+1} - \Sigma_{x,g,i})  + \Sigma_{x,g,i}
       \end{equation}
       where $\Sigma_{x,g,i}$ and $\Sigma_{x,g,i+1}$ are the macroscopic
@@ -965,16 +968,18 @@
       library data at temperatures specified in \tref{tab:xstemps}. Then, a
       square-root interpolation method is used. The square-root interpolation is
       commonly selected for cross-section interpolation because the Doppler
-      effect follow square-root behavior closely. For $T_i < T < T_{i+1}$, the
+      effect follow square-root behavior closely. For 
+      $T_i < \overline{T_{F,j}} < T_{i+1}$, the
       macroscopic cross-section for reaction $x$ in energy group $g$ within the
       fuel is calculated as
       \begin{equation}
-        \Sigma_{x,g} = 
-          \frac{\sqrt{T} - \sqrt{T_{i}}}{\sqrt{T_{i+1}}-\sqrt{T_{i}}}
+        \Sigma_{x,j,g} = 
+          \frac{\sqrt{\overline{T_{F,j}}} - \sqrt{T_{i}}}
+          {\sqrt{T_{i+1}}-\sqrt{T_{i}}}
           (\Sigma_{x,g,i+1} - \Sigma_{x,g,i})  + \Sigma_{x,g,i}
       \end{equation}
       where $\Sigma_{x,g,i}$ and $\Sigma_{x,g,i+1}$ are the macroscopic
-      cross-sections of reaction $x$ corresponding to $T_i$ and $T_{i+q}$
+      cross-sections of reaction $x$ corresponding to $T_i$ and $T_{i+1}$
       respectively. Additionally, $T_i$ is in absolute units of temperature
       (Kelvin).
       

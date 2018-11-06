@@ -3,34 +3,17 @@
 
 \section{Introduction}
   % change this to begin with multigroup
-  For typical nuclear reactor physics applications, diffusion theory
-  approximates the neutron distribution within the reactor well. The neutron 
-  diffusion equation is a second order partial differential equation in space.
-  The neutron flux as the solution to the diffusion equation is continuous in
-  both space and energy. In standard notation, the continuous neutron diffusion
-  equation is presented as
-  \begin{multline}\label{eq:continuous_diffusion}
-    -\grad \cdot (D(\vr,E) \grad \varphi(\vr,E)) + \Sigma_t(\vr,E) 
-      \varphi(\vr,E) = \\
-      \frac{\chi(\vr,E)}{\keff} \int_0^{\infty} \nu_f(\vr,E') \Sigma_f(\vr,E') 
-      \varphi(\vr,E') \; dE' + \int_0^{\infty} \Sigma_s(\vr,E' \rightarrow E) 
-      \varphi(\vr,E') \; dE'
-  \end{multline}
-  Where $D$ is the diffusion constant, $\varphi$ is the continuous scalar 
-  neutron flux, $\Sigma_t$ is the total cross section, $\chi$ is the effective 
-  fission neutron spectrum, $\keff$ is the effective neutron multiplication 
-  factor, $\Sigma_f$ is the fission cross section, $\nu_f$ is the neutron yield 
-  per fission, and $\Sigma_s(\vr,E' \rightarrow E)$ is the scattering cross 
-  section for neutrons at position $\vr$ scattering from energy $E'$ to $E$.
-  
-  The neutron diffusion equation must be discretized in space and 
-  energy to be solved numerically. Energy discretization is relatively 
-  straight-forward and is performed using the multigroup method. Spatial 
-  discretization requires more attention and will be done with the Finite 
+  For typical SFR applications, diffusion theory
+  approximates the neutron distribution within the reactor well. The multigroup
+  neutron diffusion equation is a second order partial differential equation in
+  space. The diffusion approximation is valid for fast reactors because neutron
+  mean-free-paths within the reactor are large.
+
+  Spatial discretization will be done with the Finite 
   Element Method (FEM). This spatial discretization method is selected for 
   several reasons. It allows for easily increasing the spatial convergence order
   of the method by increasing the order of the elements without refining the
-  mesh. For example, for the same mesh, quadratic elements instead of linear
+  mesh. For example, using the same mesh, quadratic elements instead of linear
   elements could be used to refine the solution. Coordinates of nodes and 
   elements can be easily updated to reflect physical phenomena, such as thermal 
   expansion (\chref{ch:thermalExpansion}). Additionally, material properties are 
@@ -38,82 +21,16 @@
   material properties during the calculation in future applications.
 
 \section{Multigroup Neutron Diffusion Equation}
-  
-  For energy discretization with the multigroup method, an energy structure is 
+  In the multigroup neutron diffusion equation, an energy structure is 
   described as $\{E_g\}$ for $g = 0,1,2,\ldots,G$ and by in order of decreasing 
   energy by convention.
   \[ 0 < E_G < E_{G-1} < \ldots < E_2 < E_1 < E_0 \]
   Then, multigroup constants can be calculated based on the energy group 
-  structure, known cross sections, and a representative flux spectrum.
-  Multigroup constants are calculated to preserve the number of neutrons 
-  produced or destroyed. That is, the calculation preserves reaction rates where
-  the reaction rate for reaction $x$ is defined as $R_x=\Sigma_x \varphi$. 
-  A formal derivation of multigroup constants consistent with
-  \eref{eq:continuous_diffusion} is given in \cite{duderstathamilton}. The
-  results of this derivation are provided.
-  \begin{align}
-    D_g(\vr) &= \frac{\int_{E_g}^{E_{g-1}} D(\vr,E') \grad \varphi(\vr,E)\;dE}
-      {\int_{E_g}^{E_{g-1}} \grad \varphi(\vr,E)\;dE} \\
-    \Sigma_{t,g}(\vr) &= \frac{\int_{E_g}^{E_{g-1}} \Sigma_t(\vr,E) 
-      \varphi(\vr,E)\;dE}{\int_{E_g}^{E_{g-1}} \varphi(\vr,E)\;dE} \\
-    \nu\Sigma_{f,g}(\vr) &= \frac{\int_{E_g}^{E_{g-1}} \nu_f(\vr,E)
-      \Sigma_f(\vr,E) \varphi(\vr,E)\;dE}{\int_{E_g}^{E_{g-1}} 
-      \varphi(\vr,E)\;dE} \\
-    \Sigma_{s,g\rightarrow g'}(\vr) &= \frac{\int_{E_g'}^{E_{g'-1}} 
-      \int_{E_g}^{E_{g-1}} \Sigma_s(\vr,E' \rightarrow E) 
-      \varphi(\vr,E')\;dE\;dE'}
-      {\int_{E_g}^{E_{g-1}} \varphi(\vr,E)\;dE}  \\
-    \chi_g(\vr) &= \int_{E_g}^{E_{g-1}} \chi(\vr,E) \; dE \\
-    \phi_g(\vr) &= \int_{E_g}^{E_{g-1}} \varphi(\vr,E) \; dE
-  \end{align}
-
-  It is crucial to note that the equations from \cite{duderstathamilton} are not
-  how cross sections are calculated for this application as they require exact
-  solution of $\varphi(\vr,E)$, $\grad \varphi(\vr,E)$, and functional forms of
-  cross sections for all arbitrary compositions. Instead, a many-group transport
-  problem is solved for simplified geometry to create representative microscopic
-  cross sections. For this application, \mcc is used to calculate microscopic
-  cross sections. \mcc uses an infinite homogeneous geometry removing spatial
-  dependence of flux and cross sections. The fine-group structure employed by 
-  \mcc is composed of 2,082 energy groups and output group structures can be
-  defined by the user. For this application, the standard 33-group structure is
-  used.
-  In practice, microscopic cross sections are calculated as follows for a
-  fine-group energy structure 
-  \[ 0 < E_G < E_{G-1} < \ldots < E_2 < E_1 < E_0 \]
-  and the notation $E_j \in E_g$ implies each fine-group $E_j$ within
-  coarse-group $E_g$.
-  \begin{align}
-    \sigma_{tr,g} &= \frac{\sum_{E_j \in E_g} \sigma_{tr,j} \Phi_j}
-      {\sum_{E_j \in E_g} \Phi_j} \\
-    \sigma_{t,g} &= \frac{\sum_{E_j \in E_g} \sigma_{t,j} \Phi_j}
-      {\sum_{E_j \in E_g} \Phi_j} \\
-    \nu \sigma_{f,g} &= \frac{\sum_{E_j \in E_g} \nu_{f,j} \sigma_{f,j}
-      \Phi_j}{\sum_{E_j \in E_g} \Phi_j} \\
-    \sigma_{s,g \rightarrow g'} &= \frac{\sum_{E_j' \in E_g'} \sum_{E_j \in E_g}
-      \sigma_{s,j \rightarrow j'} \Phi_{j'}}{\sum_{E_j \in E_g} \Phi_j} \\
-    \chi_g &= \sum_{E_j \in E_g} \chi_j
-  \end{align}
-  where $\sigma_{tr}$ is the transport cross section.
-  With given microscopic cross sections, macroscopic cross sections are
-  calculated by homogenizing microscopic with some number densities $N_i$. 
-  For the $x$ reaction type
-  \begin{equation}
-    \Sigma_{x,g} = \sum_{i} N_i \sigma_{x,g,i}.
-  \end{equation}
-  Finally, the transport cross section is used to calculate the diffusion
-  constant.
-  \begin{equation}
-    D_g = \frac{1}{3 \Sigma_{tr,g}}
-  \end{equation}
-
-  Note that cross sections $\nu_f(\vr,E)$ and $\Sigma_f(\vr,E)$ have been 
-  combined. This is a convenient mathematical representation of the group
-  collapse to preserve the rate of neutrons produced.
-
-  Integrating \eref{eq:continuous_diffusion} over a single energy group, and
-  using multigroup constants calculated as previously described, the multigroup
-  neutron diffusion equation can be written as.
+  structure, known cross-sections, and a representative flux spectrum.
+  Generation of multigroup constants is performed using \mcc and is described in
+  \sref{sec:cross_section_treatment}.
+  In conventional notation, the multigroup neutron diffusion equation can be
+  written as 
   \begin{equation}
     \label{eq:multigroup_diffusion}
     - \grad \cdot ( D_g(\vr) \grad \phi_g(\vr)) + \Sigma_{t,g}(\vr) \phi_g(\vr)= 
@@ -121,11 +38,17 @@
       \phi_{g'}(\vr) + \sum_{g'=1}^{G} \Sigma_{s,g' \rightarrow g}(\vr) 
       \phi_{g'}(\vr)
   \end{equation}
-  The neutron diffusion equation has now been discretized in energy.
-  Spatial dicretization will be based on the Finite Element Method (FEM) and 
-  will be discussed in \sref{sec:formulation}.
+  where $D_g$ is the diffusion constant, $\phi_g$ is the neutron flux, 
+  $\Sigma_{t,g}$ is the total cross-section, $\chi_g$ is the 
+  fission neutron spectrum, $\keff$ is the effective neutron multiplication 
+  factor, $\nu \Sigma_{f,g}$ is the number of fission neutrons generated per
+  unit neutron flux,
+  and $\Sigma_{s,g' \rightarrow g}$ is the scattering cross 
+  section for neutrons scattering from energy group $E_g'$ to energy group
+  $E_g$. Spatial dicretization will be based on the Finite Element Method (FEM)
+  and will be discussed in \sref{sec:formulation}.
   
-  The total neutron cross section includes the contribution due to 
+  The total neutron cross-section includes the contribution due to 
   self-scattering. That is, due to $\Sigma_{s,g\rightarrow g}$. This can be 
   subtracted from both sides of \eref{eq:multigroup_diffusion} for simplicity 
   and numeric efficiency.
@@ -135,7 +58,7 @@
       \phi_{g'}(\vr) + \sum_{g'=1, g' \ne g}^{G} 
       \Sigma_{s,g' \rightarrow g}(\vr) \phi_{g'}(\vr)
   \end{equation}
-  Where $\Sigma_{r,g}$ is the removal cross section defined as 
+  Where $\Sigma_{r,g}$ is the removal cross-section defined as 
   $\Sigma_{r,g}(\vr) = \Sigma_{t,g}(\vr) - \Sigma_{s,g\rightarrow g}(\vr)$. For
   simplicity, the neutron sources in \eref{eq:multigroup_removal} can be 
   combined into a single term.
@@ -233,7 +156,7 @@
         \int_{\Omega} q_g(\vr) v(\vr) \;d\Omega
     \end{equation}
     
-    For the purposes of this application, material cross sections and the
+    For the purposes of this application, material cross-sections and the
     neutron source $q_{g,e}$ are assumed to be constant within an element. 
     To calculate a constant neutron source within an element, \eref{eq:q} is
     used for the average flux in an element.
@@ -383,7 +306,7 @@
     of the FEM. 
     
     The diffusion coefficient $D_g(\vr)$ is non-zero and bounded and
-    the removal cross section $\Sigma_{r,g}(\vr)$ is bounded. The Lax-Milgram 
+    the removal cross-section $\Sigma_{r,g}(\vr)$ is bounded. The Lax-Milgram 
     Lemma implies the solution to the FEM as derived here is both unique and 
     bounded (See Theorem 9.3 \cite{textbookli}). This is 
     not the entire description as the source function $q_g(\vr)$ is updated on 
@@ -429,7 +352,7 @@
     
     Though the notation may be obtuse, the above reduces to a linear system of
     equations. These equations are constructed from the integral quantities 
-    specified by the FEM and the coefficients given by the cross sections and
+    specified by the FEM and the coefficients given by the cross-sections and
     fixed source regions. The integral quantities themselves are expressed 
     explicitly in the next section.
     
@@ -946,7 +869,7 @@
     It is important to note that all of the analysis in this section assumed the
     matrix $\mr$ does not change between iterations. For simple multigroup
     criticality calculations, this assumption is correct. However, in realistic
-    power reactor simulations, the cross sections of the problem may be 
+    power reactor simulations, the cross-sections of the problem may be 
     considered functions of material temperature or may have some changing
     number density. For these problems, the matrix $\mr$ is necessarily updated
     on each power iteration in a nonlinear manner. For nonlinear power
@@ -986,7 +909,7 @@
   \cite{ParaView} and VisIt \cite{VisIt}. Additionally, open-source C and Python
   packages exist for easy manipulation of the format. Cross sections are 
   specified in either a plain text user format or the ISOTXS format as common to 
-  fast reactor applications and the multigroup cross section generator \mcc 
+  fast reactor applications and the multigroup cross-section generator \mcc 
   \cite{mcc}. The multigroup neutron diffusion equation is solved according to 
   \eref{eq:multigroup_source}. The resulting effective neutron multiplication 
   factor, $\keff$, is written to an output file. The multigroup neutron flux is
@@ -1082,7 +1005,7 @@
     
     A benefit of this implementation is that the finite element vector $\vf$ 
     must be updated on each power iteration of the solution whereas the matrix 
-    $\ma$ is described entirely by geometry and the material cross sections. For
+    $\ma$ is described entirely by geometry and the material cross-sections. For
     this reason, $\ma$ can be generated once at the beginning of the problem and 
     stored for the duration of the calculation.
     \FloatBarrier % make sure the algorithm is in the correct section
