@@ -392,7 +392,8 @@
     quantities cannot be expressed exactly, or doing so would be computationally
     inefficient, numerical quadratures are used. For certain problems, these 
     quadratures can express the integrals exactly. This will be discussed in 
-    \sref{sec:quadrature derivations}.
+    \sref{sec:quadratures}.
+
     \subsubsection{Linear Triangles}
       Linear triangles are common to two-dimensional finite element methods and
       have been investigated in many applications \cite{Hosseini2017} 
@@ -434,19 +435,19 @@
       for the integral quantities for an arbitrary triangle that are originally
       proposed in \cite{textbookwhite}. The expression for
       the line integral is found in \cite{computerLab}. For a triangle with 
-      corners $\{ x_i,y_i \}$ with $i=1,2,3$.
+      corners $\{ x_i,y_i \}$ with $i=1,2,3$
       \begin{align}
         \int_{\Omega_e} \grad \basis_i(\vr) \cdot \grad \basis_j(\vr) 
           \;d\Omega_e &= \frac{1}{4 A_e}
           ((x_{i+1}-x_{i+2})(x_{j+1}-x_{j+2}) + 
-          (y_{i+1}-y_{i+2})(y_{j+1}-y_{j+2})) \\
+          (y_{i+1}-y_{i+2})(y_{j+1}-y_{j+2})), \\
         \int_{\Omega_e} \basis_i(\vr) \basis_j(\vr) \;d\Omega_e &= 
-          \frac{A_e}{12} (1+\delta_{ij}) \\
+          \frac{A_e}{12} (1+\delta_{ij}), \\
         \int_{\Omega_e} \basis_i(\vr) \;d\Omega_e &= \frac{A_e}{3} \\
         \int_{\partial \Omega_e} \basis_i(\vr) \basis_j(\vr) \;ds &=
-          \frac{L_e}{6}(1+\delta_{ij}) \\
+          \frac{L_e}{6}(1+\delta_{ij}), \\
       \end{align}
-      Where $A_e$ is the area of the triangular element, $L_e$ is the length of 
+      where $A_e$ is the area of the triangular element, $L_e$ is the length of 
       the edge between node $i$ and node $j$, and $\delta_{ij}$ is the Kronecker
       delta.
       The Kronecker delta is defined as
@@ -524,7 +525,7 @@
       The integrals of the basis function over the element are given in
       \eref{eq:bigmat} through \eref{eq:wedge_surface_integral}. The values
       presented herein are not found in literature and have been calculated by
-      the author
+      the author. For a 
       \begin{align}
         \label{eq:bigmat}
         \int_{\Omega_e} \basis_i(\vr) \basis_j(\vr) \;d\Omega_e &= 
@@ -536,8 +537,8 @@
             2 & 1 & 1 & 4 & 2 & 2 \\
             1 & 2 & 1 & 2 & 4 & 2 \\
             1 & 1 & 2 & 2 & 2 & 4 
-          \end{pmatrix} \\
-        \int_{\Omega_e} \basis_i(\vr) \;d\Omega_e &= \frac{V_e}{12} \\
+          \end{pmatrix} ,\\
+        \int_{\Omega_e} \basis_i(\vr) \;d\Omega_e &= \frac{V_e}{12} ,\\
         \label{eq:wedge_surface_integral}
         \int_{\partial \Omega_e} \basis_i(\vr) 
           \basis_j(\vr) \;d\partial\Omega_e &= 
@@ -545,9 +546,9 @@
             \frac{A_{\Delta}}{12}(1+\delta_{ij})&\text{if triangular surface} \\
             \frac{A_{\Box}}{36}(1+\delta_{ij})(1-\half \delta_{i,(5-j)}) &
               \text{if quadrilateral surface}
-          \end{cases}
+          \end{cases},
       \end{align}
-      Where $V_e$ is the volume of the element, $A_{\Delta}$ is the area of the
+      where $V_e$ is the volume of the element, $A_{\Delta}$ is the area of the
       triangular surface, and $A_{\Box}$ is the area of the quadrilateral
       element. 
       The matrix in \eref{eq:bigmat} is indexed $M_{ij}$
@@ -641,6 +642,8 @@
     FEM is performed on an arbitrary element in space. Therefore, it is 
     necessary to perform a coordinate transform when using a quadrature set.
     % get VERY explicit here so someone else can actually solve the problem...
+    Integration with transformed coordinates from domain $\Omega$ to the
+    reference domain $\Omega_{ref}$ can be written
     \begin{equation}
       \int_{\Omega} f(\vx) \;d\Omega = 
         \int_{\Omega_{ref}} f(\vx) \lvert \mj \rvert \;d\Omega_{ref} \approx
@@ -652,7 +655,7 @@
     the Jacobi.
 
     For isoparametric elements, the Jacobi is constant over the element and can
-    be precalculated to save from populating, and evaluating the 
+    be precalculated to avoid populating, and evaluating the 
     determinant of a matrix for each integration point. For the elements of 
     concern, these values are presented in \tref{tab:jacobi} as found in 
     \cite{textbookcolorado}.
@@ -672,47 +675,63 @@
       \end{center}
     \end{table}
 
-    For the general element, the Jacobian matrix, $\mj$, is calculated at each
-    point of the quadrature $(x_i,y_i,z_i)$ as described in
+    For the general element, the Jacobian matrix, $\mj_i$, is calculated at each
+    point of the quadrature $(\xi_i,\zeta_i,\eta_i)$ as described in
     \eref{eq:calcJacobian}.
     \begin{equation}
       \label{eq:calcJacobian}
-      \mj = 
+      \mj_i = 
       \begin{pmatrix}
-        \sum_{k=1}^P \frac{\partial \basis_k}{\partial \xi} x_k   &
-        \sum_{k=1}^P \frac{\partial \basis_k}{\partial \zeta} x_k &
-        \sum_{k=1}^P \frac{\partial \basis_k}{\partial \eta} x_k   \\
-        \sum_{k=1}^P \frac{\partial \basis_k}{\partial \xi} y_k   &
-        \sum_{k=1}^P \frac{\partial \basis_k}{\partial \zeta} y_k &
-        \sum_{k=1}^P \frac{\partial \basis_k}{\partial \eta} y_k   \\
-        \sum_{k=1}^P \frac{\partial \basis_k}{\partial \xi} z_k   &
-        \sum_{k=1}^P \frac{\partial \basis_k}{\partial \zeta} z_k &
-        \sum_{k=1}^P \frac{\partial \basis_k}{\partial \eta} z_k   \\
+        \sum_{k=1}^{N_P} \left. \frac{\partial \basis_k}{\partial \xi}
+          \right|_{(\xi_i,\zeta_i,\eta_i)} x_k   \; &
+        \sum_{k=1}^{N_P} \left. \frac{\partial \basis_k}{\partial \zeta}
+          \right|_{(\xi_i,\zeta_i,\eta_i)} x_k   \; &
+        \sum_{k=1}^{N_P} \left. \frac{\partial \basis_k}{\partial \eta} 
+          \right|_{(\xi_i,\zeta_i,\eta_i)} x_k   \\
+        \sum_{k=1}^{N_P} \left. \frac{\partial \basis_k}{\partial \xi}
+          \right|_{(\xi_i,\zeta_i,\eta_i)} y_k   \; &
+        \sum_{k=1}^{N_P} \left. \frac{\partial \basis_k}{\partial \zeta} 
+          \right|_{(\xi_i,\zeta_i,\eta_i)} y_k   \; &
+        \sum_{k=1}^{N_P} \left. \frac{\partial \basis_k}{\partial \eta} 
+          \right|_{(\xi_i,\zeta_i,\eta_i)} y_k   \\
+        \sum_{k=1}^{N_P} \left. \frac{\partial \basis_k}{\partial \xi}
+          \right|_{(\xi_i,\zeta_i,\eta_i)} z_k   \; &
+        \sum_{k=1}^{N_P} \left. \frac{\partial \basis_k}{\partial \zeta} 
+          \right|_{(\xi_i,\zeta_i,\eta_i)} z_k   \; &
+        \sum_{k=1}^{N_P} \left. \frac{\partial \basis_k}{\partial \eta} 
+          \right|_{(\xi_i,\zeta_i,\eta_i)} z_k   
       \end{pmatrix}
     \end{equation}
-    Where $P$ is the number of points in the element, $\basis_k$ is the basis
-    function centered at the $k^{th}$ corner, and for corner cordinates 
-    $\{x_k,y_k,z_k\}$ for $k = 1,2,\ldots,P$.
+    Where $N_P$ is the number of points in the element, $\basis_k(\vr)$ is the
+    basis function centered at the $k^{th}$ corner, and for corner cordinates 
+    $(x_k,y_k,z_k)$ for $k = 1,2,\ldots,N_P$.
 
-    With the Jacobian calculated, $J=\lvert\mj\rvert$ is simply the matrix 
-    determinant. For the quadrature integration of derivative quantities as
-    necessary in the FEM, the derivatives must also be translated from the
-    reference element to the spatial element. This is performed according to 
-    \algorithmref{algorithm:deriv_int}. The notation is dense as the method
-    requires two sets of coordinates. First, the coordinate in the reference
-    element $(\xi,\zeta,\eta)$ and second, the coordinate in Cartesian space
-    $(x,y,z)$.
-    Then, the vector $\vd_{i,\,(\xi,\zeta,\eta)}$ is the gradient vector for
+    With the Jacobian populated as \eref{eq:calcJacobian}, $J=\lvert\mj\rvert$
+    is simply the matrix determinant. For the quadrature integration of 
+    derivative quantities as necessary in the FEM, the derivatives must also be
+    translated from the reference element to the spatial element. This is 
+    performed according to \algorithmref{algorithm:deriv_int}. The notation is 
+    dense as the method requires two sets of coordinates. First, the coordinate 
+    in the reference element $(\xi,\zeta,\eta)$ and second, the coordinate in 
+    Cartesian space $(x,y,z)$.
+
+    The vector $\vd_{i,\,(\xi,\zeta,\eta)}$ is the gradient vector for
     $\basis_i$ with respect to the reference coordinates $(\xi,\zeta,\eta)$.
+    \begin{equation}
+      \vd_{i\,(\xi,\zeta,\eta)} = \grad_{(\xi,\zeta,\eta)} N_i(\vr) 
+    \end{equation}
     Vector $\vd_{i,\,(x,y,z)}$ is the gradient vector for $\basis_i$ with
-    respect to the Cartesian coordinates $(x,y,z)$. In 
-    \algorithmref{algorithm:deriv_int}, the quadrature has points $\{\vx_p\}$ 
-    and weights $\{w_p\}$ for $p = 1,2,\ldots,N_P$ and the value of the integral
+    respect to the Cartesian coordinates $(x,y,z)$. 
+    \begin{equation}
+      \vd_{i,\,(x,y,z)} = \grad_{(x,y,z)} N_i(\vr)
+    \end{equation}
+    In \algorithmref{algorithm:deriv_int}, the quadrature has points $\{\vx_p\}$ 
+    and weights $\{w_p\}$ for $p = 1,2,\ldots,N$ and the value of the integral
     is represented by \eref{eq:deriv_integral}.
     \begin{equation}
       \label{eq:deriv_integral}
       v = \int_{\Omega_e} \grad \basis_i(\vr) \cdot \grad \basis_j(\vr) \;
-      d\Omega_e
+        d\Omega_e
     \end{equation}
 
     \begin{algorithm}
@@ -731,7 +750,7 @@
             \vd_{i,\,(\xi,\zeta,\eta)} \mj^{-1}$.
           \State Calculate the vector $\vd_{j,\,(x,y,z)} =
             \vd_{j,\,(\xi,\zeta,\eta)} \mj^{-1}$.
-          \State $v = v + \left(\vd_{i,\,(x,y,z)}^{T} \vd_{j,\,(x,y,z)}\right)
+          \State $v \gets v + \left(\vd_{i,\,(x,y,z)}^{T} \vd_{j,\,(x,y,z)}\right)
             \, w_p \, \lvert \mj \rvert$
         \EndFor
       \end{algorithmic}
