@@ -214,15 +214,39 @@
   calculate on-the-fly cross-sections during the simulation.
   With given microscopic cross sections calculated by \mcc, macroscopic cross
   sections are calculated by homogenizing microscopic with number densities
-  $N_i$.  For the $x$ reaction type, the macroscopic cross-section is defined
-  as
+  $N_{i,j}$ for isotope ${j=1,2,\ldots,N_{iso}}$ in region
+  ${i=1,2,\ldots,N_{reg}}$.  For the $x$ reaction type, the 
+  macroscopic cross-section is defined as
   \begin{equation}
-    \Sigma_{x,g} = \sum_{i=1}^{N_{iso}} N_i \sigma_{x,g,i}.
+    \Sigma_{x,g} = \frac{\sum_{i=1}^{N_{reg}} \sum_{j=1}^{N_{iso}} V_i N_{j} 
+      \sigma_{x,g,i}} {\sum_{i=1}^{N_{reg}}V_i}
   \end{equation}
-  Finally, the transport cross section is used to calculate the diffusion
-  constant.
+  again using the area formulae from \eref{eq:afrac_first} through
+  \eref{eq:afrac_last} to calcualte the volume fractions of each regin.
+  Finally, the homogenized transport cross section is used to calculate the 
+  diffusion coefficient.
   \begin{equation}
     D_g = \frac{1}{3 \Sigma_{tr,g}}
   \end{equation}
 
 \section{Thesis Organization}
+  In \chref{ch:neutronDiffusion}, the derivation of the Finite Element Method is
+  presented for triangular and wedge elements. The resulting eigenvalue problem
+  is then solved using the power method. Results from the diffusion solution are
+  verified in two-dimension and three-dimension problems with both analytic and
+  benchmark solutions. These verification problems for the neutron diffusion
+  equation are presented in \chref{ch:diffusionResults}.
+
+  \chref{ch:thermalHydraulics} presents the formulation of axial heat convection
+  and radial heat conduction models for a typical SFR. These models are used to
+  calculate material temperatures and update cross-sections for the simulation.
+  Results of the numerical model is compared to analytical models and example
+  system temperatures are shown.
+
+  The materials are expanded according to thermal expansion behavior as
+  described in \chref{ch:thermalExpansion}. This model allows for the realistic
+  simulation of a SFR and results of the simulation of a model SFR are presented
+  in \chref{ch:coupledResults}. Finally, \chref{ch:conclusions} presents a 
+  summary and the conclusions of this research. Additionally, recommendations 
+  for further research are included.
+
