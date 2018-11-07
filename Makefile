@@ -13,5 +13,9 @@ $(NAME).pdf : $(NAME).tex $(NAME).bib front.tex $(CHAPTERS) ncsuthesis.cls \
 	pdflatex $(NAME)
 	grep -i "Warn" $(NAME).log
 
+force:
+	rm $(NAME).pdf
+	make
+
 clean :
 	rm $(AUX) $(INTERMEDIATES)

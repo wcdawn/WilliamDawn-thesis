@@ -20,6 +20,10 @@
 \usepackage{threeparttable} % for table with footnote
 \usepackage{amssymb} % for \therefore and \implies
 \usepackage{isotope}
+\usepackage{array}
+\newenvironment{conditions}
+  {\par\vspace{\abovedisplayskip}\noindent\begin{tabular}{>{$}l<{$} @{${}={}$} l}}
+  {\end{tabular}\par\vspace{\belowdisplayskip}}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%%%%%%%% Hack for alphanumeric bibliography
@@ -270,6 +274,7 @@ Method}
 \newcommand{\Conv}{\mathop{\scalebox{1.5}{\raisebox{-0.2ex}{$\ast$}}}}%
 
 % linear algebra
+\renewcommand{\epsilon}{\varepsilon}
 %    vectors
 \newcommand{\va}{\mathbf{a}}
 \newcommand{\vb}{\mathbf{b}}
@@ -297,12 +302,12 @@ Method}
 \newcommand{\realnn}{\real^{n \times n}}
 
 % variable definitions
-\newcommand{\keff}{k_{\!\mbox{\scriptsize \em eff}}}
-\newcommand{\kref}{k_{\!\mbox{\scriptsize \em ref}}}
+\newcommand{\keff}{\ensuremath{k_{\!\mbox{\scriptsize \em eff}}}}
+\newcommand{\kref}{\ensuremath{k_{\!\mbox{\scriptsize \em ref}}}}
 \newcommand{\grad}{\mathbf{\nabla}}
 
 % general macros
-\newcommand{\units}[1]{\;\ensuremath{\left[\text{{#1}}\right]}}
+\newcommand{\units}[1]{\,\ensuremath{\left[\text{{#1}}\right]}}
 
 % neutronDiffusion
 \newcommand{\albedo}{\alpha}
