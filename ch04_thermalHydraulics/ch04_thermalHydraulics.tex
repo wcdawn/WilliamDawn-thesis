@@ -847,14 +847,14 @@
     temperatures. Currently, 10 power iterations are run per temperature update
     and this provides efficient and convergent behavior.
     For a discussion of power iterations, see \sref{sec:power_iterations}. When
-    the temperatures are updated, the cross-sections are also updated. Note that
-    this update of cross-sections during a power iteration makes the iterative
-    method non-linear and the convergence of the method is no longer guaranteed.
-    However, this procedure is commonly used in practice and no convergence
-    problems have been observed.
-    Experimentally, convergence behaves acceptably for typical cases. The
-    general procedure to update cross sections is given in
-    \algorithmref{algorithm:temperature_update}.
+    the temperatures are updated, the cross-sections are also updated. Updating
+    the material-cross sections requires recomputing the finite element matrix
+    which proves to be the most computationally expensive part of the update. 
+    Note that the update of cross-sections during a power iteration makes the
+    iterative method non-linear and the convergence of the method is no longer
+    guaranteed. However, this procedure is commonly used in practice and no 
+    convergence problems have been observed. The general procedure to update
+    cross-sections is given in \algorithmref{algorithm:temperature_update}.
 
     In \algorithmref{algorithm:temperature_update}, the cross-sections are
     updated using the average material temperatures. Average material

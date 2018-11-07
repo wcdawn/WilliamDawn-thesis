@@ -951,25 +951,26 @@
 
 \section{Implementation}
   A FEM neutron diffusion solution has been developed using 
-  the above formulae. The program begins with a geometry description specified
-  in a plain text VTK file \cite{vtk}. The VTK format is chosen because it is a
-  standard that can be used with visualization tools such as ParaView
-  \cite{ParaView} and VisIt \cite{VisIt}. Additionally, open-source C and Python
-  packages exist for easy manipulation of the format. Cross sections are 
-  specified in either a plain text user format or the ISOTXS format as common to 
-  fast reactor applications and the multigroup cross-section generator \mcc 
-  \cite{mcc}. The multigroup neutron diffusion equation is solved according to 
-  \eref{eq:multigroup_source}. The resulting effective neutron multiplication 
+  the above formulae. The program begins by reading a geometry description 
+  specified in a plain text VTK file \cite{vtk}. The VTK format is chosen 
+  because it is a standard that can be used with visualization tools such as 
+  ParaView \cite{ParaView} and VisIt \cite{VisIt}. Additionally, open-source C 
+  and Python packages exist for easy manipulation of the format. Cross sections
+  are specified in either a plain text user format or the ISOTXS format as 
+  common to fast reactor applications and the multigroup cross-section generator
+  \mcc \cite{mcc}. The multigroup neutron diffusion equation is solved according
+  to \eref{eq:multigroup_source}. The resulting effective neutron multiplication 
   factor, $\keff$, is written to an output file. The multigroup neutron flux is
   written to a different results VTK file for easy visualization.
 
   \subsection{Algorithm}
     The algorithm for the solution to the diffusion equation is similar to most
-    implementations of the multigroup neutron diffusion method. The algorithm 
-    itself is presented in \algorithmref{algorithm:general}. The steps unique 
-    to the FEM are steps \ref{state:fem_matrix} and \ref{state:fem_vector}. 
-    These require the quantities previously derived and form the linear system 
-    described by the FEM. 
+    implementations of the power iteration method to solve the multigroup
+    neutron diffusion equation. The algorithm itself is presented in 
+    \algorithmref{algorithm:general}. The steps unique to the FEM are steps 
+    \ref{state:fem_matrix} and \ref{state:fem_vector}. These require the 
+    quantities previously derived and form the linear system described by the 
+    FEM. 
     
     In step \ref{state:rcm} the matrix is reordered. Mathematically this has no
     effect on the result as the linear system represented is equivalent. This 
@@ -1018,12 +1019,12 @@
     \end{algorithm}
 
     State \ref{state:chi_collapse} normalizes $\chi$ to preserve the 
-    neutron production rate due to fission in each group in each element of the
-    problem recalling the definition of $q_{fiss,g}$ as provided in
+    neutron production rate due to fission in each energy group in each element
+    of the problem recalling the definition of $q_{fiss,g}$ as provided in
     \eref{eq:qfiss}. Typically, reactor materials are described isotopically and 
     $\chi$ may be specified isotopically. However, for calculating the fission 
-    neutron source $q_{fiss,g}$, an effective $\chi$ for the element is needed. 
-    From an isotopic description, $q_{fiss,g}$ is given in 
+    neutron source $q_{fiss,g}$, an effective $\chi$ for each finite element is
+    needed. From an isotopic description, $q_{fiss,g}$ is given in 
     \eref{eq:isotopic_chi}.
     \begin{equation}
       \label{eq:isotopic_chi}
@@ -1064,17 +1065,18 @@
     implementations have been described and implemented in the past including
     triplet storage, reduced column, and reduced row storage \cite{sparseBLAS}.
     For this application a \twotable method is chosen which was uniquely 
-    developed. \twotable storage is not designed to be the most efficient 
-    storage method but is chosen for its simplicity and implementation with the 
-    FEM. Future work may include a reduced row implementation but there will be
-    a trade-off between memory minimization and computational efficiency.
+    developed. \twotable storage is chosen for its simplicity and implementation
+    with the FEM. Future work may include a reduced row implementation but there
+    will be a trade-off between memory minimization and computational 
+    efficiency.
     
     The \twotable method is composed of two separate matrices in memory. An 
-    integer index table, \texttt{IDX}, and a double precision value table
+    integer index table, \texttt{IDX}, and an IEEE double precision value table
     \texttt{VAL}. Each table is dimension $DOF \times D$ where $DOF$ is the
     number of degrees of freedom of the linear system and $D$ is the maximum
-    number of nodes that a node shares including itself. This must be determined
-    at the beginning of the problem.
+    number of nodes that a node shares including itself. $D$ is the degree of
+    the matrix plus one. This must be determined at the beginning of the
+    problem based on the input geometry.
     
     \texttt{IDX} is initialized to -1 and \texttt{VAL} is initialized 
     to 0.0 such that an index of -1 corresponds to a null entry in the 
@@ -1108,12 +1110,12 @@
     \end{equation}
     \eref{eq:idx_number} indicates that the value of matrix $\ma$ in the
     seventh row in the eighth column is 12.1. This will allow for simple row 
-    operations and efficient matrix vector multiplication which will be 
+    operations and efficient matrix-vector multiplication which will be 
     necessary in the solution of the linear system.
 
   \subsection{Boundary Conditions}
     \label{sec:boundary_conditions}
-    Boundary conditions deserve brief consideration. There are many ways to 
+    Boundary conditions merit brief consideration. There are many ways to 
     implement boundary conditions and all result in mathematically the same 
     answer. The choices made for this application are presented below. Mirror 
     boundary conditions require $\grad \phi_g(\vr) = 0$ for 
@@ -1162,7 +1164,7 @@
     not have this especially useful property if all the groups were instead 
     solved simultaneously. Symmetry condition is straight-forward and is 
     observed in the elemental matrix description \eref{eq:matrix_population}. 
-    Briefly, $A_{i,j,g,e}=A_{j,i,g,e}$.
+    Briefly, ${A_{i,j,g,e}=A_{j,i,g,e}}$.
     Positive definiteness is a particularly useful condition but is often 
     difficult to prove. $\ma$ is sometimes diagonally dominant for conveniently
     ordered meshes composed certain elements but generally, the matrix is not 
