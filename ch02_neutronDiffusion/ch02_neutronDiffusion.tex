@@ -60,14 +60,16 @@
   The total neutron cross-section includes the contribution due to 
   within-group scattering. That is, due to $\Sigma_{s,g\rightarrow g}$. This can
   be subtracted from both sides of \eref{eq:multigroup_diffusion} for simplicity 
-  and numeric efficiency.
-  \begin{equation} \label{eq:multigroup_removal}
+  and numeric efficiency. Rewriting \eref{eq:multigroup_diffusion} with this
+  modification yields
+  \begin{equation} 
+    \label{eq:multigroup_removal}
     - \grad \cdot( D_g(\vr) \grad \phi_g(\vr)) + \Sigma_{r,g}(\vr) \phi_g(\vr) = 
       \frac{\chi_g(\vr)}{\keff} \sum_{g'=1}^{G} \nu\Sigma_{f,g'}(\vr) 
       \phi_{g'}(\vr) + \sum_{g'=1, g' \ne g}^{G} 
       \Sigma_{s,g' \rightarrow g}(\vr) \phi_{g'}(\vr)
   \end{equation}
-  Where $\Sigma_{r,g}$ is the removal cross-section defined as 
+  where $\Sigma_{r,g}$ is the removal cross-section defined as 
   $\Sigma_{r,g}(\vr) = \Sigma_{t,g}(\vr) - \Sigma_{s,g\rightarrow g}(\vr)$. The
   removal cross-section now describes the removal of neutrons from the element
   of phase space due to nuclear interactions. 
@@ -163,7 +165,7 @@
     Finite element derivation is based on with \eref{eq:multigroup_source}.
     Proceeding with the Galerkin Finite Element Method, the equation is 
     multiplied by a testing function $v(\vr) \in H_1(\Omega)$ 
-    Where $H$ is the Sobolev space. 
+    where $H$ is the Sobolev space. 
     \begin{equation}
       -\grad \cdot (D_g(\vr) \grad \phi_g(\vr)) v(\vr) + 
         \Sigma_{r,g}(\vr) \phi_g(\vr) v(\vr) =
@@ -262,11 +264,11 @@
         \sum_{e=1}^{N_E} q_{g,e} \int_{\Omega_e} v(\vr) \; d\Omega_e
     \end{multline}
     Next, the function of interest $\phi_g(\vr)$ is assumed to be a linear 
-    combination of chosen basis functions $\{\basis_i\}$.
+    combination of chosen basis functions $\{\basis_i\}$ as
     \begin{equation} \label{eq:linear_combination}
       \phi_g(\vr) = \sum_{i=1}^{DOF} \upsilon_{g,i} \basis_i(\vr)
     \end{equation}
-    Where coefficients $\vu = \{\upsilon_{g,i}\}$ are unknown and will be 
+    where coefficients $\vu = \{\upsilon_{g,i}\}$ are unknown and will be 
     determined and $DOF$ is the degree of freedom of the problem. Typically 
     $DOF$ is the number of nodes minus any nodes for which the flux is fixed 
     (e.g. zero-flux nodes).  Typically, these basis functions have unit 
@@ -705,9 +707,9 @@
           \right|_{(\xi_i,\zeta_i,\eta_i)} z_k   
       \end{pmatrix}
     \end{equation}
-    Where $N_P$ is the number of points in the element, $\basis_k(\vr)$ is the
-    basis function centered at the $k^{th}$ corner, and for corner cordinates 
-    $(x_k,y_k,z_k)$ for $k = 1,2,\ldots,N_P$.
+    In \eref{eq:calcJacobian}, $N_P$ is the number of points in the element, 
+    $\basis_k(\vr)$ is the basis function centered at the $k^{th}$ corner, and 
+    for corner cordinates $(x_k,y_k,z_k)$ for $k = 1,2,\ldots,N_P$.
 
     With the Jacobian populated as \eref{eq:calcJacobian}, $J=\lvert\mj\rvert$
     is simply the matrix determinant. For the quadrature integration of 
@@ -1024,14 +1026,13 @@
     \eref{eq:qfiss}. Typically, reactor materials are described isotopically and 
     $\chi$ may be specified isotopically. However, for calculating the fission 
     neutron source $q_{fiss,g}$, an effective $\chi$ for each finite element is
-    needed. From an isotopic description, $q_{fiss,g}$ is given in 
-    \eref{eq:isotopic_chi}.
+    needed. From an isotopic description, $q_{fiss,g}$ is given as
     \begin{equation}
       \label{eq:isotopic_chi}
       q_{fiss,g}(\vr) = \sum_{i=1}^{N_I} \widetilde{\chi_{i,g}}(\vr)
         \nu \Sigma_{f,i,g}(\vr) \phi_g(\vr)
     \end{equation}
-    Where $\widetilde{\chi_{i,g}}$ is the isotopic $\chi$ and $N_I$ is the 
+    where $\widetilde{\chi_{i,g}}$ is the isotopic $\chi$ and $N_I$ is the 
     number of isotopes at position $\vr$. Next, require $q_{fiss,g}$ to have the 
     form of
     \eref{eq:element_chi}.
@@ -1219,7 +1220,7 @@
     matrix include Gauss-Seidel iteration with Successive Over-Relaxation (SOR) 
     and the Conjugate Gradient (CG) Krylov subspace method. SOR needs
     \textit{a priori} knowledge of the optimized over-relaxation factor
-    $\omega_{opt}$ for good performanc. In practice, this is performed 
+    $\omega_{opt}$ for optimal performance. In practice, this is performed 
     analytically with contrived solutions or in a modified guess-and-check 
     method. For this application, the CG method is chosen because it requires no 
     \textit{a priori} knowledge and produced a solution to the same tolerance in 
@@ -1255,7 +1256,7 @@
     \end{algorithm}
     
     In \algorithmref{algorithm:CG}, $\epsilon$ is a tolerance set by the user 
-    and the square of the two-norm is most efficiently replaced by the 
+    and the square of the two-norm is most efficiently replaced by the vector
     inner-product as in \eref{eq:two_norm_inner}. 
     \begin{equation}
       \label{eq:two_norm_inner}
@@ -1267,3 +1268,8 @@
     computationally expensive \cite{Kelley1995IterativeEquations}. As most of 
     the computational time of the diffusion solutions is spent in the linear 
     system solution, is is crucial that this process be efficient.
+
+    With the solution of the linear system, the implementation of the FEM to 
+    solve the multigroup neutron diffusion problem is completed. Results in the
+    form of analytic and benchmark verification problems are presented in
+    \chref{ch:diffusionResults}.
