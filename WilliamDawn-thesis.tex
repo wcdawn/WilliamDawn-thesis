@@ -14,7 +14,7 @@
 \usepackage{subfig}    % composite figures
 
 % user defined packages
-\usepackage{algorithm}
+\usepackage[chapter]{algorithm} % make sure to reset count at the new chapter
 \usepackage[noend]{algpseudocode}
 \usepackage{csvsimple}
 \usepackage{threeparttable} % for table with footnote
@@ -328,8 +328,8 @@ Method}
 \newcommand{\fref}[1]{Fig.~\ref{#1}}
 \newcommand{\tref}[1]{Table~\ref{#1}}
 \newcommand{\sref}[1]{Sec.~\ref{#1}}
-\newcommand{\chref}[1]{Chapter ~\ref{#1}}
-\newcommand{\apref}[1]{Appendix ~\ref{#1}}
+\newcommand{\chref}[1]{Chapter~\ref{#1}}
+\newcommand{\apref}[1]{Appendix~\ref{#1}}
 \newcommand{\algorithmref}[1]{Algorithm~\ref{#1}}
 % add chapter number to algorithm
 \renewcommand{\thealgorithm}{\arabic{chapter}.\arabic{algorithm}}

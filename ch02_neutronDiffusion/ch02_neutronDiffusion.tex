@@ -1018,9 +1018,19 @@
         \EndFor
         \State Update $\keff$.
         \State Check convergence.
+        \State Perform non-linear update if necessary. \label{state:nonlinear}
       \EndWhile
       \end{algorithmic}
     \end{algorithm}
+
+    State \ref{state:nonlinear} incorporates the possibility of non-linear
+    updates into the power iteration method. This invalidates the proof from
+    \sref{sec:power_iterations} but is performed to simulate thermal hydraulic
+    and thermal expansion effects as described in \chref{ch:thermalHydraulics}
+    and \chref{ch:thermalExpansion} respectively. This procedufre is commonly
+    used in practice and no convergence problems have been observed. This update
+    also requires recalculating the finite element matrix $\ma_g$ for each 
+    group.
 
     State \ref{state:chi_collapse} normalizes $\chi$ to preserve the 
     neutron production rate due to fission in each energy group in each element
