@@ -3,23 +3,33 @@
 
 \section{Introduction}
   The following are analytic solutions designed for verification of one-,
-  two-, and three-dimension numerical neutron diffusion equation solvers.
-  One-group and two-group problems are also addressed.
+  two-, and three-dimension numerical solvers for the multigroup neutron 
+  diffusion equation. One-group and two-group problems are also addressed.
   
-  For the reference problems, the one-group neutron diffusion problem is written
-  below.
+  For the one-group reference problems, the neutron diffusion problem is written
   \begin{equation} \label{eq:onegroup}
     -D \grad^2 \phi + \Sigma_r \phi =  \frac{1}{\keff} \nu \Sigma_f \phi + 
       q_{fixed}
   \end{equation}
-  Where $\grad^2 \phi = \grad \cdot (\grad \phi)$ and is used to simplify 
-  notation. This is useful for problems with constant $D$ as the constant can be
+  where
+  \begin{conditions}
+    D & diffusion coefficient \units{cm} \\
+    \phi & scalar neutron flux \units{$\frac{1}{\text{cm}^2 \; \text{s}}$}\\
+    \Sigma_r & macroscopic removal cross-section \units{$\frac{1}{\text{cm}}$}\\
+    \keff & effective neutron multiplication factor \\
+    \nu\Sigma_f & number of fission neutrons per unit neutron flux
+      \units{\text{cm}} \\
+    q_{fixed} & fixed volumetric neutron source 
+      \units{$\frac{1}{\text{cm}^3 s}$}
+  \end{conditions}
+  and $\grad^2 \phi = \grad \cdot (\grad \phi)$ and is used to simplify 
+  notation. This is valid for problems with constant $D$ as the constant can be
   removed from the derivative. For problems considered here, material constants
   such as $D$ are constant in some region, either the entire problem or a finite
   region.
   
   For two-group neutron diffusion problems, the two-group neutron 
-  diffusion problem is written below.
+  diffusion problem is written 
   \begin{align} 
     \label{eq:twogroup1}
     -D_1 \grad^2 \phi_1 + \Sigma_{r1} \phi_1 &= \frac{1}{\keff} \left(
@@ -28,18 +38,20 @@
     -D_2 \grad^2 \phi_2 + \Sigma_{r2} \phi_2 &= 
       \Sigma_{s 1 \rightarrow 2} \phi_2
   \end{align}
-  Where $\phi_1$ is the higher energy group and $\phi_2$ is the lower energy 
-  group. This formulation assumes all fission neutrons are created in the fast 
-  energy group and there is no up-scattering (scattering that results in an 
-  increase in neutron energy). These are realistic assumptions for all diffusive
-  neutron systems.
+  where notation is the same as \eref{eq:onegroup} with the addition of
+  subscripts indicating the enrgy groups and $\phi_1$ is the higher energy group
+  and $\phi_2$ is the lower energy group such that $E_1 > E_2$. This formulation
+  assumes all fission neutrons are created in the high energy group ($\chi_1 =
+  1$ and $\chi_2 = 0$) and there is no scattering that results in an increase in
+  neutron energy; i.e., no up-scattering ($\Sigma_{s 2 \rightarrow 1} = 0$).
+  These are realistic assumptions for typical diffusive neutron systems.
 
   Analytic solutions are provided herein. One-dimension problems can be 
   replicated in a two-dimension solver using a square geometry and select 
-  boundary conditions. For a given quadrilateral, two of the boundary conditions
-  are set to reflective conditions and two are set to zero-flux $(\phi = 0)$ 
-  conditions. For true two-dimensions problems, all of the boundary conditions 
-  are set to zero-flux conditions.
+  boundary conditions. To reduce the dimension of a quadrilateral, two of the 
+  boundary conditions are set to mirror flux conditions and two are set to 
+  zero-flux $(\phi = 0)$ conditions. For true two-dimension and three-dimension 
+  problems, all of the boundary conditions are set to zero-flux conditions.
   
   These formula are common to second order partial differential equations, but
   the formulation here is based in part from \cite{textbooklewis}.
@@ -78,7 +90,7 @@
   Using the form of \eref{eq:1dfixed_buckle}, the homogeneous solution satisfies 
   \begin{equation}
     \label{eq:1dfixed_homog}
-    \frac{d^2}{dx^2} \phi_x(x) - \kappa^2 \phi_H(x) = 0.
+    \frac{d^2}{dx^2} \phi_H(x) - \kappa^2 \phi_H(x) = 0.
   \end{equation}
   The homogeneous solution $\phi_H(x)$ has form 
   \begin{equation}
@@ -113,7 +125,7 @@
     \phi(x) &= \frac{q_{fixed}}{D} \left( \cosh(\kappa \, x) -1 \right)
       + c_2 \, \sinh(\kappa \, x)
   \end{align}
-  The next boundary condition is evaluated at $x=L_x$ as apecified in
+  The next boundary condition is evaluated at $x=L_x$ as specified in
   \eref{eq:1dfixed_bc2}.
   \begin{align}
     \phi(L_x) &= 0 \\
@@ -135,6 +147,7 @@
   \fref{fig:fixed_critical}. Note that the magnitude of the function is not
   arbitrary and is specified by the magnitude of the external source
   $q_{fixed}$.
+
   \begin{figure}
     \centering
     \includegraphics[width=0.7\textwidth]{fixed_critical}
@@ -165,7 +178,7 @@
     \label{eq:1d1g_buckle}
     \frac{d^2}{dx^2} \phi(x) + B^2 \phi(x) = 0
   \end{equation}
-  Where $B$ is the buckling term defined as
+  where $B$ is the buckling term defined as
   \begin{equation}
     \label{eq:1d1g_b2}
     B^2 = \frac{\frac{1}{\keff} \nu \Sigma_f - \Sigma_r}{D}.
@@ -192,8 +205,8 @@
   Next, the second boundary condition is evaluated at $x=L_x$ as specified in
   \eref{eq:1d1g_bc2}.
   \begin{align}
-    \phi(L_x) &= 0 \\
-    &= c_2 \, \sin(B \, L_x)
+    \phi(L_x) &= 0 ,\\
+    &= c_2 \, \sin(B \, L_x).
   \end{align}
   For a non-trivial solution, this problem is an eigenvalue problem with $B$
   determined by the boundary condition such that 
@@ -204,15 +217,15 @@
   the problem. This term is only zero for specific values of $B_g$.
   This implies $c_2$ is arbitrary and the
   magnitude of the flux can be normalized to a constant. For simplicity, allow
-  $c_2 = \phi_0$. Then, recall the zeros of the sine function.
+  $c_2 = \phi_0$. Then, noting the zeros of the sine function.
   \begin{align}
-    B_g \, L_x &= n \, \pi \\
-    B_g &= \frac{n \, \pi}{L_x}
+    B_g \, L_x &= n \, \pi, \\
+    B_g &= \frac{n \, \pi}{L_x},
   \end{align}
-  Where $n$ is an integer. For the fundamental mode, $n=1$.
+  where $n$ is an integer. For the fundamental mode, $n=1$,
   \begin{equation}
     \label{eq:1d1g_buckle_geom}
-    B_g = \frac{\pi}{L_x}
+    B_g = \frac{\pi}{L_x}.
   \end{equation}
   Substitute \eref{eq:1d1g_buckle_geom} into \eref{eq:1d1g_sin} for the final
   solution to the fundamental eigenmode.
@@ -222,7 +235,7 @@
   \end{equation}
   A typical flux shape is plotted in \fref{fig:fixed_critical} along with the
   solution for a fixed-source problem. Recall that the magnitude is arbitrary so 
-  the flux is normalized to have the maximum equal to the fixed solution for 
+  the flux is normalized to have maximum equal to the fixed solution for 
   visualization purposes.
   Recalling the definition of $B$ from \eref{eq:1d1g_b2}, the fundamental
   eigenvalue of the problem, $\keff$, can be solved for by setting buckling
@@ -283,17 +296,17 @@
     \label{eq:2d1g_buckle}
     \grad^2 \phi(x,y) + B^2 \phi(x,y) = 0
   \end{equation}
-  Where $B$ is the buckling term and is given for this problem is given as
+  where $B$ is the buckling term and is given for this problem is given as
   \begin{equation}
     \label{eq:2d1g_b2}
     B^2 = \frac{\frac{1}{\keff} \nu \Sigma_f - \Sigma_r}{D}.
   \end{equation}
   The Laplacian $\grad^2$ in \eref{eq:2d1g_buckle} for two-dimensional Cartesian
-  geometry is then expanded into partial derivatives.
+  geometry is then expanded into partial derivatives as
   \begin{equation}
     \label{eq:2d1g_partial}
     \frac{\partial^2}{\partial x^2} \phi(x,y) + \frac{\partial^2}{\partial y^2}
-      \phi(x,y) + B^2 \phi(x,y) = 0
+      \phi(x,y) + B^2 \phi(x,y) = 0.
   \end{equation}
   The method of separation of variables is used to solve
   \eref{eq:2d1g_partial}. Begin by assuming that $\phi(x,y)$ is separable as
@@ -328,26 +341,27 @@
   \eref{eq:2d1g_divide_sum} into two equations yields
   \begin{align}
     \label{eq:2d1g_x}
-    \frac{1}{X(x)} \, \frac{d^2}{d x^2} X(x) + \alpha^2 &= 0 \\
+    \frac{1}{X(x)} \, \frac{d^2}{d x^2} X(x) + \alpha^2 &= 0, \\
     \label{eq:2d1g_y}
-    \frac{1}{Y(y)} \, \frac{d^2}{d y^2} Y(y) + \beta^2 &= 0
+    \frac{1}{Y(y)} \, \frac{d^2}{d y^2} Y(y) + \beta^2 &= 0,
   \end{align}
   where $\alpha$ and $\beta$ are constants such that
   \begin{equation}
     \label{eq:2d1g_buckle_alphabeta}
-    \alpha^2 + \beta^2 = B^2
+    \alpha^2 + \beta^2 = B^2.
   \end{equation}
   Consider \eref{eq:2d1g_x} and boundary conditions specified in
   \eref{eq:2d1g_bc1} and \eref{eq:2d1g_bc2}. Then, \eref{eq:2d1g_x} can be
   rewritten
   \begin{equation}
-    \frac{d^2}{dx^2} X(x) + \alpha^2 X(x) = 0
+    \label{eq:2d1g_xwqn}
+    \frac{d^2}{dx^2} X(x) + \alpha^2 X(x) = 0.
   \end{equation}
-  this is similar to the previous problem in \eref{eq:1d1g_buckle} which has 
-  general solution of the form
+  The form of \eref{eq:2d1g_xeqn} is similar to the previous problem in 
+  \eref{eq:1d1g_buckle} which has general solution of the form
   \begin{equation}
     \label{eq:2d1g_x_general}
-    X(x) = c_1 \, \cos(\alpha \, x) + c_2 \, \sin(\alpha \, x)
+    X(x) = c_1 \, \cos(\alpha \, x) + c_2 \, \sin(\alpha \, x).
   \end{equation}
   Consider the boundary condition at $x=0$ as specified in \eref{eq:2d1g_bc1}.
   \begin{align}
@@ -356,12 +370,12 @@
     \label{eq:2d1g_x_c1}
     \therefore \; c_1 &= 0
   \end{align}
-  Inserting this result into \eref{eq:2d1g_x_general} gives
+  Inserting \eref{eq:2d1g_x_c1} into \eref{eq:2d1g_x_general} gives
   \begin{equation}
     \label{eq:2d1g_x_sin}
     X(x) = c_2 \, \sin( \alpha x).
   \end{equation}
-  Then considering the boundary condition at $x=L_x$ as specified in
+  Then, considering the boundary condition at $x=L_x$ as specified in
   \eref{eq:2d1g_bc2}.
   \begin{align}
     X(L_x) &= 0 \\
@@ -370,7 +384,7 @@
   For a non-trivial solution $X(x)$, this is an eigenvalue problem with $\alpha$
   specified by the core size. This implies $c_2$ is arbitrary and the
   magnitude of the function can be normalized to a constant. For simplicity,
-  allow $c_2 = \phi_0$. Then, recall the zeros of the sine function.
+  allow $c_2 = \phi_{0,x}$. Then, recall the zeros of the sine function.
   \begin{align}
     \alpha \, L_x &= n \, \pi \\
     \alpha &= \frac{n \, \pi}{L_x}
@@ -384,12 +398,12 @@
   to the fundamental mode of $X(x)$.
   \begin{equation}
     \label{eq:2d1g_x_solution}
-    X(x) = \sin\left(\frac{\pi}{L_x} x \right)
+    X(x) = \phi_{0,x} \sin\left(\frac{\pi}{L_x} x \right)
   \end{equation}
   Similar procedure is performed to solve for $Y(y)$ giving
   \begin{equation}
     \label{eq:2d1g_y_solution}
-    Y(y) = \sin\left(\frac{\pi}{L_y} y \right)
+    Y(y) = \phi_{0,y} \sin\left(\frac{\pi}{L_y} y \right)
   \end{equation}
   and 
   \begin{equation}
@@ -397,20 +411,23 @@
     \beta = \frac{\pi}{L_y}.
   \end{equation}
   \eref{eq:2d1g_x_solution} and \eref{eq:2d1g_y_solution} are substituted into
-  \eref{eq:2d1g_separable}.
+  \eref{eq:2d1g_separable} giving
   \begin{equation}
     \label{eq:analytic_2d1g}
-    \phi(x,y) = \sin\left(\frac{\pi}{L_x} x\right) \, 
+    \phi(x,y) = \phi_0 \sin\left(\frac{\pi}{L_x} x\right) \, 
       \sin\left(\frac{\pi}{L_y} y\right)
   \end{equation}
+  where $\phi_0 = \phi_{0,x} \phi_{0,y}$ and is also arbitrary.
   A typical flux shape given by \eref{eq:analytic_2d1g} is plotted
   in \fref{fig:2d1g}.
+
   \begin{figure}
     \centering
     \includegraphics[width=0.7\textwidth]{2d1g}
     \caption{Two-Dimension Criticality Flux Shape.}
     \label{fig:2d1g}
   \end{figure}
+
   Using \eref{eq:2d1g_buckle_alphabeta} along with \eref{eq:2d1g_x_alpha} and a
   similar expression for $\beta$, the buckling can be written geometrically.
   \begin{equation}
