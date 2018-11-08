@@ -336,7 +336,7 @@
     Or, \eref{eq:linear_equation} can be written in matrix format as
     \begin{equation}
       \label{eq:matrix_notation}
-      \ma \vu = \vf
+      \ma \, \vu = \vf
     \end{equation}
     where $\vu = \{\upsilon_{i,g}\}$. 
     
@@ -380,7 +380,9 @@
     condition discussion.  The population of the vector $\vf$ is done similarly
     in an element-by-element fashion. Then, the matrix $\ma$ and the vector 
     $\vf$ are known for each energy group. The equations are solved for one
-    energy group at a time and $\phi_g$ is calculated and stored.
+    energy group at a time and $\phi_g$ is calculated and stored. The matrix
+    $\ma$ will be shown to be symmetric positive definite in
+    \sref{sec:linear_system_solution}.
     
     The above derivation reduces to a linear system of
     equations. These equations are constructed from the integral quantities 
