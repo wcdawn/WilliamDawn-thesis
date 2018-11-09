@@ -4,6 +4,7 @@ close all
 Lx = 100;
 LW = 2;
 ntest = 100;
+num_dots = 10;
 
 D1 = 1.3466;
 D2 = 0.37169;
@@ -27,13 +28,18 @@ for i = 1:ntest
     ytest(2,i) = fun2(xtest(i));
 end
 
+delta_selected = (1/num_dots)*ntest;
+selected = floor(1:delta_selected:ntest);
+matlab_blue = [0.00 0.447 0.741];
+matlab_orange = [0.91 0.41 0.17];
 
 figure
 hold on
 title('One-Dimension, Two-Group, Criticality')
-plot(xtest,ytest(1,:),'LineWidth',LW)
-plot(xtest,ytest(2,:),'LineWidth',LW)
+plot(xtest,ytest(1,:),'-o','LineWidth',LW,'MarkerIndices',selected,'MarkerFaceColor',matlab_blue)
+plot(xtest,ytest(2,:),'-^','LineWidth',LW,'MarkerIndices',selected,'MarkerFaceColor',matlab_orange)
 legend({'g=1','g=2'})
 xlabel('x [cm]')
 ylabel('\phi(x)')
 hold off
+print(gcf,'../figs/1d2g.png','-dpng','-r800');

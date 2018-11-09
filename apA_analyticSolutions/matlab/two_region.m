@@ -59,9 +59,10 @@ hold on
 title('One-Dimension, One-Group, Two Region, Criticality');
 plot(xtest,ytest,'LineWidth',LW);
 ylim([0,1])
-plot([LF LF],[ylim()],'k','LineWidth',LW)
+plot([LF LF],ylim(),'k','LineWidth',1)
 text(0.5*LF,0.5,'Fuel','FontSize',FZ);
 text(0.5*(LF+LR),0.5,'Reflector','FontSize',FZ);
 xlabel('x [cm]');
 ylabel('\phi(x)');
 hold off
+print(gcf,'../figs/2reg.png','-dpng','-r800');

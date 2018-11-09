@@ -24,7 +24,7 @@ end
 figure
 surf(xtest,ytest,val,'EdgeColor','none')
 view([0,90])
-colormap(coolwarm)
+colormap(viridis)
 colorbar
 xlabel('x [cm]')
 ylabel('y [cm]')

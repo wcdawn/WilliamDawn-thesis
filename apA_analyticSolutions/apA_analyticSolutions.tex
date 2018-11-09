@@ -143,7 +143,8 @@
     \frac{\frac{q_{fixed}}{D} 
     \left(\cosh(\kappa\,L_x)-1\right)}{\sinh(\kappa\,L_x)} \sinh(\kappa\,x)
   \end{equation}
-  A typical result of \eref{eq:analytic_1dfixedsrc} is presented in
+  Recall $\kappa^2 = \frac{\Sigma_r}{D}$ as in \eref{eq:1dfixed_b2}. A typical 
+  result of \eref{eq:analytic_1dfixedsrc} is presented in
   \fref{fig:fixed_critical}. Note that the magnitude of the function is not
   arbitrary and is specified by the magnitude of the external source
   $q_{fixed}$.
@@ -473,9 +474,9 @@
     \phi_g(L_x) &= 0.
   \end{align}
   
-  Since this is a bare core problem ($\phi=0$ on all boundaries), the general
-  solution to \eref{eq:1d2g_1} and \eref{eq:1d2g_2} has the form common to
-  one-group bare core problems.
+  This is a bare core problem ($\phi=0$ on all boundaries); therefore, the 
+  general solution to \eref{eq:1d2g_1} and \eref{eq:1d2g_2} has the form common
+  to one-group bare core problems,
   \begin{equation}
     \label{eq:multigroup_buckle}
     \frac{d^2}{dx^2} \phi_g(x) + B^2 \phi_g(x) = 0 \qquad \text{for } g=1,2
@@ -489,101 +490,110 @@
   Boundary conditions are applied next. Beginning with the boundary condition at
   $x=0$ as specified in \eref{eq:1d2g_bc0} gives
   \begin{align}
-    \phi_g(0) &= 0 \\
-    &= c_{1g} \\
+    \phi_g(0) &= 0, \\
+    &= c_{1g}, \\
     \label{eq:1d2g_c1g}
-    \therefore \; c_{1g} &= 0
+    \therefore \; c_{1g} &= 0.
   \end{align}
-  Then, using \eref{eq:1d2g_c1g}, \eref{eq:multigroup_general} can be rewritten.
+  Then, using \eref{eq:1d2g_c1g}, \eref{eq:multigroup_general} can be rewritten 
+  as
   \begin{equation}
     \label{eq:1d2g_sin}
-    \phi_g(x) = c_g \, \sin(B\,x)
+    \phi_g(x) = c_{2g} \, \sin(B\,x).
   \end{equation}
+  For notational clarity, let $k_g = c_{2g}$.
   Evaluating the boundary condition at $x=L_x$ as specified in
   \eref{eq:1d2g_bcLx}.
   \begin{align}
-    \phi_g(L_x) &= 0 \\
-    &= c_g \, \sin(B \, L_x)
+    \phi_g(L_x) &= 0 ,\\
+    &= k_g \, \sin(B \, L_x).
   \end{align}
-  The buckling $B$ is then specified by the zeros of the $\sin()$ function. 
+  The buckling $B$ is then specified by the zeros of the sine function.
   \begin{equation}
     \label{eq:1d2g_buckle_geom}
     B = \frac{\pi}{L_x}
   \end{equation}
-  To find the unknown coefficients $c_g$, differentiate \eref{eq:1d2g_sin}
-  twice.
+  To find the unknown coefficients $k_g$, differentiate \eref{eq:1d2g_sin}
+  twice with respect to $x$.
   \begin{equation}
     \label{eq:1d2g_sin_d2}
-    \frac{d^2}{dx^2} \phi_g(x) = - B^2 \, c_g \, \sin(B\,x)
+    \frac{d^2}{dx^2} \phi_g(x) = - B^2 \, k_g \, \sin(B\,x)
   \end{equation}
   Insert \eref{eq:1d2g_sin} and \eref{eq:1d2g_sin_d2} into \eref{eq:1d2g_1} and
   \eref{eq:1d2g_2}.
   \begin{align}
-    D_1 \, B^2 \, c_1 \, \sin(B\,x) + \Sigma_{r1} \, c_1 \, \sin(B\,x) &=
-      \frac{1}{\keff} \left( \nu \Sigma_{f1} \, c_1 \, \sin(B \, x) + \nu
-      \Sigma_{f2} \, c_2 \, \sin(B\,x) \right) \\
-    D_2 \, B^2 \, c_2 \sin(B\,x) + \Sigma_{r2} \, c_2 \, \sin(B\,x) &=
-      \Sigma_{s 1\rightarrow 2} \, c_1 \, \sin(B\,x)
+    D_1 \, B^2 \, k_1 \, \sin(B\,x) + \Sigma_{r1} \, k_1 \, \sin(B\,x) &=
+      \frac{1}{\keff} \left( \nu \Sigma_{f1} \, k_1 \, \sin(B \, x) + \nu
+      \Sigma_{f2} \, k_2 \, \sin(B\,x) \right) \\
+    D_2 \, B^2 \, k_2 \sin(B\,x) + \Sigma_{r2} \, k_2 \, \sin(B\,x) &=
+      \Sigma_{s 1\rightarrow 2} \, k_1 \, \sin(B\,x)
   \end{align}
   Dividing through the equations by $\sin(B\,x)$.
   \begin{align}
     \label{eq:1d2g_expression1}
-    D_1 \, B^2 \,c_1+ \Sigma_{r1}\,c_1 &= \frac{1}{\keff} \left( \nu \Sigma_{f1}
-      \, c_1 + \nu \Sigma_{f2} \, c_2 \right) \\
+    D_1 \, B^2 \,k_1+ \Sigma_{r1}\,k_1 &= \frac{1}{\keff} \left( \nu \Sigma_{f1}
+      \, k_1 + \nu \Sigma_{f2} \, k_2 \right) \\
     \label{eq:1d2g_expression2}
-    D_2 \, B^2 \, c_2 + \Sigma_{r2}\,c_2 &= \Sigma_{s 1\rightarrow 2} \, c_1
+    D_2 \, B^2 \, k_2 + \Sigma_{r2}\,k_2 &= \Sigma_{s 1\rightarrow 2} \, k_1
   \end{align}
   Beginning with \eref{eq:1d2g_expression2} and solving for the quantity
-  $\frac{c_2}{c_1}$ and recalling \eref{eq:1d2g_buckle_geom}.
+  $\frac{k_2}{k_1}$ and recalling \eref{eq:1d2g_buckle_geom}.
   \begin{align}
-    \frac{c_2}{c_1} &= \frac{\Sigma_{s 1\rightarrow 2}}{D_2 \, B^2 + \Sigma_{r2}}
+    \frac{k_2}{k_1} &= \frac{\Sigma_{s 1\rightarrow 2}}{D_2 \, B^2 + \Sigma_{r2}}
       \\
     \label{eq:1d2g_ratio}
-    \frac{c_2}{c_1} &= \frac{\Sigma_{s 1\rightarrow 2}}{D_2 \,
+    \frac{k_2}{k_1} &= \frac{\Sigma_{s 1\rightarrow 2}}{D_2 \,
       \left(\frac{\pi}{L_x}\right)^2 + \Sigma_{r2}}
   \end{align}
+  The quantity $\frac{k_2}{k_1}$ relates the magnitudes of $\phi_1(x)$ and
+  $\phi_2(x)$. The relative magnitude is not arbitrary as expressed in
+  \eref{eq:1d2g_ratio} but the $k_1$ is arbitrary. Allow $k_1 = \phi_0$ where
+  $\phi_0$ is a constant.
+
   Returning to \eref{eq:1d2g_expression1} and solving for the eigenvalue
   $\keff$.
   \begin{align}
-    \keff &= \frac{\nu \Sigma_{f1} \, c_1 + \nu \Sigma_{f2} \, c_2}
-      {D_1 \, B^2 c_1 + \Sigma_{r1} \, c_1 }\\
-    \keff &= \frac{\nu \Sigma_{f1} \, c_1 + \nu \Sigma_{f2} \, c_2}
-      {D_1 \, \left(\frac{\pi}{L_x}\right)^2 \, c_1 + \Sigma_{r1} \, c_1}
+    \keff &= \frac{\nu \Sigma_{f1} \, k_1 + \nu \Sigma_{f2} \, k_2}
+      {D_1 \, B^2 k_1 + \Sigma_{r1} \, k_1 }\\
+    \keff &= \frac{\nu \Sigma_{f1} \, k_1 + \nu \Sigma_{f2} \, k_2}
+      {D_1 \, \left(\frac{\pi}{L_x}\right)^2 \, k_1 + \Sigma_{r1} \, k_1}
   \end{align}
-  Divide the top and bottom of the ratio by $c_1$.
+  Divide the top and bottom of the ratio by $k_1$.
   \begin{equation}
     \label{eq:1d2g_keff}
-    \keff = \frac{\nu \Sigma_{f1} + \nu \Sigma_{f2} \, \frac{c_2}{c_1}}
+    \keff = \frac{\nu \Sigma_{f1} + \nu \Sigma_{f2} \, \frac{k_2}{k_1}}
       {D_1 \, \left(\frac{\pi}{L_x}\right)^2 + \Sigma_{r1}}
   \end{equation}
-  Recalling the quantity $\frac{c_2}{c_1}$ from \eref{eq:1d2g_ratio}.
+  Recalling the quantity $\frac{k_2}{k_1}$ from \eref{eq:1d2g_ratio}.
 
   The flux shape for $\phi_1(x)$ and $\phi_2(x)$ are given by combining
   \eref{eq:1d2g_sin}, \eref{eq:1d2g_buckle_geom}, and \eref{eq:1d2g_ratio}.
   Combining these equations and rewriting yields
   \begin{align}
-    \phi_1(x) &= \phi_0 \, \sin\left(\frac{\pi}{L_x} x \right) \\
-    \phi_2(x) &= \frac{c_2}{c_1} \, \phi_0 \, \sin\left(\frac{\pi}{L_x} x
-      \right)
+    \phi_1(x) &= \phi_0 \, \sin\left(\frac{\pi}{L_x} x \right), \\
+    \phi_2(x) &= \frac{k_2}{k_1} \, \phi_0 \, \sin\left(\frac{\pi}{L_x} x
+      \right),
   \end{align}
-  where $\phi_0$ is an arbitrary constant.
-  An example solution is plotted in \fref{fig:1d2g}. The coefficient $c_1$ is
-  arbitrary and the ratio $\frac{c_2}{c_1}$ is given in \eref{eq:1d2g_ratio}.
-  Finally, $\keff$ is given in \eref{eq:1d2g_keff}. The cross sections from 
-  VVER440 benchmark in \sref{sec:vver440} MAT1 are used for this problem. For 
-  ease of reference, the cross sections are also presented in 
+  recalling $\phi_0$ is an arbitrary constant.
+  An example solution is plotted in \fref{fig:1d2g}. The coefficient $k_1$ is
+  arbitrary and the ratio $\frac{k_2}{k_1}$ is given in \eref{eq:1d2g_ratio}.
+  Finally, $\keff$ is given in \eref{eq:1d2g_keff}. The cross-sections from 
+  VVER440 benchmark, material MAT1, described in \sref{sec:vver440} are used for
+  this problem. For ease of reference, the cross sections are also presented in 
   \tref{tab:1d2g_vver440}. For the specified cross sections and 
   $L_x = 100 \units{cm}$, the solutions are
   \begin{align}
-    \frac{c_2}{c_1} &= 0.0261324, \\
+    \frac{k_2}{k_1} &= 0.0261324, \\
     \keff &= 0.892349.
   \end{align}
+
   \begin{figure}
     \centering
     \includegraphics[width=0.7\textwidth]{1d2g}
     \caption{Example Two-Group Flux Plot.}
     \label{fig:1d2g}
   \end{figure}
+
   \begin{table}
     \caption{Two-Group VVER440 Material Constants.}
     \label{tab:1d2g_vver440}
@@ -605,9 +615,9 @@
 
 \section{One-Dimension, One-Group, Two Region, Criticality}
   \label{sec:deriv_2reg}
-  This one-dimension problem is meant to simulate a reactor with reflective
-  material at the edge of the reactor. The purpose of this problem is to test
-  the materials mapping of the solver. The problem is in the domain 
+  This one-dimension problem is meant to simulate a reactor with non-fissile,
+  reflective material at the edge of the reactor. The purpose of this problem is
+  to test the materials mapping of the solver. The problem is in the domain 
   $x \in [0,L_R]$. Geometry is shown in \fref{fig:2reg_geom}. Fuel material 
   (subscript F) is located in $x \in [0,L_F]$ and reflector material 
   (subscript R) is located in $ x \in [L_F,L_R]$. The material is homogeneous 
@@ -617,10 +627,10 @@
   \begin{align}
     \label{eq:2regF}
     -D_F \frac{d^2}{dx^2} \phi_F(x) + \Sigma_{rF} &= \frac{1}{\keff} \nu
-      \Sigma_{fF} \phi_F(x) \qquad &\forall \; x \in [0,L_F] \\
+      \Sigma_{fF} \phi_F(x) \quad \forall \; x \in [0,L_F] \\
     \label{eq:2regR}
-    -D_R \frac{d^2}{dx^2} \phi_R(x) + \Sigma_{rR} &= 0 \qquad &\forall 
-      \; x \in [L_F,L_R]
+    -D_R \frac{d^2}{dx^2} \phi_R(x) + \Sigma_{rR} &= 0  
+      \qquad \qquad \qquad \forall \; x \in [L_F,L_R]
   \end{align}
   with boundary and interfacial conditions
   \begin{align}
@@ -642,12 +652,12 @@
   \end{figure}
 
   Beginning in the fueled region, the diffusion equation \eref{eq:2regF} can be
-  rewritten with a buckling term $B_F$.
+  rewritten with a buckling term $B_F$ as
   \begin{equation}
     \label{eq:2regF_buckle}
     \frac{d^2}{dx^2} \phi_F(x) + B_F^2 \phi_F(x) = 0 
   \end{equation}
-  Where $B_F^2$ is given by
+  where $B_F^2$ is the buckling term in the fuel and is given by
   \begin{equation}
     \label{eq:2regF_b2}
     B_F^2 = \frac{\frac{1}{\keff} \nu \Sigma_{fF} - \Sigma_{rF}}{D_F}.
@@ -678,10 +688,10 @@
     \label{eq:2regF_cos}
     \phi_F(x) = c_{1F} \, \cos(B_F\, x)
   \end{equation}
-  and its derivative is provided.
+  and its derivative is also provided
   \begin{equation}
     \label{eq:2regF_cos_derivative}
-    \frac{d}{dx} \phi_F(x) = -c_{1F} \, B_F \, \sin(B_F \, x)
+    \frac{d}{dx} \phi_F(x) = -c_{1F} \, B_F \, \sin(B_F \, x).
   \end{equation}
 
   Next, the reflector region is considered as in \eref{eq:2regR}. This equation
@@ -690,7 +700,7 @@
     \label{eq:2regR_buckle}
     \frac{d^2}{dx^2} \phi_R(x) - B_R^2 \phi_R(x) = 0
   \end{equation}
-  where $B_R^2$ is given as
+  where $B_R^2$ is the buckling term in the reflector and is given as
   \begin{equation}
     \label{eq:2regR_b2}
     B_R^2 = \frac{\Sigma_{rR}}{D_R}.
@@ -702,8 +712,8 @@
   \end{equation}
   where $c_{1R}$ and $c_{2R}$ are unknown constant coefficients.
   Note the use of $(x-L_F)$ instead of $x$ in \eref{eq:2regR_general}. This
-  choice is valid because $\cosh()$ and $\sinh()$ can be rewritten as
-  exponential functions and the subtraction in the argument is equivalent to
+  choice is valid because hyperbolic cosine and hyperbolic sine can be rewritten
+  as exponential functions and the subtraction in the argument is equivalent to
   multiplication by a constant.
   The derivative of \eref{eq:2regR_general} is also provided as it will be
   useful for evaluating boundary conditions.
@@ -724,34 +734,36 @@
     \label{eq:2reg_c2r_a}
     c_{2R} &= -c_{1R} \frac{1}{\tanh(B_R\,(L_R-L_F))}
   \end{align}
+
   Next, the current continuity condition at $x=L_F$ is considered as specified
   in \eref{eq:2reg_current_continuity}. \eref{eq:2regF_cos_derivative} and
   \eref{eq:2regR_general_derivative} are used to evaluate the functions.
+  Evaluating the boundary condition yields
   \begin{align}
     \left. D_F \frac{d}{dx} \phi_F(x) \right|_{x=L_F} &= 
-      \left. D_R \frac{d}{dx} \phi_R(x) \right|_{x=L_F} \\
-    -D_F \, c_{1F} \, B_F \, \sin(B_F \, L_F) &= D_R \, B_R \, c_{2R}
+      \left. D_R \frac{d}{dx} \phi_R(x) \right|_{x=L_F} ,\\
+    -D_F \, c_{1F} \, B_F \, \sin(B_F \, L_F) &= D_R \, B_R \, c_{2R}.
   \end{align}
-  Then, solving for $c_{2R}$.
+  Then, solving for $c_{2R}$ gives
   \begin{equation}
     \label{eq:2reg_c2r_b}
-    c_{2R} = \frac{-D_F \, c_{1F} \, B_F \, \sin(B_F \, L_F)}{D_R\,B_R}
+    c_{2R} = \frac{-D_F \, c_{1F} \, B_F \, \sin(B_F \, L_F)}{D_R\,B_R}.
   \end{equation}
   Next, the flux continuity condition at $x=L_F$ is considered as specified in 
   \eref{eq:2reg_flux_continuity}. \eref{eq:2regF_cos} and 
-  \eref{eq:2regR_general} are used to evaluate the functions.
+  \eref{eq:2regR_general} are used to evaluate the functions as
   \begin{align}
-    \phi_F(L_F) &= \phi_R(L_F) \\
-    c_{1F} \, \cos(B_f \, L_F) &= c_{1R} \\
+    \phi_F(L_F) &= \phi_R(L_F) ,\\
+    c_{1F} \, \cos(B_f \, L_F) &= c_{1R} ,\\
     \label{eq:2reg_c1r}
-    c_{1R} &= c_{1F} \, \cos(B_F \, L_F)
+    c_{1R} &= c_{1F} \, \cos(B_F \, L_F).
   \end{align}
 
-  Now coefficients $c$ are solved. Setting \eref{eq:2reg_c2r_a} equal to
-  \eref{eq:2reg_c2r_b} gives
+  Now the constant coefficients $c$ are solved. Setting \eref{eq:2reg_c2r_a} 
+  equal to \eref{eq:2reg_c2r_b} gives
   \begin{align}
     -c_{1R} \frac{1}{\tanh(B_R\,(L_R-L_F))}
-      &= \frac{-D_F \, c_{1F} \, B_F \, \sin(B_F \, L_F)}{D_R\,B_R} \\
+      &= \frac{-D_F \, c_{1F} \, B_F \, \sin(B_F \, L_F)}{D_R\,B_R}, \\
     c_{1R} \frac{1}{\tanh(B_R\,(L_R-L_F))}
       &= \frac{D_F \, c_{1F} \, B_F \, \sin(B_F \, L_F)}{D_R\,B_R}.
   \end{align}
@@ -771,7 +783,7 @@
     \frac{D_R \, B_R}{D_F \, \tanh(B_R \, (L_R - L_F))} &= 
       \frac{B_F \, \sin(B_F \, L_F)}{\cos(B_F \, L_F)}
   \end{align}
-  Leading to the transcendental function
+  Leading to the transcendental relation
   \begin{equation}
     \label{eq:2reg_bf}
     B_F \, \tan(B_F \, L_F) = \frac{D_R \, B_R}{D_F \, \tanh(B_R \, (L_R-L_F))}
@@ -779,8 +791,8 @@
   where $B_R$ is defined according to \eref{eq:2regR_b2}. 
   \eref{eq:2reg_bf} is the most simplified solution for $B_F$. Unfortunately,
   there is no analytic expression for $B_F$. Therefore, a numeric solver 
-  such as MATLAB's \verb|vpasolve()| or a generic bisection search must be used.
-  The $\tan()$ function causes the solution $B_F$ to be especially sensitive to 
+  such as MATLAB's \verb|vpasolve()| or a generic bisection method must be used.
+  The tangent function causes the solution $B_F$ to be especially sensitive to 
   the starting guess or bounds of the search. Once, $B_F$ is known, the 
   eigenvalue, $\keff$ can be solved using \eref{eq:2regF_b2}.
   \begin{equation}
@@ -803,7 +815,7 @@
       \phi_R(x) & L_F \le x \le L_R
     \end{cases}
   \end{align}
-  Where $\phi_0$ is the arbitrary normalization constant and $\phi_0 = \phi(0)$.
+  Where $\phi_0$ is the arbitrary normalization constant.
 %
 %  $H(x)$ is the Heaviside step function such that
 %  \begin{equation}
@@ -821,6 +833,7 @@
     B_F &= 0.0255922 \units{$\frac{1}{\text{cm}}$} \\
     \keff &= 0.962188
   \end{align}
+
   \begin{table}
     \caption{Two Region Material Constants.}
     \label{tab:2reg_constants}
@@ -836,6 +849,7 @@
       \end{tabular}
     \end{center}
   \end{table}
+
   \begin{figure}
     \centering
     \includegraphics[width=0.7\textwidth]{2reg}
@@ -847,7 +861,8 @@
   \label{sec:deriv_finite_cyl}
   This three-dimension problem can be simulated in three Cartesian dimensions 
   and,using symmetry, reduced to two cylindrical dimensions for easier analytic 
-  solution. This problem is located in $r \in [0,T]$ and $z \in [0,H]$. The 
+  solution. This problem is located in $r \in [0,T]$ and $z \in [0,H]$ where $r$
+  and $z$ are the radial and axial coordinates respectively. The 
   material is homogeneous within the problem and has fixed coefficient 
   properties. The diffusion equation for this problem is 
   \begin{equation}
@@ -877,19 +892,19 @@
     \label{eq:finite_cyl_b2}
     B^2 = \frac{\frac{1}{\keff} \nu \Sigma_f - \Sigma_r }{D}
   \end{equation}
-  The Laplacian in \eref{eq:finite_cyl_buckle} is expanded noting the special
-  attention to the radial derivative.
+  The Laplacian in \eref{eq:finite_cyl_buckle} is expanded noting two dimension
+  cylindrical coordinates
   \begin{equation}
     \label{eq:finite_cyl_deriv}
     \frac{1}{r} \frac{\partial}{\partial r} \left( r \frac{\partial}{\partial r}
       \phi(r,z) \right) + \frac{\partial^2}{\partial z^2} \phi(r,z) + 
-      B^2 \phi(r,z) = 0
+      B^2 \phi(r,z) = 0.
   \end{equation}
   Using the method of separation of variables, assume $\phi(r,z)$ is the product
-  of two functions.
+  of two functions as
   \begin{equation}
     \label{eq:finite_cyl_separation}
-    \phi(r,x) = R(r) \, Z(z)
+    \phi(r,x) = R(r) \, Z(z).
   \end{equation}
   Inserting \eref{eq:finite_cyl_separation} into \eref{eq:finite_cyl_deriv}.
   \begin{align}
@@ -910,7 +925,7 @@
   Each of the partial derivatives operates on a function of only one variable so
   the derivatives become standard derivatives.
 
-  The firest two terms of \eref{eq:finite_cyl_sum} are function of only $r$ and
+  The first two terms of \eref{eq:finite_cyl_sum} are function of only $r$ and
   $z$ respectively, and their sum is equal to a constant. Therefore, both of the
   terms must also be equal to a constant \cite{lamarsh1966}. Splitting
   \eref{eq:finite_cyl_sum} into two equations yields
@@ -930,15 +945,15 @@
     \frac{1}{r} \frac{d}{dr} \left( r \frac{d}{dr} R(r) \right) + \beta^2 R(r) =
     0
   \end{equation}
-  Multiplying by $r$
+  Multiplying by $r$.
   \begin{equation}
     \frac{d}{dr} \left( r \frac{d}{dr} R(r) \right) + \beta^2 r = 0
   \end{equation}
-  Noting the product rule of differentiation
+  Noting the product rule of differentiation.
   \begin{equation}
     r \frac{d}{dr} R(r) + R(r) + \beta^2 R(r) = 0
   \end{equation}
-  Dividing by $r$
+  Dividing by $r$.
   \begin{equation}
     \label{eq:finite_cyl_bessel}
     \frac{d}{dr} R(r) + \frac{1}{r} R(r) + \beta^2 R(r) = 0
@@ -948,13 +963,13 @@
     \label{eq:finite_cyl_bessel_general}
     R(r) = c_1 J_0(\beta r ) + c_2 Y_0(\beta r)
   \end{equation}
-  Where $J_0$ is the Bessel function of the first kind, zeroth order and $Y_0$
+  where $J_0$ is the Bessel function of the first kind, zeroth order and $Y_0$
   is the Bessel function of the second kind, zeroth order. Requiring the flux to
   be finite at $r=0$ as per \eref{eq:finite_cyl_bcr0}.
   \begin{align}
-    \lim_{r \rightarrow 0} Y_0(r) &= - \infty \\
+    \lim_{r \rightarrow 0} Y_0(r) &\rightarrow - \infty, \\
     \label{eq:finite_cyl_c2}
-    \therefore \; c_2 &= 0
+    \therefore \; c_2 &= 0.
   \end{align}
   \eref{eq:finite_cyl_c2} is inserted into \eref{eq:finite_cyl_bessel_general}.
   \begin{equation}
@@ -975,23 +990,23 @@
     \label{eq:finite_cyl_beta}
     \beta &= \frac{\alpha_0}{T}
   \end{align}
-  Where $\alpha_n$ are the zeros of the $J_0$ function and $\alpha_0$ is the
-  first zero( $\alpha_0 \approx 2.4048$). Coefficient $c_1$ is arbitrary so 
-  allow $c_1 = 1$. Then
+  where $\alpha_n$ are the zeros of the $J_0$ function and $\alpha_0$ is the
+  first zero ($\alpha_0 \approx 2.4048$). Coefficient $c_1$ is arbitrary so 
+  allow $c_1 = R_0$. Then
   \begin{equation}
     \label{eq:finite_cyl_R}
-    R(r) = J_0\left(\frac{\alpha_0}{T} r\right)
+    R(r) = R_0 \, J_0\left(\frac{\alpha_0}{T} r\right)
   \end{equation}
 
-  A similar process is repeated for $Z(z)$. This derivation is simple and is
-  briefly repeated here. Recall \eref{eq:finite_cyl_zeq} which may be rewritten.
+  A similar process is repeated for $Z(z)$. This derivation is briefly repeated 
+  here. Recall \eref{eq:finite_cyl_zeq} which may be rewritten.
   \begin{equation}
     \frac{d^2}{dz^2} Z(z) + B^2 Z(z) = 0
   \end{equation}
-  Which has general solution of the form
+  which has general solution of the form
   \begin{equation}
     \label{eq:finite_cyl_z_general}
-    Z(z) = c_3 \cos(\gamma z) + c_4 \sin(\gamma z)
+    Z(z) = c_3 \cos(\gamma z) + c_4 \sin(\gamma z).
   \end{equation}
   Evaluating \eref{eq:finite_cyl_z_general} at $z=0$ considering the boundary
   condition specified in \eref{eq:finite_cyl_bcz0}.
@@ -1013,33 +1028,34 @@
     &= c_4 \sin(\gamma H)
   \end{align}
   For non-trivial $Z(z)$, the term $\sin(\gamma H)=0$ is required and $c_4$ is
-  trivial and $\gamma$ specified by geometry. 
+  trivial and $\gamma$ specified by geometry as
   \begin{align}
     \gamma H &= n \pi \\
     \gamma &= \frac{n \pi}{H} \\
     \label{eq:finite_cyl_gamma}
     \gamma &= \frac{\pi}{H}
   \end{align}
-  Where $n$ is an integer and $n \pi$ are the roots of the $\sin()$ function.
+  where $n$ is an integer and $n \pi$ are the roots of the sine function.
   Then the fundamental mode is specified for $n=1$. Coefficient $c_4$ is
-  arbitrary so allow $c_4 = \phi_0$. Then
+  arbitrary so allow $c_4 = Z_0$. Then
   \begin{equation}
     \label{eq:finite_cyl_Z}
-    Z(z) = \sin\left(\frac{\pi}{H} z\right)
+    Z(z) = Z_0 \sin\left(\frac{\pi}{H} z\right)
   \end{equation}
 
   \eref{eq:finite_cyl_R} and \eref{eq:finite_cyl_Z} are combined according to
-  the separation of variables from \eref{eq:finite_cyl_separation}.
+  the separation of variables from \eref{eq:finite_cyl_separation}
   \begin{equation}
     \label{eq:analytic_finite_cyl}
-    \phi(r,z) = J_0\left(\frac{\alpha_0}{T} r\right) \sin\left(\frac{\pi}{H} z
-      \right)
+    \phi(r,z) = \phi_0 \, 
+      J_0\left(\frac{\alpha_0}{T} r\right) \sin\left(\frac{\pi}{H} z \right)
   \end{equation}
-  An example flux plot is shown in \fref{fig:finite_cyl}.
-  Recall \eref{eq:finite_cyl_b2} and the form \eref{eq:finite_cyl_b2_sum}.
-  Coefficients $\beta$ and $\gamma$ are given in \eref{eq:finite_cyl_beta} and
-  \eref{eq:finite_cyl_gamma}. Then, an expression for $\keff$ can be
-  constructed.
+  where $\phi_0$ is arbitrary and $\phi_0 = R_0 Z_0$.
+  An example flux plot for a slice of the cylinder is shown in 
+  \fref{fig:finite_cyl}. Recall \eref{eq:finite_cyl_b2} and the form 
+  \eref{eq:finite_cyl_b2_sum}. Coefficients $\beta$ and $\gamma$ are given in 
+  \eref{eq:finite_cyl_beta} and \eref{eq:finite_cyl_gamma}. Then, an expression
+  for $\keff$ can be constructed.
   \begin{equation}
     \label{eq:keff_finite_cyl}
     \keff = \frac{\nu \Sigma_f}{D \left( \left(\frac{\alpha_0}{T}\right)^2 +
@@ -1051,7 +1067,7 @@
     \keff = 0.996711
   \end{equation}
   
-  The shape of the boundary as described by the discrete mesh  is extremely 
+  The shape of the boundary as described by the discrete mesh is extremely 
   important for a circular (or curved) boundary. A simple example of this is 
   shown in \fref{fig:circle_meshes}. In a mesh refinement study, the mesh must 
   be regenerated with a halved mesh parameter $h$ for each refinement, rather 
@@ -1068,7 +1084,7 @@
   \begin{figure}
     \centering
     \includegraphics[width=0.7\textwidth]{circle_meshes}
-    \caption{Mesh Refinement of Curved Mesh}
+    \caption{Mesh Refinement of Curved Mesh.}
     \label{fig:circle_meshes}
   \end{figure}
 

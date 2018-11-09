@@ -988,6 +988,22 @@
   themselves are not used in the reactor simulation. The axial solution comes
   from a typical reactor simulation and demonstrates the expected behaviors for
   system temperatures.
+  
+  \subsection{Total Reactor Power}
+    To verify the calculation of enthalpy according to the axial heat convection
+    model is implemented correctly, reactor power is calculated using enthalpy
+    and compared to the user input $Q_{Rx}$. An energy balance using the reactor
+    as a control volume dictates that
+    \begin{equation}
+      \label{eq:reactor_energy_balance}
+      Q_{Rx} = \sum_{i=1}^{N_{hex}} \mdot_i (h_{i,N_z+1/2} - h_{inlet})
+    \end{equation}
+    where $h_{i,N_z+1/2}$ is the enthalpy at the upper elevation of the chunk
+    located in channel $i$ at the ultimate axial elevation $N_z$. The user
+    inputs reactor power, $Q_{Rx}$, and the calculated value is compared to the
+    input value. For a reactor model operating at full power, the calculated
+    reactor power agreed to the user input reactor power to within machine
+    tolerance.
 
   \subsection{Radial Results}
     Radial temperatures for a single-pin model are shown in

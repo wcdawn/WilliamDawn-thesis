@@ -46,20 +46,15 @@ fprintf('Tclad_ave = %.2f %.2f %.2f\n',Tclad_ave,myTclad_ave,Tclad_ave-myTclad_a
 figure
 hold on
 plot(r,T,'Color',matlab_blue,'LineWidth',LW)
-plot([0,rfuel],[Tfuel_ave,Tfuel_ave],'Color',matlab_orange,'LineWidth',LW)
-plot([rfuel,rbond],[Tbond_ave,Tbond_ave],'Color',matlab_orange,'HandleVisibility','off','LineWidth',LW)
-plot([rbond,rclad],[Tclad_ave,Tclad_ave],'Color',matlab_orange,'HandleVisibility','off','LineWidth',LW)
+plot([0,rfuel],[Tfuel_ave,Tfuel_ave],'--','Color',matlab_orange,'LineWidth',LW)
+plot([rfuel,rbond],[Tbond_ave,Tbond_ave],'--','Color',matlab_orange,'HandleVisibility','off','LineWidth',LW)
+plot([rbond,rclad],[Tclad_ave,Tclad_ave],'--','Color',matlab_orange,'HandleVisibility','off','LineWidth',LW)
 legend({'Radial Temperature','Average Temperature'},'Location','SouthWest')
 
-% plot([0,rfuel],[myTfuel_ave,myTfuel_ave],'Color','r','LineWidth',LW)
-% plot([rfuel,rbond],[myTbond_ave,myTbond_ave],'Color','r','HandleVisibility','off','LineWidth',LW)
-% plot([rbond,rclad],[myTclad_ave,myTclad_ave],'Color','r','HandleVisibility','off','LineWidth',LW)
-
-
 yl = ylim();
-plot([rfuel,rfuel],yl,'k','HandleVisibility','off','LineWidth',LW)
-plot([rbond,rbond],yl,'k','HandleVisibility','off','LineWidth',LW)
-plot([rclad,rclad],yl,'k','HandleVisibility','off','LineWidth',LW)
+plot([rfuel,rfuel],yl,'k','HandleVisibility','off')
+plot([rbond,rbond],yl,'k','HandleVisibility','off')
+plot([rclad,rclad],yl,'k','HandleVisibility','off')
 text(0.5*rfuel,900,'Fuel','HorizontalAlignment','Center','FontSize',FS)
 text(0.5*(rfuel+rbond),900,'Bond','HorizontalAlignment','Center','FontSize',FS)
 text(0.5*(rbond+rclad),900,'Clad','HorizontalAlignment','Center','FontSize',FS)
@@ -69,4 +64,4 @@ title('Representative Temperature Calculation')
 xlabel('Radius [cm]')
 ylabel('Temperature [K]')
 hold off
-
+print(gcf,'../radial_temp_plot.png','-dpng','-r800');

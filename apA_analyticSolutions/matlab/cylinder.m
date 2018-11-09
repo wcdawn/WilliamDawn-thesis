@@ -19,15 +19,18 @@ for i = 1:ntest
     end
 end
 
-figure
+figure('pos',[1000 1000 650 1000])
 surf(rtest,ztest,ftest','EdgeColor','none')
 view([0,90])
-colormap(coolwarm)
+colormap(viridis)
 colorbar
 xlabel('r [cm]')
 ylabel('z [cm]')
 xlim([0 T])
 ylim([0 H])
+% set(gcf,'PaperPositionMode','manual');
+% set(gcf,'PaperUnits','centimeters')
+% set(gcf,'PaperPosition',[0 0 130 200])
 
 title('Slice of Finite Cylinder')
 
