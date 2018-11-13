@@ -67,14 +67,18 @@ title('Analytic Average Temperature')
 
 figure
 hold on
-plot(Tcool_tester,z_tester);
-plot(Tclad_tester,z_tester);
-plot(Tbond_tester,z_tester);
-plot(Tfuel_tester,z_tester);
+plot(Tcool_tester,z_tester,'LineWidth',LW);
+plot(Tclad_tester,z_tester,'LineWidth',LW);
+plot(Tbond_tester,z_tester,'LineWidth',LW);
+plot(Tfuel_tester,z_tester,'LineWidth',LW);
 hold off
 legend({'T_{cool}','T_{clad}','T_{bond}','T_{fuel}'},'Location','SouthEast')
 ylim([0,z(end)])
-title('Tester Average Temperature')
+xlabel('Temperature [K]')
+ylabel('Elevation [m]')
+title('Modeled Axial Temperature')
+print(gcf,'../axial_temp_plot.png','-dpng','-r800');
+
 
 matlab_blue = [0.00 0.447 0.741];
 matlab_orange = [0.91 0.41 0.17];
