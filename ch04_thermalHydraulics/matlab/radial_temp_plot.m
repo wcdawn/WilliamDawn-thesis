@@ -75,4 +75,4 @@ title('Representative Temperature Calculation')
 xlabel('Radius [cm]')
 ylabel('Temperature [K]')
 hold off
-print(gcf,'../radial_temp_plot.png','-dpng','-r800');
+print(gcf,'../figs/radial_temp_plot.png','-dpng','-r800');

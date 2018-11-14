@@ -77,7 +77,7 @@ ylim([0,z(end)])
 xlabel('Temperature [K]')
 ylabel('Elevation [m]')
 title('Modeled Axial Temperature')
-print(gcf,'../axial_temp_plot.png','-dpng','-r800');
+print(gcf,'../figs/axial_temp_plot.png','-dpng','-r800');
 
 
 matlab_blue = [0.00 0.447 0.741];
@@ -115,4 +115,4 @@ title('Temperature Difference')
 xlabel('z [m]')
 xlim([0,z(end)])
 ylabel('Temperature Difference [K]')
-print(gcf,'../axial_difference_plot.png','-dpng','-r800');
+print(gcf,'../figs/axial_difference_plot.png','-dpng','-r800');

@@ -88,7 +88,7 @@ ylim([0,z(end)])
 ylabel('Elevation [m]')
 xlabel('Temperature [K]')
 title('Typical Axial Temperature Plot')
-print(gcf,'../axial_temp_plot.png','-dpng','-r800');
+print(gcf,'../figs/axial_temp_plot.png','-dpng','-r800');
 
 clad_factor = zeros(size(tfuel));
 cool_factor = zeros(size(tfuel));
