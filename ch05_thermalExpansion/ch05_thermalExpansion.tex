@@ -97,10 +97,46 @@
     \label{eq:lef_a}
     F_a(T_{exp}) = \left(\frac{\Delta L}{L}\right)_{\text{U10Zr}}
   \end{equation}
-  and $F_a(T_{exp}) = F_z(T_{exp})$.
+  and $F_a(T_{exp}) = F_z(T_{exp})$. Using radial and axial thermal expansion
+  factors, a thermally expanded coordinate $(x',y',z')$ can be expressed as
+  \begin{align}
+    \label{eq:expand_x}
+    x' &= x + x \, F_r(T_{exp}) \\
+    \label{eq:expand_y}
+    y' &= y + y \, F_r(T_{exp}) \\
+    \label{eq:expand_z}
+    z' &= z + z \, F_a(T_{exp})
+  \end{align}
+  which is consistent with the assumption of uniform radial and axial expansion.
+
+  Using the coordinate transforms in \eref{eq:expand_x}, \eref{eq:expand_y}, and
+  \eref{eq:expand_z}, consider the thermal expansion of a volume $V$. Volume $V$
+  has coordinate components $L_x$, $L_y$, and $L_z$ such that 
+  ${V = L_x \, L_y \, L_z}$. Then, the thermally expanded volume $V'$ can be
+  written
+  \begin{align}
+    V' &= V + \Delta V, \\
+    V' &= (L_x + \Delta L_x) (L_y + \Delta L_y) (L_z + \Delta L_z). \\
+  \end{align}
+  Then, recognizing that the coordinate expansions $\Delta L_x = L_x
+  F_r(T_{exp})$.
+  \begin{align}
+    V' &= (L_x + L_x \, F_r(T_{exp})) + (L_y + L_y \, F_r(T_{exp})) + 
+      (L_z + L_z \, F_a(T_{exp})) \\
+    V' &= L_x \, L_y \, L_z \, (1 + F_r(T_{exp}))^2 (1+F_a(T_{exp})) \\
+    V' &= V (1 + F_r(T_{exp}))^2 (1+F_a(T_{exp}))
+  \end{align}
+  The volume ratio is then
+  \begin{equation}
+    \label{eq:volume_ratio}
+    \frac{V}{V'} = \frac{1}{(1+F_r(T_{exp}))^2 (1+F_a(T_{exp}))}.
+  \end{equation}
+
+  
+  
 
   % define volume expansion factor
-  % prove areas do not expand if all at same rate
+  % prove area fractions do not expand if all at same rate
 
 \section{Implementation}
   Thermal expansion effects the reactor simulation in two major ways. First,
