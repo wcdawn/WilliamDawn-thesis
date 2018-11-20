@@ -12,6 +12,7 @@ Tclad_ave = 0.676579E+03;
 
 LW = 2;
 FS = 13;
+FN = 'Times New Roman';
 num_dots = 8;
 matlab_blue = [0.00 0.447 0.741];
 matlab_orange = [0.91 0.41 0.17];
@@ -66,13 +67,16 @@ yl = ylim();
 plot([rfuel,rfuel],yl,'k','HandleVisibility','off')
 plot([rbond,rbond],yl,'k','HandleVisibility','off')
 plot([rclad,rclad],yl,'k','HandleVisibility','off')
-text(0.5*rfuel,900,'Fuel','HorizontalAlignment','Center','FontSize',FS)
-text(0.5*(rfuel+rbond),900,'Bond','HorizontalAlignment','Center','FontSize',FS)
-text(0.5*(rbond+rclad),900,'Clad','HorizontalAlignment','Center','FontSize',FS)
+text(0.5*rfuel,900,'Fuel','HorizontalAlignment','Center','FontSize',FS,'FontName',FN)
+text(0.5*(rfuel+rbond),900,'Bond','HorizontalAlignment','Center','FontSize',FS,'FontName',FN)
+text(0.5*(rbond+rclad),900,'Clad','HorizontalAlignment','Center','FontSize',FS,'FontName',FN)
 
 ylim(yl);
 title('Representative Temperature Calculation')
 xlabel('Radius [cm]')
 ylabel('Temperature [K]')
 hold off
-print(gcf,'../figs/radial_temp_plot.png','-dpng','-r800');
+
+set(gca,'FontName','Times New Roman','FontSize',12);
+% print('../figs/finite_cyl.eps','-depsc2');
+% close(gcf)

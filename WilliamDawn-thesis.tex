@@ -12,6 +12,7 @@
 \usepackage{textcomp}  % better copyright sign, among other things
 \usepackage{lipsum}    % filler text
 \usepackage{subfig}    % composite figures
+\usepackage[table]{xcolor}
 
 % user defined packages
 \usepackage[chapter]{algorithm} % make sure to reset count at the new chapter
@@ -19,8 +20,9 @@
 \usepackage{csvsimple}
 \usepackage{threeparttable} % for table with footnote
 \usepackage{amssymb} % for \therefore and \implies
-\usepackage{isotope}
-\usepackage{array}
+\usepackage{isotope} % isotope notation e.g. \isotope[235]{U}
+\usepackage[outdir=./hidden_epstopdf/]{epstopdf}
+\pdfminorversion=7 % needed to use PDF 1.7 defintition. 1.5 is default.
 \newenvironment{conditions}
   {\par\vspace{\abovedisplayskip}\noindent\begin{tabular}{>{$}l<{$} @{${}={}$} l}}
   {\end{tabular}\par\vspace{\belowdisplayskip}}

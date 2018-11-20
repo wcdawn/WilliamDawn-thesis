@@ -43,4 +43,7 @@ xlabel('x [cm]')
 ylabel('\phi(x)')
 legend({'Criticality', 'Fixed Source'})
 hold off
-print(gcf,'../figs/fixed_critical.png','-dpng','-r800');
+
+set(gca,'FontName','Times New Roman','FontSize',12);
+print('../figs/fixed_critical.eps','-depsc2');
+close(gcf)

@@ -3,7 +3,7 @@ close all
 
 Lx = 1;
 Ly = 1;
-ntest = 1000;
+ntest = 75;
 
 qfixed = 1;
 sigma_r = 1;
@@ -28,4 +28,8 @@ colormap(viridis)
 colorbar
 xlabel('x [cm]')
 ylabel('y [cm]')
-title('Two-Dimension, One-Group, Ciriticality')
+title('Two-Dimension, One-Group, Criticality')
+
+set(gca,'FontName','Times New Roman','FontSize',12);
+print('../figs/2d1g.eps','-depsc2');
+close(gcf)

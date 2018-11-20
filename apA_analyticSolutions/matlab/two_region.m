@@ -60,9 +60,12 @@ title('One-Dimension, One-Group, Two Region, Criticality');
 plot(xtest,ytest,'LineWidth',LW);
 ylim([0,1])
 plot([LF LF],ylim(),'k','LineWidth',1)
-text(0.5*LF,0.5,'Fuel','FontSize',FZ);
-text(0.5*(LF+LR),0.5,'Reflector','FontSize',FZ);
+text(0.5*LF,0.5,'Fuel','FontSize',FZ,'FontName','Times New Roman');
+text(0.5*(LF+LR),0.5,'Reflector','FontSize',FZ,'FontName','Times New Roman');
 xlabel('x [cm]');
 ylabel('\phi(x)');
 hold off
-print(gcf,'../figs/2reg.png','-dpng','-r800');
+
+set(gca,'FontName','Times New Roman','FontSize',12);
+print('../figs/2reg.eps','-depsc2');
+close(gcf)

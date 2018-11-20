@@ -3,7 +3,8 @@ close all
 
 T = 1;
 H = 2;
-ntest = 1000;
+% NOTE: if this is too large the image will be saved as a bitmap automatically
+ntest = 76; 
 
 alpha_0 = fzero(@(z) besselj(0, z), 3);
 % besselj(0, alpha_0); % Should be small
@@ -19,19 +20,17 @@ for i = 1:ntest
     end
 end
 
-figure('pos',[1000 1000 650 1000])
-surf(rtest,ztest,ftest','EdgeColor','none')
-view([0,90])
-colormap(viridis)
-colorbar
-xlabel('r [cm]')
-ylabel('z [cm]')
-xlim([0 T])
-ylim([0 H])
-% set(gcf,'PaperPositionMode','manual');
-% set(gcf,'PaperUnits','centimeters')
-% set(gcf,'PaperPosition',[0 0 130 200])
+figure('pos',[1000 1000 650 1000]);
+surf(rtest,ztest,ftest','EdgeColor','flat');
+view([0,90]);
+colormap(viridis);
+colorbar;
+xlabel('r [cm]');
+ylabel('z [cm]');
+xlim([0 T]);
+ylim([0 H]);
+title('Slice of Finite Cylinder');
 
-title('Slice of Finite Cylinder')
-
-
+set(gca,'FontName','Times New Roman','FontSize',20);
+print('../figs/finite_cyl.eps','-depsc2');
+close(gcf)

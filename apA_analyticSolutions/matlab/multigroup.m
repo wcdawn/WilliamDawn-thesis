@@ -42,4 +42,7 @@ legend({'g=1','g=2'})
 xlabel('x [cm]')
 ylabel('\phi(x)')
 hold off
-print(gcf,'../figs/1d2g.png','-dpng','-r800');
+
+set(gca,'FontName','Times New Roman','FontSize',12);
+print('../figs/1d2g.eps','-depsc2');
+close(gcf)
