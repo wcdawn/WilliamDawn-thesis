@@ -22,3 +22,6 @@ ylim([0,45])
 xlabel('T [K]')
 ylabel('Thermal Conductivity [W/m/K]')
 title('Thermal Conductivity U-10Zr')
+set(gca,'FontName','Times New Roman','FontSize',12);
+print('../figs/kfuel_plot.eps','-depsc2');
+close(gcf)

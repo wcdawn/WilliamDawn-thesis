@@ -78,5 +78,5 @@ ylabel('Temperature [K]')
 hold off
 
 set(gca,'FontName','Times New Roman','FontSize',12);
-% print('../figs/finite_cyl.eps','-depsc2');
-% close(gcf)
+print('../figs/radial_temp_plot.eps','-depsc2');
+close(gcf)
