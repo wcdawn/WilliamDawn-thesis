@@ -1,7 +1,7 @@
 clear
 close all
 
-fname = '~/dev/thesis/sfr/lef.csv';
+fname = './lef.csv';
 data = csvread(fname,1,0);
 LW = 2;
 
@@ -29,4 +29,5 @@ xlim([T(1),T(end)])
 ylim([0,max(lef_fuel)*1.05])
 ax = gca;
 ax.YAxis.Exponent=-2; % this is the same as percentage results
-print(gcf,'../figs/lef_plot.png','-dpng','-r800');
+set(gca,'FontName','Times New Roman')
+print(gcf,'../figs/lef_plot.eps','-depsc2');
