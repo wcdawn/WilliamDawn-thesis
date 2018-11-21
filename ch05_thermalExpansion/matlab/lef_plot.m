@@ -1,7 +1,7 @@
 clear
 close all
 
-fname = './lef.csv';
+fname = '../data/lef.csv';
 data = csvread(fname,1,0);
 LW = 2;
 
@@ -31,3 +31,4 @@ ax = gca;
 ax.YAxis.Exponent=-2; % this is the same as percentage results
 set(gca,'FontName','Times New Roman')
 print(gcf,'../figs/lef_plot.eps','-depsc2');
+close(gcf)
