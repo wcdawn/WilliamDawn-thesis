@@ -45,5 +45,23 @@ for i = 1:6
     plot(this_wrap(:,1),this_wrap(:,2),'k','LineWidth',LW)
 end
 
+FS = 14;
+FN = 'Times New Roman';
+text(-11.2,6,'Th_{box}','FontSize',FS,'FontName',FN);
+text(0.8,8.5,'F2F','FontSize',FS,'FontName',FN);
+text(-7,1,'Pitch','FontSize',FS,'FontName',FN);
+axis(axis)
+arrow([0,-19*.5],[0,+19*.5],'LineWidth',1)
+arrow([0,+19*.5],[0,-19*.5],'LineWidth',1)
+arrow([-6,0],[-3,-5])
+arrow([-3,-5],[-6,0])
+arrow([-7.8,5.5],[-6.2,4.45],'Length',10)
+arrow([-6.2,4.45],[-7.8,5.5],'Length',10)
+
+
+
+hold off
+
 set(gca,'Visible','off');
-print(gcf,'foo.png','-dpng','-r800'); 
+print(gcf,'../figs/hex_can.eps','-depsc2');
+close(gcf)

@@ -75,8 +75,6 @@ chunk_offset = 3;
 plot3(hex(:,1)+chunk_offset,hex(:,2),hex(:,3)+height,'k','LineWidth',LW);
 plot3(assy_front(:,1)+chunk_offset,assy_front(:,2),assy_front(:,3),'k','LineWidth',LW)
 
-% chevron
-
 % hex
 hex_offset = 6;
 plot3(hex(:,1)+hex_offset,hex(:,2),hex(:,3)+3*height,'k','LineWidth',LW);
@@ -84,7 +82,6 @@ plot3(assy_front(:,1)+hex_offset,assy_front(:,2),assy_front(:,3),'k','LineWidth'
 plot3(assy_front(:,1)+hex_offset,assy_front(:,2),assy_front(:,3)+height,'k','LineWidth',LW)
 plot3(assy_front(:,1)+hex_offset,assy_front(:,2),assy_front(:,3)+2*height,'k','LineWidth',LW)
 
-hold off
 xlim([0,7])
 ylim([0,6])
 zlim([0,7])
@@ -92,5 +89,26 @@ xlabel('x')
 ylabel('y')
 zlabel('z')
 view([0 30])
+
+% add chevrons now that camera is fixed
+annotation('line',[0.25,0.3],[0.2,0.2],'LineWidth',LW);
+annotation('line',[0.3,0.3+0.1*0.5*sqrt(2.)],[0.2,0.2+0.1*0.5*sqrt(2.)],'LineWidth',LW);
+annotation('line',[0.3+0.1*0.5*sqrt(2.),0.3],[0.2+0.1*0.5*sqrt(2.),0.2+2*0.1*0.5*sqrt(2.)],'LineWidth',LW);
+annotation('line',[0.25,0.3],[0.2,0.2]+2*0.1*0.5*sqrt(2.),'LineWidth',LW);
+annotation('line',[0.25,0.25+0.1*0.5*sqrt(2.)],[0.2+2*0.1*0.5*sqrt(2.),0.2+0.1*0.5*sqrt(2.)],'LineWidth',LW);
+annotation('line',[0.25+0.1*0.5*sqrt(2.),0.25],[0.2+0.1*0.5*sqrt(2.),0.2],'LineWidth',LW);
+
+dumb = 0.3;
+annotation('line',dumb+[0.25,0.3],[0.2,0.2],'LineWidth',LW);
+annotation('line',dumb+[0.3,0.3+0.1*0.5*sqrt(2.)],[0.2,0.2+0.1*0.5*sqrt(2.)],'LineWidth',LW);
+annotation('line',dumb+[0.3+0.1*0.5*sqrt(2.),0.3],[0.2+0.1*0.5*sqrt(2.),0.2+2*0.1*0.5*sqrt(2.)],'LineWidth',LW);
+annotation('line',dumb+[0.25,0.3],[0.2,0.2]+2*0.1*0.5*sqrt(2.),'LineWidth',LW);
+annotation('line',dumb+[0.25,0.25+0.1*0.5*sqrt(2.)],[0.2+2*0.1*0.5*sqrt(2.),0.2+0.1*0.5*sqrt(2.)],'LineWidth',LW);
+annotation('line',dumb+[0.25+0.1*0.5*sqrt(2.),0.25],[0.2+0.1*0.5*sqrt(2.),0.2],'LineWidth',LW);
+
+% add arrow and z
+annotation('textarrow',[0.9,0.9],[0.15,0.3],'String','z','LineWidth',LW,'FontSize',12,'FontName','Times New Roman')
+
 set(gca,'Visible','off');
-print(gcf,'geom_build.png','-dpng','-r800'); 
+print(gcf,'../figs/chunk_description.eps','-depsc2');
+close(gcf)
