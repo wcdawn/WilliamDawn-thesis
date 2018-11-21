@@ -406,20 +406,17 @@
       have been investigated in many applications \cite{Hosseini2017} 
       \cite{Hosseini2013} \cite{Hosseini2015}. The linear triangle element is a
       triangle defined by three corner coordinates with basis functions located 
-      on each corner. A triangle element is sketched in 
-      \fref{fig:sketch_triangle}.
+      on each corner. 
 
       \begin{figure}
         \centering
-        \includegraphics[width=0.3\textwidth]{sketch_triangle}
-        \caption{Description of Triangle Element.}
-        \label{fig:sketch_triangle}
-      \end{figure}
-      \begin{figure}
-        \centering
-        \includegraphics[width=0.4\textwidth]{Tref}
-        \caption{Description of Reference Triangle.}
-        \label{fig:Tref}
+        \subfloat[General Triangle Element.]
+          {\includegraphics[width=0.35\textwidth]{sketch_triangle}}
+        \vspace{0.2in}
+        \subfloat[Reference Triangle.]
+          {\includegraphics[width=0.35\textwidth]{Tref}}
+        \caption{Description of Triangular Elements.}
+        \label{fig:triangle_elements}
       \end{figure}
 
       It is difficult to analytically calculate the desired integral quantities
@@ -427,10 +424,11 @@
       created and quantities are calculated for the reference element and then
       translated to the arbitrary element using a Jacobian. 
       The reference triangle $T_{ref}$ is located in
-      $\xi \in [0,1]$ and $\eta \in [0,1-\xi]$ as shown in \fref{fig:Tref}. The
+      $\xi \in [0,1]$ and $\eta \in [0,1-\xi]$. General and reference triangles
+      are shown in \fref{fig:triangle_elements}. The
       basis functions are zero outside of the reference triangle and within the
       reference triangle, basis functions for the are provided in the
-      coordinates of $T_{ref}$ (see \fref{fig:Tref}).
+      coordinates of $T_{ref}$.
       \begin{align}
         \basis_i(\xi,\eta) &= 0 \; \forall \; (\xi,\eta) \notin T_{ref} \\
         \basis_1(\xi,\eta) &= \xi \\

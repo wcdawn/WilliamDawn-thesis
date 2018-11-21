@@ -35,14 +35,11 @@ str = fgets(fid);
 
 info = sscanf(str,'%c %*s %*s', 1);
 
-if((info ~= 'P') && (info ~= 'V'))
-    str = fgets(fid);    
-    info = sscanf(str,'%c %*s %*s', 1);
-end
+str = fgets(fid);    
+info = sscanf(str,'%c %*s %*s', 1);
 
-% read vertex ids
+% read elements ids
 
-if((info ~= 'P') && (info ~= 'V'))
     data = sscanf(str,'%*s %d %d',2);
     nelem = data(1);
     nmem = data(2);
@@ -53,7 +50,7 @@ if((info ~= 'P') && (info ~= 'V'))
         data = sscanf(str,'%d %d %d %d',4);
         face(i,:) = data(2:4);
     end    
-end
+
 
 fclose(fid);
 
