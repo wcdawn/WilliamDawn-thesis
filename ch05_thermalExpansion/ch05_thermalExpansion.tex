@@ -81,7 +81,7 @@
   represent the average temperature within the reactor. It is expected thermal
   expansion effects will be significant. However, thermal expansion factors are
   typically on the order $10^{-6}$ so small, local changes in temperature are
-  will not affect the macroscopic simulation.
+  not expected to affect the macroscopic simulation.
 
   Given the assumptions of this model, a radial thermal expansion factor can be
   defined using \eref{eq:lef_ht9} as
@@ -97,39 +97,40 @@
     \label{eq:lef_a}
     F_a(T_{exp}) = \left(\frac{\Delta L}{L}\right)_{\text{U10Zr}}
   \end{equation}
-  and $F_a(T_{exp}) = F_z(T_{exp})$. Using radial and axial thermal expansion
-  factors, a thermally expanded coordinate $(x',y',z')$ can be expressed as
+  and $F_a(T_{exp}) = F_z(T_{exp})$. For a ``cold'' cooridnate $(x^C,y^C,z^C)$,
+  the thermally expanded ``hot'' coordinate $(x^H,y^H,z^H)$ can be expressed 
+  using radial and axial thermal expansion factors as
   \begin{align}
     \label{eq:expand_x}
-    x' &= x + x \, F_r(T_{exp}) \\
+    x^H &= x^C + x^C \, F_r(T_{exp}) \\
     \label{eq:expand_y}
-    y' &= y + y \, F_r(T_{exp}) \\
+    y^H &= y^C + y^C \, F_r(T_{exp}) \\
     \label{eq:expand_z}
-    z' &= z + z \, F_a(T_{exp})
+    z^H &= z^C + z^C \, F_a(T_{exp})
   \end{align}
   which is consistent with the assumption of uniform radial and axial expansion.
 
   Using the coordinate transforms in \eref{eq:expand_x}, \eref{eq:expand_y}, and
-  \eref{eq:expand_z}, consider the thermal expansion of a volume $V$. Volume $V$
-  has coordinate components $L_x$, $L_y$, and $L_z$ such that 
-  ${V = L_x \, L_y \, L_z}$. Then, the thermally expanded volume $V'$ can be
-  written
+  \eref{eq:expand_z}, consider the thermal expansion of a cold volume $V^C$.
+  Volume $V^C$ has coordinate components $L_x^C$, $L_y^C$, and $L_z^C$ such that 
+  ${V^C = L_x^C \, L_y^C \, L_z^C}$. Then, the thermally expanded volume $V^H$ 
+  can be written
   \begin{align}
-    V' &= V + \Delta V, \\
-    V' &= (L_x + \Delta L_x) (L_y + \Delta L_y) (L_z + \Delta L_z). \\
+    V^H &= V^C + \Delta V, \\
+    V^H &= (L_x^C + \Delta L_x) (L_y^C + \Delta L_y) (L_z^C + \Delta L_z). 
   \end{align}
-  Then, recognizing that the coordinate expansions $\Delta L_x = L_x
-  F_r(T_{exp})$.
+  Then, recognizing that the coordinate expansions 
+  ${\Delta L_x = L_x^C F_r(T_{exp})}$.
   \begin{align}
-    V' &= (L_x + L_x \, F_r(T_{exp})) + (L_y + L_y \, F_r(T_{exp})) + 
-      (L_z + L_z \, F_a(T_{exp})) \\
-    V' &= L_x \, L_y \, L_z \, (1 + F_r(T_{exp}))^2 (1+F_a(T_{exp})) \\
-    V' &= V (1 + F_r(T_{exp}))^2 (1+F_a(T_{exp}))
+    V^H &= (L_x^C + L_x^C \, F_r(T_{exp})) + (L_y^C + L_y^C \, F_r(T_{exp})) + 
+      (L_z^C + L_z^C \, F_a(T_{exp})) \\
+    V^H &= L_x^C \, L_y^C \, L_z^C \, (1 + F_r(T_{exp}))^2 (1+F_a(T_{exp})) \\
+    V^H &= V^C (1 + F_r(T_{exp}))^2 (1+F_a(T_{exp}))
   \end{align}
   The volume ratio is then
   \begin{equation}
     \label{eq:volume_ratio}
-    \frac{V}{V'} = \frac{1}{(1+F_r(T_{exp}))^2 (1+F_a(T_{exp}))}.
+    \frac{V^C}{V^H} = \frac{1}{(1+F_r(T_{exp}))^2 (1+F_a(T_{exp}))}.
   \end{equation}
   Given the assumption of uniform thermal expansion in axial and radial
   directions, the ratio of volumetric expansion is constant throughout the
@@ -144,42 +145,50 @@
   Thermal expansion effects the reactor simulation in two major ways. First,
   thermal expansion causes the physical dimensions of the reactor to increase. 
   This is modeled by the expansion of individual elements in the solution of the
-  finite element method as well as the expansion of areas within the hexagons.
-  Second, as a result in the increase in physical dimensions, the density of
-  reactor materials decreases. This decrease in density is necessary to preserve
-  the mass of the materials within the reactor. The density change is observed
-  as an effect on cross-sections.
-
-  The conservation of reactor material is expressed as a conservation of number
-  of atoms. Allow the superscript $H$ to represent ``Hot'' conditions (i.e.
-  thermally expanded) and the superscript $C$ to represent ``Cold'' conditions.
-  Then, the conservation of the number of atoms for species $i$, can be
-  expressed as
-  \begin{equation}
-    \label{eq:conservation}
-    n_i^H = n_i^C 
-  \end{equation}
-  where $n_i^H$ is the number of atoms of species $i$ after thermal expansion.
-  The number of atoms $n_i$ can be written as 
-  \begin{equation}
-    \label{eq:nden_definition}
-    n_i = N_i \, V_i
-  \end{equation}
-  where $N_i$ is the number densities of species $i$ and $V_i$ is the volume
-  occupied by species $i$. Then, inserting \eref{eq:nden_definition} into 
-  \eref{eq:conservation} yields an expression for the thermally expanded number
-  density of species $i$ as
-  \begin{align}
-    N_i^H \, V_i^H &= N_i^C \, V_i^C, \\
-    N_i^H &= N_i^C \frac{V_i^C}{V_i^H}
-  \end{align}
-  where the term $\frac{V_i^C}{V_i^H} < 1$ and represents the expansion of the
-  volume occupied by species $i$.
+  neutron diffusion equation via the finite element method (see
+  \chref{ch:neutronDiffusion}) as well as the expansion of areas within the 
+  hexagons.  Second, as a result in the increase in physical dimensions, the 
+  density of reactor materials decreases. This decrease in density is necessary
+  to preserve the quantity of material within the reactor. In this derivation,
+  the number of atoms are conserved. The density change due to thermal expansion 
+  is observed as an effect on cross-sections.
 
   \subsection{Expansion of Elements and Area Fractions}
-    
+    Given the assumption of constant thermal expansion in radial and axial
+    directions, thermal expansion is straightforward. Each node coordinate in
+    the mesh is expanded according to \eref{eq:expand_x}, \eref{eq:expand_y},
+    and \eref{eq:expand_z}. By expanding in axial and radial directions
+    uniformly throughout the reactor, it is certain that there will be no
+    intersection or overlap of elements. In a realistic analysis, stress,
+    strain, and contact pressures must be accounted for but this is unnecessary
+    here because the assumptions prohibit such conditions.
 
   \subsection{Cross-section Effects}
+    The conservation of reactor material is expressed as a conservation of 
+    number of atoms. Allow the superscript $H$ to represent ``hot'' conditions 
+    (i.e.  thermally expanded) and the superscript $C$ to represent ``cold'' 
+    conditions.  Then, the conservation of the number of atoms for species $i$, 
+    can be expressed as
+    \begin{equation}
+      \label{eq:conservation}
+      n_i^H = n_i^C 
+    \end{equation}
+    where $n_i^H$ is the number of atoms of species $i$ after thermal expansion.
+    The number of atoms $n_i$ can be written as 
+    \begin{equation}
+      \label{eq:nden_definition}
+      n_i = N_i \, V_i
+    \end{equation}
+    where $N_i$ is the number density of species $i$ and $V_i$ is the volume
+    occupied by species $i$. Then, inserting \eref{eq:nden_definition} into 
+    \eref{eq:conservation} yields an expression for the thermally expanded 
+    number density of species $i$ as
+    \begin{align}
+      N_i^H \, V_i^H &= N_i^C \, V_i^C, \\
+      N_i^H &= N_i^C \frac{V_i^C}{V_i^H}
+    \end{align}
+    where the term $\frac{V_i^C}{V_i^H} < 1$ and represents the expansion of the
+    volume occupied by species $i$.
 
 \section{Results}
   \begin{figure}
