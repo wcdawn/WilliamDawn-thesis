@@ -119,7 +119,7 @@
     V^H &= V^C + \Delta V, \\
     V^H &= (L_x^C + \Delta L_x) (L_y^C + \Delta L_y) (L_z^C + \Delta L_z). 
   \end{align}
-  Then, recognizing that the coordinate expansions 
+  Then, recognizing the coordinate expansions 
   ${\Delta L_x = L_x^C F_r(T_{exp})}$.
   \begin{align}
     V^H &= (L_x^C + L_x^C \, F_r(T_{exp})) + (L_y^C + L_y^C \, F_r(T_{exp})) + 
@@ -136,8 +136,72 @@
   directions, the ratio of volumetric expansion is constant throughout the
   reactor.
 
-  Assume the cross-sectional area of the hexagonal assembly is confined to the
-  radial direction. Though the assembly may warp, this warping is negligible.
+  It is assumed that the cross-sectional area of the hexagonal assembly is 
+  confined to the radial direction; any warping of the assembly that would
+  violate this assumption is neglected. Then, the hexagonal assembly has total
+  cross-sectional area $A$ and contains component cross sections $A_i$. For
+  example, the total area occupied by the fuel material could be considered
+  $A_i$ and the total area of the hexagon described by the flat-to-flat
+  dimension could be considered $A$. Define $A_i$ such that $\sum_{i} A_i = A$.
+  Let the fractional area $a_i = A_i/A$ and $\sum_{i} a_i = 1$.
+
+  Similar to a ratio of volumetric expansion, a ratio of area expansion may be
+  derived. Assume all dimensions in the radial direction (to which the
+  cross-sectional assembly area is confined), expand according to
+  $F_r(T_{exp})$. Then, consider a representative area $A^C = L_x^C L_y^C$.
+  Then, the thermally expanded volume $A^H$ can be written
+  \begin{align}
+    A^H &= A^C + \Delta A, \\
+    A^H &= (L_x^C + \Delta L_x) (L_y^C + \Delta L_y).
+  \end{align}
+  Recognizing the coordinate thermal expansions ${\Delta L_x = L_x^C
+  F_r(T_{exp})}$.
+  \begin{align}
+    A^H &= (L_x^C + L_x^C F_r(T_{exp})) (L_y^C + F_r(T_{exp})) \\
+    A^H &= L_x^C L_y^C (1 + F_r(T_{exp}))^2 \\
+    A^H &= A^C (1 + F_r(T_{exp}))
+  \end{align}
+  The area ratio is then
+  \begin{equation}
+    \label{eq:area_ratio}
+    \frac{A^H}{A^C} = (1 + F_r(T_{exp}))^2.
+  \end{equation}
+
+  Consider the thermal expansion of area fractions $a_i$. Observe $a_i^C =
+  \frac{A_i^C}{A^C}$. Then, both $A_i$ and $A$ are thermally expanded according
+  to \eref{eq:area_ratio}.
+  \begin{align}
+    a_i^H &= \frac{A_i^H}{A^H} \\
+    a_i^H &= \frac{A_i^C (1 + F_r(T_{exp}))^2}{A^C (1 + F_r(T_{exp}))} \\
+    \label{eq:constant_area_frac}
+    a_i^H &= a_i^C
+  \end{align}
+  \eref{eq:constant_area_frac} implies that for uniform thermal expansion in the
+  radial directions, area fractions are unaffected by thermal expansion though
+  areas themselves expand. 
+  
+  However, in the model used here, the fuel radius and fuel area
+  are expanded according to $\left(\frac{\Delta L}{L_0}\right)_{\text{U10Zr}}$
+  whereas all other materials are expanded according to 
+  $\left(\frac{\Delta L}{L_0}\right)_{\text{HT9}}$. This does imply that,
+  numerically, the radius of the fuel could exceed the inner radius of the clad
+  which is a non-physical result. This will only happen for small sodium bond
+  gaps and high thermal expansion temperatures. In these cases, the radius of
+  the fuel is confined to the expanded inner radius of the cladding. Though a
+  more complex relationship describes the true value of these radii, the error
+  due to this assumption is small compared to the assumption of uniform thermal
+  expansion.
+  
+  Due to the different thermal expansions of fuel and structural material within
+  the cross-section of the hexagonal assembly, the thermal expansion of area 
+  fractions does not obey \eref{eq:constant_area_frac}. Instead, area fractions
+  are simply calculated at hot and cold conditions and the ratio from this
+  calculation is used.
+
+
+
+
+
   
   
 
