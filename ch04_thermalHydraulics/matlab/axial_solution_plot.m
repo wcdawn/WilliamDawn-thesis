@@ -1,7 +1,7 @@
 clear
 close all
 
-analtyic_fname = '~/dev/thesis/thermal/axial_analytic_results.csv';
+analtyic_fname = '../data/axial_analytic_results.csv';
 data = csvread(analtyic_fname,1,0);
 LW = 2;
 
@@ -20,7 +20,7 @@ Tclad = data(:,10);
 Tbond = data(:,11);
 Tfuel = data(:,12);
 
-tester_fname = '~/dev/thesis/thermal/axial_test_results.csv';
+tester_fname = '../data/axial_test_results.csv';
 data = csvread(tester_fname,1,0);
 z_tester = data(:,1);
 h_tester = data(:,2);

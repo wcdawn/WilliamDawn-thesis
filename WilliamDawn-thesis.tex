@@ -261,14 +261,9 @@ Method}
 
 %% A central location to add your favorite macros.
 %% user defined commands and macros
-
-%% A few examples to get you started.
-\newcommand{\uv}[1]{\ensuremath{\mathbf{\hat{#1}}}}
-\newcommand{\bo}{\ensuremath{\mathbf{\Omega}}}
-\newcommand{\Conv}{\mathop{\scalebox{1.5}{\raisebox{-0.2ex}{$\ast$}}}}%
-
 % linear algebra
 \renewcommand{\epsilon}{\varepsilon} % use the pretty epsilon
+
 %    vectors
 \newcommand{\va}{\mathbf{a}}
 \newcommand{\vb}{\mathbf{b}}
@@ -281,8 +276,8 @@ Method}
 \newcommand{\vu}{\mathbf{u}}
 \newcommand{\vx}{\mathbf{x}}
 \newcommand{\vw}{\mathbf{w}}
-\newcommand{\vphi}{\mathbf{\phi}}
 \newcommand{\vPhi}{\Phi}
+
 %    matrices
 \newcommand{\ma}{\mathbf{A}}
 \newcommand{\mb}{\mathbf{B}}
@@ -290,6 +285,7 @@ Method}
 \newcommand{\ml}{\mathbf{L}}
 \newcommand{\mm}{\mathbf{M}}
 \newcommand{\mr}{\mathbf{R}}
+
 %    sets
 \newcommand{\real}{\mathbb{R}}
 \newcommand{\realn}{\real^{n}}
@@ -300,9 +296,6 @@ Method}
 \newcommand{\keffsub}[1]{\ensuremath{k_{\!\mbox{\scriptsize \em eff,{#1}}}}}
 \newcommand{\kref}{\ensuremath{k_{\!\mbox{\scriptsize \em ref}}}}
 \newcommand{\grad}{\mathbf{\nabla}}
-
-% general macros
-\newcommand{\units}[1]{\,\ensuremath{\left[\text{{#1}}\right]}}
 
 % neutronDiffusion
 \newcommand{\albedo}{\alpha}
@@ -318,7 +311,12 @@ Method}
 % thermalExpansion
 \newcommand{\texp}{\ensuremath{T_{\!\mbox{\scriptsize \em exp}}}}
 
+% general macros
+\newcommand{\units}[1]{\,\ensuremath{\left[\text{{#1}}\right]}}
 \newcommand{\half}{\frac{1}{2}}
+\newcommand{\nicesub}[2]{\ensuremath{{#1}_{\!\mbox{\scriptsize \em {#2}}}}}
+
+
 
 % reference macros
 \newcommand{\eref}[1]{Eq.~(\ref{#1})}

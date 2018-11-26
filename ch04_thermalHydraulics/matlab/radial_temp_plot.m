@@ -1,8 +1,8 @@
 clear
 close all
 
-fname = '~/dev/thesis/thermal/radial.csv';
-fname_const = '~/dev/thesis/thermal/kfuel_radial.csv';
+fname = '../data/radial.csv';
+fname_const = '../data/kfuel_radial.csv';
 rfuel = 0.270510;
 rbond = 0.312420;
 rclad = 0.368300;
