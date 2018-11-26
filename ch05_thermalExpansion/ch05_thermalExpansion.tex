@@ -10,9 +10,9 @@
   GE-Hitachi Nuclear Energy's PRISM. 
 
   In reactors such as EBR-II and PRISM, thermal expansion represents a
-  significant reactivity effect and requires modeling. PRISM claims a thermal
-  expansion feedback due to neutron leakage on the order of $0.5
-  \units{$\frac{\Delta k}{k}$}$ \cite{GEFR793}. Additionally, thermal
+  significant reactivity effect and requires modeling. PRISM calculates a 
+  thermal expansion feedback due to neutron leakage on the order of 
+  $0.5 \units{$\frac{\Delta k}{k}$}$ \cite{GEFR793}. Additionally, thermal
   expansion has been proven to serve as an inherent safety feature of SFRs. In
   the remarkable EBR-II Demonstrations in April of 1986, two truly major
   accident events were performed on the reactor while operating at full power:
@@ -86,17 +86,20 @@
     uniformly expanded in radial and axial directions. It is assumed that 
     material expansion in the radial direction (both $x$ and $y$ directions) 
     expands as HT9 because the dominating expansion in this direction is due to 
-    the expansion of the hexagonal assemblies themselves. It is assumed that
+    the expansion of the hexagonal assemblies themselves and the grid plate at
+    the base of the reactor. It is assumed that
     material expansion in the axial direction (the $z$ direction) expands as 
     U10Zr because the dominating expansion in this direction is the elongation 
     of the metallic fuel. Within a hexagonal assembly, all dimensions are 
     expanded as HT9 with the exception of the fuel radius, $R_F$, which is 
     expanded as U10Zr. Within a hexagonal assembly, the coolant flow area and 
     the sodium bond area are allowed to ``float'' because they are assumed 
-    liquid. All dimensions in the reactor are expanded assuming the user-input 
+    liquid.
+    
+    All dimensions in the reactor are expanded assuming the user-input 
     dimensions are at room-temperature conditions and using a single, fixed 
     thermal expansion temperature $\texp$. The expansion temperature should be 
-    selected to represent the average temperature within the reactor. It is 
+    selected to represent an effective temperature within the reactor. It is 
     expected thermal expansion effects will be significant. However, thermal 
     expansion factors are typically on the order $10^{-6}$ so small, local 
     changes in temperature are not expected to affect the macroscopic 
@@ -301,6 +304,30 @@
     to $\Sigma = \sigma N$.
 
 \section{Results}
+  The effect of thermal expansion on reactor criticality is observed. As
+  previously mentioned in \sref{sec:model_details__assumptions_and_formulae}, 
+  the user must input an effective temperature to which the reactor is thermally 
+  expanded. This user-input value of $\texp$ is varied and all other thermal 
+  feedback effects are disabled in the simulation. It is expected that thermal 
+  expansion will cause significant a decrease in $\keff$ and represent negative 
+  reactivity insertion. $\keff$ as a function of $\texp$ is plotted in 
+  \fref{fig:thexp_study} and the associate reactivity, calculated as
+  \begin{equation}
+    \label{eq:reactivity_formula}
+    \rho = \frac{\keff - \kref}{\keff \, \kref}
+  \end{equation}
+  is plotted in \fref{fig:thexp_study_reactivity}. In
+  \eref{eq:reactivity_formula}, $\keff$ is the calculated effective neutron 
+  multiplication factor after thermal expansion and $\kref$ is the neutron 
+  multiplication factor without thermal expansion. 
+
+  Given the assumptions in this model, \fref{fig:thexp_study} and
+  \fref{fig:thexp_study_reactivity} show that thermal expansion represents a
+  significant reactivity effect and contributes as much as $-1,000 \units{pcm}$
+  at extreme temperatures. Additionally, in this model the thermal expansion
+  factor of the fuel given in \eref{eq:lef_u10zr} dominates and the phase change 
+  given by the formula can be seen at the expected $923 \units{K}$.
+
   \begin{figure}
     \centering
     \includegraphics[width=0.7\textwidth]{thexp_study}
