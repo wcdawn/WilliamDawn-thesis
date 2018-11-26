@@ -131,7 +131,8 @@
       z^H &= z^C + z^C \, F_a(\texp)
     \end{align}
     which is consistent with the assumption of uniform radial and axial 
-    expansion.
+    expansion. These formulae expand the distance from each coordinate to the
+    origin $(0,0,0)$ and all points will move away from the origin.
 
     Using the coordinate transforms in \eref{eq:expand_x}, \eref{eq:expand_y}, 
     and \eref{eq:expand_z}, consider the thermal expansion of a cold volume 
@@ -236,7 +237,7 @@
 
   \subsection{Expansion of Elements and Area Fractions}
     Given the assumption of constant thermal expansion in radial and axial
-    directions, thermal expansion is straightforward. Each node coordinate in
+    directions, thermal expansion follows immediately. Each node coordinate in
     the mesh is expanded according to \eref{eq:expand_x}, \eref{eq:expand_y},
     and \eref{eq:expand_z}. By expanding in axial and radial directions
     uniformly throughout the reactor, it is certain that there will be no
@@ -275,7 +276,7 @@
 
     The volume $V_i$ can be written in terms of element volume and area
     fraction. Let species $i$ be contained in region $n$ in element $e$. This
-    model assumes area fractions are constant within an element such. That is,
+    model assumes area fractions are constant within an element. That is,
     within a finite element, area fractions do not change axially. Then, the
     volume $V_i$ can be rewritten as $V_i = a_j \, V_e$ where $a_j$ is the area
     fraction of region $j$ and $V_e$ is the volume of the element $e$. Insert
