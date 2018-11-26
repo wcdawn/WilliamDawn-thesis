@@ -3,16 +3,15 @@
 
 \section{Necessity of Modeling}
   % discuss the EBR-II tests
-  % TODO discuss that it is assumed user input is at ``cold'' conditions
-  Steel props from \cite{ht9Prop}.
-  Fuel props from \cite{thexpU10Zr}.
+  % todo find sources for EBR-II & PRISM
+  The Sodium Cooled Fast Reactor (SFR) as modeled is entirely composed of
+  metals and, as such, experience significant thermal expansion. While other 
+  designs may employ different fuel material, these are not considered. Such
+  reactor designs composed of metal fuel include Experimental Breeder Reactor II
+  (EBR-II) as designed and built by Argonne National Laboratory (ANL) as well as
+  GE-Hitachi Nuclear Energy's PRISM. 
 
-  \begin{figure}
-    \centering
-    \includegraphics[width=0.7\textwidth]{lef_plot}
-    \caption{Linear Expansion Factor for HT9 Steel and U10Zr Fuel.}
-    \label{fig:lef_plot}
-  \end{figure}
+  \cite{PlentifulEnergy}
 
 \section{Model Details}
   Highly detailed thermal expansion modeling can be done using the Finite
@@ -63,6 +62,13 @@
   observed that the LEF of U10Zr is as much as twice that of HT9. This implies
   fuel material will expand significantly more than structural material which is
   expected behavior for metallic fuel.
+
+  \begin{figure}
+    \centering
+    \includegraphics[width=0.7\textwidth]{lef_plot}
+    \caption{Linear Expansion Factor for HT9 Steel and U10Zr Fuel.}
+    \label{fig:lef_plot}
+  \end{figure}
 
   To simplify the modeling of thermal expansion, material dimensions are
   uniformly expanded in radial and axial directions. It is assumed that material
@@ -172,7 +178,7 @@
   to \eref{eq:area_ratio}.
   \begin{align}
     a_i^H &= \frac{A_i^H}{A^H} \\
-    a_i^H &= \frac{A_i^C (1 + F_r(T_{exp}))^2}{A^C (1 + F_r(T_{exp}))} \\
+    a_i^H &= \frac{A_i^C (1 + F_r(T_{exp}))^2}{A^C (1 + F_r(T_{exp}))^2} \\
     \label{eq:constant_area_frac}
     a_i^H &= a_i^C
   \end{align}
@@ -198,15 +204,6 @@
   are simply calculated at hot and cold conditions and the ratio from this
   calculation is used.
 
-
-
-
-
-  
-  
-
-  % prove area fractions do not expand if all at same rate
-
 \section{Implementation}
   Thermal expansion effects the reactor simulation in two major ways. First,
   thermal expansion causes the physical dimensions of the reactor to increase. 
@@ -227,7 +224,7 @@
     uniformly throughout the reactor, it is certain that there will be no
     intersection or overlap of elements. In a realistic analysis, stress,
     strain, and contact pressures must be accounted for but this is unnecessary
-    here because the assumptions prohibit such conditions.
+    here because the assumptions prohibit overlap and intersection conditions.
 
   \subsection{Cross-section Effects}
     The conservation of reactor material is expressed as a conservation of 
@@ -254,7 +251,10 @@
       N_i^H &= N_i^C \frac{V_i^C}{V_i^H}
     \end{align}
     where the term $\frac{V_i^C}{V_i^H} < 1$ and represents the expansion of the
-    volume occupied by species $i$.
+    volume occupied by species $i$. Using the relationship from
+    \eref{eq:volume_ratio}
+    % todo
+
 
 \section{Results}
   \begin{figure}

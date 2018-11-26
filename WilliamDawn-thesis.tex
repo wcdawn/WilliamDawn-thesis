@@ -86,24 +86,18 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 \addbibresource{WilliamDawn-thesis.bib}
-\addbibresource{Mendeley.bib}
- \defbibheading{myheading}[BIBLIOGRAPHY]{
- \chapter*{#1}
- \markboth{#1}{#1}}
+\defbibheading{myheading}[BIBLIOGRAPHY]{
+\chapter*{#1}
+\markboth{#1}{#1}}
 
-%amssymb and amsfonts cannot be used in conjunction with mdput
-%\usepackage{amsmath,amssymb,amsfonts}
 \usepackage{dcolumn}% Align table columns on decimal point
 \usepackage{bm}% bold math
-%\usepackage{hyperref}% add hypertext capabilities
-%\usepackage{hypernat}% make hyperref and natbib work together
 \usepackage{cancel}
 \usepackage{verbatim}% multiline commenting
 \usepackage{ifthen}
 \usepackage{url}
 \usepackage{sectsty}
 \usepackage{balance} 
-%\usepackage{caption}
 \usepackage{graphicx} %eps figures can be used instead
 \usepackage{lastpage}
 \usepackage[format=plain,
@@ -126,7 +120,6 @@
 
 \usepackage[sharp]{easylist} %used for brainstorming purposes 
 % used for \Asterisk for convolution %conflicts with \widering
-%\usepackage{mathabx}
 
 %compile on single pass
 %\usepackage[backend=biber,...]{biblatex}
@@ -272,11 +265,10 @@ Method}
 %% A few examples to get you started.
 \newcommand{\uv}[1]{\ensuremath{\mathbf{\hat{#1}}}}
 \newcommand{\bo}{\ensuremath{\mathbf{\Omega}}}
-% \renewcommand{\exp}[1]{e^{#1}}
 \newcommand{\Conv}{\mathop{\scalebox{1.5}{\raisebox{-0.2ex}{$\ast$}}}}%
 
 % linear algebra
-\renewcommand{\epsilon}{\varepsilon}
+\renewcommand{\epsilon}{\varepsilon} % use the pretty epsilon
 %    vectors
 \newcommand{\va}{\mathbf{a}}
 \newcommand{\vb}{\mathbf{b}}
@@ -322,6 +314,9 @@ Method}
 
 % thermalHydraulics
 \newcommand{\mdot}{\dot{m}}
+
+% thermalExpansion
+\newcommand{\texp}{\ensuremath{T_{\!\mbox{\scriptsize \em exp}}}}
 
 \newcommand{\half}{\frac{1}{2}}
 
@@ -386,7 +381,6 @@ Method}
                        -(12pt * #1) % assuming baselineskip of 12pt in caption
                        -\chapterfootskip
                        }}
-%\usepackage{titlesec}
 
 %landscape support in fancyhdr from 
 %http://tex.stackexchange.com/questions/9071/how-to-translate-and-rotate-the-heading-of-landscaped-pages
