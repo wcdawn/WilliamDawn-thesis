@@ -11,19 +11,21 @@
 
   In reactors such as EBR-II and PRISM, thermal expansion represents a
   significant reactivity effect and requires modeling. PRISM calculates a 
-  thermal expansion feedback due to neutron leakage on the order of 
-  $0.5 \units{$\frac{\Delta k}{k}$}$ \cite{GEFR793}. Additionally, thermal
-  expansion has been proven to serve as an inherent safety feature of SFRs. In
-  the remarkable EBR-II Demonstrations in April of 1986, two truly major
-  accident events were performed on the reactor while operating at full power:
-  Unprotected Loss-Of-Flow (ULOF) and Unprotected Loss-Of-Heat-Sink (ULOHS).
-  These experiments demonstrated conclusively the passive safety of SFR designs
-  due in part to the thermal expansion of materials \cite{PlentifulEnergy}.
+  thermal expansion feedback such that a 1\% change in radial dimension results
+  in $-0.5 \units{$\Delta k$}$ indicating a significant effect \cite{GEFR793}.
+  Additionally, thermal expansion has been proven to serve as an inherent safety 
+  feature of SFRs. In the remarkable EBR-II Demonstrations in April 1986, two 
+  major accident events were performed on the reactor while operating at full 
+  power. Operators forced the reactor to undergo Unprotected Loss-Of-Flow (ULOF)
+  and Unprotected Loss-Of-Heat-Sink (ULOHS) events. EBR-II was safely shutdown
+  due to nothing other than thermal feedback effects. These experiments 
+  demonstrated conclusively the passive safety of SFR designs due in part to the
+  thermal expansion of materials \cite{PlentifulEnergy}.
 
 \section{Model Details}
   \label{sec:model_details}
   Highly detailed thermal expansion modeling can be done using the Finite
-  Element Method to calculate local stresses and strains on all reactor
+  Element Method (FEM) to calculate local stresses and strains on all reactor
   structural components. However, the model developed here for the simulation of
   SFRs does not estimate temperature and heat generation at all positions due to
   the smearing of hexagonal assemblies. Therefore, a simplified thermal
