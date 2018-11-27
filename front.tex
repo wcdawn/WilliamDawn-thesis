@@ -1,6 +1,37 @@
 %% ------------------------------ Abstract ---------------------------------- %%
 \begin{abstract}
-  \lipsum[1-3]
+  Renewed interest in advanced nuclear power reactors such as the Versatile Test 
+  Reactor (VTR) at Idaho National Laboratory (INL) has encouraged enhanced 
+  modeling of Sodium Cooled Fast Reactors (SFRs). Since their inception in the 
+  early days of nuclear engineering with reactors such as at the Experimental 
+  Breeder Reactor and Fermi 1, many new modeling techniques have been developed.
+  This work seeks to introduce cutting-edge methods to the simulation of SFRs.
+
+  In this work, the multigroup neutron diffusion equation is solved via the
+  Finite Element Method (FEM). This method allows for the use of unstructured
+  and general meshes. By using an unstructured mesh, physical phenomena such as
+  thermal expansion can be modeled and used to perturb the mesh. Additionally,
+  the FEM will allow for simplified mesh refinements by means of both geometric
+  refinement and the use of higher order methods without recreating the mesh.
+  The multigroup neutron diffusion equation can be solved for two-dimensional
+  problems using triangles or three-dimensional problems using pentahedra, also
+  known as wedges. 
+
+  Thermal feedback effects within a SFR are also modeled in this work. A
+  simplified thermal hydraulic model is used, modeling both axial heat 
+  convection and radial heat conduction. Resulting temperatures are used to 
+  calculate on-the-fly neutron cross-sections to capture the effects of Doppler
+  feedback. Additionally, a thermal expansion model is used to simulate the 
+  thermal expansion of fuel and structural components within the reactor. These 
+  effects have been proven to significantly impact reactor behavior in 
+  experiments such as those performed at Experimental Breeder Reactor II 
+  (EBR-II).
+
+  Using these models, a typical SFR is simulated at operating conditions. The 
+  models as implemented demonstrate expected reactor behavior for an SFR and can
+  be used to visualize the inherent safety features and feedback effects of such 
+  a nuclear reactor.
+  
 \end{abstract}
 
 %% ---------------------------- Copyright page ------------------------------ %%
@@ -11,18 +42,51 @@
 
 %% -------------------------------- Dedication ------------------------------ %%
 \begin{dedication}
-  \centering To the future of clean electricity and and natural preservation.
+  \centering To the future of clean electricity and natural beauty.
 \end{dedication}
 
 %% -------------------------------- Biography ------------------------------- %%
 \begin{biography}
-  The author was born in a small town \ldots
+  William C. Dawn was born and raised in Stafford, Virginia. He attended public
+  schools there for his primary education, participating in the Commonwealth
+  Governor's School for High School. William earned a B.S. degree in Nuclear
+  Eneingeering from North Carolina State University (NC State) in May 2017. 
+  After his Master's degree, William will remain at NC State to pursue a Ph.D.
+  degree in Nuclear Engineering. 
+
+  William is a fellow of the Integrated University Program (IUP) facilitated by
+  DOE-NE. During his undergraduate and graduate careers, he has had the
+  opportunity to work with GE-Hitachi Nuclear Energy LLC. and Oak Ridge National
+  Laboratory (ORNL). William has also made contributions to the Consortium for
+  Advanced Simulation of LWRs (CASL).
 \end{biography}
 
 %% ----------------------------- Acknowledgements --------------------------- %%
 \begin{acknowledgements}
-  I would like to thank my advisor for his help.
+  This work would not have been possible without the help of friends and family.
+  I would like to thank my Mom and Dad, Suzanne and Bill Dawn, for their
+  patience, their listening, and their advice. Their support has helped to make
+  this work a reality.
+
+  I would also like to thank my advisor, Dr. Scott Palmtag. We have both learned
+  tremendously during this process. His consistency and desire to know more have
+  kept me busy these last few months and I am grateful.
 \end{acknowledgements}
+
+%% ----------------------------- Disclaimer --------------------------- %%
+\clearpage
+\vspace*{\fill}
+\begin{center}
+  \mbox{\parbox{5in}{
+  This material is based upon work supported under an Integrated
+  University Program Graduate Fellowship. Any opinions, findings, conclusions,
+  or recommendations expressed in this publication are those of the author and
+  do not necessarily reflect the views of the Department of Energy Office of
+  Nuclear Energy.
+  }}
+\end{center}
+\vspace*{\fill}
+\clearpage
 
 \thesistableofcontents
 
