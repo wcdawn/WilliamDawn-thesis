@@ -3,24 +3,26 @@
 
 \section{Necessity of Modeling}
   The Sodium Cooled Fast Reactor (SFR) as modeled is entirely composed of
-  metals and, as such, experience significant thermal expansion. While other 
-  designs may employ different fuel material, these are not considered. Such
-  reactor designs composed of metal fuel include Experimental Breeder Reactor II
-  (EBR-II) as designed and built by Argonne National Laboratory (ANL) as well as
-  PRISM as designed by GE-Hitachi Nuclear Energy (GEH).
+  metals and, as such, experiences significant thermal expansion. While other 
+  designs may employ different fuel material (e.g. oxides or carbides), these 
+  are not considered. Reactor designs composed of metal fuel include 
+  Experimental Breeder Reactor II (EBR-II) as designed and built by Argonne 
+  National Laboratory (ANL) and PRISM as designed by GE-Hitachi Nuclear Energy 
+  (GEH).
 
-  In reactors such as EBR-II and PRISM, thermal expansion represents a
-  significant reactivity effect and requires modeling. PRISM calculates a 
-  thermal expansion feedback such that a 1\% change in radial dimension results
-  in $-0.5 \units{$\Delta k$}$ indicating a significant effect \cite{GEFR793}.
-  Additionally, thermal expansion has been proven to serve as an inherent safety 
-  feature of SFRs. In the remarkable EBR-II Demonstrations in April 1986, two 
-  major accident events were performed on the reactor while operating at full 
-  power. Operators forced the reactor to undergo Unprotected Loss-Of-Flow (ULOF)
-  and Unprotected Loss-Of-Heat-Sink (ULOHS) events. EBR-II was safely shutdown
-  due to nothing other than thermal feedback effects. These experiments 
-  demonstrated conclusively the passive safety of SFR designs due in part to the
-  thermal expansion of materials \cite{PlentifulEnergy}.
+  In metal fueled reactors such as EBR-II and PRISM, thermal expansion 
+  represents a significant reactivity effect and requires modeling. PRISM 
+  calculates a thermal expansion feedback such that a 1\% change in radial 
+  dimension results in $-0.5 \units{$\Delta k$}$ indicating a significant effect 
+  \cite{GEFR793}. Additionally, thermal expansion has been proven to serve as an 
+  inherent safety feature of SFRs. In the remarkable EBR-II Demonstrations in 
+  April 1986, two major accident events were performed on the reactor while 
+  operating at full power. Operators forced the reactor to undergo Unprotected 
+  Loss-Of-Flow (ULOF) and Unprotected Loss-Of-Heat-Sink (ULOHS) events. EBR-II 
+  was safely shutdown due to nothing other than inherent thermal feedback 
+  effects. These experiments demonstrated conclusively the passive safety of SFR
+  designs due in part to the thermal expansion of materials 
+  \cite{PlentifulEnergy}.
 
 \section{Model Details}
   \label{sec:model_details}
@@ -38,10 +40,11 @@
   density as a function of temperature as described by state equations in
   \cite{sodiumProp}. Additionally, the mass of sodium within the reactor is not
   conserved. Sodium in the coolant is allowed to flow into and out of an
-  expansion vessel external to the reactor. In a SFR, sodium in the bond region
-  flows upward from the fuel region into a gas plenum; however, this is not
-  modeled as the sodium level in the bond is not tracked. Instead, the mass of
-  sodium in the bond region is allowed to vary during the simulation.
+  expansion vessel external to the reactor. In as SFR, sodium in the bond region
+  flows upward from the fuel region into a gas plenum as the fuel expands,
+  forcing it outward; however, this is not modeled as the sodium level in the 
+  bond is not tracked. Instead, the mass of sodium in the bond region is allowed
+  to vary during the simulation.
 
   \subsection{Material Properties}
     \label{sec:model_details__material_properties}
@@ -49,13 +52,13 @@
     Fuel material is modeled as metallic uranium with 10\% Zr by weight included
     (i.e. U10Zr). Thermal expansion properties for HT9 are given in 
     \cite{ht9Prop} and for U10Zr are given in \cite{thexpU10Zr}. The equations 
-    for the Linear Expansion Factor (LEF) as functions of temperature as used in
-    this implementation are given
+    for the Linear Expansion Factor (LEF) as functions of temperature and used 
+    in this implementation are given
     \begin{equation}
       \label{eq:lef_ht9}
       \left( \frac{\Delta L}{L} \right)_{\text{HT9}} = 
         -2.191 \times 10^{-3} + 5.678 \times 10^{-6} \, T + 
-        8.111 \times 10^{-9} \, T^2 - 2.576 \times 10^{-12} \, T^3 
+        8.111 \times 10^{-9} \, T^2 - 2.576 \times 10^{-12} \, T^3 ,
     \end{equation}
     \begin{multline}
       \label{eq:lef_u10zr}
@@ -68,7 +71,7 @@
             + 1.518 \times 10^{-10} \, T^3 & \text{otherwise}
         \end{cases}
     \end{multline}
-    for $T$ in \units{K}. Note that U10Zr has a phase change at 923 \units{K} 
+    for $T$ in \units{K}. Note that U10Zr has a phase change at $923 \units{K}$
     that increases the LEF at this point. The LEF of HT9 and U10Zr over the 
     range of operating temperatures of SFRs are plotted in \fref{fig:lef_plot}. 
     It is observed that the LEF of U10Zr is as much as twice that of HT9. This 
@@ -89,41 +92,39 @@
     material expansion in the radial direction (both $x$ and $y$ directions) 
     expands as HT9 because the dominating expansion in this direction is due to 
     the expansion of the hexagonal assemblies themselves and the grid plate at
-    the base of the reactor. It is assumed that
-    material expansion in the axial direction (the $z$ direction) expands as 
-    U10Zr because the dominating expansion in this direction is the elongation 
-    of the metallic fuel. Within a hexagonal assembly, all dimensions are 
-    expanded as HT9 with the exception of the fuel radius, $R_F$, which is 
-    expanded as U10Zr. Within a hexagonal assembly, the coolant flow area and 
-    the sodium bond area are allowed to ``float'' because they are assumed 
-    liquid.
+    the base of the reactor. The exception to radial thermal expansion is that 
+    the radius of the fuel, $R_F$, expands as U10Zr.  Within a hexagonal 
+    assembly, the coolant flow area and the sodium bond area are allowed to 
+    ``float'' because they are assumed liquid.  It is assumed that material 
+    expansion in the axial direction (the $z$ direction) expands as U10Zr 
+    because the dominating expansion in this direction is the elongation of the 
+    metallic fuel. 
     
     All dimensions in the reactor are expanded assuming the user-input 
-    dimensions are at room-temperature conditions and using a single, fixed 
-    thermal expansion temperature $\texp$. The expansion temperature should be 
-    selected to represent an effective temperature within the reactor. It is 
-    expected thermal expansion effects will be significant. However, thermal 
-    expansion factors are typically on the order $10^{-6}$ so small, local 
-    changes in temperature are not expected to affect the macroscopic 
-    simulation.
+    dimensions are at room-temperature conditions. Dimensions are expanded
+    according to a single, fixed thermal expansion temperature $\texp$ as input
+    by the user. The expansion temperature should be selected to represent an 
+    effective temperature within the reactor. It is expected thermal expansion 
+    effects will be significant. However, thermal expansion factors are 
+    typically on the order $10^{-6}$ so small, local changes in temperature are 
+    not expected to affect the macroscopic simulation.
 
-    Given the assumptions of this model, a radial thermal expansion factor can 
-    be defined using \eref{eq:lef_ht9} as
+    Given the assumptions of this model, a radial LEF can be defined using 
+    \eref{eq:lef_ht9} as
     \begin{equation}
       \label{eq:lef_r}
       F_r(\texp) = \left(\frac{\Delta L}{L}\right)_{\text{HT9}}
     \end{equation}
     which is a function of $\texp$. Note that given the assumption of uniform
     radial thermal expansion, ${F_x(\texp) = F_y(\texp) = F_r(\texp)}$.
-    Similarly, an axial thermal expansion factor can be defined using
-    \eref{eq:lef_u10zr} as 
+    Similarly, an axial LEF can be defined using \eref{eq:lef_u10zr} as 
     \begin{equation}
       \label{eq:lef_a}
       F_a(\texp) = \left(\frac{\Delta L}{L}\right)_{\text{U10Zr}}
     \end{equation}
     and $F_a(\texp) = F_z(\texp)$. For a ``cold'' cooridnate 
     $(x^C,y^C,z^C)$, the thermally expanded ``hot'' coordinate $(x^H,y^H,z^H)$ 
-    can be expressed using radial and axial thermal expansion factors as
+    can be expressed using radial and axial LEFs as
     \begin{align}
       \label{eq:expand_x}
       x^H &= x^C + x^C \, F_r(\texp) \\
@@ -134,7 +135,7 @@
     \end{align}
     which is consistent with the assumption of uniform radial and axial 
     expansion. These formulae expand the distance from each coordinate to the
-    origin $(0,0,0)$ and all points will move away from the origin.
+    origin, $(0,0,0)$.
 
     Using the coordinate transforms in \eref{eq:expand_x}, \eref{eq:expand_y}, 
     and \eref{eq:expand_z}, consider the thermal expansion of a cold volume 
@@ -145,13 +146,12 @@
       V^H &= V^C + \Delta V, \\
       V^H &= (L_x^C + \Delta L_x) (L_y^C + \Delta L_y) (L_z^C + \Delta L_z). 
     \end{align}
-    Then, recognizing the coordinate expansions 
-    ${\Delta L_x = L_x^C F_r(\texp)}$.
+    Then, recognizing the coordinate expansions,
     \begin{align}
       V^H &= (L_x^C + L_x^C \, F_r(\texp)) + (L_y^C + L_y^C \, F_r(\texp)) + 
-        (L_z^C + L_z^C \, F_a(\texp)) \\
-      V^H &= L_x^C \, L_y^C \, L_z^C \, (1 + F_r(\texp))^2 (1+F_a(\texp)) \\
-      V^H &= V^C (1 + F_r(\texp))^2 (1+F_a(\texp))
+        (L_z^C + L_z^C \, F_a(\texp)), \\
+      V^H &= L_x^C \, L_y^C \, L_z^C \, (1 + F_r(\texp))^2 (1+F_a(\texp)), \\
+      V^H &= V^C (1 + F_r(\texp))^2 (1+F_a(\texp)).
     \end{align}
     The volume ratio is then
     \begin{equation}
@@ -172,44 +172,13 @@
     $\sum_{i} A_i = A$. Let the fractional area $a_i = A_i/A$ and 
     $\sum_{i} a_i = 1$.
 
-    Similar to a ratio of volumetric expansion, a ratio of area expansion may be
-    derived. Assume all dimensions in the radial direction (to which the
-    cross-sectional assembly area is confined), expand according to
-    $F_r(\texp)$. Then, consider a representative area $A^C = L_x^C L_y^C$.
-    Then, the thermally expanded volume $A^H$ can be written
-    \begin{align}
-      A^H &= A^C + \Delta A, \\
-      A^H &= (L_x^C + \Delta L_x) (L_y^C + \Delta L_y).
-    \end{align}
-    Recognizing the coordinate thermal expansions ${\Delta L_x = L_x^C
-    F_r(\texp)}$.
-    \begin{align}
-      A^H &= (L_x^C + L_x^C F_r(\texp)) (L_y^C + F_r(\texp)) \\
-      A^H &= L_x^C L_y^C (1 + F_r(\texp))^2 \\
-      A^H &= A^C (1 + F_r(\texp))
-    \end{align}
-    The area ratio is then
-    \begin{equation}
-      \label{eq:area_ratio}
-      \frac{A^H}{A^C} = (1 + F_r(\texp))^2.
-    \end{equation}
-
-    Consider the thermal expansion of area fractions $a_i$. Observe $a_i^C =
-    \frac{A_i^C}{A^C}$. Then, both $A_i$ and $A$ are thermally expanded 
-    according to \eref{eq:area_ratio}.
-    \begin{align}
-      a_i^H &= \frac{A_i^H}{A^H} \\
-      a_i^H &= \frac{A_i^C (1 + F_r(\texp))^2}{A^C (1 + F_r(\texp))^2} \\
-      \label{eq:constant_area_frac}
-      a_i^H &= a_i^C
-    \end{align}
-    \eref{eq:constant_area_frac} implies that for uniform thermal expansion in 
-    the radial directions, area fractions are unaffected by thermal expansion 
-    though areas themselves expand. 
-    
-    However, in the model used here, the fuel radius and fuel area
-    are expanded according to $\left(\frac{\Delta L}{L_0}\right)_{\text{U10Zr}}$
-    whereas all other materials are expanded according to 
+    Using a method similar to the derivation of the volume ratio, a ratio can be
+    derived for thermally expanded areas and area fractions. However, this would
+    not be useful to the model because within an assembly, not all dimensions
+    expand uniformly within the radial direction.
+    The fuel radius and fuel area are expanded according to 
+    $\left(\frac{\Delta L}{L_0}\right)_{\text{U10Zr}}$ whereas all other 
+    materials are expanded according to 
     $\left(\frac{\Delta L}{L_0}\right)_{\text{HT9}}$. This does imply that,
     numerically, the radius of the fuel could exceed the inner radius of the 
     clad which is a non-physical result. This will only happen for small sodium 
@@ -220,22 +189,22 @@
     uniform thermal expansion.
     
     Due to the different thermal expansions of fuel and structural material 
-    within the cross-section of the hexagonal assembly, the thermal expansion of 
-    area fractions does not obey \eref{eq:constant_area_frac}. Instead, area 
-    fractions are simply calculated at hot and cold conditions and the ratio 
-    from this calculation is used.
+    within the cross-sectional area of the hexagonal assembly, the thermal 
+    expansion of area fractions does not have a general formulaic relationship.
+    Instead, area fractions are simply calculated at hot and cold conditions
+    using expanded and unexpanded dimensions respectively. 
 
 \section{Implementation}
-  Thermal expansion effects the reactor simulation in two major ways. First,
-  thermal expansion causes the physical dimensions of the reactor to increase. 
-  This is modeled by the expansion of individual elements in the solution of the
-  neutron diffusion equation via the finite element method (see
-  \chref{ch:neutronDiffusion}) as well as the expansion of areas within the 
-  hexagons.  Second, as a result in the increase in physical dimensions, the 
+  Thermal expansion affects the reactor in two major ways. First, thermal 
+  expansion causes the physical dimensions of the reactor to increase. This is 
+  modeled by the expansion of individual elements in the solution of the neutron 
+  diffusion equation via the finite element method 
+  (see \chref{ch:neutronDiffusion}) as well as the expansion of areas within the 
+  hexagons. Second, as a result in the increase in physical dimensions, the 
   density of reactor materials decreases. This decrease in density is necessary
   to preserve the quantity of material within the reactor. In this derivation,
-  the number of atoms are conserved. The density change due to thermal expansion 
-  is observed as an effect on cross-sections.
+  the number of atoms in the reactor are conserved. The density change due to 
+  thermal expansion is observed as a decrease on cross-sections.
 
   \subsection{Expansion of Elements and Area Fractions}
     Given the assumption of constant thermal expansion in radial and axial
@@ -246,6 +215,9 @@
     intersection or overlap of elements. In a realistic analysis, stress,
     strain, and contact pressures must be accounted for but this is unnecessary
     here because the assumptions prohibit overlap and intersection conditions.
+    As previously discussed in
+    \sref{sec:model_details__assumptions_and_formulae}, the thermal expansion of
+    area fractions is calculated directly.
 
   \subsection{Cross-section Effects}
     \label{sec:cross-section_effects}
@@ -277,12 +249,12 @@
     volume occupied by species $i$. 
 
     The volume $V_i$ can be written in terms of element volume and area
-    fraction. Let species $i$ be contained in region $n$ in element $e$. This
-    model assumes area fractions are constant within an element. That is,
-    within a finite element, area fractions do not change axially. Then, the
-    volume $V_i$ can be rewritten as $V_i = a_j \, V_e$ where $a_j$ is the area
-    fraction of region $j$ and $V_e$ is the volume of the element $e$. Insert
-    this into \eref{eq:nden_volume_ratio}.
+    fraction. Let species $i$ be contained in region $j$ in finite element $e$. 
+    This model assumes area fractions are constant within an element and can be
+    treated as volume fractions. Then, the volume $V_i$ can be rewritten as 
+    $V_i = a_j \, V_e$ where $a_j$ is the area fraction of region $j$ and $V_e$
+    is the volume of the element $e$. Inserting this definition for $V_i$ into
+    \eref{eq:nden_volume_ratio}.
     \begin{equation}
       \label{eq:nden_expansion_expanded}
       N_i^H = N_i^C \frac{a_j^C}{a_j^H} \frac{V_e^C}{V_e^H}
@@ -290,10 +262,10 @@
     Recall from \sref{sec:model_details__assumptions_and_formulae} that the
     ratio $\frac{a_j^C}{a_j^C}$ is dictated by the relative expansion of the
     fuel radius and the other structural materials. The area fractions
-    themselves are calculated and the ratio is calculated numerically. The ratio
-    $\frac{V_e^C}{V_e^H}$ is the standard volume ratio due to thermal expansion
-    and is given by \eref{eq:volume_ratio}. Inserting \eref{eq:volume_ratio}
-    into \eref{eq:nden_expansion_expanded}.
+    themselves are calculated and the ratio is calculated subsequently. The 
+    ratio $\frac{V_e^C}{V_e^H}$ is the standard volume ratio due to thermal 
+    expansion and is given by \eref{eq:volume_ratio}. Inserting 
+    \eref{eq:volume_ratio} into \eref{eq:nden_expansion_expanded}.
     \begin{equation}
       \label{eq:nden_thexp_update}
       N_i^H = N_i^C \frac{a_j^C}{a_j^H} 
@@ -302,7 +274,7 @@
     Therefore, to preserve the number of atoms in the reactor, number densities
     in the reactor must be updated according to \eref{eq:nden_thexp_update} in
     addition to expanding reactor dimensions. Notice that
-    \eref{eq:nden_thexp_update} can also be used to update reaction 
+    \eref{eq:nden_thexp_update} can also be used to update neutron reaction 
     cross-sections directly as they are proportional to number density according
     to $\Sigma = \sigma N$.
 
@@ -312,12 +284,13 @@
   the user must input an effective temperature to which the reactor is thermally 
   expanded. This user-input value of $\texp$ is varied and all other thermal 
   feedback effects are disabled in the simulation. It is expected that thermal 
-  expansion will cause significant a decrease in $\keff$ and represent negative 
-  reactivity insertion. $\keff$ as a function of $\texp$ is plotted in 
-  \fref{fig:thexp_study} and the associate reactivity, calculated as
+  expansion will cause a significant decrease in $\keff$ and represent negative 
+  reactivity insertion. Effective neutron multiplication factor as a function of
+  $\texp$ is plotted in \fref{fig:thexp_study} and the associated reactivity, 
+  calculated as
   \begin{equation}
     \label{eq:reactivity_formula}
-    \rho = \frac{\keff - \kref}{\keff \, \kref}
+    \rho \units{pcm} = \frac{\keff - \kref}{\keff \, \kref} \times 10^5
   \end{equation}
   is plotted in \fref{fig:thexp_study_reactivity}. In
   \eref{eq:reactivity_formula}, $\keff$ is the calculated effective neutron 
@@ -334,14 +307,15 @@
   \begin{figure}
     \centering
     \includegraphics[width=0.7\textwidth]{thexp_study}
-    \caption{\keff \, due to Thermal Expansion Temperature.}
+    \caption{Effective Neutron Multiplication Factor as a Function of 
+      Thermal Expansion Temperature.}
     \label{fig:thexp_study}
   \end{figure}
 
   \begin{figure}
     \centering
     \includegraphics[width=0.7\textwidth]{thexp_study_reactivity}
-    \caption{Reactivity due to Thermal Expansion Temperature.}
+    \caption{Reactivity as a Function of Thermal Expansion Temperature.}
     \label{fig:thexp_study_reactivity}
   \end{figure}
 
