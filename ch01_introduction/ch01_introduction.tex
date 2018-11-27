@@ -26,9 +26,9 @@
   cross-sections change and affect the reactor power. The multi-physics nature
   of the reactor necessitate a simulation of the power distribution within the
   reactor as well as all physical effects which will be modeled. In this
-  application, the neutron diffusion equation is used to describe the reactor
-  power distribution as in \chref{ch:neutronDiffusion}. Multi-physics effects
-  are described by heat conduction and heat convection models as in
+  work, the mulitgroup neutron diffusion equation is used to describe the 
+  reactor power distribution as in \chref{ch:neutronDiffusion}. Multi-physics 
+  effects are described by heat conduction and heat convection models as in
   \chref{ch:thermalHydraulics} as well as a thermal expansion model as in
   \chref{ch:thermalExpansion}.
 
@@ -148,7 +148,7 @@
   For benchmark and analytic problems, cross-sections are simply given as
   constants for the problem. Realistic reactor simulations require
   cross-sections generated from preliminary calculations. In this
-  application, multigroup microscopic cross-sections are generated using 
+  work, multigroup microscopic cross-sections are generated using 
   \mcc \cite{mcc}.
   The cross-section generator uses 2,082 fine energy groups to collapse down
   to an arbitrary number of energy-groups. For this simulation, the
@@ -171,13 +171,13 @@
   temperature relationship is used to generate the cross-section libraries.
 
   In each cross-section library, the coolant is maintained at some nominal
-  temperature. For this application, that temperature is $400 \units{K}$
+  temperature. For this work, that temperature is $400 \units{K}$
   (note: sodium melting temperature 371 \units{K}). Maintaining the coolant
   temperature as constant in this manner is acceptable because the dominant 
   effect of temperature on the macroscopic cross-sections in the coolant is 
   the density change of the fluid, not the Doppler effect. With constant 
   coolant temperature, the fuel temperature is then varied over some range. 
-  For this application, libraries are generated for average fuel temperatures
+  In this work, libraries are generated for average fuel temperatures
   of $400 \units{K}$, $600 \units{K}$, $900 \units{K}$, and $1200 \units{K}$.
   At each fuel temperature, the clad temperature is related as 
   \begin{equation}

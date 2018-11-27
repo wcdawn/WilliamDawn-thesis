@@ -2,10 +2,10 @@
 \label{ch:diffusionResults}
 
 \section{Introduction}
-  This application of the FEM has been compared against reference 
+  This implementation of the FEM has been compared against reference 
   benchmark problems as well as analytic solutions. Comparison
   against benchmark problems demonstrates an ability to solve problems for
-  which this application was intended. Comparison against analytic solutions 
+  which this work was intended. Comparison against analytic solutions 
   allows for more detailed error and convergence analysis as not only the system
   $\keff$ but also the flux solution are known exactly. 
 
@@ -299,7 +299,7 @@
 
   \subsection{Benchmark Solutions}
     \label{sec:benchmark_solutions}
-    The application presented here was designed simulate nuclear power reactors,
+    The work presented here was designed simulate nuclear power reactors,
     both SFRs and other reactor designs. Two-dimension and three-dimension
     benchmark problems with similar reactor physics phenomena have been examined
     here. These problems come from existing benchmarks based on hexagonal 
@@ -580,9 +580,9 @@
       measurements appear insensitive to fission spectrum. 
 
       Reference data can be found in \tref{tab:monjukeff}. Results from the
-      finite element application are presented in \tref{tab:monju}. The error
-      (difference between reference and calculated results) are presented in
-      parenthesis next to the quantities. 
+      finite element method implementation are presented in \tref{tab:monju}. 
+      The error (difference between reference and calculated results) are 
+      presented in parenthesis next to the quantities. 
       Rod Worth is presented as calculated in \eref{eq:rodworth}. Rod Difference
       is presented as calculated in \eref{eq:roddifference}.
 
@@ -615,15 +615,16 @@
       the KNK-II core. Cross sections are provided for a four-group energy
       structure. There are many materials specified in the problem so it also
       aids in testing material mapping in a code. However, the reference data is
-      for a transport solution. In this application, the transport cross
-      sections are used to solve the neutron diffusion equation. This explains
-      some of the numerical differences in the results but general trends are
-      reflected. In addition to the comparison to the reference transport
-      solution, the neutron diffusion equation is solved with DIF3D and the
-      finite element results are comporable to the finite difference solution. 
+      for a transport solution. In this work, the cross-sections from the
+      transport problem are used to solve the neutron diffusion equation. This 
+      explains some of the numerical differences in the results but general 
+      trends are reflected. In addition to the comparison to the reference 
+      transport solution, the neutron diffusion equation is solved with DIF3D 
+      and the finite element results are comporable to the finite difference 
+      solution. 
 
-      Reference data can be found in \tref{tab:knkkeff}. Results from the Finite
-      Element neutron diffusion application are presented in \tref{tab:knk}. The
+      Reference data can be found in \tref{tab:knkkeff}. Results from the finite
+      element neutron diffusion solution are presented in \tref{tab:knk}. The
       error (difference between reference and calculated results) are presented
       in parenthesis next to the quantities.
       Rod Worth is presented as calculated in \eref{eq:rodworth}. Rod Difference

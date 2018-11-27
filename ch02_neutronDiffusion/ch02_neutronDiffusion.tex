@@ -180,7 +180,7 @@
         \int_{\Omega} q_g(\vr) v(\vr) \;d\Omega
     \end{equation}
     
-    For the purposes of this application, material cross-sections and the
+    For the purposes of this work, material cross-sections and the
     neutron source $q_{g,e}$ are assumed to be constant within an element. 
     To calculate a constant neutron source within an element, \eref{eq:q} is
     used to calculate the average neutron source $\phiavg_{g,e}$ in an element.
@@ -276,12 +276,12 @@
     $\upsilon_i$ are the approximated solution at the nodes. It is also 
     convenient for basis functions to have compact support. That is, basis 
     functions are created such that they are zero almost everywhere except some
-    minimal region. Compact support in this application is chosen such that
+    minimal region. Compact support in this implementation is chosen such that
     basis functions have unit value on a single mesh node and are zero on all
     other mesh nodes. Basis functions are typically piecewise continuous 
     polynomials of arbitrary degree. For selected elements, basis functions will
     be defined explicitly in \sref{sec:matrix_quantities}.  Linear and quadratic
-    polynomials are common but for the application presented here, only linear
+    polynomials are common but for the work presented here, only linear
     basis functions are explored.
 
     The test function $v(\vr)$ is also chosen as a linear combination of the 
@@ -394,7 +394,7 @@
     \label{sec:matrix_quantities}
     For certain simple elements, the integral quantities described in 
     \eref{eq:matrix_population} and \eref{eq:vector_population} have exact 
-    analytic forms. For this application, linear triangles and linear wedges
+    analytic forms. For this work, linear triangles and linear wedges
     are investigated and many of the integrals have exact expressions. If these 
     quantities cannot be expressed exactly, or doing so would be computationally
     inefficient, numerical quadratures are used. For certain problems, these 
@@ -815,7 +815,7 @@
     Perron-Frobenius theorem, a matrix with the properties of $\mr$ has a 
     unique, positive eigenvalue, greater in magnitude than the modulus of all 
     other eigenvalues of the matrix. The weighting vector $\vw$ is arbitrary 
-    but does affect convergence rate. For this application ,
+    but does affect convergence rate. For this work,
     $\vw = \{\nu \Sigma_f\}$ such that the inner product 
     $\{\nu \Sigma_f\}^T \vPhi$ represents the summation of the fission neutron
     production rate throughout all energy groups and all elements. 
@@ -927,8 +927,8 @@
     number density. For these problems, the matrix $\mr$ is necessarily updated
     on between power iterations in a nonlinear manner. For nonlinear power
     iteration updates, convergence is no longer guaranteed. The argument for
-    convergence with nonlinear power iterations in this application falls back
-    to the stability of the physical system.
+    convergence with nonlinear power iterations in this implementation falls 
+    back to the stability of the physical system.
     
   \subsection{Calculation of Source with Power Iterations}
 
@@ -1078,7 +1078,7 @@
     sparse solution to the linear system are required. Many sparse matrix 
     implementations have been described and implemented in the past including
     triplet storage, reduced column, and reduced row storage \cite{sparseBLAS}.
-    For this application a \twotable method is chosen which was uniquely 
+    For this work a \twotable method is chosen which was uniquely 
     developed. \twotable storage is chosen for its simplicity and implementation
     with the FEM. Future work may include a reduced row implementation but there
     will be a trade-off between memory minimization and computational 
@@ -1131,7 +1131,7 @@
     \label{sec:boundary_conditions}
     Boundary conditions merit brief consideration. There are many ways to 
     implement boundary conditions and all result in mathematically the same 
-    answer. The choices made for this application are presented below. Mirror 
+    answer. The choices made for this work are presented below. Mirror 
     boundary conditions require $\grad \phi_g(\vr) = 0$ for 
     $\vr \in \partial \Omega$. These are also known as ``natural'' boundary
     conditions because the finite element matrix $\ma$ requires no additional 
@@ -1167,7 +1167,7 @@
     For a non-singular linear system $\ma \vu = \vf$, where $\ma$ is a square 
     matrix, there exists a unique solution. Many strategies have been proposed 
     to solve this system in an efficient manner. Options are restricted in this
-    application because the solution must operate with a sparsely stored linear 
+    work because the solution must operate with a sparsely stored linear 
     system and result in no fill-in. This immediately demands an iterative 
     method. The linear system described by the FEM can then be exploited for its 
     unique properties to select a favorable solution method.
@@ -1235,13 +1235,13 @@
     \textit{a priori} knowledge of the optimized over-relaxation factor
     $\omega_{opt}$ for optimal performance. In practice, this is performed 
     analytically with contrived solutions or in a modified guess-and-check 
-    method. For this application, the CG method is chosen because it requires no 
+    method. The CG method is chosen because it requires no 
     \textit{a priori} knowledge and produced a solution to the same tolerance in 
     a comparable wall-time without the need for guess-and-check iterations.
     
     A simple recipe for the CG method is presented in Algorithm 2.4.1
     \cite{Kelley1995IterativeEquations} and its implementation in this 
-    application is replicated in \algorithmref{algorithm:CG}.
+    work is replicated in \algorithmref{algorithm:CG}.
     
     \begin{algorithm}
       \caption{Conjugate Gradient Method.}
