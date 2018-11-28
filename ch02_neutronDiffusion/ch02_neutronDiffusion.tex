@@ -2,15 +2,16 @@
 \label{ch:neutronDiffusion}
 
 \section{Introduction}
-  This chapter will describe the solution method to the finite element
-  multigroup neutron diffusion equation for general geometry. The solution 
+  This chapter will describe the solution of the
+  multigroup neutron diffusion equations for general geometry via the Finite
+  Element Method (FEM). The solution 
   method and derivations here are general to the multigroup neutron diffusion 
-  equation but it's application to Fast Reactors (FRs) or any standard reactor geometry is 
-  straightforward. For typical FR applications, diffusion theory
-  approximates the neutron distribution within the reactor well. The multigroup
-  neutron diffusion equation is a second order partial differential equation in
-  space. The diffusion approximation is valid for fast reactors because neutron
-  mean-free-paths within the reactor are large relative to material dimensions.
+  equation and it's application to Fast Reactors (FRs) or any standard reactor 
+  geometry is straightforward. For typical FR applications, diffusion theory
+  approximates the neutron distribution within the reactor well. 
+  The diffusion approximation is a standard assumption for fast reactors because 
+  neutron mean-free-paths within the reactor are large relative to material 
+  dimensions.
 
   Spatial discretization will be done with the Finite 
   Element Method (FEM). This spatial discretization method is selected for 
@@ -20,24 +21,26 @@
   elements could be used to spatially refine the solution. Additionally, 
   coordinates of nodes and elements can be easily updated to reflect physical 
   phenomena, such as thermal expansion (see \chref{ch:thermalExpansion}). 
-  Material properties are calculated on an element basis allowing for detailed
-  updates to the material properties during the calculation.
+  Finally, material properties are calculated on an element basis allowing for 
+  detailed updates to the material properties during the calculation.
 
 \section{Multigroup Neutron Diffusion Equation}
   In the multigroup neutron diffusion equation, an energy structure is 
-  described by the set of energies $\{E_g\}$ for $g = 1,2,\ldots,G$ and by in
-  order of decreasing energy by convention.
+  described by the set of energies $\{E_g\}$ for $g = 1,2,\ldots,G$ and arranged 
+  by in order of decreasing energy by convention.
   \[ 0 < E_G < E_{G-1} < \ldots < E_2 < E_1 < \nicesub{E}{max} \]
-  Then, multigroup constants can be calculated based on the energy group 
-  structure, known cross-sections, and a representative flux spectrum.
-  Generation of multigroup constants is performed using \mcc and is described in
-  \sref{sec:cross_section_treatment}.
+  Multigroup constants can be calculated using this energy group 
+  structure from energy-dependent cross-sections, and a representative flux 
+  spectrum. Generation of multigroup constants is performed using \mcc and is 
+  described in \sref{sec:cross_section_treatment}.
+
   In conventional notation, the multigroup neutron diffusion equation can be
   written as 
   \begin{equation}
     \label{eq:multigroup_diffusion}
     - \grad \cdot ( D_g(\vr) \grad \phi_g(\vr)) + \Sigma_{t,g}(\vr) \phi_g(\vr)= 
-      \frac{\chi_g(\vr)}{\keff} \sum_{g'=1}^{G} \nu\Sigma_{f,g'}(\vr) 
+      \frac{\widetilde{\chi_g}(\vr)}{\keff} 
+      \sum_{g'=1}^{G} \nu\Sigma_{f,g'}(\vr) 
       \phi_{g'}(\vr) + \sum_{g'=1}^{G} \Sigma_{s,g' \rightarrow g}(\vr) 
       \phi_{g'}(\vr)
   \end{equation}
@@ -48,10 +51,10 @@
       \units{$\frac{1}{\text{cm}^2 \; \text{s}}$}, \\
     \Sigma_{t,g}(\vr) & macroscopic total cross-section for energy group $g$ 
       \units{$\frac{1}{\text{cm}}$}, \\
-    \chi_g(\vr) & fission spectrum for energy group $g$, \\
+    \widetilde{\chi_g}(\vr) & effective fission spectrum for energy group $g$,\\
     \keff & effective neutron multiplication factor, \\
-    \nu \Sigma_{f,g}(\vr) & number of fission neutrons produced per unit neutron
-      flux in energy group $g$ \units{$\frac{1}{\text{cm}}$}, \\
+    \nu \Sigma_{f,g}(\vr) & number of fission neutrons times microscopic fission
+      cross-section in energy group $g$ \units{$\frac{1}{\text{cm}}$}, \\
     \Sigma_{s,g' \rightarrow g} (\vr) & macroscopic scatter cross-section from
       energy group $g'$ to energy group $g$ \units{$\frac{1}{\text{cm}}$}, \\
     G & total number of energy groups.
@@ -65,7 +68,8 @@
   \begin{equation} 
     \label{eq:multigroup_removal}
     - \grad \cdot( D_g(\vr) \grad \phi_g(\vr)) + \Sigma_{r,g}(\vr) \phi_g(\vr) = 
-      \frac{\chi_g(\vr)}{\keff} \sum_{g'=1}^{G} \nu\Sigma_{f,g'}(\vr) 
+      \frac{\widetilde{\chi_g}(\vr)}{\keff} 
+      \sum_{g'=1}^{G} \nu\Sigma_{f,g'}(\vr) 
       \phi_{g'}(\vr) + \sum_{g'=1, g' \ne g}^{G} 
       \Sigma_{s,g' \rightarrow g}(\vr) \phi_{g'}(\vr)
   \end{equation}
@@ -88,7 +92,7 @@
   with contributing terms
   \begin{align}
     \label{eq:qfiss}
-    q_{fiss,g}(\vr) &= \frac{\chi_g(\vr)}{\keff} \sum_{g'=1}^{G} 
+    q_{fiss,g}(\vr) &= \frac{\widetilde{\chi_g}(\vr)}{\keff} \sum_{g'=1}^{G} 
       \nu \Sigma_{f,g'}(\vr) \phi_{g'}(\vr), \\
     \label{eq:qup}
     q_{up,g}(\vr) &= \sum_{g'=g+1}^{G} \Sigma_{s,g' \rightarrow g}(\vr)
@@ -116,9 +120,40 @@
   the method remains general. Additionally, for many-group energy structures, as
   common to fast reactor applications, solving each group independently is 
   typically more computationally efficient as such linear systems have favorable 
-  conditioning and are dimensionally smaller. Fast reactors also are dominated
+  conditioning and are dimensionally smaller. Fast reactors are also dominated
   by down-scatter as opposed to thermal reactors which experience significant
   up-scatter.
+
+  Typically, reactor materials are described isotopically and 
+  $\chi$ may be specified isotopically. However, for calculating the fission 
+  neutron source $q_{fiss,g}$ as in \eref{eq:qfiss}, an effective 
+  $\widetilde{\chi}$ for each finite
+  element is needed. From an isotopic description, $q_{fiss,g}$ is given as
+  \begin{equation}
+    \label{eq:isotopic_chi}
+    q_{fiss,g}(\vr) = \sum_{i=1}^{N_I} \chi_{i,g}(\vr)
+      \nu \Sigma_{f,i,g}(\vr) \phi_g(\vr)
+  \end{equation}
+  where $\chi_{i,g}$ is the isotopic $\chi$ and $N_I$ is the 
+  number of isotopes at position $\vr$. Next, require $q_{fiss,g}$ to have the 
+  form of \eref{eq:element_chi}.
+  \begin{equation}
+    \label{eq:element_chi}
+    q_{fiss,g}(\vr) = \widetilde{\chi_g}(\vr) \, 
+      \sum_{i=1}^{N_I} \nu \Sigma_{f,i,g}(\vr) \phi_g(\vr)
+  \end{equation}
+  Setting \eref{eq:isotopic_chi} equal to \eref{eq:element_chi} yields the
+  expression for $\widetilde{\chi_g}$ based on isotopic data.
+  \begin{equation}
+    \label{eq:chi_collapse}
+    \widetilde{\chi_g}(\vr) = \frac{\sum_{i=1}^{N_I} \chi_{i,g}(\vr)
+      \nu \Sigma_{f,i,g}(\vr) \phi_g(\vr)}
+      {\sum_{i=1}^{N_I} \nu \Sigma_{f,i,g}(\vr) \phi_g(\vr)}
+  \end{equation}
+  Noting that \eref{eq:chi_collapse} requires the solution $\phi_g(\vr)$. This
+  means that $\chi_g$ must be calculated for each element for each iteration of
+  the solution (see Step \ref{state:chi_collapse} in
+  \algorithmref{algorithm:general}).
 
 \section{Formulation of Finite Element Equations}
   \label{sec:formulation}
@@ -1025,7 +1060,7 @@
       \end{algorithmic}
     \end{algorithm}
 
-    State \ref{state:nonlinear} incorporates the possibility of non-linear
+    Step \ref{state:nonlinear} incorporates the possibility of non-linear
     updates into the power iteration method. This invalidates the proof from
     \sref{sec:power_iterations} but is performed to simulate thermal hydraulic
     and thermal expansion effects as described in \chref{ch:thermalHydraulics}
@@ -1033,39 +1068,6 @@
     used in practice and no convergence problems have been observed. This update
     also requires recalculating the finite element matrix $\ma_g$ for each 
     group.
-
-    State \ref{state:chi_collapse} normalizes $\chi$ to preserve the 
-    neutron production rate due to fission in each energy group in each element
-    of the problem recalling the definition of $q_{fiss,g}$ as provided in
-    \eref{eq:qfiss}. Typically, reactor materials are described isotopically and 
-    $\chi$ may be specified isotopically. However, for calculating the fission 
-    neutron source $q_{fiss,g}$, an effective $\chi$ for each finite element is
-    needed. From an isotopic description, $q_{fiss,g}$ is given as
-    \begin{equation}
-      \label{eq:isotopic_chi}
-      q_{fiss,g}(\vr) = \sum_{i=1}^{N_I} \widetilde{\chi_{i,g}}(\vr)
-        \nu \Sigma_{f,i,g}(\vr) \phi_g(\vr)
-    \end{equation}
-    where $\widetilde{\chi_{i,g}}$ is the isotopic $\chi$ and $N_I$ is the 
-    number of isotopes at position $\vr$. Next, require $q_{fiss,g}$ to have the 
-    form of
-    \eref{eq:element_chi}.
-    \begin{equation}
-      \label{eq:element_chi}
-      q_{fiss,g}(\vr) = \chi_g(\vr) \, \sum_{i=1}^{N_I} \nu \Sigma_{f,i,g}(\vr)
-        \phi_g(\vr)
-    \end{equation}
-    Setting \eref{eq:isotopic_chi} equal to \eref{eq:element_chi} yields the
-    expression for $\chi_g$ based on isotopic data.
-    \begin{equation}
-      \label{eq:chi_collapse}
-      \chi_g(\vr) = \frac{\sum_{i=1}^{N_I} \widetilde{\chi_{i,g}}(\vr)
-        \nu \Sigma_{f,i,g}(\vr) \phi_g(\vr)}
-        {\sum_{i=1}^{N_I} \nu \Sigma_{f,i,g}(\vr) \phi_g(\vr)}
-    \end{equation}
-    Noting that \eref{eq:chi_collapse} requires the solution $\phi_g(\vr)$. This
-    means that $\chi_g$ must be calculated for each element for each power
-    iteration.
     
     A benefit of this implementation is that the finite element vector $\vf$ 
     must be updated on each power iteration of the solution whereas the matrix 
