@@ -3,6 +3,7 @@ close all
 
 f2f = 15;
 th = 2;
+gap = 0.7;
 radius = 2.38;
 wrap = 0.15*radius;
 theta = 60.*(pi/180.);
@@ -34,6 +35,7 @@ hold on
 % hex can
 plot(hex(:,1)*f2f,hex(:,2)*f2f,'k','LineWidth',LW)
 plot(hex(:,1)*(f2f+2*th),hex(:,2)*(f2f+2*th),'k','LineWidth',LW)
+plot(hex(:,1)*(f2f+2*th+2*gap),hex(:,2)*(f2f+2*th+2*gap),'k','LineWidth',LW)
 % center circle
 plot(circle(:,1)*radius,circle(:,2)*radius,'k','LineWidth',LW)
 plot(circle(:,1)*wrap+offset(1),circle(:,2)*wrap+offset(2),'k','LineWidth',LW)
@@ -47,18 +49,17 @@ end
 
 FS = 14;
 FN = 'Times New Roman';
-text(-11.2,6,'Th_{box}','FontSize',FS,'FontName',FN);
+text(-11.5,6.7,'Th_{Can}','FontSize',FS,'FontName',FN);
 text(0.8,8.5,'F2F','FontSize',FS,'FontName',FN);
 text(-7,1,'Pitch','FontSize',FS,'FontName',FN);
-axis(axis)
+axis equal
 arrow([0,-19*.5],[0,+19*.5],'LineWidth',1)
 arrow([0,+19*.5],[0,-19*.5],'LineWidth',1)
 arrow([-6,0],[-3,-5])
 arrow([-3,-5],[-6,0])
 arrow([-7.8,5.5],[-6.2,4.45],'Length',10)
 arrow([-6.2,4.45],[-7.8,5.5],'Length',10)
-
-
+annotation('textarrow',[0.8,0.76],[0.81,0.747],'String','Gap','FontSize',FS,'FontName',FN)
 
 hold off
 

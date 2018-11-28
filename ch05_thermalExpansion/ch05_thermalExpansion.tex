@@ -29,10 +29,10 @@
   Highly detailed thermal expansion modeling can be done using the Finite
   Element Method (FEM) to calculate local stresses and strains on all reactor
   structural components. However, the model developed here for the simulation of
-  SFRs does not estimate temperature and heat generation at all positions due to
-  the smearing of hexagonal assemblies. Therefore, a simplified thermal
-  expansion model is developed to simulate the effect of thermal expansion on
-  reactivity.
+  fast reactors does not estimate temperature and heat generation at all 
+  positions due to the smearing of hexagonal assemblies. Therefore, a simplified 
+  thermal expansion model is developed to simulate the effect of thermal 
+  expansion on reactivity.
 
   In the model, linear dimensions are expanded based on material properties.
   All sodium in the reactor is assumed to be liquid so effects of thermal
@@ -40,7 +40,7 @@
   density as a function of temperature as described by state equations in
   \cite{sodiumProp}. Additionally, the mass of sodium within the reactor is not
   conserved. Sodium in the coolant is allowed to flow into and out of an
-  expansion vessel external to the reactor. In as SFR, sodium in the bond region
+  expansion vessel external to the reactor. In an SFR, sodium in the bond region
   flows upward from the fuel region into a gas plenum as the fuel expands,
   forcing it outward; however, this is not modeled as the sodium level in the 
   bond is not tracked. Instead, the mass of sodium in the bond region is allowed
@@ -73,10 +73,10 @@
     \end{multline}
     for $T$ in \units{K}. Note that U10Zr has a phase change at $923 \units{K}$
     that increases the LEF at this point. The LEF of HT9 and U10Zr over the 
-    range of operating temperatures of SFRs are plotted in \fref{fig:lef_plot}. 
-    It is observed that the LEF of U10Zr is as much as twice that of HT9. This 
-    implies fuel material will expand significantly more than structural 
-    material which is expected behavior for metallic fuel.
+    range of operating temperatures of fast reactors are plotted in 
+    \fref{fig:lef_plot}. It is observed that the LEF of U10Zr is as much as 
+    twice that of HT9. This implies fuel material will expand significantly more 
+    than structural material which is expected behavior for metallic fuel.
 
     \begin{figure}
       \centering

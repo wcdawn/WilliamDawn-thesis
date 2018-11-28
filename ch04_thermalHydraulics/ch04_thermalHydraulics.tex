@@ -3,12 +3,12 @@
 
 \section{Introduction}
   Material temperatures are a pivotal part of the multi-physics problem of
-  simulating a Sodium-cooled Fast Reactor (SFR). Temperatures are necessary for
+  simulating a Fast Reactor (FR). Temperatures are necessary for
   calculating reactor cross-sections for an accurate power distribution and can
   be used as input for a thermal hydraulic simulation. Thermal hydraulic models
-  are developed for standard SFR geometry as described in
+  are developed for standard FR geometry as described in
   \sref{sec:geometry_description}. Recall, the standard assembly is a hexagonal 
-  can and filled with many cylindrical pins. 
+  can and filled with many cylindrical rods. 
 
   In this simulation, two thermal hydraulic models are employed. The first is a 
   steady-state, one-dimensional, axial heat convection model to calculate coolant 
@@ -16,26 +16,30 @@
   This model is valid for the assumption of no cross-flow between channels and 
   perfect fluid mixing within the flow channel. These assumptions are valid for
   simulating fast reactors with canned assemblies and assembly designs which 
-  encourage within-assembly mixing. Hexagonal assemblies as common to SFRs and 
+  encourage within-assembly mixing. Hexagonal assemblies as common to FRs and 
   described in \sref{sec:geometry_description} satisfy this assumption with 
   canned assemblies to prevent cross-flow between channels and mixing encouraged
   by wire wrapping. The second model is a radial steady-state, one-dimensional,
-  radial heat conduction model within a cylindrical pin to calculate average 
-  cladding, sodium bond, and fuel temperatures.
-  
+  radial heat conduction model within a cylindrical rod to calculate average 
+  cladding, bond, and fuel temperatures.
+
   \begin{figure}
     \centering
     \includegraphics[width=\textwidth]{enthalpy_rise}
-    \caption{Typical SFR Enthalpy Rise.}
+    \caption{Typical FR Enthalpy Rise.}
     \label{fig:enthalpy_rise}
   \end{figure}
 
 \section{Material Properties}
   \label{sec:material_properties}
   Thermodynamic properties of reactor materials are required for these models.
-  The sodium coolant properties are the most extensive with density, enthalpy, 
-  thermal conductivity, dynamic viscosity, and heat capacity required. The 
-  functional forms of these properties are given in \cite{sodiumProp}. 
+  The coolant properties are the most extensive with density, enthalpy, 
+  thermal conductivity, dynamic viscosity, and heat capacity required. In this
+  thesis, sodium coolant is considered. However, these thermal hydraulic
+  properties can be easily changed to allow for the simulation of fast reactors
+  with other coolants such as lead or molten salt. The 
+  functional forms of sodium thermal hydaraulic properties are given in 
+  \cite{sodiumProp}. 
   Thermal conductivity values are also required for the cladding and fuel
   material. Typical cladding for fast reactor designs is HT9 stainless-steel and
   a functional form of the thermal conductivity is given in \cite{ht9Prop}. Both
@@ -173,8 +177,8 @@
       \label{eq:mass_flow_split}
       \mdot_i = \mdot_{Rx} \frac{A_{cool,i}}{A_{cool,Rx}}
     \end{equation}
-    where $A_{cool,i}$ is the coolant flow area for channel $i$, $N_{pin,i}$ is
-    the number of pins within the assembly $i$, and $A_{cool,Rx}$
+    where $A_{cool,i}$ is the coolant flow area for channel $i$, $N_{rod,i}$ is
+    the number of rods within the assembly $i$, and $A_{cool,Rx}$
     is the coolant flow area for the reactor.  The mass flow per unit area is 
     assumed constant at the reactor inlet and the mass flow in a channel is the
     product of the mass flux and the channel flow area. This partitioning of
@@ -282,7 +286,7 @@
     For the purposes of the radial model, geometry is described in
     \fref{fig:radial_model}. This model represents a cylindrical fuel pellet,
     surrounded by sodium bond, enclosed in steel cladding, with sodium coolant
-    flowing in the axial direction. The center of the fuel pin is located at
+    flowing in the axial direction. The center of the fuel rod is located at
     $r=0$ where $r$ is the radial coordinate. The fuel pellet has radius $R_F$
     and fuel is located in $r \in [0,R_F)$. Then, bond is located in 
     $r \in (R_F,R_B)$ and clad is located in $r \in (R_B,R_C]$. The fuel 
@@ -313,7 +317,7 @@
     $T_{\infty}$ the clad surface temperature is described by Newton's law of 
     cooling and a convective heat transfer correlation. For this work, the 
     Weisman correlation is selected for its applicability to triangular-pitch 
-    flow channels.  
+    flow channels \cite{weisman}.
 
     With derivation completed, the temperatures of interest are calculated.
     While derivation moved from fuel center-line outward to clad surface,
@@ -584,7 +588,8 @@
     \subsubsection{Clad Surface Temperature}
       Clad surface temperature $T_C$ is given by Newton's Law of Cooling with
       convective heat transfer coefficient $H$ specified according to the
-      Weisman Correlation. Newton's Law of Cooling may be written as
+      Weisman correlation \cite{weisman}. Newton's Law of Cooling may be written 
+      as
       \begin{equation}
         q''_{clad} = H_c (T_C - T_{\infty})
       \end{equation}
@@ -604,7 +609,7 @@
       The coefficient $H$ must be calculated via an applicable correlation.
       The Weisman correlation is selected because it is valid for general fluid
       flow and has parameters correlated for triangular pitch flow areas common
-      to fast reactor designs. The Weisman Correlation relates the Nusselt,
+      to fast reactor designs. The Weisman correlation relates the Nusselt,
       Reynolds, and Prandlt dimensionless numbers according to
       \begin{equation}
         \label{eq:weisman}
@@ -624,12 +629,12 @@
         \label{eq:weisman_de}
         D_e &= \frac{4 \, A_x}{P_w} \\
         \label{eq:weisman_g}
-        G &= \frac{\mdot}{A_x \, N_{pin}}
+        G &= \frac{\mdot}{A_x \, N_{rod}}
       \end{align}
-      where $S$ is the pin-pitch pins, $A_x$ is the
+      where $S$ is the rod-pitch rods, $A_x$ is the
       flow cross-sectional area, $P_w$ is the flow wetted perimeter, $D_e$
-      is the effective flow diameter, $G$ is the mass-flux for a single-pin
-      channel, and $N_{pin}$ is the number of pins in the assembly. The Reynolds
+      is the effective flow diameter, $G$ is the mass-flux for a single-rod
+      channel, and $N_{rod}$ is the number of rods in the assembly. The Reynolds
       number is defined as
       \begin{equation}
         \label{eq:re}
@@ -751,7 +756,7 @@
       self-shielding in the fuel, the temperature corresponding to the average
       neutron flux is nearer to the surface of the fuel as neutron flux
       decreases significantly within the fuel material itself. For the purposes
-      of this model, this approximation is acceptably accurate as pin-powers
+      of this model, this approximation is acceptably accurate as rod-powers
       cannot be resolved in this simplified geometry.
 
     \subsubsection{Average Bond Temperature}
@@ -882,7 +887,7 @@
       \State Calculate bulk coolant temperature in each chunk using the 
         procedure outlined in \sref{sec:axial_convection_model}.
       \State Calculate surface temperatures and fuel center-line temperature
-        for the average pin in each chunk using the procedure in 
+        for the average rod in each chunk using the procedure in 
         \sref{sec:surface_temps}.
       \State Calculate material average temperatures using the procedure 
         outlined in \sref{sec:average_temps}.
@@ -1017,7 +1022,7 @@
     tolerance.
 
   \subsection{Radial Results}
-    Radial temperatures for a single-pin model are shown in
+    Radial temperatures for a single-rod model are shown in
     \fref{fig:radial_temp_plot}. This model was generated for 
     ${q'''_j = 6.93 \times 10^9 \units{$\frac{\text{W}}{\text{m}^3}$}}$ and 
     ${\mdot_i = 68.56 \units{$\frac{\text{kg}}{\text{s}}$}}$ which are typical 
@@ -1073,7 +1078,7 @@
           $h_{in}$    & 246.62 &\units{$\frac{\text{kJ}}{\text{kg}}$} \\
           $H$         & 1.2    &\units{m} \\
           $R_F$       & 0.27051 & \units{cm} \\
-          $N_{pin}$   & 271     \\
+          $N_{rod}$   & 271     \\
           \bottomrule
         \end{tabular}
       \end{center}
@@ -1082,11 +1087,11 @@
     First, convert $q'''(z)$ to $q'(z)$ as
     \begin{equation}
       \label{eq:qprime}
-      q'(z) = \pi \, R_F^2 \, N_{pin} \, q'''(z)
+      q'(z) = \pi \, R_F^2 \, N_{rod} \, q'''(z)
     \end{equation}
     and as a result,
     \begin{equation}
-      q'_0 = \pi \, R_F^2 \, N_{pin} \, q'''_0.
+      q'_0 = \pi \, R_F^2 \, N_{rod} \, q'''_0.
     \end{equation}
     Begin with the calculation of $h(x)$ using 
     \eref{eq:continuous_heat_balance}. Then,
