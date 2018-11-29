@@ -293,12 +293,12 @@
   represents an average fuel rod in each fuel bundle. The model explicitly
   treats fuel, sodium bond, and cladding regions.
   In the radial heat conduction model, it is assumed that all heat generated in
-  the reactor is due directly to fission as described by the volumetric heat
-  generation rate ${q'''=\kappa \Sigma_f \phi}$. However, other sources of heat
-  also contribute to reactor power. Gamma radiation can account for up to 14\%
-  of heat generated throughout the core. Additionally, via beta deposition and
-  elastic neutron scattering, roughly 2\% of fission energy is deposited in the
-  cladding material \cite{FastSpectrumReactors}.
+  the reactor is due to fission as described by the volumetric heat
+  generation rate ${q'''=\kappa \Sigma_f \phi}$. All deposited energy is
+  described by the coefficient $\kappa$. However, roughly $2\%$ of power
+  transmitted via gamma radiation will be absorbed directly in the coolant and
+  does not need to be conducted. Effectively, $q'''$ is reduced by this fraction
+  in the radial heat conduction model \cite{FastSpectrumReactors}.
   
   For this model, it is assumed
   that the bulk coolant temperature, $T_{\infty,i,k}$, is known within the chunk 
@@ -312,7 +312,7 @@
   accurate simulation of the reactor as they influence multigroup constants.
 
   \subsection{Geometric Model}
-    For the purposes of the radial model, geometry is described in
+    For the purposes of the radial model, the geometry is shown in
     \fref{fig:radial_model}. This model represents a cylindrical fuel pellet,
     surrounded by sodium bond, enclosed in steel cladding, with sodium coolant
     flowing in the axial direction. The center of the fuel rod is located at
@@ -339,19 +339,19 @@
     heat conduction equation with material properties described in
     \sref{sec:material_properties}. The process of the derivation moves outward
     from the fuel center-line toward the coolant flow, always assuming that the
-    next surface temperature is known. Derivation begins with the fuel 
+    next surface temperature is known. The derivation begins with the fuel 
     center-line temperature, assuming the fuel surface temperature is known. 
     Then, derivation moves to the fuel surface temperature assuming the bond 
     surface temperature is known. This pattern is terminated and the 
     relationship is closed at the cladding surface where, for a given 
-    $T_{\infty}$ the clad surface temperature is described by Newton's law of 
+    $T_{\infty}$, the clad surface temperature is described by Newton's law of 
     cooling and a convective heat transfer correlation. For this work, the 
     Weisman correlation is selected for its applicability to triangular-pitch 
     flow channels \cite{weisman}.
 
-    With derivation completed, the temperatures of interest are calculated.
-    While derivation moved from fuel center-line outward to clad surface,
-    calculation moves from clad surface inward to fuel center-line. This is
+    With the derivation complete, the temperatures of interest are calculated.
+    While the derivation moved from fuel center-line outward to clad surface,
+    the calculation moves from clad surface inward to fuel center-line. This is
     necessary because the quantities are all unknown with the exception of
     $T_{\infty}$ so the calculation begins there. Surface temperatures are all
     described explicitly due to the assumption of constant thermal conductivity
@@ -362,80 +362,79 @@
     
     \subsubsection{Temperature in Fuel}
       The fueled region is the only region modeled with non-zero volumetric heat
-      generation. In this region, $q'''_j$ as specified by 
+      generation. In this region, $q'''_{i,k}$ as specified by 
       \eref{eq:chunkqppp_fuel} is assumed constant within the fuel. 
       Additionally, the thermal conductivity in the fuel will be assumed to have
-      general form $k_F(T)$. For this work, $k_F(T)$ is specified by the
+      the general form $k_F(T)$. For this work, $k_F(T)$ is specified by the
       functional form from \cite{fuelProp}. For the assumed fuel composition, 
       the thermal conductivity is plotted in \fref{fig:kfuel_plot}.
 
       The steady-state heat conduction equation with constant volumetric heat
-      generation rate $q'''_j$ and variable thermal conductivity $k_F(T)$ can be
-      written.
+      generation rate $q'''_{i,k}$ and variable thermal conductivity $k_F(T)$ 
+      can be written.
       \begin{equation}
         \label{eq:conduction_fuel}
-        \grad \cdot (k_F(T_F(r)) \grad T_F(r)) + q'''_j = 0
+        \grad \cdot (k_F(T_F(r)) \grad T_F(r)) + q'''_{i,k} = 0
       \end{equation}
       Noting the gradient operator in one-dimensional cylindrical geometry,
-      \eref{eq:conduction_fuel} is rewritten with partial derivatives.
+      \eref{eq:conduction_fuel} is rewritten with derivatives.
       \begin{equation}
         \label{eq:conduction_fuel_cylindrical}
-        \frac{1}{r} \frac{\partial}{\partial r} \left( r \, k_F(T_F(r)) \, 
-          \frac{d \, T_F}{dr} \right) + q'''_j = 0
+        \frac{1}{r} \frac{d}{dr} \left( r \, k_F(T_F(r)) \, 
+          \frac{d \, T_F}{dr} \right) + q'''_{i,k} = 0
       \end{equation}
       Note the inner derivative is an ordinary derivative because the only
-      function to which it applies, $T_F(r)$, is a function of one variable. The
-      outer derivative is a partial derivative because it applies to $T_F(r)$ as
-      well as $k_F(T_F(r))$.
+      function to which it applies, $T_F(r)$, is a function of one variable. 
 
       Begin solving \eref{eq:conduction_fuel_cylindrical} by multiplying the
       equation by radial coordinate $r$.
       \begin{equation}
-        \frac{\partial}{\partial r} \left( r\, k_F(T_F(r)) \, \frac{d\, T_F}{dr} 
-        \right) + q'''_j = 0
+        \frac{d}{dr} \left( r\, k_F(T_F(r)) \, \frac{d\, T_F}{dr} 
+          \right) + q'''_{i,k} \, r = 0
       \end{equation}
       Integrate the equation for $r \in [0,r']$ where $r'$ is an arbitrary
       location $r' \in [0,R_F]$.
       \begin{align}
-        \int_0^{r'} \left( \frac{\partial}{\partial r} \left( r\, k_F(T_F(r)) \, 
-          \frac{d\, T_F}{dr} \right) + q'''_j \right) \; dr &= 0 \\
-        \int_0^{r'} \frac{\partial}{\partial r} \left( r\, k_F(T_F(r)) 
-          \frac{d \, T_F}{dr} \right) \; dr + \int_0^{r'} q'''_j \; dr &= 0 \\
+        \int_0^{r'} \left( \frac{d}{dr} \left( r\, k_F(T_F(r)) \, 
+          \frac{d\, T_F}{dr} \right) + q'''_{i,k}\,r \right) \; dr &= 0 \\
+        \int_0^{r'} \frac{d}{dr} \left( r\, k_F(T_F(r)) 
+          \frac{d \, T_F}{dr} \right) \; dr + 
+          \int_0^{r'} q'''_{i,k} \,r \; dr &= 0 \\
         \label{eq:need_bc}
         \left[ r \, k_F(T_F(r)) \frac{d\,T_F}{dr} \right]_{r=0}^{r=r'} + 
-          \left. \frac{q'''_j}{2} r^2 \right|_{r=0}^{r=r'} &= 0 \\
+          \left. \frac{q'''_{i,k}}{2} r^2 \right|_{r=0}^{r=r'} &= 0 
       \end{align}
-      Using a symmetry boundary condition at $r=0$, then 
+      The temperature of the fuel at the centerline is required to be finite.
       \begin{equation}
-        \left. \frac{d \, T_F}{dr} \right|_{r=0} = 0
+        \left. \frac{d \, T_F}{dr} \right|_{r=0} \text{ is Finite}.
       \end{equation}
       and \eref{eq:need_bc} can be evaluated.
       \begin{equation}
         \label{eq:dtdr_fuel}
         \left. r' k_F(T_F(r')) \frac{d\,T_F}{dr} \right|_{r=r'} + 
-          \frac{q'''_j}{2} r^{\prime 2} = 0
+          \frac{q'''_{i,k}}{2} r^{\prime 2} = 0
       \end{equation}
       Divide by the location $r'$.
       \begin{equation}
         \left. k_F(T_F(r')) \frac{d \, T_F}{dr}\right|_{r=r'} + 
-          \frac{q'''_j}{2} r' = 0
+          \frac{q'''_{i,k}}{2} r' = 0
       \end{equation}
       Next, integrate $r' \in [0,r]$.
       \begin{align}
         \int_0^r \left( k_F(T_F(r')) \left. \frac{d\,T_F}{dr}\right|_{r=r'} 
-          + \frac{q'''_j}{2} r' \right) \; dr' &= 0 \\
+          + \frac{q'''_{i,k}}{2} r' \right) \; dr' &= 0 \\
         \int_0^r k_F(T_F(r')) \left. \frac{d\,T_F}{dr}\right|_{r=r'} \; dr' + 
-          \int_0^r \frac{q'''_j}{2} r' \; dr' &= 0 \\
+          \int_0^r \frac{q'''_{i,k}}{2} r' \; dr' &= 0 \\
         \int_0^r k_F(T_F(r')) \left. \frac{d\,T_F}{dr}\right|_{r=r'} \; dr' + 
-          \left. \frac{q'''_j}{4} r^{\prime 2} \right|_{r'=0}^{r'=r} &= 0 \\
+          \left. \frac{q'''_{i,k}}{4} r^{\prime 2} \right|_{r'=0}^{r'=r} &= 0 \\
         \int_0^r k_F(T_F(r')) \left. \frac{d\,T_F}{dr}\right|_{r=r'} \; dr' + 
-          \frac{q'''_j}{4} r^2 &= 0
+          \frac{q'''_{i,k}}{4} r^2 &= 0
       \end{align}
       The fundamental theorem of calculus allows for the expression of the first
-      integral.
+      integral as
       \begin{equation}
         \label{eq:tcl_integral}
-        \int_{T_F(0)}^{T_F(r)} k_F(T_F(r)) \; dr + \frac{q'''_j}{4} r^2 = 0
+        \int_{T_F(0)}^{T_F(r)} k_F(T_F(r)) \; dr + \frac{q'''_{i,k}}{4} r^2 = 0.
       \end{equation}
       In this derivation, $k_F(T)$ is allowed to be a generic function. 
       Therefore, \eref{eq:tcl_integral} does not have a simple forward 
@@ -449,27 +448,28 @@
       where $k_F(T)$ is the thermal conductivity of the fuel material as shown
       in \fref{fig:kfuel_plot}. Then, \eref{eq:tcl_integral} can be rewritten.
       \begin{gather}
-        K_F(T_F(r)) - K_F(T_F(0)) + \frac{q'''_j}{4} r^2 = 0 \\
+        K_F(T_F(r)) - K_F(T_F(0)) + \frac{q'''_{i,k}}{4} r^2 = 0 \\
         \label{eq:tfuel_r}
-        K_F(T_F(0)) = K_F(T_F(r)) + \frac{q'''_j}{4} r^2 \\
+        K_F(T_F(0)) = K_F(T_F(r)) + \frac{q'''_{i,k}}{4} r^2 \\
         \label{eq:tcl_conductivity_integral}
-        K_F(T_F(0)) = K_F(T_F) + \frac{q'''_j}{4} R_F^2
+        K_F(T_F(0)) = K_F(T_F) + \frac{q'''_{i,k}}{4} R_F^2
       \end{gather}
       The fuel center-line temperature can be calculated using
       \eref{eq:tcl_conductivity_integral} given a functional form of the
-      conductivity integral $K_F(T)$ by performing a search on the function
-      where $T_F(0)$ is the fuel center-line temperature, $T_F=T_F(R_F)$ is the
-      fuel surface temperature, and $R_F$ is the radius of the fuel.
-      If, instead, $k_F(T)$ were constant such that $k_F(T) = k_F$, then
-      \eref{eq:tcl_conductivity_integral} would be equivalent to 
+      conductivity integral $K_F(T)$ by performing a search on the conductivity
+      integral where $T_F(0)$ is the fuel center-line temperature, 
+      $T_F=T_F(R_F)$ is the fuel surface temperature, and $R_F$ is the radius of 
+      the fuel. If, instead, $k_F(T)$ were constant such that $k_F(T) =
+      \overline{k_F}$, then \eref{eq:tcl_conductivity_integral} would be 
+      equivalent to 
       \begin{align}
         \label{eq:tfr}
         T_F(r) &= T_F(0) - \frac{q'''_g}{4 \overline{k_F}} r^2 \\
         \label{eq:tcl_constant_kfuel}
-        T_F(0) &= T_F + \frac{q'''_j}{4 \overline{k_F}} R_F^2
+        T_F(0) &= T_F + \frac{q'''_{i,k}}{4 \overline{k_F}} R_F^2
       \end{align}
-      where $\overline{k_F}$ is the effective thermal conductivity in the fuel
-      region.
+      where $\overline{k_F}$ is the assumed constant thermal conductivity in the 
+      fuel region.
       To calculate $T_F(0)$, the fuel surface temperature must be known.
       If more information is known about $K_F(T)$, a forward expression
       may be possible. However, a bisection method is implemented to maintain
@@ -535,56 +535,59 @@
       for any $r' \in [0,R_F]$ so allow $r'=R_F$.
       \begin{align}
         \left. R_F k_F(T_F(R_F)) \frac{d\,T_F}{dr} \right|_{r=R_F} + 
-          \frac{q'''_j}{2} R_F^2 &= 0 \\
+          \frac{q'''_{i,k}}{2} R_F^2 &= 0 \\
         \label{eq:surface_relation}
         \left. R_F k_F(T_F(R_F)) \frac{d\,T_F}{dr} \right|_{r=R_F} &= 
-          - \frac{q'''_j}{2} R_F^2
+          - \frac{q'''_{i,k}}{2} R_F^2
       \end{align}
       Recall from the earlier derivation of the fuel center-line temperature 
-      that the quantity $q'''_j$ is the average volumetric heat generation rate
+      that the quantity $q'''_{i,k}$ is the average volumetric heat generation rate
       within chunk $j$ specified in \eref{eq:chunkqppp_fuel}.
       \eref{eq:surface_relation} is substituted into
       \eref{eq:tf_first_integral}.
       \begin{equation}
         \label{eq:tf_first_bc}
         \left. r' \, k_B \frac{d\,T_B}{dr} \right|_{r=r'} +
-          \frac{q'''_j}{2} R_F^2 = 0
+          \frac{q'''_{i,k}}{2} R_F^2 = 0
       \end{equation}
       Divide \eref{eq:tf_first_integral} by the radial coordinate $r'$. This is
       valid because $r' \ne 0$ in this region.
       \begin{equation}
         \left. k_B \frac{d\,T_B}{dr} \right|_{r=r'} + 
-          \frac{q'''_j}{2} \frac{R_F^2}{r'} = 0
+          \frac{q'''_{i,k}}{2} \frac{R_F^2}{r'} = 0
       \end{equation}
       Integrate the equation for $r' \in [R_F,r]$ where $r \in [R_F,r']$.
       \begin{align}
         \int_{R_F}^r \left( \left. k_B \frac{d\,T_B}{dr}\right|_{r=r'}
-          + \frac{q'''_j}{2} \frac{R_F^2}{r'} \right) \; dr' &= 0 \\
+          + \frac{q'''_{i,k}}{2} \frac{R_F^2}{r'} \right) \; dr' &= 0 \\
         \int_{R_F}^r \left. k_B \frac{d\,T_B}{dr}\right|_{r=r'} \; dr'
-          + \int_{R_F}^r \frac{q'''_j}{2} \frac{R_F^2}{r'} \; dr' &= 0\\
+          + \int_{R_F}^r \frac{q'''_{i,k}}{2} \frac{R_F^2}{r'} \; dr' &= 0\\
         k_B \int_{R_F}^r \left. \frac{d\,T_B}{dr}\right|_{r=r'} \; dr'
-          + \frac{q'''_j}{2} R_F^2 \left. \ln(r') \right|_{r'=R_F}^{r'=r} &= 0\\
+          + \frac{q'''_{i,k}}{2} R_F^2 \left. \ln(r') \right|_{r'=R_F}^{r'=r} &= 0\\
         k_B \int_{R_F}^r \left. \frac{d\,T_B}{dr}\right|_{r=r'} \; dr'
-          + \frac{q'''_j}{2} R_F^2 ( \ln(r) - \ln(R_F)) &= 0 \\
+          + \frac{q'''_{i,k}}{2} R_F^2 ( \ln(r) - \ln(R_F)) &= 0 \\
         k_B \int_{R_F}^r \left. \frac{d\,T_B}{dr}\right|_{r=r'} \; dr'
-          + \frac{q'''_j}{2} R_F^2 \ln\left(\frac{r}{R_F}\right) &= 0 
+          + \frac{q'''_{i,k}}{2} R_F^2 \ln\left(\frac{r}{R_F}\right) &= 0 
       \end{align}
       Again, the remaining integral can be rewritten by employing the
       fundamental theorem of calculus.
       \begin{equation}
         \label{eq:tf_fundamental_theorem}
-        k_B (T_B(r) - T_B(R_F)) + \frac{q'''_j}{2} R_F^2 
+        k_B (T_B(r) - T_B(R_F)) + \frac{q'''_{i,k}}{2} R_F^2 
           \ln\left(\frac{r}{R_F}\right) = 0
       \end{equation}
-      Then, solving for $T_B(R_F)$.
-      \begin{align}
+      Then, solving for $T_B(R_F)$,
+      \begin{equation}
         \label{eq:tbr}
-        T_B(r) &= T_B(R_F) - \frac{q'''_j}{2 k_B} R_F^2 
-          \ln\left(\frac{r}{R_F}\right) \\
+        T_B(r) = T_B(R_F) - \frac{q'''_{i,k}}{2 k_B} R_F^2 
+          \ln\left(\frac{r}{R_F}\right).
+      \end{equation}
+      Evaluate at $R_B$ and rearrange,
+      \begin{equation}
         \label{eq:tf_forward}
-        T_B(R_F) &= T_B(R_B) + \frac{q'''_j}{2 k_B} R_F^2 
-          \ln\left(\frac{R_B}{R_F}\right)
-      \end{align}
+        T_B(R_F) = T_B(R_B) + \frac{q'''_{i,k}}{2 k_B} R_F^2 
+          \ln\left(\frac{R_B}{R_F}\right).
+      \end{equation}
       The fuel surface temperature can be calculated using
       \eref{eq:tf_forward} for constant thermal conductivity $k_B$.
       In \eref{eq:tf_forward}, the bond surface temperature must be
@@ -604,10 +607,10 @@
       similarly by changing material subscripts. 
       \begin{align}
         \label{eq:tcr}
-        T_C(r) &= T_C(R_B) - \frac{q'''_j}{2 k_C} R_F^2
+        T_C(r) &= T_C(R_B) - \frac{q'''_{i,k}}{2 k_C} R_F^2
           \ln\left(\frac{r}{R_B}\right) \\
         \label{eq:tb_forward}
-        T_C(R_B) &= T_C(R_C) + \frac{q'''_j}{2 k_C} R_F^2
+        T_C(R_B) &= T_C(R_C) + \frac{q'''_{i,k}}{2 k_C} R_F^2
           \ln\left(\frac{R_C}{R_B}\right)
       \end{align}
       The bond surface temperature can be calculated using \eref{eq:tb_forward}
@@ -631,9 +634,9 @@
       The heat flux at the clad surface is related to the volumetric heat 
       generation rate in the fuel according to 
       \begin{equation}
-        q''_{clad} = q'''_j \frac{R_F^2}{2 R_C}
+        q''_{clad} = q'''_{i,k} \frac{R_F^2}{2 R_C}
       \end{equation}
-      where $q'''_j$ is the chunk-average volumetric heat generation rate in the
+      where $q'''_{i,k}$ is the chunk-average volumetric heat generation rate in the
       fuel according to \eref{eq:chunkqppp_fuel}.
 
       The coefficient $H$ must be calculated via an applicable correlation.
@@ -699,7 +702,7 @@
       \begin{align}
         T_C &= \frac{q''_{clad}}{H_c} + T_{\infty} \\
         \label{eq:tc}
-        T_C &= q'''_j \frac{R_F^2}{2\,R_c\,H_c} + T_{\infty}
+        T_C &= q'''_{i,k} \frac{R_F^2}{2\,R_c\,H_c} + T_{\infty}
       \end{align}
       With \eref{eq:tc}, all surface temperatures and the fuel center-line
       temperature have been related to $T_{\infty}$ and the calculation of these
@@ -708,7 +711,8 @@
   \subsection{Average Temperatures}
     \label{sec:average_temps}
     Average material temperatures are used to evaluate material properties such
-    as densities and cross-sections within the different material regions. The
+    as densities, cross-sections, and thermal expansion within the different 
+    material regions. The
     derivations in this section require the fuel center-line and surface
     temperatures from \sref{sec:surface_temps}. To calculate the average
     temperature in a region, an expression $T(r)$ is required. For the bond and
@@ -718,10 +722,11 @@
     is calculated using fuel surface and fuel center-line temperatures
     calculated assuming variable thermal conductivity. Then, $T_F(r)$ can be 
     expressed by holding the fuel thermal conductivity constant at the effective
-    value. In a test case at reactor conditions, this method of effective 
+    value and using \eref{eq:tcl_constant_kfuel}. In a test case at reactor 
+    conditions, this method of effective 
     constant thermal conductivity resulted in a $10 \units{K}$ error in the 
     average fuel temperature compared to a numerical integration with 1,000
-    points. For the purposes of calculating cross-sections, this approximation
+    points. For the purposes of calculating average values, this approximation
     is acceptable.
 
     \subsubsection{Average Fuel Temperature}
@@ -730,7 +735,7 @@
       \eref{eq:tcl_constant_kfuel} such that
       \begin{equation}
         \label{eq:kfuel_constant}
-        \overline{k_F} = \frac{q'''_j \, R_F^2}{4(T_0-T_F)}
+        \overline{k_F} = \frac{q'''_{i,k} \, R_F^2}{4(T_0-T_F)}
       \end{equation}
       where $T_0 = T_F(0)$ is the fuel center-line temperature and
       $T_F=T_F(R_F)$ is the fuel surface temperature.
@@ -743,7 +748,7 @@
           {\int_0^{R_F} r \; dr} \\
         \label{eq:tfbar_integral}
         \overline{T_F} &= \frac{\int_0^{R_F} \left( T_0 - 
-          \frac{q'''_j}{4 \overline{k_F}}
+          \frac{q'''_{i,k}}{4 \overline{k_F}}
           r^2\right) \, r \; dr}{\int_0^{R_F} r \; dr}
       \end{align}
       noting the added $r$ multiplication term due to cylindrical coordinates
@@ -758,36 +763,38 @@
       Next, the integral in the numerator of \eref{eq:tfbar_integral} is 
       evaluated.
       \begin{align}
-        \int_0^{R_F} \left( T_0 - \frac{q'''_j}{4 \overline{k_F}} r^2 \right)
+        \int_0^{R_F} \left( T_0 - \frac{q'''_{i,k}}{4 \overline{k_F}} r^2 \right)
           \, r \; dr&= 
-          \int_0^{R_F} \left( T_0 \, r - \frac{q'''_j}{4\overline{k_F}} 
+          \int_0^{R_F} \left( T_0 \, r - \frac{q'''_{i,k}}{4\overline{k_F}} 
           r^3 \right) \; dr\\
         &= \left. T_0) \frac{r^2}{2} \right|_{r=0}^{r=R_F} -
-          \left. \frac{q'''_j}{4 \overline{k_F}} \frac{r^4}{4} 
+          \left. \frac{q'''_{i,k}}{4 \overline{k_F}} \frac{r^4}{4} 
           \right|_{r=0}^{r=R_F} \\
         \label{eq:tf_numerator}
-        &= T_0 \frac{R_F^2}{2} - \frac{q'''_j}{16 \overline{k_F}} R_F^4
+        &= T_0 \frac{R_F^2}{2} - \frac{q'''_{i,k}}{16 \overline{k_F}} R_F^4
       \end{align}
       Evaluating \eref{eq:tfbar_integral} by dividing \eref{eq:tf_numerator} by
       \eref{eq:tf_denominator} yields an expression for the average fuel
       temperature in the fuel region.
       \begin{equation}
         \label{eq:tf_bar}
-        \overline{T_F} = T_0 - \frac{q'''_j}{8 \overline{k_F}} R_F^2
+        \overline{T_F} = T_0 - \frac{q'''_{i,k}}{8 \overline{k_F}} R_F^2
       \end{equation}
       \eref{eq:tf_bar} then yields the average temperature in the fuel region
       assuming the thermal conductivity is constant at the effective value
       $k_F$. $\overline{T_F}$ will be used to calculate fuel cross-sections. 
 
-      More accurately, an effective fuel temperature
-      would be used to calculate fuel cross sections. Truly, the effective
-      fuel temperature for cross-section calculation is closer to the
-      surface temperature than the average temperature. Due to
-      self-shielding in the fuel, the temperature corresponding to the average
-      neutron flux is nearer to the surface of the fuel as neutron flux
-      decreases significantly within the fuel material itself. For the purposes
-      of this model, this approximation is acceptably accurate as rod-powers
-      cannot be resolved in this simplified geometry.
+      To calculate more accurate fuel cross-sections, an effective fuel 
+      temperature should be used which weights the fuel surface temperature 
+      higher than the average value.  Due to self-shielding in the fuel, the 
+      temperature corresponding to the average neutron flux is nearer to the 
+      surface of the fuel as neutron flux decreases significantly within the 
+      fuel material itself. For the purposes of this model, the use of volume 
+      averaged fuel temperatures is acceptably accurate as rod-powers cannot be 
+      resolved in this simplified geometry. In addition, metal fuel has a lower 
+      change in temperature between surface and centerline temperatures when 
+      compared to oxide fuels and rod dimensions are smaller than typical Light 
+      Water Reactors (LWRs).
 
     \subsubsection{Average Bond Temperature}
       \label{sec:average_bond_temp}
@@ -799,7 +806,7 @@
           {\int_{R_F}^{R_B} r \; dr} \\
         \label{eq:tbbar_integral}
         \overline{T_B} &= \frac{\int_{R_F}^{R_B} \left( T_F -
-          \frac{q'''_j}{2 k_B} R_F^2 \ln\left(\frac{r}{R_F}\right) \right)
+          \frac{q'''_{i,k}}{2 k_B} R_F^2 \ln\left(\frac{r}{R_F}\right) \right)
           \, r \; dr} {\int_{R_F}^{R_B} r \; dr}
       \end{align}
       with the weighting due to radial coordinates included.
@@ -817,19 +824,19 @@
       given in a table of integrals. Then, the numerator of 
       \eref{eq:tbbar_integral} can be evaluated. 
       \begin{align}
-        \int_{R_F}^{R_B} \left( T_F - \frac{q'''_j}{2 k_B} R_F^2
+        \int_{R_F}^{R_B} \left( T_F - \frac{q'''_{i,k}}{2 k_B} R_F^2
           \ln\left(\frac{r}{R_F}\right) \right) r \; dr 
           &= \int_{R_F}^{R_B}
-          \left( T_F \, r - \frac{q'''_j}{2 k_B}R_F^2
+          \left( T_F \, r - \frac{q'''_{i,k}}{2 k_B}R_F^2
           \ln\left(\frac{r}{R_F}\right) \, r \right) \; dr \\
         &=
           \left. T_F \frac{r^2}{2} \right|_{r=R_F}^{r=R_B} - 
-          \left. \frac{q'''_j}{2 k_B}R_F^2 \left( \frac{r^2}{2}
+          \left. \frac{q'''_{i,k}}{2 k_B}R_F^2 \left( \frac{r^2}{2}
           \ln\left(\frac{r}{R_F}\right) - \frac{r^2}{4} \right)
           \right|_{r=R_F}^{r=R_B} \\
         \label{eq:tbbar_numerator}
         &= 
-          T_F \frac{R_B^2-R_F^2}{2} - \frac{q'''_j}{2 k_B} R_F^2
+          T_F \frac{R_B^2-R_F^2}{2} - \frac{q'''_{i,k}}{2 k_B} R_F^2
           \left( \frac{R_F^2 - R_B^2}{4} + \frac{R_B^2}{2}
           \ln\left(\frac{R_B}{R_F}\right) \right)
       \end{align}
@@ -838,13 +845,12 @@
       simplifying.
       \begin{equation}
         \label{eq:tb_bar}
-        \overline{T_B} = T_F - \frac{q'''_j}{4 k_B} \, R_F^2 \, \left(
+        \overline{T_B} = T_F - \frac{q'''_{i,k}}{4 k_B} \, R_F^2 \, \left(
           \frac{R_F^2 - R_B^2 + 2\,R_B^2 \ln\left(\frac{R_B}{R_F}\right)}
           {R_B^2-R_F^2}\right)
       \end{equation}
       \eref{eq:tb_bar} then yields the average temperature in the fuel region
-      and $\overline{T_B}$ will be used to calculate cross-sections in the bond
-      region.
+      and $\overline{T_B}$.
 
     \subsubsection{Average Clad Temperature}
       The calculation of the average clad temperature is similar to the
@@ -1054,7 +1060,7 @@
   \subsection{Radial Results}
     Radial temperatures for a single-rod model are shown in
     \fref{fig:radial_temp_plot}. This model was generated for 
-    ${q'''_j = 6.93 \times 10^9 \units{$\frac{\text{W}}{\text{m}^3}$}}$ and 
+    ${q'''_{i,k} = 6.93 \times 10^9 \units{$\frac{\text{W}}{\text{m}^3}$}}$ and 
     ${\mdot_i = 68.56 \units{$\frac{\text{kg}}{\text{s}}$}}$ which are typical 
     values generated by conducting a full reactor simulation. It is seen
     that the temperature profile within the fuel region is approximately 
