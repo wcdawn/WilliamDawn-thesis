@@ -814,12 +814,12 @@
 \section{Power Iterations}
   \label{sec:power_iterations}
   The FEM is used to solve a fixed source problem for a given source
-  distribution $q_g(\vr)$. However, for multigroup problems with fissile,
-  the problem is an eigenvalue problem and the source is not known explicitly 
-  due to interaction between groups. For eigenvalue problems, the problem is 
-  also not a fixed-source problem and has many solutions. The method of 
-  Power Iterations allows these problem to be solved iteratively and in the
-  case of the eigenvalue problem, to solve for the fundamental eigenmode.
+  distribution $q_g(\vr)$. However, for multigroup problems with a fission 
+  source, the problem is an eigenvalue problem and the source is not known a 
+  priori.  For eigenvalue problems, the problem is also not a fixed-source 
+  problem and has many solutions. The method of Power Iterations allows 
+  eigenvalue problems to be solved iteratively for the fundamental eigenvalue 
+  and eigenvector.
 
   \subsection{Convergence of Power Iteration Method}
     Noting the FEM equations can be written as matrix form
@@ -873,20 +873,20 @@
     eigenvector $\vPhi$ \cite{nakamura}. For notation and enumeration, allow the 
     eigenvalue to be rewritten as
     \begin{equation}
-      \label{eq:lambda}
-      \lambda = \frac{1}{\keff}.
+      \label{eq:mu}
+      \mu = \frac{1}{\keff}.
     \end{equation}
     The eigenvectors $\vu_n$ and
-    corresponding eigenvalues $\lambda_n$ of $\mr$ are defined by
+    corresponding eigenvalues $\mu_n$ of $\mr$ are defined by
     \begin{equation}
       \label{eq:eigen_definition}
-      \vu_n = \lambda_n \, \mr \, \vu_n
+      \vu_n = \mu_n \, \mr \, \vu_n
     \end{equation}
-    It may be proved that all eigenvalues $\lambda$ are real, positive, and 
+    It may be proved that all eigenvalues $\mu$ are real, positive, and 
     distinct. The eigenvalues are then numbered in the sequence:
     \begin{equation}
       \label{eq:eigen_order}
-      \lambda_0 < \lambda_1 < \lambda_2 < \cdots < \lambda_I
+      \mu_0 < \mu_1 < \mu_2 < \cdots < \mu_I
     \end{equation}
     where $I$ is the rank of the problem. The eigenvectors have the 
     orthogonality relations:
@@ -916,48 +916,50 @@
     rewritten as 
     \begin{equation}
       \label{eq:phi_expand_begin}
-      \vPhi^{(s+1)} = \lambda^{(s)} \, \lambda^{(s-1)} \, \lambda^{(s-2)} \, 
-        \ldots \, \lambda^{(0)} \, \mr \phi^{(0)}.
+      \vPhi^{(s+1)} = \mu^{(s)} \, \mu^{(s-1)} \, \mu^{(s-2)} \, 
+        \ldots \, \mu^{(0)} \, \mr \phi^{(0)}.
     \end{equation}
     Then, \eref{eq:eigen_projection} can be inserted into
     \eref{eq:phi_expand_begin}.
     \begin{align}
-      \vPhi^{(s+1)} &= \lambda^{(s)} \, \lambda^{(s-1)} \, \ldots \, 
-        \lambda^{(0)} \sum_{n=1}^I c_n^{(0)} \, \mr \, \vu_n \\
-      &= \left( \prod_{p=0}^{s} \lambda^{(p)} \right) \sum_{n=1}^I c_n^{(0)} \, 
+      \vPhi^{(s+1)} &= \mu^{(s)} \, \mu^{(s-1)} \, \ldots \, 
+        \mu^{(0)} \sum_{n=1}^I c_n^{(0)} \, \mr \, \vu_n \\
+      &= \left( \prod_{p=0}^{s} \mu^{(p)} \right) \sum_{n=1}^I c_n^{(0)} \, 
         \mr \, \vu_n
     \end{align}
     Recalling the relationship \eref{eq:eigen_projection}
     \begin{equation}
       \label{eq:phi_expand_above}
-      \vPhi^{(s+1)} = \left( \prod_{p=0}^s \lambda^{(p)} \right) 
-        \sum_{n=1}^I c_n^{(0)} \frac{1}{\lambda_n^{(s+1)}} \vu_n
+      \vPhi^{(s+1)} = \left( \prod_{p=0}^s \mu^{(p)} \right) 
+        \sum_{n=1}^I c_n^{(0)} \frac{1}{\mu_n^{(s+1)}} \vu_n
     \end{equation}
     \eref{eq:phi_expand_above} can be rewritten by dividing and multiplying by
-    $\lambda_0$ and dividing and multiplying by $c_0$.
+    $\mu_0$ and dividing and multiplying by $c_0$.
     \begin{align}
-      \vPhi^{(s+1)} &= \left( \prod_{p=0}^s \frac{\lambda^{(p)}}{\lambda_0} 
+      \vPhi^{(s+1)} &= \left( \prod_{p=0}^s \frac{\mu^{(p)}}{\mu_0} 
         \right) c_0 \left( \vu_0 \sum_n^I \frac{c_n^{(0)}}{c_0^{(0)}}
-        \frac{\lambda_0}{\lambda_n^{(s+1)}} \vu_n \right) \\
+        \frac{\mu_0}{\mu_n^{(s+1)}} \vu_n \right) \\
       \label{eq:eigen_phi_converge}
       \vPhi^{(s+1)} &\approx \text{const.} \left( 
         \vu_0 \sum_n^I \frac{c_n^{(0)}}{c_0^{(0)}}
-        \frac{\lambda_0}{\lambda_n^{(s+1)}} \vu_n \right)
+        \frac{\mu_0}{\mu_n^{(s+1)}} \vu_n \right)
     \end{align}
     The ordering of unique eigenvalues required by \eref{eq:eigen_order} 
-    requires $\lambda_0 / \lambda_n < 1$ and the problem is convergent.  The 
+    requires $\mu_0 / \mu_n < 1$ and the problem is convergent.  The 
     convergence rate is determined by the dominance ratio, $d$, where
     \begin{equation}
       \label{eq:dominance_ratio}
-      d \equiv \max_{n=1,2,\ldots,I} \frac{\lambda_0}{\lambda_n} =
-        \frac{\lambda_0}{\lambda_1}
+      d \equiv \max_{n=1,2,\ldots,I} \frac{\mu_0}{\mu_n} =
+        \frac{\mu_0}{\mu_1}
     \end{equation}
     and it can be seen that for problems with small dominance ratio, the power
-    iteration method will converge more quickly. Convergence criteria are then
-    specified as an absolute tolerance in the sense of the eigenvalue
+    iteration method will converge more quickly. As the dominance ratio
+    approaches unity, $d \rightarrow 1$, the Power Iteration method will be
+    slower to converge. Convergence criteria are then specified as an absolute 
+    tolerance in the sense of the eigenvalue
     \begin{equation}
       \label{eq:eigenvalue_tol}
-      \epsilon_{\lambda} > | \lambda^{(s+1)} - \lambda^{(s)} |
+      \epsilon_{\mu} > | \mu^{(s+1)} - \mu^{(s)} |
     \end{equation}
     and as a relative tolerance in the sense of the eigenvector
     \begin{equation}
@@ -972,7 +974,7 @@
     power reactor simulations, the cross-sections of the problem may be 
     considered functions of material temperature or may have some variable
     number density. For these problems, the matrix $\mr$ is necessarily updated
-    on between power iterations in a nonlinear manner. For nonlinear power
+    between power iterations in a nonlinear manner. For nonlinear power
     iteration updates, convergence is no longer guaranteed. The argument for
     convergence with nonlinear power iterations in this implementation falls 
     back to the stability of the physical system.
@@ -992,8 +994,8 @@
     $q_{up,g}(\vr)$ requires lower energy groups (i.e. $g' > g$). The
     down-scatter component $q_{down,g}(\vr)$ requires higher energy groups (i.e.
     $g' < g$). Based on these requirements, these source components can be
-    calculated based on different power iterations of $\phi_g(\vr)$. This is
-    described in \algorithmref{algorithm:general}.
+    calculated based on different iterations within the Power Iteration method.
+    This is described in \algorithmref{algorithm:general}.
     \eref{eq:multigroup_source_expand} is then more explicitly written.
     \begin{equation} \label{eq:multigroup_power_iterations}
       -\grad \cdot (D_g(\vr) \grad \phi_g^{(s)}(\vr)) + \Sigma_{r,g}(\vr)
@@ -1061,7 +1063,7 @@
             \label{state:fem_vector}
           \State Solve $\ma \vu = \vf$ using an iterative technique (See
             \sref{sec:linear_system_solution}).
-          \State Parse $\vu$ for $\phi$ nodal solution.
+          \State Parse $\vu$ for $\phi$ solution on nodes.
           \State Calculate element-average $\phiavg$.
         \EndFor
         \State Update $\keff$.
@@ -1084,7 +1086,7 @@
     must be updated on each power iteration of the solution whereas the matrix 
     $\ma$ is described entirely by geometry and the material cross-sections. For
     this reason, $\ma$ can be generated once at the beginning of the problem and 
-    stored for the duration of the calculation.
+    stored for the duration of the calculation (with no non-linear updates).
     \FloatBarrier % make sure the algorithm is in the correct section
 
   \subsection{Memory and Storage}
@@ -1114,7 +1116,7 @@
     Then, for node 5, the table \texttt{IDX} may resemble \eref{eq:idx_example}.
     \begin{equation}
       \label{eq:idx_example}
-      \texttt{IDX}(5,:) = (8, 200, 48, 96, 5 )
+      \texttt{IDX}(:,5) = (8, 200, 48, 96, 5 )
     \end{equation}
     \begin{figure}
       \centering
