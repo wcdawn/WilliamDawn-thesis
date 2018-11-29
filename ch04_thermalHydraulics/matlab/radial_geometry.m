@@ -32,6 +32,8 @@ text(rclad,txt_hi,'T_C','FontSize',FS,'FontName',FN,'HorizontalAlignment','cente
 text(0.5*(rclad+xmax),txt_hi,'T_{\infty}','FontSize',FS,'FontName',FN,'HorizontalAlignment','center')
 
 text(0,txt_lo,'r=0','FontSize',FS,'FontName',FN,'HorizontalAlignment','center')
+% CENTER-LINE SYMBOL
+text(0,txt_lo+0.3,sprintf('\x2104'),'FontSize',24,'FontName','Cambria Math','HorizontalAlignment','center')
 text(rfuel,txt_lo,'R_F','FontSize',FS,'FontName',FN,'HorizontalAlignment','center')
 text(rbond,txt_lo,'R_B','FontSize',FS,'FontName',FN,'HorizontalAlignment','center')
 text(rclad,txt_lo,'R_C','FontSize',FS,'FontName',FN,'HorizontalAlignment','center')
@@ -41,10 +43,10 @@ text(0.5*(rfuel+rbond),txt_md,'Bond','FontSize',FS,'FontName',FN,'HorizontalAlig
 text(0.5*(rbond+rclad),txt_md,'Clad','FontSize',FS,'FontName',FN,'HorizontalAlignment','center')
 text(0.5*(rclad+xmax),txt_md,'Coolant','FontSize',FS,'FontName',FN,'HorizontalAlignment','center')
 
-text(0.5*rfuel,txt_md-1,"q'''",'FontSize',FS,'FontName',FN,'HorizontalAlignment','center')
+% single apostrophe is indicated by ''
+text(0.5*rfuel,txt_md-1,'q''''''','FontSize',FS,'FontName',FN,'HorizontalAlignment','center')
 
 % coolant arrrows
-% pbaspect([1 1 1])
 axis(axis)
 arrow([rclad+0.2,lo*1.2],[rclad+0.2,hi*.5]);
 arrow([rclad+0.3,lo*1.2+0.6],[rclad+0.3,hi*.5+0.6]);
@@ -54,7 +56,6 @@ hold off
 xlim([-0.1,xmax])
 ylim([lo-0.5,hi*1.1])
 set(gca,'Visible','off')
-% set(gca,'FontName','Times New Roman','FontSize',12);
 print('../figs/radial_model.eps','-depsc2');
 close(gcf)
 
