@@ -101,46 +101,46 @@
   The particular solution is given for a constant value $q_{fixed}$.
   \begin{equation}
     \label{eq:1dfixed_particular}
-    \phi_P(x) = -\frac{q_{fixed}}{D}
+    \phi_P(x) = \frac{q_{fixed}}{D\,\kappa^2}
   \end{equation}
   Combining the homogeneous and particular solutions.
   \begin{equation}
     \label{eq:1dfixed_constants}
-    \phi(x) = c_1 \, \cosh(\kappa \, x) + c_2 \, \sinh(\kappa \, x) -
-      \frac{q_{fixed}}{D}
+    \phi(x) = c_1 \, \cosh(\kappa \, x) + c_2 \, \sinh(\kappa \, x) +
+      \frac{q_{fixed}}{D\,\kappa^2}
   \end{equation}
   Next, boundary conditions are considered to solve for the unknown coefficients
   in \eref{eq:1dfixed_constants}. Beginning with the boundary at $x=0$ as 
   specified in \eref{eq:1dfixed_bc1}.
   \begin{align}
     \phi(0) &= 0 \\
-    &= c_1 - \frac{q_{fixed}}{D} \\
+    &= c_1 + \frac{q_{fixed}}{D\,\kappa^2} \\
     \label{eq:1dfixed_c1}
-    \therefore \; c_1 &= \frac{q_{fixed}}{D}
+    \therefore \; c_1 &= - \frac{q_{fixed}}{D\,\kappa^2}
   \end{align}
   \eref{eq:1dfixed_c1} is then inserted into \eref{eq:1dfixed_constants}.
   \begin{align}
-    \phi(x) &= \frac{q_{fixed}}{D} \, \cosh(\kappa \, x) + c_2 \,
-      \sinh(\kappa \, x) - \frac{q_{fixed}}{D} \\
-    \phi(x) &= \frac{q_{fixed}}{D} \left( \cosh(\kappa \, x) -1 \right)
-      + c_2 \, \sinh(\kappa \, x)
+    \phi(x) &= -\frac{q_{fixed}}{D\,\kappa^2} \, \cosh(\kappa \, x) + c_2 \,
+      \sinh(\kappa \, x) + \frac{q_{fixed}}{D\kappa^2} \\
+    \phi(x) &= \frac{q_{fixed}}{D\,\kappa^2} \left( 1- \cosh(\kappa \, x)  
+      \right) + c_2 \, \sinh(\kappa \, x)
   \end{align}
   The next boundary condition is evaluated at $x=L_x$ as specified in
   \eref{eq:1dfixed_bc2}.
   \begin{align}
     \phi(L_x) &= 0 \\
-    &= \frac{q_{fixed}}{D} \left( \cosh(\kappa \, L_x ) - 1 \right) + 
+    &= \frac{q_{fixed}}{D\,\kappa^2} \left( 1- \cosh(\kappa \, L_x )  \right) + 
       c_2 \, \sinh(\kappa \, L_x) \\
     \label{eq:1dfixed_c2}
-    \therefore c_2 &= \frac{\frac{q_{fixed}}{D} \left(\cosh(\kappa \, L_x) -
-      1 \right)} {\sinh(\kappa \, L_x)}
+    \therefore c_2 &= \frac{\frac{q_{fixed}}{D\,\kappa^2} 
+      \left(\cosh(\kappa \, L_x) - 1 \right)} {\sinh(\kappa \, L_x)}
   \end{align}
   All constants of the problem are now specified in \eref{eq:1dfixed_c1} and 
   \eref{eq:1dfixed_c2} and can be substitued into \eref{eq:1dfixed_constants}.
   \begin{equation}
     \label{eq:analytic_1dfixedsrc}
-    \phi(x) = \frac{q_{fixed}}{D} \left( \cosh(\kappa\,x)-1 \right) +
-    \frac{\frac{q_{fixed}}{D} 
+    \phi(x) = \frac{q_{fixed}}{D\,\kappa^2} \left( 1-\cosh(\kappa\,x) \right) +
+    \frac{\frac{q_{fixed}}{D\,\kappa^2} 
     \left(\cosh(\kappa\,L_x)-1\right)}{\sinh(\kappa\,L_x)} \sinh(\kappa\,x)
   \end{equation}
   Recall $\kappa^2 = \frac{\Sigma_r}{D}$ as in \eref{eq:1dfixed_b2}. A typical 
@@ -606,6 +606,8 @@
         $D_2 \units{cm}$ & 3.716900E-01 \\
         $\Sigma_{r1} \units{$\frac{1}{\text{cm}}$}$ & 2.525500E-02 \\
         $\Sigma_{r2} \units{$\frac{1}{\text{cm}}$}$ & 6.427700E-02 \\
+        $\Sigma_{s 1 \rightarrow 2} \units{$\frac{1}{\text{cm}}$}$ &
+           1.689300E-02 \\
         $\nu \Sigma_{f1} \units{$\frac{1}{\text{cm}}$}$ & 4.448800E-03 \\
         $\nu \Sigma_{f2} \units{$\frac{1}{\text{cm}}$}$ & 7.375300E-02 \\
         \bottomrule
@@ -804,8 +806,8 @@
   coefficients \eref{eq:2reg_c1r} and \eref{eq:2reg_c2r_b}.
   \begin{align}
     \phi_F(x) &= \phi_0 \, \cos(B_F \, x) \\
-    \phi_R(x) &= \phi_0 \, \cos(B_f \, L_F) \, \cosh(B_R \, (x-L_F)) - 
-      \frac{\phi_0 \, D_F \, \sin(B_f\,L_F)}{D_R \, B_R} \, 
+    \phi_R(x) &= \phi_0 \, \cos(B_F \, L_F) \, \cosh(B_R \, (x-L_F)) - 
+      \frac{\phi_0 \, D_F \, B_F \, \sin(B_F\,L_F)}{D_R \, B_R} \, 
       \sinh(B_R\,(x-L_F)) \\
     \label{eq:analytic_2reg}
     %\phi(x) &= H(x-L_F) \, \phi_R(x) + H(L_F-x) \, \phi_F(x)
@@ -830,7 +832,7 @@
   given in \tref{tab:2reg_constants}, the following are solutions. Additionally,
   a flux shape is shown in \fref{fig:2reg}.
   \begin{align}
-    B_F &= 0.0255922 \units{$\frac{1}{\text{cm}}$} \\
+    B_F &= 0.0255922048213879 \units{$\frac{1}{\text{cm}}$} \\
     \keff &= 0.962188
   \end{align}
 
