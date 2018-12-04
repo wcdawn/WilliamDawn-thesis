@@ -346,8 +346,9 @@
     relationship is closed at the cladding surface where, for a given 
     $T_{\infty}$, the clad surface temperature is described by Newton's law of 
     cooling and a convective heat transfer correlation. For this work, the 
-    Weisman correlation is selected for its applicability to triangular-pitch 
-    flow channels \cite{weisman}.
+    Subbotin-Ushakov correlation is selected for its applicability to 
+    triangular-pitch flow channels in liquid metal cooled reactors 
+    \cite{subbotinUshakov}.
 
     With the derivation complete, the temperatures of interest are calculated.
     While the derivation moved from fuel center-line outward to clad surface,
@@ -620,9 +621,9 @@
 
     \subsubsection{Clad Surface Temperature}
       Clad surface temperature $T_C$ is given by Newton's Law of Cooling with
-      convective heat transfer coefficient $H$ specified according to the
-      Weisman correlation \cite{weisman}. Newton's Law of Cooling may be written 
-      as
+      convective heat transfer coefficient $H_c$ specified according to the
+      Subbotin-Ushakov correlation \cite{subbotinUshakov}. Newton's Law of 
+      Cooling may be written as
       \begin{equation}
         q''_{clad} = H_c (T_C - T_{\infty})
       \end{equation}
@@ -636,46 +637,68 @@
       \begin{equation}
         q''_{clad} = q'''_{i,k} \frac{R_F^2}{2 R_C}
       \end{equation}
-      where $q'''_{i,k}$ is the chunk-average volumetric heat generation rate in the
-      fuel according to \eref{eq:chunkqppp_fuel}.
+      where $q'''_{i,k}$ is the chunk-average volumetric heat generation rate 
+      in the fuel according to \eref{eq:chunkqppp_fuel}.
 
-      The coefficient $H$ must be calculated via an applicable correlation.
-      The Weisman correlation is selected because it is valid for general fluid
-      flow and has parameters correlated for triangular pitch flow areas common
-      to fast reactor designs. The Weisman correlation relates the Nusselt,
-      Reynolds, and Prandlt dimensionless numbers according to
+      The coefficient $H_c$ must be calculated via an applicable correlation.
+      The Subbotin-Ushakov correlation is selected because it is valid for 
+      coolant in heavy liquid metal cooled reactor designs with triangular 
+      pitch assemblies. This correlation is presented in \cite{subbotinUshakov}
+      in which various common correlations for this application is reviewed.
+      This correlation is selected because it is validated by experimental data
+      and is valid for a wide range of operating conditions common to metal 
+      cooled fast reactors. The correlation relates the P\'eclet number, $Pe$,
+      to the Nusselt number, $Nu$. The P\'eclet number is the product of the 
+      Prandlt number, $Pr$, and the Reynolds number, $Re$.
       \begin{equation}
-        \label{eq:weisman}
-        Nu = C \, Re^{0.8} \, Pr^{1/3}
+        \label{eq:peclet}
+        Pe = Re \, Pr
       \end{equation}
-      where $Nu$ is the Nusselt number, $Re$ is the Reynolds number, $Pr$ is 
-      the Prandlt number, and $C$ is a correlation coefficient specified by the
-      triangular geometry. For triangular pitch flow, the geometry is described
-      as
-      \begin{align}
-        \label{eq:weisman_c}
-        C &= 0.026 \frac{S}{2 \, R_C} - 0.006 \\
-        \label{eq:weisman_ax}
-        A_x &= \frac{\sqrt{3}}{4} S^2 - \frac{\pi R_C^2}{2} \\
-        \label{eq:weisman_pw}
-        P_w &= \pi R_C \\
-        \label{eq:weisman_de}
-        D_e &= \frac{4 \, A_x}{P_w} \\
-        \label{eq:weisman_g}
-        G &= \frac{\mdot}{A_x \, N_{rod}}
-      \end{align}
-      where $S$ is the rod-pitch rods, $A_x$ is the
-      flow cross-sectional area, $P_w$ is the flow wetted perimeter, $D_e$
-      is the effective flow diameter, $G$ is the mass-flux for a single-rod
-      channel, and $N_{rod}$ is the number of rods in the assembly. The Reynolds
-      number is defined as
+      The Subbotin-Ushankov correlation is given as
+      \begin{equation}
+        \label{eq:subbotinUshakov}
+        Nu = 7.55 \frac{S}{D} - 20 \left(\frac{S}{D}\right)^{-13} + 
+          \frac{3.67}{90\left(\frac{S}{D}\right)^{2}}
+          Pe^{\left(0.56 + 0.19 \frac{S}{D}\right)}
+      \end{equation}
+      where $S$ is the rod-pitch within the assembly and $D$ is the outer 
+      diameter of the cladding. The Subbotin-Ushankov correlation is valid for
+      ${ 1 < Pe < 4,000 }$ and ${1.2 \le S/D \le 2.0}$.
+
+      Calculating the nondimensional numbers begins with the calculation of 
+      cross-sectional flow area and wetted perimeter. As all properties 
+      calculated are the channel average properties, the flow area and wetted
+      perimeters are calculated for the average fuel rod using formulae from 
+      \cite{FastSpectrumReactors}. Then, the cross-sectional flow area is
+      \begin{equation}
+        \label{eq:correlation_ax}
+        A_x = \left(\frac{\sqrt{3}}{4} S^2 - \frac{\pi R_C^2}{2} - 
+          \frac{\pi \, D_{wrap}^2}{8} \right) N_{rod}
+      \end{equation}
+      where $S$ is the rod-pitch and $N_{rod}$ is the number of rods in the 
+      assembly. The wetted perimeter is
+      \begin{equation}
+        \label{eq:correlation_pw}
+        P_w = \left(\pi R_C + \frac{\pi\,D_{wrap}}{2}\right) N_{rod}.
+      \end{equation}
+      Then, the effective flow diameter is defined as
+      \begin{equation}
+        \label{eq:correlation_de}
+        D_e = \frac{4 \, A_x}{P_w}
+      \end{equation}
+      and the mass-flux in the flow channel is 
+      \begin{equation}
+        \label{eq:correlation_g}
+        G_i = \frac{\mdot_i}{A_x}
+      \end{equation}
+      The Reynolds number is defined as
       \begin{equation}
         \label{eq:re}
         Re = \frac{G \, D_e}{A_x \, \mu}
       \end{equation}
-      where $\mdot_h$ is the assembly mass flow rate, $\mu$ is the fluid's
+      where $\mdot_i$ is the assembly mass flow rate, $\mu$ is the fluid's
       dynamic viscosity given by a state relationship, and $D_e$ and $A_x$ are 
-      defined according to \eref{eq:weisman_de} and \eref{eq:weisman_ax}
+      defined according to \eref{eq:correlation_de} and \eref{eq:correlation_ax}
       respectively. The Prandtl number is defined according to 
       \begin{equation}
         \label{eq:pr}
@@ -688,17 +711,18 @@
       given fluid as a state relationship.
       
       With the dimensionless quantities expressed in \eref{eq:re} and
-      \eref{eq:pr}, the Weisman correlation is used to calculate the Nusselt
-      number. Given a Nusselt number, the convective heat transfer coefficient
-      is defined as
+      \eref{eq:pr}, the Subotin-Ushakov correlation is used to calculate the 
+      Nusselt number. Given a Nusselt number, the convective heat transfer 
+      coefficient is defined as
       \begin{equation}
         \label{eq:hc}
         H_c = \frac{N\!u \, k}{D_e}
       \end{equation}
-      where $Nu$ is the Nusselt number from the Weisman correlation
-      \eref{eq:weisman}, $k$ is the fluid thermal conductivity given by a state
-      relationship, and $D_e$ is the effective flow diameter given in
-      \eref{eq:weisman_de}. Finally, the clad surface temperature is expressed.
+      where $Nu$ is the Nusselt number from the Subbotin-Ushakov correlation
+      \eref{eq:subbotinUshakov}, $k$ is the fluid thermal conductivity given by 
+      a state relationship, and $D_e$ is the effective flow diameter given in
+      \eref{eq:correlation_de}. Finally, the clad surface temperature is 
+      expressed.
       \begin{align}
         T_C &= \frac{q''_{clad}}{H_c} + T_{\infty} \\
         \label{eq:tc}
