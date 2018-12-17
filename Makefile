@@ -29,10 +29,10 @@ $(NAME).pdf : $(NAME).tex $(NAME).bib front.tex $(FIGURES) $(CHAPTERS) \
 
 $(DEFENSE).pdf : $(DEFENSE).tex $(DEFENSE_EXTRA) $(FIGURES) 
 	echo $(DEFENSE)
-	pdflatex --output-directory=./defense $(DEFENSE).tex
+	pdflatex --shell-escape --output-directory=./defense $(DEFENSE).tex
 	#bibtex $(DEFENSE)
-	pdflatex --output-directory=./defense $(DEFENSE).tex
-	pdflatex --output-directory=./defense $(DEFENSE).tex
+	pdflatex --shell-escape --output-directory=./defense $(DEFENSE).tex
+	pdflatex --shell-escape --output-directory=./defense $(DEFENSE).tex
 
 forcedefense : 
 	rm $(DEFENSE).pdf
