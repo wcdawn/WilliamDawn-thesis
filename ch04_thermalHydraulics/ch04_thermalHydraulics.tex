@@ -346,8 +346,9 @@
     relationship is closed at the cladding surface where, for a given 
     $T_{\infty}$, the clad surface temperature is described by Newton's law of 
     cooling and a convective heat transfer correlation. For this work, the 
-    Weisman correlation is selected for its applicability to triangular-pitch 
-    flow channels \cite{weisman}.
+    Subbotin-Ushakov correlation is selected for its applicability to 
+    triangular-pitch flow channels in liquid metal cooled reactors 
+    \cite{subbotinUshakov}.
 
     With the derivation complete, the temperatures of interest are calculated.
     While the derivation moved from fuel center-line outward to clad surface,
@@ -620,9 +621,9 @@
 
     \subsubsection{Clad Surface Temperature}
       Clad surface temperature $T_C$ is given by Newton's Law of Cooling with
-      convective heat transfer coefficient $H$ specified according to the
-      Weisman correlation \cite{weisman}. Newton's Law of Cooling may be written 
-      as
+      convective heat transfer coefficient $H_c$ specified according to the
+      Subbotin-Ushakov correlation \cite{subbotinUshakov}. Newton's Law of 
+      Cooling may be written as
       \begin{equation}
         q''_{clad} = H_c (T_C - T_{\infty})
       \end{equation}
@@ -636,46 +637,68 @@
       \begin{equation}
         q''_{clad} = q'''_{i,k} \frac{R_F^2}{2 R_C}
       \end{equation}
-      where $q'''_{i,k}$ is the chunk-average volumetric heat generation rate in the
-      fuel according to \eref{eq:chunkqppp_fuel}.
+      where $q'''_{i,k}$ is the chunk-average volumetric heat generation rate 
+      in the fuel according to \eref{eq:chunkqppp_fuel}.
 
-      The coefficient $H$ must be calculated via an applicable correlation.
-      The Weisman correlation is selected because it is valid for general fluid
-      flow and has parameters correlated for triangular pitch flow areas common
-      to fast reactor designs. The Weisman correlation relates the Nusselt,
-      Reynolds, and Prandlt dimensionless numbers according to
+      The coefficient $H_c$ must be calculated via an applicable correlation.
+      The Subbotin-Ushakov correlation is selected because it is valid for 
+      coolant in heavy liquid metal cooled reactor designs with triangular 
+      pitch assemblies. This correlation is presented in \cite{subbotinUshakov}
+      in which various common correlations for this application is reviewed.
+      This correlation is selected because it is validated by experimental data
+      and is valid for a wide range of operating conditions common to metal 
+      cooled fast reactors. The correlation relates the P\'eclet number, $Pe$,
+      to the Nusselt number, $Nu$. The P\'eclet number is the product of the 
+      Prandlt number, $Pr$, and the Reynolds number, $Re$.
       \begin{equation}
-        \label{eq:weisman}
-        Nu = C \, Re^{0.8} \, Pr^{1/3}
+        \label{eq:peclet}
+        Pe = Re \, Pr
       \end{equation}
-      where $Nu$ is the Nusselt number, $Re$ is the Reynolds number, $Pr$ is 
-      the Prandlt number, and $C$ is a correlation coefficient specified by the
-      triangular geometry. For triangular pitch flow, the geometry is described
-      as
-      \begin{align}
-        \label{eq:weisman_c}
-        C &= 0.026 \frac{S}{2 \, R_C} - 0.006 \\
-        \label{eq:weisman_ax}
-        A_x &= \frac{\sqrt{3}}{4} S^2 - \frac{\pi R_C^2}{2} \\
-        \label{eq:weisman_pw}
-        P_w &= \pi R_C \\
-        \label{eq:weisman_de}
-        D_e &= \frac{4 \, A_x}{P_w} \\
-        \label{eq:weisman_g}
-        G &= \frac{\mdot}{A_x \, N_{rod}}
-      \end{align}
-      where $S$ is the rod-pitch rods, $A_x$ is the
-      flow cross-sectional area, $P_w$ is the flow wetted perimeter, $D_e$
-      is the effective flow diameter, $G$ is the mass-flux for a single-rod
-      channel, and $N_{rod}$ is the number of rods in the assembly. The Reynolds
-      number is defined as
+      The Subbotin-Ushankov correlation is given as
+      \begin{equation}
+        \label{eq:subbotinUshakov}
+        Nu = 7.55 \frac{S}{D} - 20 \left(\frac{S}{D}\right)^{-13} + 
+          \frac{3.67}{90\left(\frac{S}{D}\right)^{2}}
+          Pe^{\left(0.56 + 0.19 \frac{S}{D}\right)}
+      \end{equation}
+      where $S$ is the rod-pitch within the assembly and $D$ is the outer 
+      diameter of the cladding. The Subbotin-Ushankov correlation is valid for
+      ${ 1 < Pe < 4,000 }$ and ${1.2 \le S/D \le 2.0}$.
+
+      Calculating the nondimensional numbers begins with the calculation of 
+      cross-sectional flow area and wetted perimeter. As all properties 
+      calculated are the channel average properties, the flow area and wetted
+      perimeters are calculated for the average fuel rod using formulae from 
+      \cite{FastSpectrumReactors}. Then, the cross-sectional flow area is
+      \begin{equation}
+        \label{eq:correlation_ax}
+        A_x = \left(\frac{\sqrt{3}}{4} S^2 - \frac{\pi R_C^2}{2} - 
+          \frac{\pi \, D_{wrap}^2}{8} \right) N_{rod}
+      \end{equation}
+      where $S$ is the rod-pitch and $N_{rod}$ is the number of rods in the 
+      assembly. The wetted perimeter is
+      \begin{equation}
+        \label{eq:correlation_pw}
+        P_w = \left(\pi R_C + \frac{\pi\,D_{wrap}}{2}\right) N_{rod}.
+      \end{equation}
+      Then, the effective flow diameter is defined as
+      \begin{equation}
+        \label{eq:correlation_de}
+        D_e = \frac{4 \, A_x}{P_w}
+      \end{equation}
+      and the mass-flux in the flow channel is 
+      \begin{equation}
+        \label{eq:correlation_g}
+        G_i = \frac{\mdot_i}{A_x}
+      \end{equation}
+      The Reynolds number is defined as
       \begin{equation}
         \label{eq:re}
         Re = \frac{G \, D_e}{A_x \, \mu}
       \end{equation}
-      where $\mdot_h$ is the assembly mass flow rate, $\mu$ is the fluid's
+      where $\mdot_i$ is the assembly mass flow rate, $\mu$ is the fluid's
       dynamic viscosity given by a state relationship, and $D_e$ and $A_x$ are 
-      defined according to \eref{eq:weisman_de} and \eref{eq:weisman_ax}
+      defined according to \eref{eq:correlation_de} and \eref{eq:correlation_ax}
       respectively. The Prandtl number is defined according to 
       \begin{equation}
         \label{eq:pr}
@@ -688,17 +711,18 @@
       given fluid as a state relationship.
       
       With the dimensionless quantities expressed in \eref{eq:re} and
-      \eref{eq:pr}, the Weisman correlation is used to calculate the Nusselt
-      number. Given a Nusselt number, the convective heat transfer coefficient
-      is defined as
+      \eref{eq:pr}, the Subotin-Ushakov correlation is used to calculate the 
+      Nusselt number. Given a Nusselt number, the convective heat transfer 
+      coefficient is defined as
       \begin{equation}
         \label{eq:hc}
         H_c = \frac{N\!u \, k}{D_e}
       \end{equation}
-      where $Nu$ is the Nusselt number from the Weisman correlation
-      \eref{eq:weisman}, $k$ is the fluid thermal conductivity given by a state
-      relationship, and $D_e$ is the effective flow diameter given in
-      \eref{eq:weisman_de}. Finally, the clad surface temperature is expressed.
+      where $Nu$ is the Nusselt number from the Subbotin-Ushakov correlation
+      \eref{eq:subbotinUshakov}, $k$ is the fluid thermal conductivity given by 
+      a state relationship, and $D_e$ is the effective flow diameter given in
+      \eref{eq:correlation_de}. Finally, the clad surface temperature is 
+      expressed.
       \begin{align}
         T_C &= \frac{q''_{clad}}{H_c} + T_{\infty} \\
         \label{eq:tc}
@@ -815,7 +839,8 @@
       specified in \tref{tab:constant_k}.
       Evaluating the denominator of \eref{eq:tbbar_integral}.
       \begin{align}
-        \int_{R_F}^{R_B} r \; dr &= \left. \frac{r}{2} \right|_{r=R_F}^{r=R_B}\\
+        \int_{R_F}^{R_B} r \; dr &= \left. \frac{r^2}{2} 
+          \right|_{r=R_F}^{r=R_B}\\
         \label{eq:tbbar_denominator}
         \int_{R_F}^{R_B} r \; dr &= \frac{R_B^2 - R_F^2}{2}
       \end{align}
@@ -862,8 +887,8 @@
       \begin{equation}
         \label{eq:tc_bar}
         \overline{T_C} = T_B - \frac{q'''}{4 k_C} R_F^2 \left(
-          \frac{R_B^2 - R_C^2 + 2 \, R_C^2 \ln\left(\frac{R_C}{R_B}\right)}
-          {R_C^2 - R_B^2} \right)
+          \frac{2 \, R_C^2 \ln\left(\frac{R_C}{R_B}\right)}
+          {R_C^2 - R_B^2}  - 1\right)
       \end{equation}
       where $T_B$ is the bond surface temperature. With the use of
       \eref{eq:tc_bar}, the average clad temperature $\overline{T_C}$ can be
@@ -895,6 +920,7 @@
   When
   the temperatures are updated, the cross-sections are also updated. Updating
   the material-cross sections requires recomputing the finite element matrix
+  (see \eref{eq:matrix_population})
   which proves to be the most computationally expensive part of the update. 
   Note that the update of cross-sections during a power iteration makes the
   iterative method non-linear and the convergence of the method is no longer
@@ -918,16 +944,17 @@
         \eref{eq:normalization_c}.
       \State Calculate power for each element as in \eref{eq:elementpwr} and
         \eref{eq:elementqppp_fuel}.
-      \State Calculate power for each chunk as in \eref{eq:chunkpwr} and
-        \eref{eq:chunkqppp_fuel}.
-      \State Calculate bulk coolant temperature in each chunk using the 
-        procedure outlined in \sref{sec:axial_convection_model}.
-      \State Calculate surface temperatures and fuel center-line temperature
-        for the average rod in each chunk using the procedure in 
-        \sref{sec:surface_temps}.
-      \State Calculate material average temperatures using the procedure 
-        outlined in \sref{sec:average_temps}.
-      \State Update cross sections using average material temperatures.
+      \ForAll{chunks}
+        \State Calculate power $q_{i,k}$ and $q'''_{i,k}$ in \eref{eq:chunkpwr}
+          and \eref{eq:chunkqppp_fuel}.
+        \State Calculate bulk coolant temperature using the 
+          procedure outlined in \sref{sec:axial_convection_model}.
+        \State Calculate surface temperatures and fuel center-line temperature
+          using the procedure in \sref{sec:surface_temps}.
+        \State Calculate material average temperatures using the procedure 
+          outlined in \sref{sec:average_temps}.
+        \State Update cross sections using average material temperatures.
+      \EndFor
     \end{algorithmic}
   \end{algorithm}
 
@@ -949,97 +976,85 @@
     $T_{\infty,j}$ which is the bulk coolant temperature in each chunk.
     Therefore, each chunk will have a unique coolant number density.
     
-    In the temperature dependent cross-section library structure described in
-    \sref{sec:cross_section_treatment}, all coolant temperatures are the same. 
-    Then, the macroscopic cross section in the coolant for reaction $x$ is given
-    as
-    \begin{equation}
-      \Sigma_{x,j} = N_{Na}(T_{\infty,j}) \; \sigma_{x,Na}
-    \end{equation}
-    where $N_{Na}$ is calculated according to \eref{eq:number_density_sodium}.
+    %In the temperature dependent cross-section library structure described in
+    %\sref{sec:cross_section_treatment}, all coolant temperatures are the same. 
+    %Then, the macroscopic cross section in the coolant for reaction $x$ is given
+    %as
+    %\begin{equation}
+    %  \Sigma_{x,j} = N_{Na}(T_{\infty,j}) \; \sigma_{x,Na}
+    %\end{equation}
+    %where $N_{Na}$ is calculated according to \eref{eq:number_density_sodium}.
 
-    If, instead, the microscopic coolant temperature was varied as a function
-    of temperature in the cross-section library generation, a linear 
-    interpolation is performed for $T_{i}<T_{\infty,j}<T_{i+1}$ according to
+    Using the coolant temperatures for the cross-section library structure
+    described in \sref{sec:cross_section_treatment}, coolant cross sections are
+    calculated using a linear interpolation. For coolant temperature
+    $T_{n}<T_{\infty,i,k}<T_{n+1}$ and library temperatures $\{T_n\}$,
     \begin{equation}
-      \label{eq:cs_cool}
-      \Sigma_{x,j,g} = N_{Na}(T_{\infty,j}) 
-        \left( \frac{T - T_{i}}{T_{i+1}-T_{i}} 
-        (\sigma_{x,Na,g,i+1} - \sigma_{x,Na,g,i})  + \sigma_{x,Na,g,i}\right)
+      \label{eq:xs_cool}
+      \Sigma_{x,i,k,g} = N_{Na}(T_{\infty,i,k}) 
+        \left( \frac{T_{\infty,i,k} - T_{n}}{T_{n+1}-T_{n}} 
+        (\sigma_{x,Na,g,n+1} - \sigma_{x,Na,g,n})  + \sigma_{x,Na,g,n}\right)
     \end{equation}
-    where $\sigma_{x,Na,g,i}$ and $\sigma_{x,Na,g,i+1}$ are the microscopic 
+    where $N_{Na}$ is calculated according to \eref{eq:number_density_sodium},
+    $\sigma_{x,Na,g,n}$ and $\sigma_{x,Na,g,n+1}$ are the microscopic 
     cross-sections for reaction $x$ in energy group $g$ that correspond to 
-    temperatures $T_i$ and $T_{i+1}$ respectively.
+    library temperatures $T_n$ and $T_{n+1}$ respectively.
 
   \subsection{Clad Cross Sections}
-    Cross-section temperature dependence within the cladding is predominately
-    due to the Doppler effect. Macroscopic cross-sections are tabulated based 
+    Macroscopic cross-sections are tabulated based 
     on the cross-section library data at temperatures specified in
-    \tref{tab:xstemps}. The Doppler effect is typically small as cladding
+    \tref{tab:xstemps}. The temperature effect is typically small as cladding
     material has fewer absorption resonances than fuel material and cladding
     material does not change temperature as extremely as other reactor
     materials. For this reason, a simple linear interpolation is used to 
     interpolate macroscopic cross-sections within this material. For 
-    $T_i < \overline{T_{C,j}} < T_{i+1}$, the macroscopic cross-section for 
+    $T_n < \overline{T_{C,i,k}} < T_{n+1}$, the macroscopic cross-section for 
     reaction $x$ and energy group $g$ according to the linear interpolation 
     method is given as
     \begin{equation}
       \label{eq:xs_linear_interpolation}
-      \Sigma_{x,j,g} = 
-        \frac{\overline{T_{C,j}} - T_{i}}{T_{i+1}-T_{i}} 
-        (\Sigma_{x,g,i+1} - \Sigma_{x,g,i})  + \Sigma_{x,g,i}
+      \Sigma_{x,i,k,g} = 
+        \frac{\overline{T_{C,i,k}} - T_{n}}{T_{n+1}-T_{n}} 
+        (\Sigma_{x,g,n+1} - \Sigma_{x,g,n})  + \Sigma_{x,g,n}
     \end{equation}
-    where $\Sigma_{x,g,i}$ and $\Sigma_{x,g,i+1}$ are the macroscopic
-    cross-sections that correspond to temperatures $T_i$ and $T_{i+1}$
+    where $\Sigma_{x,g,n}$ and $\Sigma_{x,g,n+1}$ are the macroscopic
+    cross-sections that correspond to library temperatures $T_n$ and $T_{n+1}$
     respectively. 
 
   \subsection{Bond Cross Sections}
     While the average bond temperature is computed, the temperature and density
     dependence of bond cross sections is neglected. This is because the bond 
-    represents a miniscule volume of the reactor and the sodium cross-sections 
-    within this region do not dictate any larger-scale reactor physics. This
-    treatment is consistent with the cross-section library generation because
-    all sodium in the assembly is ``smeared'' into the same cross-section value.
-
-    The bond is the same material as the coolant (sodium). If all coolant 
-    cross-sections are provided at the same temperature, the bond cross sections
-    are set to the same value as the coolant cross sections. If the sodium cross
-    sections are provided at various temperatures, a linear interpolation is 
-    performed according to \eref{eq:xs_linear_interpolation} using
-    $\overline{T_{B,j}}$. The assumption that this region has the
-    same cross-sections as the coolant has negligible effect on the solution.
+    represents a small volume of the reactor and the sodium cross-sections 
+    do no change significantly with temperature. Therefore, it is assumed that,
+    for purposes of calculating cross-sections, the temperature in the coolant
+    is the same as the temperature in the bond and cross sections in the bond
+    are calculated as \eref{eq:xs_cool}.
 
   \subsection{Fuel Cross Sections}
     Temperature dependence of cross-sections in the fuel region is dominated
-    by the Doppler effect. This effect may be large for high fuel temperatures
-    and it is important that for realistic cross-sections, this effect be
-    simulated properly. Macroscopic cross-sections are tabulated based on
-    library data as generated in the procedure from
-    \sref{sec:cross_section_treatment}. Then, a square-root interpolation method
-    is used. The square-root interpolation is commonly selected for 
-    cross-section interpolation because the Doppler effect follow square-root 
-    behavior closely. For ${T_i < \overline{T_{F,j}} < T_{i+1}}$, the 
-    macroscopic cross-section for reaction $x$ in energy group $g$ within the 
-    fuel is calculated as
+    by the Doppler effect. This effect is large for high fuel temperatures.
+    Macroscopic cross-sections are tabulated based on library data as generated 
+    in the procedure from \sref{sec:cross_section_treatment}. A square-root 
+    interpolation method is used. The square-root interpolation is commonly 
+    selected for cross-section interpolation because the Doppler effect is 
+    proportional to the square-root of absolute temperature. For 
+    ${T_n < \overline{T_{F,i,k}} < T_{n+1}}$ and library temperatures $\{T_n\}$,
+    the macroscopic cross-section for reaction $x$ in energy group $g$ within 
+    the fuel is calculated as
     \begin{equation}
-      \Sigma_{x,j,g} = 
-        \frac{\sqrt{\overline{T_{F,j}}} - \sqrt{T_{i}}}
-        {\sqrt{T_{i+1}}-\sqrt{T_{i}}}
-        (\Sigma_{x,g,i+1} - \Sigma_{x,g,i})  + \Sigma_{x,g,i}
+      \Sigma_{x,i,k,g} = 
+        \frac{\sqrt{\overline{T_{F,i,k}}} - \sqrt{T_{n}}}
+        {\sqrt{T_{n+1}}-\sqrt{T_{n}}}
+        (\Sigma_{x,g,n+1} - \Sigma_{x,g,n})  + \Sigma_{x,g,n}
     \end{equation}
-    where $\Sigma_{x,g,i}$ and $\Sigma_{x,g,i+1}$ are the macroscopic
-    cross-sections of reaction $x$ corresponding to $T_i$ and $T_{i+1}$
-    respectively. Note all temperatures used for this calculation are in units
-    of absolute temperature to eliminate non-physical complex results and
-    accurately simulate Doppler behavior.
+    where $\Sigma_{x,g,n}$ and $\Sigma_{x,g,n+1}$ are the macroscopic
+    cross-sections of reaction $x$ corresponding to library temperatures $T_n$
+    and $T_{n+1}$ respectively. Note that all temperatures used for this 
+    calculation are in units of absolute temperature.
       
 \section{Thermal Hydraulic Results}
   To demonstrate the expected behavior of these models, axial and radial
-  temperature plots are generated. The radial solution is only generated to
-  demonstrate the expected behavior as the radial temperature functions
-  themselves are not used in the reactor simulation. The axial solution comes
-  from a typical reactor simulation and demonstrates the expected behaviors for
-  system temperatures.
+  temperature plots are generated for a typical case. 
   
   \subsection{Total Reactor Power}
     To verify the calculation of enthalpy according to the axial heat convection
@@ -1058,11 +1073,13 @@
     tolerance.
 
   \subsection{Radial Results}
-    Radial temperatures for a single-rod model are shown in
-    \fref{fig:radial_temp_plot}. This model was generated for 
-    ${q'''_{i,k} = 6.93 \times 10^9 \units{$\frac{\text{W}}{\text{m}^3}$}}$ and 
-    ${\mdot_i = 68.56 \units{$\frac{\text{kg}}{\text{s}}$}}$ which are typical 
-    values generated by conducting a full reactor simulation. It is seen
+    Radial temperatures for a typical fuel rod model are shown in
+    \fref{fig:radial_temp_plot}. The radial solution is only generated to
+    demonstrate the expected behavior as the radial temperature functions
+    themselves are not used in the reactor simulation. This model was generated 
+    for ${q'''_{i,k} = 6.93 \times 10^9 \units{$\frac{\text{W}}{\text{m}^3}$}}$ 
+    and ${\mdot_i = 68.56 \units{$\frac{\text{kg}}{\text{s}}$}}$, which are 
+    typical values generated during reactor simulation. It is seen
     that the temperature profile within the fuel region is approximately 
     quadratic and temperature profiles in the bond and clad are approximately
     linear. These are the expected behavior for a constant thermal conductivity
@@ -1074,23 +1091,27 @@
 
     In \fref{fig:radial_temp_plot}, it is observed that the average temperatures
     as calculated above reasonably approximate the average temperature within 
-    each material. For this case, it was observed that a numeric integration 
-    method using 1,000 points to calculate the average temperature and the
-    calculation method described in \sref{sec:average_temps} agreed to within 
-    $10 \units{K}$.
+    each material. Average temperatures shown in \fref{fig:radial_temp_plot} are
+    from formulae in \sref{sec:average_temps}. A numerical integration was 
+    performed using the 1,000 data points plotted in \fref{fig:radial_temp_plot}
+    to estimate the average temperature in each region and these numerical 
+    results agreed with the modeled results to within $10 \units{K}$. In reactor 
+    simulations, the average values from \sref{sec:average_temps} are used.
 
     \begin{figure}
       \centering
       \includegraphics[width=0.7\textwidth]{radial_temp_plot}
-      \caption{Radial Temperatures for Typical Reactor Conditions.}
+      \caption{Radial Temperatures for Typical Fuel Rod.}
       \label{fig:radial_temp_plot}
     \end{figure}
 
   \subsection{Axial Results}
+    In this section, the results of the axial model are compared to reference
+    results to verify the model is working as expected.
     An exact solution for axial temperatures exists for a given heat generation
     rate and for constant $k_F$. This exact model is compared to a numerical
     model as developed in \sref{sec:axial_convection_model}. For this solution,
-    allow
+    assume
     \begin{equation}
       q'''(z) = q'''_0 \, \sin\left( \frac{\pi \, z}{H}\right)
     \end{equation}
@@ -1157,14 +1178,20 @@
     approximations made (e.g. constant thermal conductivity). Therefore, the
     error is only computed as it relates to $T_{\infty}(z)$. Analytic and
     modeled results are shown in \fref{fig:axial_difference_plot} as well as the
-    difference between the two results. The error for the nodaliztion selected 
-    is less than 10 \units{K}. Average axial temperatures for the discrete model 
-    are shown in \fref{fig:axial_temp_plot}.
+    difference between the two results. The numerical model used 36 axial levels
+    to approximate the axial temperatures. The error for the discretization
+    selected is less than 10 \units{K}. 
+    
+    Average axial temperatures for the discrete model 
+    are shown in \fref{fig:axial_temp_plot}. Results are obtained for 36 axial
+    levels and the radial heat conduction model from \sref{sec:average_temps} is
+    used at each axial level to calculate modeled temperatures.
 
     \begin{figure}
       \centering
       \includegraphics[width=0.8\textwidth]{axial_difference_plot}
-      \caption{Difference Between Analytic and Modeled Axial Temperatures.}
+      \caption{Difference Between Analytic and Modeled Axial Temperatures for 36
+        Axial Levels.}
       \label{fig:axial_difference_plot}
     \end{figure}
 
