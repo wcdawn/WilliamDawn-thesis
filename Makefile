@@ -9,10 +9,8 @@ DEFENSE_DIR=./defense/
 DEFENSE=$(DEFENSE_DIR)WilliamDawn-defense
 DEFENSE_EXTRA=$(DEFENSE_DIR)*.tex
 DEFENSE_AUX=$(DEFENSE_DIR)*.aux
-DEFENSE_INTERMEDIATES=$(DEFENSE_DIR)*.log \
-					  $(DEFENSE_DIR)*.nav \
-					  $(DEFENSE_DIR)*.out \
-					  $(DEFENSE_DIR)*.snm \
+DEFENSE_INTERMEDIATES=$(DEFENSE_DIR)*.log $(DEFENSE_DIR)*.nav \
+					  $(DEFENSE_DIR)*.out $(DEFENSE_DIR)*.snm \
 					  $(DEFENSE_DIR)*.toc 
 
 all : text defense
@@ -31,12 +29,16 @@ $(NAME).pdf : $(NAME).tex $(NAME).bib front.tex $(FIGURES) $(CHAPTERS) \
 
 $(DEFENSE).pdf : $(DEFENSE).tex $(DEFENSE_EXTRA) $(FIGURES) 
 	echo $(DEFENSE)
-	pdflatex -output-directory=./defense/ $(DEFENSE)
+	pdflatex --output-directory=./defense $(DEFENSE).tex
 	#bibtex $(DEFENSE)
-	#pdflatex $(DEFENSE)
-	#pdflatex $(DEFENSE)
+	pdflatex --output-directory=./defense $(DEFENSE).tex
+	pdflatex --output-directory=./defense $(DEFENSE).tex
 
-force:
+forcedefense : 
+	rm $(DEFENSE).pdf
+	make defense
+
+forcetext :
 	rm $(NAME).pdf
 	make
 
