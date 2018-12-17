@@ -2,9 +2,9 @@
 \label{ch:thermalExpansion}
 
 \section{Necessity of Modeling}
-  The Sodium Cooled Fast Reactor (SFR) as modeled is entirely composed of
+  The Fast Reactor (FR) as modeled is entirely composed of
   metals and, as such, experiences significant thermal expansion. While other 
-  designs may employ different fuel material (e.g. oxides or carbides), these 
+  designs may employ non-metallic fuel material (e.g. oxides or carbides), these 
   are not considered. Reactor designs composed of metal fuel include 
   Experimental Breeder Reactor II (EBR-II) as designed and built by Argonne 
   National Laboratory (ANL) and PRISM as designed by GE-Hitachi Nuclear Energy 
@@ -12,7 +12,7 @@
 
   In metal fueled reactors such as EBR-II and PRISM, thermal expansion 
   represents a significant reactivity effect and requires modeling. PRISM 
-  calculates a thermal expansion feedback such that a 1\% change in radial 
+  estimates a thermal expansion feedback such that a 1\% change in radial 
   dimension results in $-0.5 \units{$\Delta k$}$ indicating a significant effect 
   \cite{GEFR793}. Additionally, thermal expansion has been proven to serve as an 
   inherent safety feature of SFRs. In the remarkable EBR-II Demonstrations in 
@@ -26,7 +26,7 @@
 
 \section{Model Details}
   \label{sec:model_details}
-  Highly detailed thermal expansion modeling can be done using the Finite
+  Highly detailed thermal expansion modeling can be performed using the Finite
   Element Method (FEM) to calculate local stresses and strains on all reactor
   structural components. However, the model developed here for the simulation of
   fast reactors does not estimate temperature and heat generation at all 
@@ -39,12 +39,12 @@
   expansion within the sodium are assumed to be described by the change in
   density as a function of temperature as described by state equations in
   \cite{sodiumProp}. Additionally, the mass of sodium within the reactor is not
-  conserved. Sodium in the coolant is allowed to flow into and out of an
-  expansion vessel external to the reactor. In an SFR, sodium in the bond region
-  flows upward from the fuel region into a gas plenum as the fuel expands,
-  forcing it outward; however, this is not modeled as the sodium level in the 
-  bond is not tracked. Instead, the mass of sodium in the bond region is allowed
-  to vary during the simulation.
+  conserved. In a Sodium-cooled Fast Reactor (SFR), sodium in the coolant is 
+  allowed to flow into and out of an expansion vessel external to the reactor.
+  The sodium in the bond region flows upward from the fuel region into a gas 
+  plenum at the top of the fuel rod as the fuel expands. However, this is not 
+  modeled as the sodium level in the bond is not tracked. Instead, the mass of 
+  sodium in the bond region is allowed to vary during the simulation.
 
   \subsection{Material Properties}
     \label{sec:model_details__material_properties}
@@ -71,10 +71,10 @@
             + 1.518 \times 10^{-10} \, T^3 & \text{otherwise}
         \end{cases}
     \end{multline}
-    for $T$ in \units{K}. Note that U10Zr has a phase change at $923 \units{K}$
-    that increases the LEF at this point. The LEF of HT9 and U10Zr over the 
-    range of operating temperatures of fast reactors are plotted in 
-    \fref{fig:lef_plot}. It is observed that the LEF of U10Zr is as much as 
+    for $T$ in \units{K}. Note that U10Zr undergoes a phase change at 
+    $923 \units{K}$ that increases the LEF at this point. The LEF of HT9 and 
+    U10Zr over the range of operating temperatures of fast reactors are plotted 
+    in \fref{fig:lef_plot}. It is observed that the LEF of U10Zr is as much as 
     twice that of HT9. This implies fuel material will expand significantly more 
     than structural material which is expected behavior for metallic fuel.
 
@@ -95,7 +95,7 @@
     the base of the reactor. The exception to radial thermal expansion is that 
     the radius of the fuel, $R_F$, expands as U10Zr.  Within a hexagonal 
     assembly, the coolant flow area and the sodium bond area are allowed to 
-    ``float'' because they are assumed liquid.  It is assumed that material 
+    vary because they are assumed liquid.  It is assumed that material 
     expansion in the axial direction (the $z$ direction) expands as U10Zr 
     because the dominating expansion in this direction is the elongation of the 
     metallic fuel. 
@@ -162,15 +162,12 @@
     directions, the ratio of volumetric expansion is constant throughout the
     reactor.
 
-    It is assumed that the cross-sectional area of the hexagonal assembly is 
-    confined to the radial direction; any warping of the assembly that would
-    violate this assumption is neglected. Then, the hexagonal assembly has total
-    cross-sectional area $A$ and contains component cross sections $A_i$. For
-    example, the total area occupied by the fuel material could be considered
-    $A_i$ and the total area of the hexagon described by the flat-to-flat
-    dimension could be considered $A$. Define $A_i$ such that 
-    $\sum_{i} A_i = A$. Let the fractional area $a_i = A_i/A$ and 
-    $\sum_{i} a_i = 1$.
+    The hexagonal assembly has total cross-sectional area $A$ and contains 
+    component cross sections with areas $A_i$. For example, the total area 
+    occupied by the fuel material could be considered $A_i$ and the total area 
+    of the hexagon described by the flat-to-flat dimension could be considered 
+    $A$. Define $A_i$ such that $\sum_{i} A_i = A$. Let the fractional area 
+    $a_i = A_i/A$ and $\sum_{i} a_i = 1$.
 
     Using a method similar to the derivation of the volume ratio, a ratio can be
     derived for thermally expanded areas and area fractions. However, this would
@@ -204,18 +201,18 @@
   density of reactor materials decreases. This decrease in density is necessary
   to preserve the quantity of material within the reactor. In this derivation,
   the number of atoms in the reactor are conserved. The density change due to 
-  thermal expansion is observed as a decrease on cross-sections.
+  thermal expansion is observed as a decrease in cross-sections.
 
   \subsection{Expansion of Elements and Area Fractions}
     Given the assumption of constant thermal expansion in radial and axial
     directions, thermal expansion follows immediately. Each node coordinate in
-    the mesh is expanded according to \eref{eq:expand_x}, \eref{eq:expand_y},
-    and \eref{eq:expand_z}. By expanding in axial and radial directions
-    uniformly throughout the reactor, it is certain that there will be no
-    intersection or overlap of elements. In a realistic analysis, stress,
-    strain, and contact pressures must be accounted for but this is unnecessary
-    here because the assumptions prohibit overlap and intersection conditions.
-    As previously discussed in
+    the unstructured mesh is expanded according to \eref{eq:expand_x}, 
+    \eref{eq:expand_y}, and \eref{eq:expand_z}. By expanding in axial and radial
+    directions uniformly throughout the reactor, it is certain that there will 
+    be no intersection or overlap of elements. In a realistic analysis, stress,
+    strain, contact pressures, et cetera must be accounted for but this is 
+    unnecessary here because the assumptions prohibit overlap and intersection 
+    conditions.  As previously discussed in
     \sref{sec:model_details__assumptions_and_formulae}, the thermal expansion of
     area fractions is calculated directly.
 
@@ -297,12 +294,13 @@
   multiplication factor after thermal expansion and $\kref$ is the neutron 
   multiplication factor without thermal expansion. 
 
-  Given the assumptions in this model, \fref{fig:thexp_study} and
-  \fref{fig:thexp_study_reactivity} show that thermal expansion represents a
-  significant reactivity effect and contributes as much as $-1,000 \units{pcm}$
-  at extreme temperatures. Additionally, in this model the thermal expansion
-  factor of the fuel given in \eref{eq:lef_u10zr} dominates and the phase change 
-  given by the formula can be seen at the expected $923 \units{K}$.
+  Given the assumptions in this model, \fref{fig:thexp_study}  and
+  \fref{fig:thexp_study_reactivity} show that thermal 
+  expansion represents a significant reactivity effect and contributes as much 
+  as $-1,000 \units{pcm}$ at extreme temperatures. Additionally, in this model 
+  the thermal expansion factor of the fuel given in \eref{eq:lef_u10zr} 
+  dominates and the phase change given by the formula can be seen at the 
+  expected $923 \units{K}$.
 
   \begin{figure}
     \centering
@@ -318,5 +316,3 @@
     \caption{Reactivity as a Function of Thermal Expansion Temperature.}
     \label{fig:thexp_study_reactivity}
   \end{figure}
-
-
