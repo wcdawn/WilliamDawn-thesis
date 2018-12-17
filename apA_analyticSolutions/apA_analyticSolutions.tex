@@ -18,7 +18,7 @@
     \Sigma_r & macroscopic removal cross-section \units{$\frac{1}{\text{cm}}$}\\
     \keff & effective neutron multiplication factor \\
     \nu\Sigma_f & number of fission neutrons per unit neutron flux
-      \units{\text{cm}} \\
+      \units{$\frac{1}{\text{cm}}$} \\
     q_{fixed} & fixed volumetric neutron source 
       \units{$\frac{1}{\text{cm}^3 s}$}
   \end{conditions}
@@ -36,15 +36,16 @@
       \nu \Sigma_{f1} \phi_1 + \nu \Sigma_{f2} \phi_2 \right) \\
     \label{eq:twogroup2}
     -D_2 \grad^2 \phi_2 + \Sigma_{r2} \phi_2 &= 
-      \Sigma_{s 1 \rightarrow 2} \phi_2
+      \Sigma_{s 1 \rightarrow 2} \phi_1
   \end{align}
   where notation is the same as \eref{eq:onegroup} with the addition of
-  subscripts indicating the enrgy groups and $\phi_1$ is the higher energy group
-  and $\phi_2$ is the lower energy group such that $E_1 > E_2$. This formulation
-  assumes all fission neutrons are created in the high energy group ($\chi_1 =
-  1$ and $\chi_2 = 0$) and there is no scattering that results in an increase in
-  neutron energy; i.e., no up-scattering ($\Sigma_{s 2 \rightarrow 1} = 0$).
-  These are realistic assumptions for typical diffusive neutron systems.
+  subscripts indicating the energy groups and $\phi_1$ is the higher energy 
+  group and $\phi_2$ is the lower energy group such that $E_1 > E_2$. This 
+  formulation assumes all fission neutrons are created in the high energy group 
+  ($\chi_1 = 1$ and $\chi_2 = 0$) and there is no scattering that results in an 
+  increase in neutron energy; i.e., no up-scattering 
+  ($\Sigma_{s 2 \rightarrow 1} = 0$).  These are realistic assumptions for 
+  typical diffusive neutron systems.
 
   Analytic solutions are provided herein. One-dimension problems can be 
   replicated in a two-dimension solver using a square geometry and select 
@@ -139,9 +140,10 @@
   \eref{eq:1dfixed_c2} and can be substitued into \eref{eq:1dfixed_constants}.
   \begin{equation}
     \label{eq:analytic_1dfixedsrc}
-    \phi(x) = \frac{q_{fixed}}{D\,\kappa^2} \left( 1-\cosh(\kappa\,x) \right) +
-    \frac{\frac{q_{fixed}}{D\,\kappa^2} 
-    \left(\cosh(\kappa\,L_x)-1\right)}{\sinh(\kappa\,L_x)} \sinh(\kappa\,x)
+    \phi(x) = \left( \frac{q_{fixed}}{D} \right) 
+      \left( 1-\cosh(\kappa\,x) +
+      \frac{\cosh(\kappa\,L_x)-1}{\sinh(\kappa\,L_x)}
+      \sinh(\kappa\,x)\right)
   \end{equation}
   Recall $\kappa^2 = \frac{\Sigma_r}{D}$ as in \eref{eq:1dfixed_b2}. A typical 
   result of \eref{eq:analytic_1dfixedsrc} is presented in
@@ -249,9 +251,9 @@
     \keff &= \frac{\nu \Sigma_f}{D \left(\frac{\pi}{L_x}\right)^2 + \Sigma_r}
   \end{align}
   For a problem with material properties given in \tref{tab:1group_simple} and 
-  $L_x = 100 \units{cm}$, then
+  $L_x = 100 \units{cm}$, then the resulting effective multiplication factor is
   \begin{equation}
-    \keff = 1.998028
+    \keff = 1.998028.
   \end{equation}
 
   \begin{table}
@@ -364,43 +366,14 @@
     \label{eq:2d1g_x_general}
     X(x) = c_1 \, \cos(\alpha \, x) + c_2 \, \sin(\alpha \, x).
   \end{equation}
-  Consider the boundary condition at $x=0$ as specified in \eref{eq:2d1g_bc1}.
-  \begin{align}
-    X(0) &= 0 \\
-    &= c_1 \\
-    \label{eq:2d1g_x_c1}
-    \therefore \; c_1 &= 0
-  \end{align}
-  Inserting \eref{eq:2d1g_x_c1} into \eref{eq:2d1g_x_general} gives
-  \begin{equation}
-    \label{eq:2d1g_x_sin}
-    X(x) = c_2 \, \sin( \alpha x).
-  \end{equation}
-  Then, considering the boundary condition at $x=L_x$ as specified in
-  \eref{eq:2d1g_bc2}.
-  \begin{align}
-    X(L_x) &= 0 \\
-    &= c_2 \, \sin(\alpha \, L_x)
-  \end{align}
-  For a non-trivial solution $X(x)$, this is an eigenvalue problem with $\alpha$
-  specified by the core size. This implies $c_2$ is arbitrary and the
-  magnitude of the function can be normalized to a constant. For simplicity,
-  allow $c_2 = \phi_{0,x}$. Then, recall the zeros of the sine function.
-  \begin{align}
-    \alpha \, L_x &= n \, \pi \\
-    \alpha &= \frac{n \, \pi}{L_x}
-  \end{align}
-  Where $n$ is an integer. For the fundamental mode $n=1$.
+  $X(x)$ has solution similar to the form of the solution from \sref{sec:1d1g}
+  as the boundary conditions are similar. Using the method from \sref{sec:1d1g}, 
   \begin{align}
     \label{eq:2d1g_x_alpha}
-    \alpha = \frac{\pi}{L_x}
-  \end{align}
-  Substitute \eref{eq:2d1g_x_alpha} into \eref{eq:2d1g_x_sin} for the solution
-  to the fundamental mode of $X(x)$.
-  \begin{equation}
+    \alpha &= \frac{\pi}{L_x} \\
     \label{eq:2d1g_x_solution}
-    X(x) = \phi_{0,x} \sin\left(\frac{\pi}{L_x} x \right)
-  \end{equation}
+    X(x) &= \phi_{0,x} \, \sin\left(\frac{\pi}{L_x} x\right)
+  \end{align}
   Similar procedure is performed to solve for $Y(y)$ giving
   \begin{equation}
     \label{eq:2d1g_y_solution}
@@ -430,15 +403,15 @@
   \end{figure}
 
   Using \eref{eq:2d1g_buckle_alphabeta} along with \eref{eq:2d1g_x_alpha} and a
-  similar expression for $\beta$, the buckling can be written geometrically.
+  \eref{eq:2d1g_y_beta}, the geometric buckling can be written.
   \begin{equation}
     \label{eq:2d1g_buckle_geom}
-    B^2 = \left(\frac{\pi}{L_x}\right)^2 + \left(\frac{\pi}{L_y}\right)^2
+    B_g^2 = \left(\frac{\pi}{L_x}\right)^2 + \left(\frac{\pi}{L_y}\right)^2
   \end{equation}
   Setting \eref{eq:2d1g_buckle_geom} equal to \eref{eq:2d1g_b2} yields an
   expression for $\keff$.
   \begin{align}
-    \left(\frac{\pi}{L_x}\right)^2 + \left(\frac{pi}{L_y}\right)^2 &=
+    \left(\frac{\pi}{L_x}\right)^2 + \left(\frac{\pi}{L_y}\right)^2 &=
       \frac{\frac{1}{\keff} \nu \Sigma_f - \Sigma_r}{D} \\
     \keff &= \frac{\nu \Sigma_f}{D \left( \left(\frac{\pi}{L_x}\right)^2 + 
       \left( \frac{\pi}{L_y}\right)^2 \right) + \Sigma_r}
@@ -602,14 +575,14 @@
         \toprule
         & MAT1 \\
         \midrule
-        $D_1 \units{cm}$ & 1.346600E+00 \\
-        $D_2 \units{cm}$ & 3.716900E-01 \\
-        $\Sigma_{r1} \units{$\frac{1}{\text{cm}}$}$ & 2.525500E-02 \\
-        $\Sigma_{r2} \units{$\frac{1}{\text{cm}}$}$ & 6.427700E-02 \\
+        $D_1 \units{cm}$ & 1.3466E+00 \\
+        $D_2 \units{cm}$ & 3.7169E-01 \\
+        $\Sigma_{r1} \units{$\frac{1}{\text{cm}}$}$ & 2.5255E-02 \\
+        $\Sigma_{r2} \units{$\frac{1}{\text{cm}}$}$ & 6.4277E-02 \\
         $\Sigma_{s 1 \rightarrow 2} \units{$\frac{1}{\text{cm}}$}$ &
-           1.689300E-02 \\
-        $\nu \Sigma_{f1} \units{$\frac{1}{\text{cm}}$}$ & 4.448800E-03 \\
-        $\nu \Sigma_{f2} \units{$\frac{1}{\text{cm}}$}$ & 7.375300E-02 \\
+           1.6893E-02 \\
+        $\nu \Sigma_{f1} \units{$\frac{1}{\text{cm}}$}$ & 4.4488E-03 \\
+        $\nu \Sigma_{f2} \units{$\frac{1}{\text{cm}}$}$ & 7.3753E-02 \\
         \bottomrule
       \end{tabular}
     \end{center}
@@ -628,10 +601,10 @@
   The diffusion equation for this problem is 
   \begin{align}
     \label{eq:2regF}
-    -D_F \frac{d^2}{dx^2} \phi_F(x) + \Sigma_{rF} &= \frac{1}{\keff} \nu
-      \Sigma_{fF} \phi_F(x) \quad \forall \; x \in [0,L_F] \\
+    -D_F \frac{d^2}{dx^2} \phi_F(x) + \Sigma_{rF} \phi_F(x) &= \frac{1}{\keff} 
+      \nu \Sigma_{fF} \phi_F(x) \quad \forall \; x \in [0,L_F] \\
     \label{eq:2regR}
-    -D_R \frac{d^2}{dx^2} \phi_R(x) + \Sigma_{rR} &= 0  
+    -D_R \frac{d^2}{dx^2} \phi_R(x) + \Sigma_{rR} \phi_R(x) &= 0  
       \qquad \qquad \qquad \forall \; x \in [L_F,L_R]
   \end{align}
   with boundary and interfacial conditions
@@ -700,17 +673,18 @@
   can be rewritten as
   \begin{equation}
     \label{eq:2regR_buckle}
-    \frac{d^2}{dx^2} \phi_R(x) - B_R^2 \phi_R(x) = 0
+    \frac{d^2}{dx^2} \phi_R(x) - \kappa_R^2 \phi_R(x) = 0
   \end{equation}
-  where $B_R^2$ is the buckling term in the reflector and is given as
+  where $\kappa_R^2$ is the shape term in the reflector and is given as
   \begin{equation}
     \label{eq:2regR_b2}
-    B_R^2 = \frac{\Sigma_{rR}}{D_R}.
+    \kappa_R^2 = \frac{\Sigma_{rR}}{D_R}.
   \end{equation}
   \eref{eq:2regR_buckle} has general solution of the form
   \begin{equation}
     \label{eq:2regR_general}
-    \phi_R(x) = c_{1R} \, \cosh(B_R\, (x-L_F)) + c_{2R} \, \sinh(B_R\,(x-L_F))
+    \phi_R(x) = c_{1R} \, \cosh(\kappa_R\, (x-L_F)) + c_{2R} \, 
+      \sinh(\kappa_R\,(x-L_F))
   \end{equation}
   where $c_{1R}$ and $c_{2R}$ are unknown constant coefficients.
   Note the use of $(x-L_F)$ instead of $x$ in \eref{eq:2regR_general}. This
@@ -721,20 +695,20 @@
   useful for evaluating boundary conditions.
   \begin{equation}
     \label{eq:2regR_general_derivative}
-    \frac{d}{dx} \phi_R(x) = c_{1R} \, B_R \, \sinh(B_R \, (x-L_F)) + 
-      c_{2R} \, B_R \, \cosh(B_R \, (x-L_F))
+    \frac{d}{dx} \phi_R(x) = c_{1R} \, \kappa_R \, \sinh(\kappa_R \, (x-L_F)) + 
+      c_{2R} \, \kappa_R \, \cosh(\kappa_R \, (x-L_F))
   \end{equation}
   The zero-flux boundary condition at $x=L_R$ is treated as specified in
   \eref{eq:2reg_bcLR}.
   \begin{align}
     \phi_R(L_R) &= 0 \\
-    &= c_{1R} \, \cosh(B_R \, (L_R - L_F)) + c_{2R} \sinh(B_R \, (L_R-L_F))
+    &= c_{1R} \, \cosh(\kappa_R \, (L_R - L_F)) + c_{2R} \sinh(\kappa_R \, (L_R-L_F))
   \end{align}
   Then, solving for $c_{2R}$.
   \begin{align}
-    c_{2R} &= \frac{-c_{1R}\,\cosh(B_R\,(L_R - L_F))}{\sinh(B_R \,(L_R-L_F))} \\
+    c_{2R} &= \frac{-c_{1R}\,\cosh(\kappa_R\,(L_R - L_F))}{\sinh(\kappa_R \,(L_R-L_F))} \\
     \label{eq:2reg_c2r_a}
-    c_{2R} &= -c_{1R} \frac{1}{\tanh(B_R\,(L_R-L_F))}
+    c_{2R} &= -c_{1R} \frac{1}{\tanh(\kappa_R\,(L_R-L_F))}
   \end{align}
 
   Next, the current continuity condition at $x=L_F$ is considered as specified
@@ -744,12 +718,12 @@
   \begin{align}
     \left. D_F \frac{d}{dx} \phi_F(x) \right|_{x=L_F} &= 
       \left. D_R \frac{d}{dx} \phi_R(x) \right|_{x=L_F} ,\\
-    -D_F \, c_{1F} \, B_F \, \sin(B_F \, L_F) &= D_R \, B_R \, c_{2R}.
+    -D_F \, c_{1F} \, B_F \, \sin(B_F \, L_F) &= D_R \, \kappa_R \, c_{2R}.
   \end{align}
   Then, solving for $c_{2R}$ gives
   \begin{equation}
     \label{eq:2reg_c2r_b}
-    c_{2R} = \frac{-D_F \, c_{1F} \, B_F \, \sin(B_F \, L_F)}{D_R\,B_R}.
+    c_{2R} = \frac{-D_F \, c_{1F} \, B_F \, \sin(B_F \, L_F)}{D_R\,\kappa_R}.
   \end{equation}
   Next, the flux continuity condition at $x=L_F$ is considered as specified in 
   \eref{eq:2reg_flux_continuity}. \eref{eq:2regF_cos} and 
@@ -764,33 +738,33 @@
   Now the constant coefficients $c$ are solved. Setting \eref{eq:2reg_c2r_a} 
   equal to \eref{eq:2reg_c2r_b} gives
   \begin{align}
-    -c_{1R} \frac{1}{\tanh(B_R\,(L_R-L_F))}
-      &= \frac{-D_F \, c_{1F} \, B_F \, \sin(B_F \, L_F)}{D_R\,B_R}, \\
-    c_{1R} \frac{1}{\tanh(B_R\,(L_R-L_F))}
-      &= \frac{D_F \, c_{1F} \, B_F \, \sin(B_F \, L_F)}{D_R\,B_R}.
+    -c_{1R} \frac{1}{\tanh(\kappa_R\,(L_R-L_F))}
+      &= \frac{-D_F \, c_{1F} \, B_F \, \sin(B_F \, L_F)}{D_R\,\kappa_R}, \\
+    c_{1R} \frac{1}{\tanh(\kappa_R\,(L_R-L_F))}
+      &= \frac{D_F \, c_{1F} \, B_F \, \sin(B_F \, L_F)}{D_R\,\kappa_R}.
   \end{align}
   Inserting the expression for $c_{1R}$ from \eref{eq:2reg_c1r}.
   \begin{equation}
     \label{eq:2reg_c1f_arbitrary}
-    \frac{c_{1F} \, \cos(B_F \, L_F)}{\tanh(B_R \, (L_R-L_F))} =
-      \frac{D_F \, c_{1F} \, B_F \, \sin(B_F \, L_F)}{D_R \, B_R}
+    \frac{c_{1F} \, \cos(B_F \, L_F)}{\tanh(\kappa_R \, (L_R-L_F))} =
+      \frac{D_F \, c_{1F} \, B_F \, \sin(B_F \, L_F)}{D_R \, \kappa_R}
   \end{equation}
   In \eref{eq:2reg_c1f_arbitrary}, $c_{1F}$ cancels and is arbitrary. For
   simplicity, allow $c_{1F} = \phi_0$.
   This is an expected result of an eigenvalue problem. Continuing with the
   derivation.
   \begin{align}
-    \frac{\cos(B_F \, L_F)}{\tanh(B_R \, (L_R-L_F))} &=
-      \frac{D_F \, B_F \, \sin(B_F \, L_F)}{D_R \, B_R} \\
-    \frac{D_R \, B_R}{D_F \, \tanh(B_R \, (L_R - L_F))} &= 
+    \frac{\cos(B_F \, L_F)}{\tanh(\kappa_R \, (L_R-L_F))} &=
+      \frac{D_F \, B_F \, \sin(B_F \, L_F)}{D_R \, \kappa_R} \\
+    \frac{D_R \, \kappa_R}{D_F \, \tanh(\kappa_R \, (L_R - L_F))} &= 
       \frac{B_F \, \sin(B_F \, L_F)}{\cos(B_F \, L_F)}
   \end{align}
   Leading to the transcendental relation
   \begin{equation}
     \label{eq:2reg_bf}
-    B_F \, \tan(B_F \, L_F) = \frac{D_R \, B_R}{D_F \, \tanh(B_R \, (L_R-L_F))}
+    B_F \, \tan(B_F \, L_F) = \frac{D_R \, \kappa_R}{D_F \, \tanh(\kappa_R \, (L_R-L_F))}
   \end{equation}
-  where $B_R$ is defined according to \eref{eq:2regR_b2}. 
+  where $\kappa_R$ is defined according to \eref{eq:2regR_b2}. 
   \eref{eq:2reg_bf} is the most simplified solution for $B_F$. Unfortunately,
   there is no analytic expression for $B_F$. Therefore, a numeric solver 
   such as MATLAB's \verb|vpasolve()| or a generic bisection method must be used.
@@ -806,9 +780,9 @@
   coefficients \eref{eq:2reg_c1r} and \eref{eq:2reg_c2r_b}.
   \begin{align}
     \phi_F(x) &= \phi_0 \, \cos(B_F \, x) \\
-    \phi_R(x) &= \phi_0 \, \cos(B_F \, L_F) \, \cosh(B_R \, (x-L_F)) - 
-      \frac{\phi_0 \, D_F \, B_F \, \sin(B_F\,L_F)}{D_R \, B_R} \, 
-      \sinh(B_R\,(x-L_F)) \\
+    \phi_R(x) &= \phi_0 \, \cos(B_F \, L_F) \, \cosh(\kappa_R \, (x-L_F)) - 
+      \frac{\phi_0 \, D_F \, B_F \, \sin(B_F\,L_F)}{D_R \, \kappa_R} \, 
+      \sinh(\kappa_R\,(x-L_F)) \\
     \label{eq:analytic_2reg}
     %\phi(x) &= H(x-L_F) \, \phi_R(x) + H(L_F-x) \, \phi_F(x)
     \phi(x) &=
@@ -862,7 +836,7 @@
 \section{Finite-Cylinder, One-Group, Criticality}
   \label{sec:deriv_finite_cyl}
   This three-dimension problem can be simulated in three Cartesian dimensions 
-  and,using symmetry, reduced to two cylindrical dimensions for easier analytic 
+  and, using symmetry, reduced to two cylindrical dimensions for easier analytic 
   solution. This problem is located in $r \in [0,T]$ and $z \in [0,H]$ where $r$
   and $z$ are the radial and axial coordinates respectively. The 
   material is homogeneous within the problem and has fixed coefficient 
@@ -889,12 +863,12 @@
     \grad^2 \phi(r,z) + B^2 \phi(r,z) = 0
   \end{equation}
   Where $B$ is the buckling term and is given for this problem in
-  \eref{eq:finite_cyl_b2}.
+  \eref{eq:finite_cyl_b2} as
   \begin{equation}
     \label{eq:finite_cyl_b2}
-    B^2 = \frac{\frac{1}{\keff} \nu \Sigma_f - \Sigma_r }{D}
+    B^2 = \frac{\frac{1}{\keff} \nu \Sigma_f - \Sigma_r }{D}.
   \end{equation}
-  The Laplacian in \eref{eq:finite_cyl_buckle} is expanded noting two dimension
+  The Laplacian in \eref{eq:finite_cyl_buckle} is expanded in two dimension
   cylindrical coordinates
   \begin{equation}
     \label{eq:finite_cyl_deriv}

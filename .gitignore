@@ -13,5 +13,7 @@
 *.run.xml
 *.bib
 
+**.swp
+
 # this may get added later...
 *.pdf
