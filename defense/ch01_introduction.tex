@@ -9,15 +9,38 @@
 
 \begin{frame}
   \frametitle{State of the Art}
-  \begin{itemize}
-    \item Manually calculate reactor temperatures for an assumed power
-      distribution.
+
+  \begin{enumerate}
+    \item Estimeate reactor temperatures for an assumed power distribution.
     \item Calculate thermally expanded dimensions for reactor assemblies.
     \item Calculate number densities and area fractions to homogenize
       assemblies.
     \item Use assembly-homogenized number densities to calculate material
       cross-sections in zero-dimension transport solution in \mcc.
-    \item Model reactor compositions in \dif and run.
+    \item Model homogenized-assembly compositions in \dif and run.
     \item Collect \keff and multigroup scalar fluxes.
+  \end{enumerate}
+
+  \begin{block}{Hello}
+    No capabilities for thermal hydraulic analysis or thermal expansion
+    analysis.
+  \end{block}
+\end{frame}
+
+\begin{frame}
+  \frametitle{Proposed Method}
+  \begin{enumerate}
+    \item Use similar procedure to generate cross-sections using \mcc.
+    \item User inputs pin data that is internally homogenized.
+    \item Simulate thermal expansion and thermal hydraulics internally.
+    \item Collect \keff, multigroup scalar fluxes, reactor power, and average
+      reactor temperatures.
+  \end{enumerate}
+  %\\
+  \begin{itemize}
+    \item Thermal expansion and thermal hydraulic simulations have been moved
+      internally and are now inherent to the simulation.
+    \item Thermal hydraulic simulation also improves the accuracy of neutronics
+      simulation by leading to more accurate cross sections.
   \end{itemize}
 \end{frame}
