@@ -34,6 +34,7 @@ $(DEFENSE).pdf : $(DEFENSE).tex $(DEFENSE_EXTRA) $(FIGURES) \
 	#bibtex $(DEFENSE)
 	pdflatex --shell-escape --output-directory=./defense $(DEFENSE).tex
 	pdflatex --shell-escape --output-directory=./defense $(DEFENSE).tex
+	grep -i "Warn" $(DEFENSE).log
 
 forcedefense : 
 	rm $(DEFENSE).pdf

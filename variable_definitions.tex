@@ -66,4 +66,12 @@
 \newcommand{\chref}[1]{Chapter~\ref{#1}}
 \newcommand{\apref}[1]{Appendix~\ref{#1}}
 \newcommand{\algorithmref}[1]{Algorithm~\ref{#1}}
-% add chapter number to algorithm number
+
+\usepackage{array}
+\newcolumntype{L}{>{$}l<{$}}
+% \newenvironment{conditions}
+%   {\par\vspace{\abovedisplayskip}\noindent\begin{tabular}{>{$}l<{$} @{${}={}$} l}}
+%   {\end{tabular}\par\vspace{\belowdisplayskip}}
+\newenvironment{conditions}
+  {\par\noindent\begin{tabular}{>{$}l<{$} @{${}={}$} l}}
+  {\end{tabular}\par}
