@@ -27,7 +27,8 @@ $(NAME).pdf : $(NAME).tex $(NAME).bib front.tex $(FIGURES) $(CHAPTERS) \
 	pdflatex $(NAME)
 	grep -i "Warn" $(NAME).log
 
-$(DEFENSE).pdf : $(DEFENSE).tex $(DEFENSE_EXTRA) $(FIGURES) 
+$(DEFENSE).pdf : $(DEFENSE).tex $(DEFENSE_EXTRA) $(FIGURES) \
+	./defense/beamerthemeNCSU.sty ./defense/beamerthemeUNLTheme.sty
 	echo $(DEFENSE)
 	pdflatex --shell-escape --output-directory=./defense $(DEFENSE).tex
 	#bibtex $(DEFENSE)
