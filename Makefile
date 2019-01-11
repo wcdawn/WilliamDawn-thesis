@@ -1,4 +1,4 @@
-CHAPTERS=ch*/ch*.tex ap*/ap*.tex
+CHAPTERS=ch*/ch*.tex ap*/ap*.tex variable_definitions.tex
 FIGURES=ch*/figs/*.* ap*/figs/*.*
 NAME=WilliamDawn-thesis
 AUX=$(NAME).aux front.aux ch*/*.aux ap*/*.aux optional.aux 
@@ -28,7 +28,7 @@ $(NAME).pdf : $(NAME).tex $(NAME).bib front.tex $(FIGURES) $(CHAPTERS) \
 	grep -i "Warn" $(NAME).log
 
 $(DEFENSE).pdf : $(DEFENSE).tex $(DEFENSE_EXTRA) $(FIGURES) \
-	./defense/beamerthemeNCSU.sty ./defense/beamerthemeUNLTheme.sty
+	./defense/beamerthemeNCSU.sty 
 	echo $(DEFENSE)
 	pdflatex --shell-escape --output-directory=./defense $(DEFENSE).tex
 	#bibtex $(DEFENSE)
