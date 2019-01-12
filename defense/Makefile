@@ -11,10 +11,10 @@ all : defense
 defense : $(DEFENSE).pdf
 
 $(DEFENSE).pdf : $(DEFENSE).tex $(DEFENSE_EXTRA) $(FIGURES) beamerthemeNCSU.sty
-	pdflatex $(DEFENSE)
+	pdflatex --shell-escape $(DEFENSE)
 	bibtex $(DEFENSE)
-	pdflatex $(DEFENSE)
-	pdflatex $(DEFENSE)
+	pdflatex --shell-escape $(DEFENSE)
+	pdflatex --shell-escape $(DEFENSE)
 	grep -i "Warn" $(DEFENSE).log
 
 forcedefense :
