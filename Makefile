@@ -23,7 +23,7 @@ $(NAME).pdf : $(NAME).tex $(NAME).bib front.tex $(FIGURES) $(CHAPTERS) \
 
 forcetext :
 	rm $(NAME).pdf
-	make
+	$(MAKE) text
 
 clean :
 	rm $(AUX) $(INTERMEDIATES)

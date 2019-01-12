@@ -17,13 +17,6 @@
     0 < E_G < E_{G-1} < \ldots < E_2 < E_1 < \nicesub{E}{max}
   \end{equation}
   Typically, for \mcc and fast reactors, $G=33$.
-
-  %\begin{figure}
-  %  \centering
-  %  \includegraphics[width=0.3\textwidth]{Wref}
-  %  \caption{Description of Reference Wedge.}
-  %  \label{fig:Wref}
-  %\end{figure}
 \end{frame}
 
 \begin{frame}{Multigroup Neutron Diffusion Equation}
@@ -197,6 +190,7 @@
   \end{equation}
   Use the Second Green's Theorem to rewrite the first integral
   \cite{textbookli}.
+  %\footcite{textbookli}.
   \begin{multline} 
     -\sum_{e=1}^{N_E} D_{g,e} \int_{\partial \Omega_e} v(\vr) \grad
     \phi_g(\vr) \cdot \nhat \;ds + \sum_{e=1}^{N_E} 
@@ -242,4 +236,257 @@
 \end{frame}
 
 \begin{frame}{Linear System of Equations}
+  Including albedo form of boundary condition and assumption of linear
+  combination of basis functions.
+  \begin{multline}
+    \label{eq:linear_equation}
+    \sum_{i=1}^{DOF} \upsilon_{i,g} \sum_{j=1}^{DOF} \left(
+      \sum_{e=1}^{N_E} \albedo \int_{\partial \Omega_e}
+      \basis_i(\vr)  \basis_j(\vr) \;ds +
+      \sum_{e=1}^{N_E} D_{g,e} 
+      \int_{\Omega_e} \grad \basis_i(\vr) \cdot \grad \basis_j(\vr)\;d\vr
+      \right.
+      + \\
+      \left.
+      \sum_{e=1}^{N_E} \Sigma_{r,g,e}
+      \int_{\Omega_e} \basis_i(\vr) \basis_j(\vr) \; d\vr \right) =
+      \sum_{i=1}^{DOF} \left(
+      \sum_{e=1}^{N_E} q_{g,e} 
+      \int_{\Omega_e} \basis_i(\vr) \; d\vr \right)
+  \end{multline}
+
+  Rewriting in the form common to FEM.
+  \begin{equation}
+    \label{eq:fem_notation}
+    a(\basis_i,\basis_j) = f(\basis_i)
+  \end{equation}
+  In the form common to linear systems.
+  \begin{equation}
+    \label{eq:matrix_notation}
+    \ma \, \vu = \vf
+  \end{equation}
+  \[ \vu = \{\upsilon_{i,g}\} \]
+\end{frame}
+
+\begin{frame}{Properties of $\ma \, \vu = \vf$}
+  Properties of the linear system include:
+  \begin{itemize}
+    \item Symmetric, positive-definite \cite{textbookhughes}.
+    \item Solution, $\vu$, is unique and bounded by Lax-Milgram Lemma 
+      \cite{textbookli}.
+  \end{itemize}
+  Solution via Conjugate Gradient (CG) method 
+  \cite{Kelley1995IterativeEquations}.
+
+  It is natural to populate the matrix $\ma$ in an element-by-element procedure.
+  \begin{align}
+    A_{i,j,g} &= \sum_{e=1}^{N_E} A_{i,j,g,e} \\
+    f_{i,g} &=  \sum_{e=1}^{N_E} f_{i,g,e}
+  \end{align}
+\end{frame}
+
+\begin{frame}{Triangular Elements}
+  \begin{figure}
+    \centering
+    \subfloat[General Triangle Element.]
+      {\includegraphics[width=0.35\textwidth]{sketch_triangle}}
+    \vspace{0.2in}
+    \subfloat[Reference Triangle.]
+      {\includegraphics[width=0.35\textwidth]{Tref}}
+    %\caption{Description of Triangle Elements.}
+    \label{fig:triangle_elements}
+  \end{figure}
+\end{frame}
+
+\begin{frame}{Wedge Elements}
+  \begin{columns}
+    \begin{column}{0.5\textwidth}
+      \vspace*{\fill}
+      \begin{figure}
+        \centering
+        \includegraphics[width=0.8\textwidth]{Wref}
+        \caption{Description of Reference Wedge.}
+        \label{fig:Wref}
+      \end{figure}
+      \vspace*{\fill}
+    \end{column}
+    \begin{column}{0.5\textwidth}
+      \begin{figure}
+        \centering
+        \subfloat[General Wedge Element.]
+          {\includegraphics[width=0.4\textwidth]{wedge_sketch}}
+        \hspace{0.1\textwidth}
+        \subfloat[Distorted Wedge Element.]
+          {\includegraphics[width=0.4\textwidth]{wedge_stretch}}
+        %\caption{Description of Wedge Elements.}
+        \label{fig:sketch_wedge}
+      \end{figure}
+    \end{column}
+  \end{columns}
+\end{frame}
+
+\begin{frame}{Integration}
+  Integrals of interest:
+  \begin{align}
+    &\int_{\Omega_e} \grad \basis_i(\vr) \cdot \grad \basis_j(\vr) 
+      \;d\vr \\
+    &\int_{\Omega_e} \basis_i(\vr) \basis_j(\vr) \;d\vr \\
+    &\int_{\Omega_e} \basis_i(\vr) \;d\vr \\
+    &\int_{\partial \Omega_e} \basis_i(\vr) \basis_j(\vr) \;ds &
+  \end{align}
+
+  Options for integration:
+  \begin{enumerate}
+    \item Analytic.
+    \item Numeric (quadrature).
+  \end{enumerate}
+\end{frame}
+
+\begin{frame}{Quadrature Integration}
+  General form with weights $\{w_i\}$ and coordinates $\{\vx_i\}$.
+  \begin{equation}
+    \label{eq:quadrature}
+    \int_{\Omega} f(\vx) \;d\Omega \approx \sum_{i=1}^{N} w_i f(\vx_i)
+  \end{equation}
+  For integration of a general element using a quadrature centered on a
+  reference element, the Jacobian is used.
+  \begin{equation}
+    \int_{\Omega} f(\vx) \;d\Omega = 
+      \int_{\Omega_{ref}} f(\vx) \lvert \mj \rvert \;d\Omega_{ref} \approx
+      \sum_{i=1}^{N} w_i f(\vx_i) \lvert \mj_i \rvert
+  \end{equation}
+
+  This work uses two types of quadratures.
+  \begin{itemize}
+    \item Gaussian.
+    \item Triangle (symmetric and open).
+  \end{itemize}
+\end{frame}
+
+\begin{frame}{Power Iterations}
+  \begin{itemize}
+    \item FEM used to solve spatial distribution $\phi_g(\vr)$ for a given
+      source distribution $q_g(\vr)$.
+    \item Power Iteration method used to converge to fundamental eigenmode
+      (\keff) and eigenvector ($\phi_g(\vr)$).
+  \end{itemize}
+
+  The multigroup neutron diffusion equation can be written.
+  \begin{equation}
+    \label{eq:gehin_notation}
+    \mb(\vPhi,\keff) \vPhi = \frac{1}{\keff} \mm \vPhi
+  \end{equation}
+  Or as an eigenvalue problem.
+  \begin{align}
+    \label{eq:gehin_solution}
+    \vPhi &= \frac{1}{\keff} \mr \vPhi \\
+    \label{eq:gehin_r}
+    \mr &= \mb^{-1} \mm.
+  \end{align}
+\end{frame}
+
+\begin{frame}{Power Iterations}
+  Using this notation, the Power Iteration method is defined.
+  \begin{align}
+    \label{eq:power_iteration_phi}
+    \vPhi^{(s+1)} &= \frac{1}{\keff^{(s)}} \mr \vPhi^{(s)} \\
+    \label{eq:power_iteration_eigenvalue}
+    \keff^{(s+1)} &= \keff^{(s)} \frac{\vw^{T} \vPhi^{(s+1)}}
+      {\vw^{T} \vPhi^{(s)}} \qquad s = 1,2,\ldots,\infty
+  \end{align}
+
+  The weighting is chosen such that $\vw^{T} \vPhi$ is the total fission neutron
+  production rate.
+  \begin{equation}
+    \vw = \{\nu \Sigma_f \}
+  \end{equation}
+
+  Convergence rate is described by the dominance ratio.
+  \begin{equation}
+    d \equiv \frac{\keffsub{0}}{\keffsub{1}}
+  \end{equation}
+\end{frame}
+
+\begin{frame}{Power Iterations}
+  Iteration continues until both $\keff$ and the fission source converge.
+  \begin{align}
+    \label{eq:eigenvalue_tol}
+    \epsilon_{\keff} &> | \keff^{(s+1)} - \keff^{(s)} | \\
+    \label{eq:eigenvector_tol}
+    \epsilon_{\vPhi} &> \max_i \left| \frac{\nu\Sigma_{f,i}\vPhi_i^{(s+1)} - 
+      \nu\Sigma_{f,i} \vPhi_i^{(s)}}
+      {\nu\Sigma_{f,i} \vPhi_i^{(s)}}\right| .
+  \end{align}
+\end{frame}
+
+\begin{frame}{Calculation of Source with Power Iterations}
+  Fission and up-scatter sources must lag the flux solution by one iteration
+  whereas down-scatter source is known exactly.
+  \begin{equation} 
+    \label{eq:multigroup_power_iterations}
+    -\grad \cdot (D_g(\vr) \grad \phi_g^{(s+1)}(\vr)) + \Sigma_{r,g}(\vr)
+    \phi_g^{(s+1)}(\vr) = q_{fiss,g}^{(s)}(\vr) + q_{up,g}^{(s)}(\vr) +
+    q_{down,g}^{(s+1)}(\vr)
+  \end{equation}
+\end{frame}
+
+\begin{frame}{Matrix Ordering}
+  \begin{itemize}
+    \item Matrix is reordered to increase computational efficiency and compute
+      the same solution.
+    \item Nodes are re-indexed such that physically proximate notes have
+      proximate indices.
+    \item Improve cache hits.
+    \item Reverce Cuthill-McKee (RCM) order is chosen \cite{rcm}.
+    \item Roughly 40\% speedup observed.
+  \end{itemize}
+  % TODO insert figure
+\end{frame}
+
+\begin{frame}{Memory and Storage}
+  \begin{itemize}
+    \item Created custom \twotable storage implementation.
+    \item Modified reduced row storage.
+    \item Designed to minimize storage and optimize matrix vector
+      multiplications.
+  \end{itemize}
+\end{frame}
+
+\begin{frame}
+
+    \begin{algorithm}[H]
+      \caption{\scriptsize General Iteration Scheme}
+      \label{algorithm:general}
+      \begin{algorithmic}[1]
+      \State Read mesh from VTK.
+      \State Initialize $\phiavg^{(0)}$.
+      \State Order the nodes of the mesh into RCM order.
+        \label{state:rcm}
+      \State Calculate $\Sigma_s$, $\Sigma_t$, and $\nu \Sigma_f$ for each 
+        element.
+      \State Calculate finite element matrix $\ma_g$ for each group. Store this. 
+        \label{state:fem_matrix}
+      \While{Power Iteration}
+        \State Update the iteration counter. $s=s+1$
+        \State Update $q_{fiss,g}$ and $q_{up,g}$ for all groups from previous 
+          data $\phiavg^{(s-1)}$.
+        \State Update $\chi$ in each element using previous data.
+          \label{state:chi_collapse}
+        \For{$g=1,G$}
+          \State Update $q_{down,g}$ from current data $\phiavg^{(s)}$
+          \State Calculate total effective source in each element.
+          \State Update finite element Vector $\vf_g$ with new source.
+            \label{state:fem_vector}
+          \State Solve $\ma \vu = \vf$ using an iterative technique (Conjugate
+            Gradient).
+          \State Parse $\vu$ for $\phi$ solution on nodes.
+          \State Calculate element-average $\phiavg$.
+        \EndFor
+        \State Update $\keff$.
+        \State Check convergence.
+        \State Perform non-linear update if necessary. \label{state:nonlinear}
+      \EndWhile
+      \end{algorithmic}
+    \end{algorithm}
+
 \end{frame}

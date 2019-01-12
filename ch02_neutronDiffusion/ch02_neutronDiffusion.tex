@@ -369,10 +369,10 @@
     \end{multline}
     Which can be written in the notation common to the mathematical discussions 
     of the FEM
-      \begin{equation}
-        \label{eq:fem_notation}
-        a(\basis_i,\basis_j) = f(\basis_i)
-      \end{equation}
+    \begin{equation}
+      \label{eq:fem_notation}
+      a(\basis_i,\basis_j) = f(\basis_i)
+    \end{equation}
     where $a(\basis_i,\basis_j)$ is the bilinear form and $f(\basis_i)$ is the 
     linear form of the finite element system.
     Or, \eref{eq:linear_equation} can be written in matrix format as
@@ -538,7 +538,7 @@
         \centering
         \subfloat[General Wedge Element.]
           {\includegraphics[width=0.2\textwidth]{wedge_sketch}}
-        \vspace{0.2in}
+        \vspace{0.5in}
         \subfloat[Distorted Wedge Element.]
           {\includegraphics[width=0.2\textwidth]{wedge_stretch}}
         \caption{Description of Wedge Elements.}
@@ -998,10 +998,11 @@
     calculated based on different iterations within the Power Iteration method.
     This is described in \algorithmref{algorithm:general}.
     \eref{eq:multigroup_source_expand} is then more explicitly written.
-    \begin{equation} \label{eq:multigroup_power_iterations}
-      -\grad \cdot (D_g(\vr) \grad \phi_g^{(s)}(\vr)) + \Sigma_{r,g}(\vr)
-      \phi_g^{(s)}(\vr) = q_{fiss,g}^{(s-1)}(\vr) + q_{up,g}^{(s-1)}(\vr) +
-      q_{down,g}^{(s)}(\vr)
+    \begin{equation} 
+      \label{eq:multigroup_power_iterations}
+      -\grad \cdot (D_g(\vr) \grad \phi_g^{(s+1)}(\vr)) + \Sigma_{r,g}(\vr)
+      \phi_g^{(s+1)}(\vr) = q_{fiss,g}^{(s)}(\vr) + q_{up,g}^{(s)}(\vr) +
+      q_{down,g}^{(s+1)}(\vr)
     \end{equation}
 
 \section{Implementation}

@@ -5,6 +5,7 @@
 \usepackage{amsmath,amsfonts,amssymb}
 \usepackage{newtxtext}
 \usepackage[scaled=0.8]{newtxmath}
+
 \usepackage[
 			style=alphabetic,%numeric-comp,%authoryear-comp,%
 			sorting=nyt,%ynt					
@@ -18,6 +19,7 @@
 			maxalphanames=1, %to avoid printing a + for every et al in abbreviation
 			doi=false]{biblatex}		
 \addbibresource{../WilliamDawn-thesis.bib}
+\renewcommand*{\labelalphaothers}{}
 
 % demand a table of contents for each current section
 \AtBeginSection[]
@@ -34,8 +36,11 @@
 \setbeamertemplate{section in head/foot}[sections numbered]
 \setbeamertemplate{subsection in head/foot}[subsections numbered]
 
-% graphcis packages
-\usepackage{graphicx}
+% graphics packages
+\usepackage{graphicx,subfig}
+% Remove "Figure: " and subfigure labels. decrease font size.
+\captionsetup[subfigure]{labelformat=empty,font=scriptsize,labelfont=scriptsize}
+\captionsetup{labelformat=empty,labelsep=none,font=scriptsize}
 \usepackage[outdir=../hidden_epstopdf/]{epstopdf}
 \graphicspath{
   {../ch01_introduction/figs/}
@@ -49,6 +54,13 @@
   {../apB_benchmarks/figs/}
 }
 
+\usepackage{algorithm}
+\usepackage[noend]{algpseudocode}
+\algrenewcommand\alglinenumber[1]{\tiny #1:}
+\makeatletter
+\renewcommand{\ALG@beginalgorithmic}{\scriptsize}
+\makeatother
+\captionsetup[algorithm]{font=scriptsize}
 
 % Information to be included in the title page:
 \title[Fast Reactor and FEM]
