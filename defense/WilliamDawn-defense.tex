@@ -5,7 +5,19 @@
 \usepackage{amsmath,amsfonts,amssymb}
 \usepackage{newtxtext}
 \usepackage[scaled=0.8]{newtxmath}
-\usepackage{xspace}
+\usepackage[
+			style=alphabetic,%numeric-comp,%authoryear-comp,%
+			sorting=nyt,%ynt					
+			hyperref=true, %	
+			giveninits=true,%
+			backend=bibtex,
+			natbib=true,
+			url=false,
+			isbn=false,
+			maxnames=2, %for et al to be used
+			maxalphanames=1, %to avoid printing a + for every et al in abbreviation
+			doi=false]{biblatex}		
+\addbibresource{../WilliamDawn-thesis.bib}
 
 % demand a table of contents for each current section
 \AtBeginSection[]
@@ -24,17 +36,17 @@
 
 % graphcis packages
 \usepackage{graphicx}
-\usepackage[outdir=./hidden_epstopdf/]{epstopdf}
+\usepackage[outdir=../hidden_epstopdf/]{epstopdf}
 \graphicspath{
-  {./ch01_introduction/figs/}
-  {./ch02_neutronDiffusion/figs/}
-  {./ch03_diffusionResults/figs/}
-  {./ch04_thermalHydraulics/figs/}
-  {./ch05_thermalExpansion/figs/}
-  {./ch06_coupledResults/figs/}
-  {./ch07_conclusions/figs/}
-  {./apA_analyticSolutions/figs/}
-  {./apB_benchmarks/figs/}
+  {../ch01_introduction/figs/}
+  {../ch02_neutronDiffusion/figs/}
+  {../ch03_diffusionResults/figs/}
+  {../ch04_thermalHydraulics/figs/}
+  {../ch05_thermalExpansion/figs/}
+  {../ch06_coupledResults/figs/}
+  {../ch07_conclusions/figs/}
+  {../apA_analyticSolutions/figs/}
+  {../apB_benchmarks/figs/}
 }
 
 
@@ -72,6 +84,10 @@
 \include{ch05_thermalExpansion}
 \include{ch06_coupledResults}
 \include{ch07_conclusions}
+
+\begin{frame}
+  \printbibliography
+\end{frame}
 
 \section{} % syntax for an unnamed section
   \begin{frame}

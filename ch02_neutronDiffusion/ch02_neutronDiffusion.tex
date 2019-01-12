@@ -306,8 +306,9 @@
     \end{multline}
     Next, the function of interest $\phi_g(\vr)$ is assumed to be a linear 
     combination of chosen basis functions $\{\basis_i\}$ as
-    \begin{equation} \label{eq:linear_combination}
-      \phi_g(\vr) = \sum_{i=1}^{DOF} \upsilon_{g,i} \basis_i(\vr)
+    \begin{equation} 
+      \label{eq:linear_combination}
+      \phi_g(\vr) = \sum_{i=1}^{DOF} \upsilon_{g,i} \, \basis_i(\vr)
     \end{equation}
     where coefficients $\vu = \{\upsilon_{g,i}\}$ are unknown and will be 
     determined and $DOF$ is the total number degrees of freedom of the problem. 
@@ -327,7 +328,8 @@
 
     The test function $v(\vr)$ is also chosen as a linear combination of the 
     basis functions.
-    \begin{equation} \label{eq:linear_superposition}
+    \begin{equation} 
+      \label{eq:linear_superposition}
       v(\vr) = \sum_{j=1}^{DOF} \basis_j(\vr)
     \end{equation}
     The magnitude of the testing function is arbitrary so the magnitude is set
@@ -348,8 +350,7 @@
         \sum_{e=1}^{N_E} q_{g,e} \sum_{i=1}^{DOF} 
         \int_{\Omega_e} \basis_i(\vr) \; d\vr
     \end{multline}
-    Combining all elements, \eref{eq:this_above} can be rearranged as a linear
-    system of equations.
+    \eref{eq:this_above} can be rearranged as a linear system of equations.
     \begin{multline}
       \label{eq:linear_equation}
       \sum_{i=1}^{DOF} \upsilon_{i,g} \sum_{j=1}^{DOF} \left(
