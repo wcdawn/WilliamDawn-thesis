@@ -40,6 +40,7 @@
 
 % graphics packages
 \usepackage{graphicx,subfig}
+\def\Put(#1,#2)#3{\leavevmode\makebox(0,0){\put(#1,#2){#3}}}
 % Remove "Figure: " and subfigure labels. decrease font size.
 \captionsetup[subfigure]{labelformat=empty,font=scriptsize,labelfont=scriptsize}
 \captionsetup{labelformat=empty,labelsep=none,font=scriptsize}
