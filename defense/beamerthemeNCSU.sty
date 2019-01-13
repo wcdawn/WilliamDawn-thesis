@@ -215,7 +215,7 @@ top color=transparent!50, bottom color=transparent!100]
 {}
 {%
   \hskip\beamer@sidebarwidth \tikz{\fill[WolfpackBlack!50!bg,path fading=fade]
-  (0,0) rectangle (\paperwidth,4pt);}
+  (0,0) rectangle (\textwidth-\beamer@sidebarwidth,4pt);}
   \vskip-4pt
   \pgfuseshading{beamer@topshadesidebarcover}
   \vskip-2pt
@@ -375,6 +375,6 @@ top color=transparent!50, bottom color=transparent!100]
 \usetagform{null}
 \renewcommand{\theequation}{}
 
-\setlength{\parskip}{.25cm}
+\setlength{\parskip}{.01cm}
 \usefonttheme{professionalfonts}
 \beamertemplatetheoremsunnumbered  %This suppresses theorem numbers

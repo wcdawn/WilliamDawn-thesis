@@ -6,12 +6,17 @@ AUX=$(NAME).aux front.aux ch*/*.aux ap*/*.aux optional.aux
 INTERMEDIATES=$(NAME).bbl $(NAME).blg $(NAME).lof $(NAME).lot \
 							$(NAME).log $(NAME).toc $(NAME).out
 
+.PHONY : all text defense forcedefense forcetext clean
+
 all : text defense
 
 text : $(NAME).pdf
 
 defense : 
-	$(MAKE) -C ./defense defense
+	$(MAKE) -C ./defense/ defense
+
+forcedefense : 
+	$(MAKE) -C ./defense/ forcedefense
 
 $(NAME).pdf : $(NAME).tex $(NAME).bib front.tex $(FIGURES) $(CHAPTERS) \
 	ncsuthesis.cls optional.tex
@@ -27,3 +32,4 @@ forcetext :
 
 clean :
 	rm $(AUX) $(INTERMEDIATES)
+	$(MAKE) -C ./defense/ clean
