@@ -25,24 +25,46 @@
 \end{frame}
 
 \begin{frame}{Fuel Thermal Conductivity}
-  \begin{align}
-    \label{eq:kfuel_first}
-    k_U      &= 21.73 + 1.591 \times 10^{-2} T + 5.907 \times 10^{-6} T^2 \\
-    k_{Zr}   &= 8.853 + 7.082 \times 10^{-3} T + 2.533 \times 10^{-6} T^2 +
-      2.992 \times 10^{3} T^{-1} \\
-    k_{c,Zr} &= -102.0 + 200.1 x_{Zr} - 109.2 x_{Zr}^2 + 
-      9.435 \times 10^{-3} T + 3.459 \times 10^{-5} T^2 - 0.02093 x_{Zr} \, T \\
-    \label{eq:kfuel_last}
-    k_{U-Zr} &= \left( 1 - \sqrt{1-x_{Zr}}\right) k_{Zr} + 
-      \sqrt{1 - x_{Zr}} \left( \left( 1 - x_{Zr}\right) k_U + x_{Zr} \, k_{c,Zr}
-      \right) 
-  \end{align}
+  %\begin{align}
+  %  \label{eq:kfuel_first}
+  %  k_U      &= 21.73 + 1.591 \times 10^{-2} T + 5.907 \times 10^{-6} T^2 \\
+  %  k_{Zr}   &= 8.853 + 7.082 \times 10^{-3} T + 2.533 \times 10^{-6} T^2 +
+  %    2.992 \times 10^{3} T^{-1} \\
+  %  k_{c,Zr} &= -102.0 + 200.1 x_{Zr} - 109.2 x_{Zr}^2 + 
+  %    9.435 \times 10^{-3} T + 3.459 \times 10^{-5} T^2 - 0.02093 x_{Zr} \, T \\
+  %  \label{eq:kfuel_last}
+  %  k_{U-Zr} &= \left( 1 - \sqrt{1-x_{Zr}}\right) k_{Zr} + 
+  %    \sqrt{1 - x_{Zr}} \left( \left( 1 - x_{Zr}\right) k_U + x_{Zr} \, k_{c,Zr}
+  %    \right) 
+  %\end{align}
   \begin{figure}
     \centering
-    \includegraphics[width=0.5\textwidth]{kfuel_plot}
+    \includegraphics[width=0.7\textwidth]{kfuel_plot}
     %\caption{Variable Thermal Conductivity in Fuel.}
     \label{fig:kfuel_plot}
   \end{figure}
+\end{frame}
+
+\begin{frame}{Calculating Reactor Power}
+  For a user-input $Q_{Rx}$, a normalization constant is calculated to convert
+  unnormalized flux $\widetilde{\phi_{g,e}}$ to normalized flux $\phi_{g,e}$.
+  \begin{align}
+    \label{eq:normalization_c}
+    c &= \frac{Q_{Rx}}{\sum_{g}^{G} \sum_{e}^{N_E} \kappa \Sigma_{f,g,e} \,
+      \widetilde{\phi_{g,e}} \, V_e} \\
+    \phi_{g,e} &= c \, \widetilde{\phi_{g,e}}
+  \end{align}
+  Element power is defined.
+  \begin{equation}
+    \label{eq:elementpwr}
+    q_{e} = \sum_g^G \kappa \Sigma_{f,e,g} \, \phi_{g,e} \, V_e .
+  \end{equation}
+  Assuming all heat generated in the element is generated within the fuel, the
+  volumetric heat generation rate is defined.
+  \begin{equation}
+    \label{eq:elementqppp_fuel}
+    q'''_{e} = \frac{q_e}{V_{fuel,e}}
+  \end{equation}
 \end{frame}
 
 \begin{frame}{Axial Convection Geometric Model}
@@ -187,7 +209,7 @@
     \overline{k_F} = \frac{q'''_{i,k} \, R_F^2}{4(T_0-T_F)}
   \end{equation}
   Fuel thermal conductivity is assumed constant at $\overline{k_F}$ and an
-  analtic value is calculated for the average fuel temperature.
+  analytic value is calculated for the average fuel temperature.
   \begin{equation}
     \label{eq:tf_bar}
     \overline{T_F} = T_0 - \frac{q'''_{i,k}}{8 \overline{k_F}} R_F^2
@@ -197,23 +219,23 @@
   surface temperature more.
 \end{frame}
 
-\begin{frame}
+\begin{frame}{Radial Temperatures for Typical Fuel Rod}
   \begin{figure}
     \centering
     \includegraphics[width=0.7\textwidth]{radial_temp_plot}
-    \caption{Radial Temperatures for Typical Fuel Rod.}
+    %\caption{Radial Temperatures for Typical Fuel Rod.}
     \label{fig:radial_temp_plot}
   \end{figure}
 \end{frame}
 
-\begin{frame}
+\begin{frame}{Axial Temperatures for Typical Fuel Channel}
   \begin{columns}
     \begin{column}{0.5\textwidth}
       \begin{figure}
         \centering
         \includegraphics[width=\textwidth]{axial_difference_plot}
-        \caption{Difference Between Analytic and Modeled Axial Temperatures for 36
-          Axial Levels.}
+        %\caption{Difference Between Analytic and Modeled Axial Temperatures for 36
+        %  Axial Levels.}
         \label{fig:axial_difference_plot}
       \end{figure}
     \end{column}
@@ -221,10 +243,37 @@
       \begin{figure}
         \centering
         \includegraphics[width=\textwidth]{axial_temp_plot}
-        \caption{Average Axial Temperatures for Model Reactor Conditions.}
+        %\caption{Average Axial Temperatures for Model Reactor Conditions.}
         \label{fig:axial_temp_plot}
       \end{figure}
     \end{column}
   \end{columns}
+\end{frame}
+
+\begin{frame}{Cross-section Treatment}
+  \begin{itemize}
+    \item Coolant. 
+      \begin{itemize}
+        \item Number density and microscopic cross-sections are functionalized 
+          and updated based on $T_{\infty,i,k}$.
+        \item Linear interpolation for cross sections.
+      \end{itemize}
+    \item Clad. 
+      \begin{itemize}
+        \item Macroscopic cross-section updated based on $\overline{T_{C,i,k}}$.
+        \item Linear interpolation.
+      \end{itemize}
+    \item Bond.
+      \begin{itemize}
+        \item Assumed to have the same macroscopic cross-section as coolant.
+        \item Represents a small volume.
+        \item Consistent with homogenization approximation.
+      \end{itemize}
+    \item Fuel.
+      \begin{itemize}
+        \item Macroscopic cross-section update based on $\overline{T_{F,i,k}}$.
+        \item Square-root interpolation due to Doppler effect.
+      \end{itemize}
+  \end{itemize}
 \end{frame}
 
