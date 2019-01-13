@@ -326,6 +326,7 @@
       \caption{VVER440 Benchmark Power Comparison for Most Refined Mesh.}
       \label{fig:diffusion_vver440}
     \end{figure}
+
     \begin{table}
       \begin{center}
         \caption{VVER440 Benchmark Convergence Study.}
@@ -360,12 +361,14 @@
     given by \dif are presented graphically in \fref{fig:diffusion_snr}
     according to the key in \fref{fig:hex_description}. A numerical mesh
     convergence study for the quantity $\keff$ is presented in \tref{tab:snr}.
+
     \begin{figure}
       \centering
       \includegraphics[width=\textwidth]{diffusion_snr}
       \caption{SNR Benchmark Power Comparison for Most Refined Mesh.}
       \label{fig:diffusion_snr}
     \end{figure}
+    
     \begin{table}
       \begin{center}
         \caption{SNR Benchmark Convergence Study.}
@@ -401,12 +404,14 @@
     are presented graphically in \fref{fig:diffusion_hwr} according to the
     key in \fref{fig:hex_description}. A numerical mesh convergence study for 
     the quantity $\keff$ is presented in \tref{tab:hwr}.
+
     \begin{figure}
       \centering
       \includegraphics[width=\textwidth]{diffusion_hwr}
       \caption{HWR Benchmark Power Comparison for Most Refined Mesh.}
       \label{fig:diffusion_hwr}
     \end{figure}
+
     \begin{table}
       \begin{center}
         \caption{HWR Benchmark Convergence Study.}
@@ -446,6 +451,7 @@
     $\keff$ for each case in each of \tref{tab:iaea_nore0125},
     \tref{tab:iaea_nore0500}, \tref{tab:iaea_refl0125}, and
     \tref{tab:iaea_refl0500}.
+
     % nore0125
     \begin{table}
       \begin{center}
@@ -471,6 +477,7 @@
         \end{threeparttable}
       \end{center}
     \end{table}
+
     % nore0500
     \begin{table}
       \begin{center}
@@ -496,6 +503,7 @@
         \end{threeparttable}
       \end{center}
     \end{table}
+
     % refl0125
     \begin{table}
       \begin{center}
@@ -521,6 +529,7 @@
         \end{threeparttable}
       \end{center}
     \end{table}
+
     % refl0500
     \begin{table}
       \begin{center}
@@ -559,7 +568,7 @@
   units \units{$\Delta k$} and calculated as 
   \begin{equation}
     \label{eq:rodworth}
-    \text{Rod Worth}_x = \frac{\keffsub{A} - \keffsub{x}}
+    \text{Rod Worth}_x \units{$\Delta k$} = \frac{\keffsub{A} - \keffsub{x}}
       {\keffsub{A} \, \keffsub{x}}
   \end{equation}
   for $x = \{B,C\}$. That is, rod worth is always compared to the case with
@@ -567,7 +576,7 @@
   presented in units \units{$\% \Delta$k} as
   \begin{equation}
     \label{eq:roddifference}
-    \text{Rod Difference} \units{$\Delta k$} = (\keffsub{A} - \keffsub{x}) 
+    \text{Rod Difference}_x \units{$\% \Delta k$} = (\keffsub{A} - \keffsub{x}) 
       \times 100 \%
   \end{equation}
   for $x = \{B,C\}$.
