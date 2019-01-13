@@ -78,6 +78,7 @@ ylabel('Elevation [m]')
 title('Modeled Axial Temperature')
 set(gca,'FontName','Times New Roman','FontSize',12);
 print('../figs/axial_temp_plot.eps','-depsc2');
+close(gcf);
 
 % matlab_blue = [0.00 0.447 0.741];
 % matlab_orange = [0.91 0.41 0.17];
@@ -114,5 +115,6 @@ title('Temperature Difference')
 xlabel('z [m]')
 xlim([0,z(end)])
 ylabel('Temperature Difference [K]')
-set(gca,'FontName','Times New Roman','FontSize',12);
+set(gca,'FontName','Times New Roman','FontSize',20);
 print('../figs/axial_difference_plot.eps','-depsc2');
+close(gcf);
