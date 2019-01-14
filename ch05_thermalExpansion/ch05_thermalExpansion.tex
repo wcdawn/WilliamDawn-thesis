@@ -102,9 +102,12 @@
     
     All dimensions in the reactor are expanded assuming the user-input 
     dimensions are at room-temperature conditions. Dimensions are expanded
-    according to a single, fixed thermal expansion temperature $\texp$ as input
-    by the user. The expansion temperature should be selected to represent an 
-    effective temperature within the reactor. It is expected thermal expansion 
+    according to two user-input temperatures, $\texpfuel$ and $\texpstruct$.
+    $\texpfuel$ corresponds to the average temperature of reactor fuel and
+    $\texpstruct$ corresponds to the average temperature of steel in the
+    reactor. Typically, these values come from a previous coupled diffusion and
+    thermal hydraulics simulation.
+    It is expected thermal expansion 
     effects will be significant. However, thermal expansion factors are 
     typically on the order $10^{-6}$ so small, local changes in temperature are 
     not expected to affect the macroscopic simulation.
@@ -113,25 +116,26 @@
     \eref{eq:lef_ht9} as
     \begin{equation}
       \label{eq:lef_r}
-      F_r(\texp) = \left(\frac{\Delta L}{L}\right)_{\text{HT9}}
+      F_r(\texpstruct) = \left(\frac{\Delta L}{L}\right)_{\text{HT9}}
     \end{equation}
-    which is a function of $\texp$. Note that given the assumption of uniform
-    radial thermal expansion, ${F_x(\texp) = F_y(\texp) = F_r(\texp)}$.
+    which is a function of $\texpstruct$. Note that given the assumption of 
+    uniform radial thermal expansion, ${F_x(\texpstruct) = F_y(\texpstruct) =
+    F_r(\texpstruct)}$.
     Similarly, an axial LEF can be defined using \eref{eq:lef_u10zr} as 
     \begin{equation}
       \label{eq:lef_a}
-      F_a(\texp) = \left(\frac{\Delta L}{L}\right)_{\text{U10Zr}}
+      F_a(\texpfuel) = \left(\frac{\Delta L}{L}\right)_{\text{U10Zr}}
     \end{equation}
-    and $F_a(\texp) = F_z(\texp)$. For a ``cold'' cooridnate 
+    and $F_a(\texpfuel) = F_z(\texpfuel)$. For a ``cold'' cooridnate 
     $(x^C,y^C,z^C)$, the thermally expanded ``hot'' coordinate $(x^H,y^H,z^H)$ 
     can be expressed using radial and axial LEFs as
     \begin{align}
       \label{eq:expand_x}
-      x^H &= x^C + x^C \, F_r(\texp) \\
+      x^H &= x^C + x^C \, F_r(\texpstruct) \\
       \label{eq:expand_y}
-      y^H &= y^C + y^C \, F_r(\texp) \\
+      y^H &= y^C + y^C \, F_r(\texpstruct) \\
       \label{eq:expand_z}
-      z^H &= z^C + z^C \, F_a(\texp)
+      z^H &= z^C + z^C \, F_a(\texpfuel)
     \end{align}
     which is consistent with the assumption of uniform radial and axial 
     expansion. These formulae expand the distance from each coordinate to the
@@ -148,15 +152,17 @@
     \end{align}
     Then, recognizing the coordinate expansions,
     \begin{align}
-      V^H &= (L_x^C + L_x^C \, F_r(\texp)) + (L_y^C + L_y^C \, F_r(\texp)) + 
-        (L_z^C + L_z^C \, F_a(\texp)), \\
-      V^H &= L_x^C \, L_y^C \, L_z^C \, (1 + F_r(\texp))^2 (1+F_a(\texp)), \\
-      V^H &= V^C (1 + F_r(\texp))^2 (1+F_a(\texp)).
+      V^H &= (L_x^C + L_x^C \, F_r(\texpstruct)) + 
+        (L_y^C + L_y^C \, F_r(\texpstruct)) + 
+        (L_z^C + L_z^C \, F_a(\texpfuel)), \\
+      V^H &= L_x^C \, L_y^C \, L_z^C \, (1 + F_r(\texpstruct))^2
+        (1+F_a(\texpfuel)), \\
+      V^H &= V^C (1 + F_r(\texpstruct))^2 (1+F_a(\texpfuel)).
     \end{align}
     The volume ratio is then
     \begin{equation}
       \label{eq:volume_ratio}
-      \frac{V^C}{V^H} = \frac{1}{(1+F_r(\texp))^2 (1+F_a(\texp))}.
+      \frac{V^C}{V^H} = \frac{1}{(1+F_r(\texpstruct))^2 (1+F_a(\texpfuel))}.
     \end{equation}
     Given the assumption of uniform thermal expansion in axial and radial
     directions, the ratio of volumetric expansion is constant throughout the
@@ -266,7 +272,7 @@
     \begin{equation}
       \label{eq:nden_thexp_update}
       N_i^H = N_i^C \frac{a_j^C}{a_j^H} 
-        \frac{1}{(1+F_r(\texp))^2 (1+F_a(\texp))}
+        \frac{1}{(1+F_r(\texpstruct))^2 (1+F_a(\texpfuel))}
     \end{equation}
     Therefore, to preserve the number of atoms in the reactor, number densities
     in the reactor must be updated according to \eref{eq:nden_thexp_update} in
@@ -279,12 +285,12 @@
   The effect of thermal expansion on reactor criticality is observed. As
   previously mentioned in \sref{sec:model_details__assumptions_and_formulae}, 
   the user must input an effective temperature to which the reactor is thermally 
-  expanded. This user-input value of $\texp$ is varied and all other thermal 
-  feedback effects are disabled in the simulation. It is expected that thermal 
-  expansion will cause a significant decrease in $\keff$ and represent negative 
-  reactivity insertion. Effective neutron multiplication factor as a function of
-  $\texp$ is plotted in \fref{fig:thexp_study} and the associated reactivity, 
-  calculated as
+  expanded. This user-input values of $\texpstruct$ and $\texpfuel$ are varied 
+  and all other thermal feedback effects are disabled in the simulation. It is 
+  expected that thermal expansion will cause a significant decrease in $\keff$ 
+  and represent negative reactivity insertion. Effective neutron multiplication 
+  factor as a function of thermal expansion is plotted in \fref{fig:thexp_study} 
+  and the associated reactivity, calculated as
   \begin{equation}
     \label{eq:reactivity_formula}
     \rho \units{pcm} = \frac{\keff - \kref}{\keff \, \kref} \times 10^5
