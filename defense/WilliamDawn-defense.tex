@@ -20,6 +20,8 @@
 			doi=false]{biblatex}		
 \addbibresource{../WilliamDawn-thesis.bib}
 \renewcommand*{\labelalphaothers}{}
+\renewcommand*{\bibfont}{\scriptsize}
+\setbeamertemplate{bibliography item}{\insertbiblabel}
 
 \usepackage{booktabs,csvsimple,threeparttable}
 
@@ -87,23 +89,6 @@
   \titlepage
 \end{frame}
 
-\begin{frame}
-  \frametitle{Table of Contents}
-  \tableofcontents
-\end{frame}
-
-\include{ch01_introduction}
-\include{ch02_neutronDiffusion}
-\include{ch03_diffusionResults}
-\include{ch04_thermalHydraulics}
-\include{ch05_thermalExpansion}
-\include{ch06_coupledResults}
-\include{ch07_conclusions}
-
-\begin{frame}
-  \printbibliography
-\end{frame}
-
 \section{} % syntax for an unnamed section
   \begin{frame}
     \frametitle{Disclaimer}
@@ -119,5 +104,22 @@
     \end{center}
     \vspace*{\fill}
   \end{frame}
+
+\begin{frame}
+  \frametitle{Table of Contents}
+  \tableofcontents
+\end{frame}
+
+\include{ch01_introduction}
+\include{ch02_neutronDiffusion}
+\include{ch03_diffusionResults}
+\include{ch04_thermalHydraulics}
+\include{ch05_thermalExpansion}
+\include{ch06_coupledResults}
+\include{ch07_conclusions}
+
+\begin{frame}[allowframebreaks]{References}
+  \printbibliography
+\end{frame}
 
 \end{document}
