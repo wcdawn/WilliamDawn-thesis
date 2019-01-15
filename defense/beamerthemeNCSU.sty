@@ -263,25 +263,6 @@ top color=transparent!50, bottom color=transparent!100]
 \setbeamercolor{logo}{fg=WolfpackBlack,bg=WolfpackWhite}
 \logo{\includegraphics[height=0.55cm]{ncstate-type-2x2-red-rgb.pdf}}
 
-% Handout Mode - Using the default layouts, no menus, etc.
-\mode
-<handout>{
-\usetheme{default}
-\usecolortheme{default}
-\useinnertheme{default}
-\setbeamercolor{block title}{fg=WolfpackBlack,bg=Gray60} %
-\setbeamercolor{block body}{fg=WolfpackBlack,bg=Gray25} %
-% print multiple slides per page draw border around slide
-\usepackage{pgfpages}
-% print with space for notes
-\usepackage{handoutWithNotes}
-% put 3 slides on 1 page with space for notes
-\pgfpagesuselayout{3 on 1 with notes}[letterpaper, border shrink=5mm]
-% settings to draw border around every first 3 slide per sheet
-\pgfpageslogicalpageoptions{1}{border code=\pgfusepath{stroke}}
-\pgfpageslogicalpageoptions{2}{border code=\pgfusepath{stroke}}
-\pgfpageslogicalpageoptions{3}{border code=\pgfusepath{stroke}}
-}
 
 % Settings for every mode
 \mode
@@ -347,6 +328,7 @@ top color=transparent!50, bottom color=transparent!100]
 % keys are fg,bg,parent,use
 % keywords on 
 % http://www.cpt.univ-mrs.fr/~masson/latex/Beamer-appearance-cheat-sheet.pdf
+\only<beamer>{
 \setbeamercolor{palette primary}{fg=WolfpackWhite,bg=WolfpackRed}
 \setbeamercolor{palette secondary}{fg=WolfpackWhite,bg=WolfpackRed}
 \setbeamercolor{palette tertiary}{fg=WolfpackWhite,bg=WolfpackRed}
@@ -364,26 +346,49 @@ top color=transparent!50, bottom color=transparent!100]
 \setbeamercolor{subsection in toc}{fg=ReynoldsRed}
 \setbeamercolor{subsubsection in toc}{fg=ReynoldsRed}
 
-% options include triangle, circle, square, or ball
-\setbeamertemplate{itemize item}[circle]
-\setbeamertemplate{itemize subitem}[triangle]
-\setbeamertemplate{itemize subsubitem}[square]
 \setbeamercolor{itemize item}{fg=ReynoldsRed}
 \setbeamercolor{itemize subitem}{fg=ReynoldsRed}
 \setbeamercolor{itemize subsubitem}{fg=ReynoldsRed}
 
-\setbeamertemplate{enumerate item}[circle]
-\setbeamertemplate{enumerate subitem}[circle]
-\setbeamertemplate{enumerate subsubitem}[circle]
 \setbeamercolor{item projected}{bg=ReynoldsRed}
 \setbeamercolor{subitem projected}{bg=ReynoldsRed}
 \setbeamercolor{subsubitem projected}{bg=ReynoldsRed}
+}
+
+% Handout Mode - Using the default layouts, no menus, etc.
+\mode
+<handout>{
+\usetheme{default}
+\usecolortheme{default}
+\useinnertheme{default}
+\setbeamercolor{block title}{fg=WolfpackBlack,bg=Gray60} %
+\setbeamercolor{block body}{fg=WolfpackBlack,bg=Gray25} %
+% print multiple slides per page draw border around slide
+\usepackage{pgfpages}
+% print with space for notes
+\usepackage{handoutWithNotes}
+% put 3 slides on 1 page with space for notes
+\pgfpagesuselayout{3 on 1 with notes}[letterpaper, border shrink=5mm]
+% settings to draw border around every first 3 slide per sheet
+\pgfpageslogicalpageoptions{1}{border code=\pgfusepath{stroke}}
+\pgfpageslogicalpageoptions{2}{border code=\pgfusepath{stroke}}
+\pgfpageslogicalpageoptions{3}{border code=\pgfusepath{stroke}}
+}
 
 % number sections and subsections in tables of contents
 \setbeamertemplate{section in toc}[sections numbered]
 \setbeamertemplate{subsection in toc}[subsections numbered]
 \setbeamertemplate{section in head/foot}[sections numbered]
 \setbeamertemplate{subsection in head/foot}[subsections numbered]
+
+% options include triangle, circle, square, or ball
+\setbeamertemplate{itemize item}[circle]
+\setbeamertemplate{itemize subitem}[triangle]
+\setbeamertemplate{itemize subsubitem}[square]
+
+\setbeamertemplate{enumerate item}[circle]
+\setbeamertemplate{enumerate subitem}[circle]
+\setbeamertemplate{enumerate subsubitem}[circle]
 
 % do not show any equation numbers regardless of environment (no * required)
 % i did this to make copy/paste easier
