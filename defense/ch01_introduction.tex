@@ -1,38 +1,47 @@
 \section{Introduction}
 \label{sec:introduction}
 
-\begin{frame}{Sample frame title}
-  This is a text in the first frame. This is a text in first frame. This is a
-  text in first frame. DUMMY
+\begin{frame}{Why are we here?}
+  \pause
+  \begin{itemize}
+    \item Probably because I asked you to come.
+  \end{itemize}
 \end{frame}
 
-\begin{frame}{State of the Art}
-
-  \begin{enumerate}
-    \item Estimate reactor temperatures for an assumed power distribution.
-    \item Calculate thermally expanded dimensions for reactor assemblies.
-    \item Calculate number densities and area fractions to homogenize
-      assemblies.
-    \item Use assembly-homogenized number densities to calculate material
-      cross-sections in zero-dimension transport solution in \mcc.
-    \item Model homogenized-assembly compositions in \dif and run.
-    \item Collect \keff and multigroup scalar fluxes.
-  \end{enumerate}
-
-  \begin{block}{}
-    No capabilities for thermal hydraulic analysis or thermal expansion
-    analysis.
-  \end{block}
+\begin{frame}{Why are we here?}
+  \begin{itemize}
+    \item Model a nuclear reactor.
+      \pause
+      \begin{itemize}
+        \item Neutron distribution.
+        \item Thermal Hydraulics.
+        \item Thermal Expansion.
+      \end{itemize}
+  \end{itemize}
 \end{frame}
 
-\begin{frame}{Proposed Method}
-  \begin{enumerate}
-    \item Use similar procedure to generate cross-sections using \mcc.
-    \item User inputs pin data that is internally homogenized.
+\begin{frame}{But they did it in the 1960s!}
+  \begin{itemize}
+    \item You're right.
+    \item Computers are different now.
+    \item Mathematical methods are more efficient now.
+    \item \textbf{FORTRAN} has \textit{a few} new standards.
+  \end{itemize}
+\end{frame}
+
+\begin{frame}{Goals}
+  \begin{itemize}
+    \item User input.
+      \begin{itemize}
+        \item Reactor geometry via \texttt{VTK} mesh.
+        \item Temperature dependent cross-sections either plain-text or 
+          \texttt{ISOTXS}.
+        \item Pin dimensions and material compositions.
+      \end{itemize}
     \item Simulate thermal expansion and thermal hydraulics internally.
     \item Collect \keff, multigroup scalar fluxes, reactor power, and average
-      reactor temperatures.
-  \end{enumerate}
+      material temperatures.
+  \end{itemize}
   %\\
   \begin{itemize}
     \item Thermal expansion and thermal hydraulic simulations have been moved
