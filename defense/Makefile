@@ -4,13 +4,14 @@ DEFENSE_EXTRA=*.tex
 DEFENSE_AUX=*.aux
 DEFENSE_INTERMEDIATES=*.log *.nav *.out *.snm *.toc \
 					  *.bbl *.blg *.lof *.lot
-FIGURES=../ch*/figs/*.* ../ap*/figs/*.*
+FIGURES=../ch*/figs/*.* ../ap*/figs/*.* ./figs/*.*
 
 all : defense
 
 defense : $(DEFENSE).pdf
 
-$(DEFENSE).pdf : $(DEFENSE).tex $(DEFENSE_EXTRA) $(FIGURES) beamerthemeNCSU.sty
+$(DEFENSE).pdf : $(DEFENSE).tex $(DEFENSE_EXTRA) $(FIGURES) beamerthemeNCSU.sty\
+	../WilliamDawn-thesis.bib
 	pdflatex --shell-escape $(DEFENSE)
 	bibtex $(DEFENSE)
 	pdflatex --shell-escape $(DEFENSE)

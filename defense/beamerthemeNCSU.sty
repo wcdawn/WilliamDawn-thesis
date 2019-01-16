@@ -191,7 +191,6 @@
   \pgfdeclarehorizontalshading{beamer@sideborder}{\paperheight}{%
     color(0pt)=(WolfpackBlack);
     color(1pt)=(WolfpackBlack)}
-
   \pgfdeclareverticalshading{beamer@topshade}{\paperwidth}{%
     color(0pt)=(bg);
     color(4pt)=(WolfpackBlack!50!bg)}
@@ -227,9 +226,11 @@ top color=transparent!50, bottom color=transparent!100]
 \addtobeamertemplate{footline}
 {%
    \usebeamercolor[fg]{author in sidebar}
-   \vskip-1cm\hskip10pt
-   %\insertpagenumber\,/\,\insertpresentationendpage\kern1em\vskip2pt%
-   \insertframenumber\,/\,\inserttotalframenumber\kern1em\vskip2pt%
+   \vskip-1cm%\hskip10pt
+   \mbox{\parbox{\beamer@sidebarwidth-4pt}{
+     \centering\insertframenumber\\
+   }}
+   \vspace{0.15cm}
 }
 
 \addtobeamertemplate{sidebar \beamer@sidebarside}
