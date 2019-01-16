@@ -9,8 +9,12 @@
       diffusion equation.
     \item Solve multigroup neutron diffusion equation via Finite Element Method
       (FEM).
+    \item FEM allows for modern techniques.
+    \item Allows for solution refinement without mesh refinement.
   \end{itemize}
+\end{frame}
 
+\begin{frame}{Multigroup Neutron Diffusion Equation}
   Begin with a set of energies $\{E_g\}$ for $g = 1,2,\ldots,G$ and arranged in
   order of decreasing energy by convention.
   \begin{equation}
@@ -96,6 +100,7 @@
 
 \begin{frame}{Collapsing $\chi$}
   \begin{itemize}
+    \item Typically isotopic material data is specified.
     \item It is necessary to describe effective fission spectrum
       $\widetilde{\chi}_g(\vr)$ in terms of isotopic $\chi_{i,g}$.
     \item This is done by preserving fission neutron production rate.
@@ -114,14 +119,25 @@
   the outward-normal unit vector.
 
   \begin{enumerate}
-    \item Mirror. $\grad \phi_g(\vr) \cdot \nhat = 0 \; \forall \; 
-      \vr \in \partial \Omega$.
-    \item Albedo. $D_g(\vr) \grad \phi_g(\vr) \cdot \nhat + \albedo \phi_g(\vr)
-      = 0 \; \forall \; \vr \in \partial \Omega$, where $\albedo$ is a constant
-      specified by the user. For non-reentrant boundary condition, $\albedo =
-      \half$. $\albedo = 0$ corresponds to mirror boundary condition and
-      $\albedo \rightarrow \infty$ corresponds to Zero Flux boundary condition.
-    \item Zero Flux. $\phi_g(\vr) = 0$ for $\vr \in \partial \Omega$.
+    \item Mirror.
+      \begin{equation}
+        \grad \phi_g(\vr) \cdot \nhat = 0 \; \forall \; \vr \in \partial \Omega
+      \end{equation}
+    \item Albedo. 
+      \begin{equation}
+        D_g(\vr) \grad \phi_g(\vr) \cdot \nhat + \albedo \phi_g(\vr)
+          = 0 \; \forall \; \vr \in \partial \Omega
+      \end{equation}
+      \vspace{-0.2in}
+      \begin{itemize}
+        \item Non-reentrant, $\albedo = \half$.
+        \item Mirror, $\albedo = 0$.
+        \item Zero Flux, $\albedo \rightarrow \infty$.
+      \end{itemize}
+    \item Zero Flux. 
+      \begin{equation}
+        \phi_g(\vr) = 0 \; \forall \; \vr \in \partial \Omega
+      \end{equation}
   \end{enumerate}
 
   The order above corresponds to the order of boundary condition precedent with 
@@ -136,11 +152,9 @@
     \Omega = \Omega_1 \cup \Omega_2 \cup \Omega_3 \cup \ldots \cup
       \Omega_{N_E} 
   \end{equation}
-  such that
   \begin{equation}
     \Omega = \{\Omega_e\} \; \text{for} \; e = 1,2,\ldots,N_E
   \end{equation}
-  is a set of non-overlapping elements and
   \begin{equation}
     \Omega_i \cap \Omega_j = \emptyset.
   \end{equation}
@@ -158,7 +172,7 @@
   \end{equation}
 \end{frame}
 
-\begin{frame}
+\begin{frame}{Flat-source Elements}
   Allow the neutron source $q_g(\vr)$ to be constant over an element $\Omega_e$.
   Alternatively, a point source could be integrated numerically.
   \begin{align}
@@ -396,19 +410,22 @@
       {\vw^{T} \vPhi^{(s)}} \qquad s = 1,2,\ldots,\infty
   \end{align}
 
-  The weighting is chosen such that $\vw^{T} \vPhi$ is the total fission neutron
-  production rate.
+  The weighting is arbitrary. Chosen such that $\vw^{T} \vPhi$ is the total 
+  fission neutron production rate.
   \begin{equation}
     \vw = \{\nu \Sigma_f \}
   \end{equation}
 
+  This method will converge as $s \rightarrow \infty$. Non-linear updates will
+  not be gauranteed convergence.
+\end{frame}
+
+\begin{frame}{Power Iterations}
   Convergence rate is described by the dominance ratio.
   \begin{equation}
     d \equiv \frac{\keffsub{0}}{\keffsub{1}}
   \end{equation}
-\end{frame}
 
-\begin{frame}{Power Iterations}
   Iteration continues until both $\keff$ and the fission source converge.
   \begin{align}
     \label{eq:eigenvalue_tol}
