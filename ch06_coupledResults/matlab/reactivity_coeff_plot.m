@@ -95,7 +95,7 @@ set(h, 'MarkerFaceColor', get(h, 'Color'));
 plot([power(1),power(end)],[0,0],'k')
 hold off
 xlabel('% Power')
-ylabel('\alpha_{Coolant} [pcm/K]')
+ylabel('\alpha_{CTC} [pcm/K]')
 title('Coolant Temperature Coefficient')
 set(gca,'FontName',FN,'FontSize',FS);
 print(gcf,'../figs/alpha_ctc.eps','-depsc2')
