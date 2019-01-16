@@ -38,12 +38,24 @@
 \end{frame}
 
 \begin{frame}{Reactivity Coefficients}
-  Define the following reactivity coefficients 
-  $\alpha_{Total}$\\
-  $\alpha_{T_{\!\mbox{\scriptsize \em exp}}}$\\
-  $\alpha_{T_{exp}}$\\
-  $\alpha_{CTC}$\\ % (coolant temperature coefficient)
-  $\alpha_{Doppler}$
+  Consider a series of reactor powers $P_i = \{0\%,\ldots,100\%\}$. The
+  reactivity at power $P_i$ due to feedback can be defined.
+  \begin{equation}
+    \rho_i = \frac{\keffsub{i} - \keffsub{0}}{\keffsub{i} \, \keffsub{0}}
+  \end{equation}
+  Define the following reactivity coefficients.
+  \begin{align}
+    \alpha_{Total} &= \frac{\rho_i(\text{\scriptsize ALL})-
+      \rho_0}{P_i} \\
+    \alpha_{T_{\!\mbox{\scriptsize \em exp}}} &= \frac{\rho_i(\text{\scriptsize 
+      No } T_{\!\mbox{\scriptsize \em exp}} )-
+      \rho_0}{P_i} \\
+    % (coolant temperature coefficient)
+    \alpha_{CTC,i} &= \frac{\rho_i(\text{\scriptsize ALL}) - 
+      \rho_i(T_{cool}+\Delta T_{cool})}{\Delta T_{cool}} \\
+    \alpha_{Doppler,i} &= \frac{\rho_i(\text{\scriptsize ALL}) - 
+      \rho_i(T_{fuel}+\Delta T_{fuel})}{\Delta T_{fuel}}
+  \end{align}
 \end{frame}
 
 \begin{frame}{Eigenvalue Result}
@@ -57,7 +69,7 @@
       \includegraphics[width=0.25\textwidth]{./figs/phi_nod_group33}}
   \end{figure}
   \begin{block}{}
-    $\keff = X.XXXXXX \qquad (+XXX \units{pcm})$ expected $\pm 600\units{pcm}$
+    $\keff = X.XXXXXX$ \qquad (expected $\pm 600\units{pcm}$)
   \end{block}
 \end{frame}
 

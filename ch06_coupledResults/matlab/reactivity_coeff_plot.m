@@ -92,11 +92,36 @@ figure
 hold on
 h = plot(power,alpha(:,4),'-o','LineWidth',LW);
 set(h, 'MarkerFaceColor', get(h, 'Color'));
-plot([power(1),power(end)],[0,0],'k')
+plot([power(1),power(end)],[0,0],'k') % black line at zero
 hold off
 xlabel('% Power')
 ylabel('\alpha_{CTC} [pcm/K]')
 title('Coolant Temperature Coefficient')
 set(gca,'FontName',FN,'FontSize',FS);
 print(gcf,'../figs/alpha_ctc.eps','-depsc2')
+close(gcf)
+
+%%
+
+% plot coefficient figures
+figure
+h = plot(power,alpha(:,1),'-o','LineWidth',LW);
+set(h, 'MarkerFaceColor', get(h, 'Color'));
+xlabel('% Power')
+ylabel('\alpha_{Total} [pcm/%]')
+title('Power Coefficient')
+set(gca,'FontName',FN,'FontSize',FS);
+print(gcf,'../figs/alpha_total.eps','-depsc2')
+close(gcf)
+
+
+% plot coefficient figures
+figure
+h = plot(power,alpha(:,3),'-o','LineWidth',LW);
+set(h, 'MarkerFaceColor', get(h, 'Color'));
+xlabel('% Power')
+ylabel('\alpha_{Texp} [pcm/%]')
+title('Thermal Expansion Coefficient')
+set(gca,'FontName',FN,'FontSize',FS);
+print(gcf,'../figs/alpha_texp.eps','-depsc2')
 close(gcf)
