@@ -53,8 +53,11 @@ text(-11.5,6.7,'Th_{Can}','FontSize',FS,'FontName',FN);
 text(0.8,8.5,'F2F','FontSize',FS,'FontName',FN);
 text(-7,1,'Pitch','FontSize',FS,'FontName',FN);
 axis equal
-arrow([0,-10],[0,+10],'LineWidth',1)
-arrow([0,+10],[0,-10],'LineWidth',1)
+%F2F
+arrow([0,-9.5],[0,+9.5],'LineWidth',1)
+arrow([0,+9.5],[0,-9.5],'LineWidth',1)
+arrow([0,-9.5],[0,+9.5],'LineWidth',1)
+arrow([0,+9.5],[0,-9.5],'LineWidth',1)
 arrow([-6,0],[-3,-5])
 arrow([-3,-5],[-6,0])
 arrow([-7.8,5.5],[-6.2,4.45],'Length',10)
