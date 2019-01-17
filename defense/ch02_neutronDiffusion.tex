@@ -5,7 +5,7 @@
   Begin with a set of energies $\{E_g\}$ for $g = 1,2,\ldots,G$ and arranged in
   order of decreasing energy by convention.
   \begin{equation}
-    0 < E_G < E_{G-1} < \ldots < E_2 < E_1 < \nicesub{E}{max}
+    0 < E_G < E_{G-1} < \ldots < E_2 < E_1
   \end{equation}
   Typically, for \mcc and fast reactors, $G=33$.
 \end{frame}
@@ -40,22 +40,6 @@
       energy group $g$ \units{$\frac{1}{\text{cm}}$},} \\
     G & total number of energy groups%.
   \end{conditions}
-\end{frame}
-
-\begin{frame}{Collapsing $\chi$}
-  \begin{itemize}
-    \item Typically isotopic material data is specified.
-    \item It is necessary to describe effective fission spectrum
-      $\widetilde{\chi}_g(\vr)$ in terms of isotopic $\chi_{i,g}$.
-    \item This is done by preserving fission neutron production rate.
-    \item Fission spectrum, $\chi$, is now unique to each finite element.
-  \end{itemize}
-  \begin{equation}
-    \label{eq:chi_collapse}
-    \widetilde{\chi_g}(\vr) = \frac{\sum_{i=1}^{N_I} \chi_{i,g}(\vr)
-      \nu \Sigma_{f,i,g}(\vr) \phi_g(\vr)}
-      {\sum_{i=1}^{N_I} \nu \Sigma_{f,i,g}(\vr) \phi_g(\vr)}
-  \end{equation}
 \end{frame}
 
 \begin{frame}{Combining Neutron Source}
@@ -138,9 +122,9 @@
   \end{gather}
   \begin{figure}
     \centering
-    \includegraphics[width=0.35\textwidth]{cir0}
-    \caption{Example Mesh for Circle.}
-    \label{fig:circle_meshes}
+    \includegraphics[width=0.4\textwidth]{./figs/fixed0}
+    \caption{Expample Square Mesh.}
+    \label{fig:fixed0}
   \end{figure}
 \end{frame}
 
