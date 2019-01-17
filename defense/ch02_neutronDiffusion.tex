@@ -1,19 +1,6 @@
 \section{Finite Element Neutron Diffusion}
 \label{sec:neutronDiffusion}
 
-\begin{frame}{Finite Element Neutron Diffusion}
-  \begin{itemize}
-    \item Require neutron distribution to calculate power distribution, thermal
-      feedback, eigenvalues, and other quantities of interest.
-    \item Model reactor neutron distribution with the multigroup neutron
-      diffusion equation.
-    \item Solve multigroup neutron diffusion equation via Finite Element Method
-      (FEM).
-    \item FEM allows for modern techniques.
-    \item Allows for solution refinement without mesh refinement.
-  \end{itemize}
-\end{frame}
-
 \begin{frame}{Multigroup Neutron Diffusion Equation}
   Begin with a set of energies $\{E_g\}$ for $g = 1,2,\ldots,G$ and arranged in
   order of decreasing energy by convention.
@@ -28,18 +15,18 @@
   written as 
   \begin{equation}
     \label{eq:multigroup_diffusion}
-    - \grad \cdot ( D_g(\vr) \grad \phi_g(\vr)) + \Sigma_{t,g}(\vr) \phi_g(\vr)= 
+    - \grad \cdot ( D_g(\vr) \grad \phi_g(\vr)) + \Sigma_{r,g}(\vr) \phi_g(\vr)= 
       \frac{\widetilde{\chi_g}(\vr)}{\keff} 
       \sum_{g'=1}^{G} \nu\Sigma_{f,g'}(\vr) 
-      \phi_{g'}(\vr) + \sum_{g'=1}^{G} \Sigma_{s,g' \rightarrow g}(\vr) 
-      \phi_{g'}(\vr)
+      \phi_{g'}(\vr) + \sum_{g'=1 \; g' \ne g}^{G} 
+      \Sigma_{s,g' \rightarrow g}(\vr) \phi_{g'}(\vr)
   \end{equation}
   where 
   \begin{conditions} % custom environment designed for this purpose
     D_g(\vr)    & diffusion coefficient for energy group $g$ \units{cm}, \\
     \phi_g(\vr) & scalar neutron flux for energy group $g$
       \units{$\frac{1}{\text{cm}^2 \; \text{s}}$}, \\
-    \Sigma_{t,g}(\vr) & macroscopic total cross-section for energy group $g$ 
+    \Sigma_{r,g}(\vr) & macroscopic removal cross-section for energy group $g$ 
       \units{$\frac{1}{\text{cm}}$}, \\
     \widetilde{\chi_g}(\vr) & effective fission spectrum for energy group $g$,\\
     \keff & effective neutron multiplication factor, \\
@@ -55,21 +42,19 @@
   \end{conditions}
 \end{frame}
 
-\begin{frame}{Removal Cross-section}
+\begin{frame}{Collapsing $\chi$}
   \begin{itemize}
-    \item Rewrite by defining removal cross-section.
-    \item Aids simplicity and numeric efficiency.
+    \item Typically isotopic material data is specified.
+    \item It is necessary to describe effective fission spectrum
+      $\widetilde{\chi}_g(\vr)$ in terms of isotopic $\chi_{i,g}$.
+    \item This is done by preserving fission neutron production rate.
+    \item Fission spectrum, $\chi$, is now unique to each finite element.
   \end{itemize}
   \begin{equation}
-    \Sigma_{r,g}(\vr) = \Sigma_{t,g}(\vr) - \Sigma_{s,g \rightarrow g}(\vr)
-  \end{equation}
-  \begin{equation} 
-    \label{eq:multigroup_removal}
-    - \grad \cdot( D_g(\vr) \grad \phi_g(\vr)) + \Sigma_{r,g}(\vr) \phi_g(\vr) = 
-      \frac{\widetilde{\chi_g}(\vr)}{\keff} 
-      \sum_{g'=1}^{G} \nu\Sigma_{f,g'}(\vr) 
-      \phi_{g'}(\vr) + \sum_{g'=1, g' \ne g}^{G} 
-      \Sigma_{s,g' \rightarrow g}(\vr) \phi_{g'}(\vr)
+    \label{eq:chi_collapse}
+    \widetilde{\chi_g}(\vr) = \frac{\sum_{i=1}^{N_I} \chi_{i,g}(\vr)
+      \nu \Sigma_{f,i,g}(\vr) \phi_g(\vr)}
+      {\sum_{i=1}^{N_I} \nu \Sigma_{f,i,g}(\vr) \phi_g(\vr)}
   \end{equation}
 \end{frame}
 
@@ -98,23 +83,7 @@
   \end{align}
 \end{frame}
 
-\begin{frame}{Collapsing $\chi$}
-  \begin{itemize}
-    \item Typically isotopic material data is specified.
-    \item It is necessary to describe effective fission spectrum
-      $\widetilde{\chi}_g(\vr)$ in terms of isotopic $\chi_{i,g}$.
-    \item This is done by preserving fission neutron production rate.
-    \item Fission spectrum, $\chi$, is now unique to each finite element.
-  \end{itemize}
-  \begin{equation}
-    \label{eq:chi_collapse}
-    \widetilde{\chi_g}(\vr) = \frac{\sum_{i=1}^{N_I} \chi_{i,g}(\vr)
-      \nu \Sigma_{f,i,g}(\vr) \phi_g(\vr)}
-      {\sum_{i=1}^{N_I} \nu \Sigma_{f,i,g}(\vr) \phi_g(\vr)}
-  \end{equation}
-\end{frame}
-
-\begin{frame}{Boundary Conditons}
+\begin{frame}{Boundary Conditions}
   Consider a domain $\Omega$ with boundary $\partial \Omega$ and let $\nhat$ be
   the outward-normal unit vector.
 
@@ -144,26 +113,11 @@
   the greater the integer, the greater the precedent.
 \end{frame}
 
-\begin{frame}{Finite Element Discretization}
-  Divide the domain $\Omega$ into a set of unstructured finite elements 
-  (e.g. Delaunay triangulation).
-  \begin{equation}
-    \label{eq:set_of_elements}
-    \Omega = \Omega_1 \cup \Omega_2 \cup \Omega_3 \cup \ldots \cup
-      \Omega_{N_E} 
-  \end{equation}
-  \begin{equation}
-    \Omega = \{\Omega_e\} \; \text{for} \; e = 1,2,\ldots,N_E
-  \end{equation}
-  \begin{equation}
-    \Omega_i \cap \Omega_j = \emptyset.
-  \end{equation}
-\end{frame}
-
 \begin{frame}{Finite Element Method}
   Multiply the multigroup neutron diffusion equation by a testing function
-  $v(\vr) \in H_1(\Omega)$ and integrate over the problem domain. This yields
-  the Weak Form of the problem.
+  $v(\vr) \in H_1(\Omega)$ and integrate over the problem domain. 
+  
+  This yields the \textbf{Weak Form} of the problem.
   \begin{equation}
     \label{eq:fem_weak_form}
     - \int_{\Omega} \grad \cdot (D_g(\vr) \grad \phi_g(\vr)) v(\vr) \; d\vr
@@ -172,8 +126,27 @@
   \end{equation}
 \end{frame}
 
-\begin{frame}{Flat-source Elements}
+\begin{frame}{Finite Element Discretization}
+  Divide the domain $\Omega$ into a set of unstructured finite elements 
+  (e.g. Delaunay triangulation).
+  \begin{gather}
+    \label{eq:set_of_elements}
+    \Omega = \Omega_1 \cup \Omega_2 \cup \Omega_3 \cup \ldots \cup
+      \Omega_{N_E}  \\
+    \Omega = \{\Omega_e\} \; \text{for} \; e = 1,2,\ldots,N_E \\
+    \Omega_i \cap \Omega_j = \emptyset \; \text{for} \; i \ne j
+  \end{gather}
+  \begin{figure}
+    \centering
+    \includegraphics[width=0.35\textwidth]{cir0}
+    \caption{Example Mesh for Circle.}
+    \label{fig:circle_meshes}
+  \end{figure}
+\end{frame}
+
+\begin{frame}{Constant Source Elements}
   Allow the neutron source $q_g(\vr)$ to be constant over an element $\Omega_e$.
+
   Alternatively, a point source could be integrated numerically.
   \begin{align}
     q_g(\vr) &= q_{g,e} \; \forall \; \vr \in \Omega_e \\
@@ -189,6 +162,7 @@
       \phiavg_{g',e}\\
     \phiavg_{g,e} &= \frac{1}{N_p} \sum_{i \in \Omega_e}^{N_p} \phi_{i,g}
   \end{align}
+
   Additionally, allow all cross-sections to be constant within an element.
 \end{frame}
 
@@ -205,7 +179,6 @@
   \end{equation}
   Use the Second Green's Theorem to rewrite the first integral
   \cite{textbookli}.
-  %\footcite{textbookli}.
   \begin{multline} 
     -\sum_{e=1}^{N_E} D_{g,e} \int_{\partial \Omega_e} v(\vr) \grad
     \phi_g(\vr) \cdot \nhat \;ds + \sum_{e=1}^{N_E} 
@@ -213,23 +186,6 @@
       \; d\vr + \\
       \sum_{e=1}^{N_E} \Sigma_{r,g,e} \int_{\Omega_e} \phi_g(\vr) v(\vr) 
      \; d\vr =
-      \sum_{e=1}^{N_E} q_{g,e} \int_{\Omega_e} v(\vr) \; d\vr
-  \end{multline}
-\end{frame}
-
-\begin{frame}
-  \begin{itemize}
-    \item Recognize the form of the boundary condition.
-    \item Note that mirror and zero-flux boundary conditions can both be written
-      as albedo boundary conditions.
-  \end{itemize}
-  \begin{multline}
-    \label{eq:element_boundary}
-    \sum_{e=1}^{N_E} \albedo \int_{\partial \Omega_e} v(\vr) 
-      \phi_g(\vr) \;ds + \sum_{e=1}^{N_E} D_{g,e}
-      \int_{\Omega_e} \grad \phi_g(\vr) \cdot \grad v(\vr) \; d\vr + \\
-      \sum_{e=1}^{N_E} \Sigma_{r,g,e} \int_{\Omega_e} \phi_g(\vr) v(\vr) 
-      \; d\vr =
       \sum_{e=1}^{N_E} q_{g,e} \int_{\Omega_e} v(\vr) \; d\vr
   \end{multline}
 \end{frame}
@@ -276,11 +232,11 @@
     a(\basis_i,\basis_j) = f(\basis_i)
   \end{equation}
   In the form common to linear systems.
-  \begin{equation}
+  \begin{gather}
     \label{eq:matrix_notation}
-    \ma \, \vu = \vf
-  \end{equation}
-  \[ \vu = \{\upsilon_{i,g}\} \]
+    \ma \, \vu = \vf \\
+    \vu = \{\upsilon_{i,g}\}
+  \end{gather}
 \end{frame}
 
 \begin{frame}{Properties of $\ma \, \vu = \vf$}
@@ -295,9 +251,41 @@
 
   It is natural to populate the matrix $\ma$ in an element-by-element procedure.
   \begin{align}
+    \label{eq:matrix_population}
+    A_{i,j,g,e} &= \albedo \int_{\partial \Omega_e} \basis_i(\vr) 
+      \basis_j(\vr) \; ds + D_{g,e} 
+      \int_{\Omega_e} \grad \basis_i(\vr) \cdot \grad \basis_j(\vr) \;
+      d\Omega_e \\
+    &\qquad + \Sigma_{r,g,e} \int_{\Omega_e} \basis_i(\vr) \basis_j(\vr)
+      \; d\Omega_e, \\
+    \label{eq:vector_population}
+    f_{i,g,e} &= q_{g,e} \int_{\Omega_e} \basis_i(\vr) \;d\Omega_e.
+  \end{align}
+  \begin{align}
     A_{i,j,g} &= \sum_{e=1}^{N_E} A_{i,j,g,e} \\
     f_{i,g} &=  \sum_{e=1}^{N_E} f_{i,g,e}
   \end{align}
+\end{frame}
+
+\begin{frame}{Integration}
+  Integrals of interest:
+  \begin{align}
+    &\int_{\Omega_e} \grad \basis_i(\vr) \cdot \grad \basis_j(\vr) 
+      \;d\vr \\
+    &\int_{\Omega_e} \basis_i(\vr) \basis_j(\vr) \;d\vr \\
+    &\int_{\Omega_e} \basis_i(\vr) \;d\vr \\
+    &\int_{\partial \Omega_e} \basis_i(\vr) \basis_j(\vr) \;ds &
+  \end{align}
+
+  Options for integration:
+  \begin{itemize}
+    \item Analytic.
+    \item Numeric (quadrature).
+    \begin{itemize}
+      \item Linear (Gaussian).
+      \item Triangular.
+    \end{itemize}
+  \end{itemize}
 \end{frame}
 
 \begin{frame}{Triangular Elements}
@@ -340,44 +328,6 @@
   \end{columns}
 \end{frame}
 
-\begin{frame}{Integration}
-  Integrals of interest:
-  \begin{align}
-    &\int_{\Omega_e} \grad \basis_i(\vr) \cdot \grad \basis_j(\vr) 
-      \;d\vr \\
-    &\int_{\Omega_e} \basis_i(\vr) \basis_j(\vr) \;d\vr \\
-    &\int_{\Omega_e} \basis_i(\vr) \;d\vr \\
-    &\int_{\partial \Omega_e} \basis_i(\vr) \basis_j(\vr) \;ds &
-  \end{align}
-
-  Options for integration:
-  \begin{enumerate}
-    \item Analytic.
-    \item Numeric (quadrature).
-  \end{enumerate}
-\end{frame}
-
-\begin{frame}{Quadrature Integration}
-  General form with weights $\{w_i\}$ and coordinates $\{\vx_i\}$.
-  \begin{equation}
-    \label{eq:quadrature}
-    \int_{\Omega} f(\vx) \;d\Omega \approx \sum_{i=1}^{N} w_i f(\vx_i)
-  \end{equation}
-  For integration of a general element using a quadrature centered on a
-  reference element, the Jacobian is used.
-  \begin{equation}
-    \int_{\Omega} f(\vx) \;d\Omega = 
-      \int_{\Omega_{ref}} f(\vx) \lvert \mj \rvert \;d\Omega_{ref} \approx
-      \sum_{i=1}^{N} w_i f(\vx_i) \lvert \mj_i \rvert
-  \end{equation}
-
-  This work uses two types of quadratures.
-  \begin{itemize}
-    \item Gaussian.
-    \item Triangle (symmetric and open).
-  \end{itemize}
-\end{frame}
-
 \begin{frame}{Power Iterations}
   \begin{itemize}
     \item FEM used to solve spatial distribution $\phi_g(\vr)$ for a given
@@ -417,13 +367,13 @@
   \end{equation}
 
   This method will converge as $s \rightarrow \infty$. Non-linear updates will
-  not be gauranteed convergence.
+  not be guaranteed convergence.
 \end{frame}
 
 \begin{frame}{Power Iterations}
   Convergence rate is described by the dominance ratio.
   \begin{equation}
-    d \equiv \frac{\keffsub{0}}{\keffsub{1}}
+    d \equiv \frac{\keffsub{1}}{\keffsub{0}}
   \end{equation}
 
   Iteration continues until both $\keff$ and the fission source converge.
@@ -433,19 +383,17 @@
     \label{eq:eigenvector_tol}
     \epsilon_{\vPhi} &> \max_i \left| \frac{\nu\Sigma_{f,i}\vPhi_i^{(s+1)} - 
       \nu\Sigma_{f,i} \vPhi_i^{(s)}}
-      {\nu\Sigma_{f,i} \vPhi_i^{(s)}}\right| .
+      {\nu\Sigma_{f,i} \vPhi_i^{(s)}}\right|
   \end{align}
 \end{frame}
 
-\begin{frame}{Calculation of Source with Power Iterations}
-  Fission and up-scatter sources must lag the flux solution by one iteration
-  whereas down-scatter source is known exactly.
-  \begin{equation} 
-    \label{eq:multigroup_power_iterations}
-    -\grad \cdot (D_g(\vr) \grad \phi_g^{(s+1)}(\vr)) + \Sigma_{r,g}(\vr)
-    \phi_g^{(s+1)}(\vr) = q_{fiss,g}^{(s)}(\vr) + q_{up,g}^{(s)}(\vr) +
-    q_{down,g}^{(s+1)}(\vr)
-  \end{equation}
+\begin{frame}{Memory and Storage}
+  \begin{itemize}
+    \item Created custom \twotable sparse storage implementation.
+    \item Modified reduced row storage.
+    \item Designed to minimize storage and optimize matrix vector
+      multiplications.
+  \end{itemize}
 \end{frame}
 
 \begin{frame}{Matrix Ordering}
@@ -455,7 +403,7 @@
     \item Nodes are re-indexed such that physically proximate nodes have
       proximate indices.
     \item Improve cache hits.
-    \item Reverce Cuthill-McKee (RCM) order is chosen \cite{rcm}.
+    \item Reverse Cuthill-McKee (RCM) order is chosen \cite{rcm}.
   \end{itemize}
   \vspace{-0.25in}
   \begin{figure}
@@ -465,15 +413,6 @@
     \subfloat{\includegraphics[width=0.4\textwidth]{./figs/rcm_pattern}}
     \label{fig:sparsity_pattern}
   \end{figure}
-\end{frame}
-
-\begin{frame}{Memory and Storage}
-  \begin{itemize}
-    \item Created custom \twotable storage implementation.
-    \item Modified reduced row storage.
-    \item Designed to minimize storage and optimize matrix vector
-      multiplications.
-  \end{itemize}
 \end{frame}
 
 \begin{frame}{Combined Algorithm}
@@ -508,7 +447,8 @@
         \EndFor
         \State Update $\keff$.
         \State Check convergence.
-        \State Perform non-linear update if necessary. \label{state:nonlinear}
+        \State Perform non-linear update if necessary and update $\ma_g$. 
+          \label{state:nonlinear}
       \EndWhile
       \end{algorithmic}
     \end{algorithm}

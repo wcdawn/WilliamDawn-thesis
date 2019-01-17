@@ -34,7 +34,8 @@
       \cite{fuelProp}.
   \end{itemize}
   \begin{table}
-    \caption{Constant Thermal Conductivity for Sodium and HT9.}
+    \caption{Constant Thermal Conductivity for Sodium and HT9 at Reactor
+      Temperatures.}
     \label{tab:constant_k}
     \begin{center}
       \begin{tabular}{cl}
@@ -151,14 +152,6 @@
   \end{figure}
 \end{frame}
 
-\begin{frame}{Radial Assumptions}
-  \begin{itemize}
-    \item Axial conduction is negligible within solid materials.
-    \item Constant volumetric heat conduction rate within the fuel.
-    \item Good thermal contact between materials.
-  \end{itemize}
-\end{frame}
-
 \begin{frame}{Clad Surface Temperature -- Subbotin-Ushakov}
   Using Newton's Law of Cooling.
   \begin{align}
@@ -216,14 +209,14 @@
 \begin{frame}{Average Material Temperatures}
   Average temperatures in the clad and bond are calculated analytically.
   \begin{align}
-    \label{eq:tb_bar}
-    \overline{T_B} &= T_F - \frac{q'''_{i,k}}{4 k_B} \, R_F^2 \, \left(
-      \frac{R_F^2 - R_B^2 + 2\,R_B^2 \ln\left(\frac{R_B}{R_F}\right)}
-      {R_B^2-R_F^2}\right) \\
     \label{eq:tc_bar}
     \overline{T_C} &= T_B - \frac{q'''}{4 k_C} R_F^2 \left(
       \frac{2 \, R_C^2 \ln\left(\frac{R_C}{R_B}\right)}
-      {R_C^2 - R_B^2}  - 1\right)
+      {R_C^2 - R_B^2}  - 1\right) \\
+    \label{eq:tb_bar}
+    \overline{T_B} &= T_F - \frac{q'''_{i,k}}{4 k_B} \, R_F^2 \, \left(
+      \frac{R_F^2 - R_B^2 + 2\,R_B^2 \ln\left(\frac{R_B}{R_F}\right)}
+      {R_B^2-R_F^2}\right)
   \end{align}
 \end{frame}
 
