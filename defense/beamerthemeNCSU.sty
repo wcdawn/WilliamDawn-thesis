@@ -2,6 +2,7 @@
 
 % This theme modifies the PaloAlto, sidebar, and sidebartab beamer themes
 % Modifications by Chris Bourke
+% Modifications by William C. Dawn <wcdawn@ncsu.edu>
 % Last modified 3/7/05
 
 \usepackage{tikz}
@@ -356,6 +357,8 @@ top color=transparent!50, bottom color=transparent!100]
 \setbeamercolor{subsubitem projected}{bg=ReynoldsRed}
 }
 
+\setbeamertemplate{navigation symbols}{}
+
 % Handout Mode - Using the default layouts, no menus, etc.
 \mode
 <handout>{
@@ -374,7 +377,15 @@ top color=transparent!50, bottom color=transparent!100]
 \pgfpageslogicalpageoptions{1}{border code=\pgfusepath{stroke}}
 \pgfpageslogicalpageoptions{2}{border code=\pgfusepath{stroke}}
 \pgfpageslogicalpageoptions{3}{border code=\pgfusepath{stroke}}
+\addtobeamertemplate{navigation symbols}{}{%
+  \usebeamerfont{footline}%
+  \usebeamercolor[fg]{footline}%
+  \hspace{1em}%
+  \normalsize
+  \insertframenumber
 }
+}
+
 
 % number sections and subsections in tables of contents
 \setbeamertemplate{section in toc}[sections numbered]
