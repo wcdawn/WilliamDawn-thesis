@@ -113,23 +113,40 @@
     \label{tab:finite_cyl}
     \begin{center}
       \resizebox{\textwidth}{!}{
+      \begin{threeparttable}
       \begin{tabular}{cccccccccc}
         \toprule
         Refine & $\keff$ & $\keff$ error \units{pcm} & $\keff$ ratio & RMS & 
           RMS ratio  & $\|e\|_{\infty}$ & $\|e\|_{\infty}$ ratio \\
         \midrule
-        \csvreader[
-          late after line=\\,
-          late after last line=\\,]
-          {../ch03_diffusionResults/data/finite_cyl.csv}{}
-          {\csvcoli & \csvcolii & \csvcoliii & \csvcoliv & \csvcolv & 
-          \csvcolvi & \csvcolxi & \csvcolxii}
+
+        0     &0.895108&10160.26&4.18   &5.34E-02&2.57     &2.12E-01&1.62\\
+        1     &0.972412&2429.90 &4.16   &2.07E-02&3.19     &1.31E-01&4.65\\
+        2\tnote{$\dagger$}     &0.990870&584.06  &3.90   &6.50E-03&1.85     &2.81E-02&1.79\\
+        3     &0.995215&149.61  &3.99   &3.51E-03&9.22     &1.57E-02&8.28\\
+        4     &0.996336&37.48   &       &3.81E-04&         &1.90E-03&    \\
+
+        %\csvreader[
+        %  late after line=\\,
+        %  late after last line=\\,]
+        %  {../ch03_diffusionResults/data/finite_cyl.csv}{}
+        %  {\csvcoli & \csvcolii & \csvcoliii & \csvcoliv & \csvcolv & 
+        %  \csvcolvi & \csvcolxi & \csvcolxii}
+
         Ref. & 0.996711 \\
         \bottomrule
       \end{tabular}
+        \begin{tablenotes}
+        \item[$\dagger$] Refinement ratio $\approx 1$ but next case $\approx
+          8$.\\
+          This is due to the movement of mesh nodes in the process of circular
+          remeshing.
+        \end{tablenotes}
+      \end{threeparttable}
     }
     \end{center}
   \end{table}
+  \vspace{-0.2in}
   \begin{figure}
     \centering
     \subfloat{\includegraphics[width=0.35\textwidth]{cir0}}
@@ -221,224 +238,6 @@
   \Put(25,350){\includegraphics[width=0.15\textwidth]{hex_description}}
 \end{frame}
 
-\begin{frame}{SNR}
-  \begin{itemize}
-    \item Two-dimensional.
-    \item Sodium-cooled Fast Reactor (SFR).
-    \item Four-group.
-  \end{itemize}
-  \begin{table}
-    \begin{center}
-      %\caption{SNR Benchmark Convergence Study.}
-      \label{tab:snr}
-      \begin{threeparttable}
-        \begin{tabular}{cccc}
-          \toprule
-          Refine & $\keff$ & $\keff$ error \units{pcm} & $\keff$ ratio \\
-          \midrule
-          \csvreader[
-            late after line=\\,
-            late after last line=\\,]
-            {../ch03_diffusionResults/data/snr.csv}{}
-            {\csvcoli & \csvcolvi & \csvcolvii & \csvcolviii}
-          Ref. \tnote{$\dagger$} & 1.124000 \\
-          \bottomrule
-        \end{tabular}
-        \begin{tablenotes}
-          \item[$\dagger$] See \cite{argonneBenchmark}.
-        \end{tablenotes}
-      \end{threeparttable}
-    \end{center}
-  \end{table}
-\end{frame}
-
-\begin{frame}{SNR Benchmark Power Comparison}
-  \begin{figure}
-    \centering
-    \includegraphics[width=\textwidth]{diffusion_snr}
-    %\caption{SNR Benchmark Power Comparison for Most Refined Mesh.}
-    \label{fig:diffusion_snr}
-  \end{figure}
-  \Put(25,450){\includegraphics[width=0.15\textwidth]{hex_description}}
-\end{frame}
-
-\begin{frame}{HWR}
-  \begin{itemize}
-    \item Two-dimensional.
-    \item Heavy Water Reactor (HWR).
-    \item Two-group.
-  \end{itemize}
-  \begin{table}
-    \begin{center}
-      %\caption{HWR Benchmark Convergence Study.}
-      \label{tab:hwr}
-      \begin{threeparttable}
-        \begin{tabular}{cccc}
-          \toprule
-          Refine & $\keff$ & $\keff$ error \units{pcm} & $\keff$ ratio \\
-          \midrule
-          \csvreader[
-            late after line=\\,
-            late after last line=\\,]
-            {../ch03_diffusionResults/data/hwr.csv}{}
-            {\csvcoli & \csvcolvi & \csvcolvii & \csvcolviii}
-          Ref.\tnote{$\dagger$} & 0.991965  \\
-          \bottomrule
-        \end{tabular}
-        \begin{tablenotes}
-          \item[$\dagger$] See \cite{chao}.
-        \end{tablenotes}
-      \end{threeparttable}
-    \end{center}
-  \end{table}
-\end{frame}
-
-\begin{frame}{HWR Benchmark Power Comparison}
-  \begin{figure}
-    \centering
-    \includegraphics[width=\textwidth]{diffusion_hwr}
-    \caption{HWR Benchmark Power Comparison for Most Refined Mesh.}
-    \label{fig:diffusion_hwr}
-  \end{figure}
-  \Put(25,450){\includegraphics[width=0.15\textwidth]{hex_description}}
-\end{frame}
-
-\begin{frame}{IAEA -- No Reflector $\albedo=0.125$}
-  \begin{itemize}
-    \item Two-dimensional.
-    \item Pressurized Water Reactor (PWR).
-    \item Two-group.
-    \item Originally cartesian but converted to hexagonal in \cite{chao}.
-  \end{itemize}
-  % nore0125
-  \begin{table}
-    \begin{center}
-      %\caption{IAEA Benchmark Convergence Study. No Reflector. $\albedo = 
-      %  0.125$.}
-      \label{tab:iaea_nore0125}
-      \begin{threeparttable}
-        \begin{tabular}{cccc}
-          \toprule
-          Refine & $\keff$ & $\keff$ error \units{pcm} & $\keff$ ratio \\
-          \midrule
-          \csvreader[
-            late after line=\\,
-            late after last line=\\,]
-            {../ch03_diffusionResults/data/iaea_nore0125.csv}{}
-            {\csvcoli & \csvcolvi & \csvcolvii & \csvcolviii}
-          Ref. \tnote{$\dagger$} & 0.991378 \\
-          \bottomrule
-        \end{tabular}
-        \begin{tablenotes}
-          \item[$\dagger$] See \cite{chao}.
-        \end{tablenotes}
-      \end{threeparttable}
-    \end{center}
-  \end{table}
-\end{frame}
-
-\begin{frame}{IAEA -- No Reflector $\albedo=0.500$}
-  \begin{itemize}
-    \item Two-dimensional.
-    \item Pressurized Water Reactor (PWR).
-    \item Two-group.
-    \item Originally cartesian but converted to hexagonal in \cite{chao}.
-  \end{itemize}
-  % nore0500
-  \begin{table}
-    \begin{center}
-      %\caption{IAEA Benchmark Convergence Study. No Reflector. $\albedo = 
-      %  0.500$.}
-      \label{tab:iaea_nore0500}
-      \begin{threeparttable}
-        \begin{tabular}{cccc}
-          \toprule
-          Refine & $\keff$ & $\keff$ error \units{pcm} & $\keff$ ratio \\
-          \midrule
-          \csvreader[
-            late after line=\\,
-            late after last line=\\,]
-            {../ch03_diffusionResults/data/iaea_nore0500.csv}{}
-            {\csvcoli & \csvcolvi & \csvcolvii & \csvcolviii}
-          Ref. \tnote{$\dagger$} & 0.978077 \\
-          \bottomrule
-        \end{tabular}
-        \begin{tablenotes}
-          \item[$\dagger$] See \cite{chao}.
-        \end{tablenotes}
-      \end{threeparttable}
-    \end{center}
-  \end{table}
-\end{frame}
-
-\begin{frame}{IAEA -- Reflector $\albedo=0.125$}
-  \begin{itemize}
-    \item Two-dimensional.
-    \item Pressurized Water Reactor (PWR).
-    \item Two-group.
-    \item Originally cartesian but converted to hexagonal in \cite{chao}.
-  \end{itemize}
-  % refl0125
-  \begin{table}
-    \begin{center}
-      %\caption{IAEA Benchmark Convergence Study. With Reflector. $\albedo = 
-      %  0.125$.}
-      \label{tab:iaea_refl0125}
-      \begin{threeparttable}
-        \begin{tabular}{cccc}
-          \toprule
-          Refine & $\keff$ & $\keff$ error \units{pcm} & $\keff$ ratio \\
-          \midrule
-          \csvreader[
-            late after line=\\,
-            late after last line=\\,]
-            {../ch03_diffusionResults/data/iaea_refl0125.csv}{}
-            {\csvcoli & \csvcolvi & \csvcolvii & \csvcolviii}
-          Ref. \tnote{$\dagger$} & 1.006630 \\
-          \bottomrule
-        \end{tabular}
-        \begin{tablenotes}
-          \item[$\dagger$] See \cite{chao}.
-        \end{tablenotes}
-      \end{threeparttable}
-    \end{center}
-  \end{table}
-\end{frame}
-
-\begin{frame}{IAEA -- Reflector $\albedo=0.500$}
-  \begin{itemize}
-    \item Two-dimensional.
-    \item Pressurized Water Reactor (PWR).
-    \item Two-group.
-    \item Originally cartesian but converted to hexagonal in \cite{chao}.
-  \end{itemize}
-  % refl0500
-  \begin{table}
-    \begin{center}
-    %\caption{IAEA Benchmark Convergence Study. With Reflector. $\albedo = 
-    %  0.500$.}
-    \label{tab:iaea_refl0500}
-      \begin{threeparttable}
-        \begin{tabular}{cccc}
-          \toprule
-          Refine & $\keff$ & $\keff$ error \units{pcm} & $\keff$ ratio \\
-          \midrule
-          \csvreader[
-            late after line=\\,
-            late after last line=\\,]
-            {../ch03_diffusionResults/data/iaea_refl0500.csv}{}
-            {\csvcoli & \csvcolvi & \csvcolvii & \csvcolviii}
-          Ref. \tnote{$\dagger$} & 1.005507 \\
-          \bottomrule
-        \end{tabular}
-        \begin{tablenotes}
-          \item[$\dagger$] See \cite{chao}.
-        \end{tablenotes}
-      \end{threeparttable}
-    \end{center}
-  \end{table}
-\end{frame}
-
 \begin{frame}{Three-Dimensional Problem Analysis}
   Typically more useful to compare control rod worth measurement.
   \begin{itemize}
@@ -488,33 +287,3 @@
   \end{table}
 \end{frame}
 
-\begin{frame}{KNK}
-  \begin{itemize}
-    \item Three-dimensional.
-    \item Sodium-cooled Fast Reactor (SFR).
-    \item Four-group.
-    \item Reference data is a transport problem.
-  \end{itemize}
-  \begin{table}
-    \begin{center}
-      %\caption{KNK Benchmark Rod Worth Results.}
-      \label{tab:knk}
-      \begin{threeparttable}
-        \begin{tabular}{ccll}
-          \toprule
-          Pattern & $\keff$ & Rod Worth \units{$\Delta k$} & 
-            Rod Difference \units{\%$\Delta k$} \\
-          \midrule
-          A&1.061752&               &            \\
-          B&0.942404&0.119 (1.55E-2) \tnote{$\dagger$} &11.93 (0.75)\\
-          C&0.829829&0.263 (3.99E-2)&23.19 (1.67)\\
-          \bottomrule
-        \end{tabular}
-        \begin{tablenotes}
-          \item[$\dagger$] Value in parentheses is difference to reference
-            value from \cite{takedaBenchmark}.
-        \end{tablenotes}
-      \end{threeparttable}
-    \end{center}
-  \end{table}
-\end{frame}
