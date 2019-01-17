@@ -312,74 +312,6 @@
   \end{columns}
 \end{frame}
 
-\begin{frame}{Power Iterations}
-  \begin{itemize}
-    \item FEM used to solve spatial distribution $\phi_g(\vr)$ for a given
-      source distribution $q_g(\vr)$.
-    \item Power Iteration method used to converge to fundamental eigenmode
-      (\keff) and eigenvector ($\phi_g(\vr)$).
-  \end{itemize}
-
-  The multigroup neutron diffusion equation can be written.
-  \begin{equation}
-    \label{eq:gehin_notation}
-    \mb(\vPhi,\keff) \vPhi = \frac{1}{\keff} \mm \vPhi
-  \end{equation}
-  Or as an eigenvalue problem.
-  \begin{align}
-    \label{eq:gehin_solution}
-    \vPhi &= \frac{1}{\keff} \mr \vPhi \\
-    \label{eq:gehin_r}
-    \mr &= \mb^{-1} \mm.
-  \end{align}
-\end{frame}
-
-\begin{frame}{Power Iterations}
-  Using this notation, the Power Iteration method is defined.
-  \begin{align}
-    \label{eq:power_iteration_phi}
-    \vPhi^{(s+1)} &= \frac{1}{\keff^{(s)}} \mr \vPhi^{(s)} \\
-    \label{eq:power_iteration_eigenvalue}
-    \keff^{(s+1)} &= \keff^{(s)} \frac{\vw^{T} \vPhi^{(s+1)}}
-      {\vw^{T} \vPhi^{(s)}} \qquad s = 1,2,\ldots,\infty
-  \end{align}
-
-  The weighting is arbitrary. Chosen such that $\vw^{T} \vPhi$ is the total 
-  fission neutron production rate.
-  \begin{equation}
-    \vw = \{\nu \Sigma_f \}
-  \end{equation}
-
-  This method will converge as $s \rightarrow \infty$. Non-linear updates will
-  not be guaranteed convergence.
-\end{frame}
-
-\begin{frame}{Power Iterations}
-  Convergence rate is described by the dominance ratio.
-  \begin{equation}
-    d \equiv \frac{\keffsub{1}}{\keffsub{0}}
-  \end{equation}
-
-  Iteration continues until both $\keff$ and the fission source converge.
-  \begin{align}
-    \label{eq:eigenvalue_tol}
-    \epsilon_{\keff} &> | \keff^{(s+1)} - \keff^{(s)} | \\
-    \label{eq:eigenvector_tol}
-    \epsilon_{\vPhi} &> \max_i \left| \frac{\nu\Sigma_{f,i}\vPhi_i^{(s+1)} - 
-      \nu\Sigma_{f,i} \vPhi_i^{(s)}}
-      {\nu\Sigma_{f,i} \vPhi_i^{(s)}}\right|
-  \end{align}
-\end{frame}
-
-\begin{frame}{Memory and Storage}
-  \begin{itemize}
-    \item Created custom \twotable sparse storage implementation.
-    \item Modified reduced row storage.
-    \item Designed to minimize storage and optimize matrix vector
-      multiplications.
-  \end{itemize}
-\end{frame}
-
 \begin{frame}{Matrix Ordering}
   \begin{itemize}
     \item Matrix is reordered to increase computational efficiency and compute
@@ -399,7 +331,7 @@
   \end{figure}
 \end{frame}
 
-\begin{frame}{Combined Algorithm}
+\begin{frame}{Power Iteration Algorithm}
 
     \begin{algorithm}[H]
       \caption{\scriptsize General Iteration Scheme}
