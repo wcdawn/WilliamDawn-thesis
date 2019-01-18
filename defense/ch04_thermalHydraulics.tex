@@ -5,7 +5,7 @@
   \begin{figure}
     \centering
     \includegraphics[width=0.8\textwidth]{enthalpy_rise}
-    %\caption{Typical FR Enthalpy Rise.}
+    \caption{Typical SFR Enthalpy Rise.}
     \label{fig:enthalpy_rise}
   \end{figure}
 \end{frame}
@@ -23,12 +23,14 @@
       \subfloat[Fuel]{
         \includegraphics[width=0.35\textwidth]{./figs/temp_fuel}}
     \end{tabular}
+    \caption{Typical SFR Average Material Temperatures.}
   \end{figure}
 \end{frame}
 
 \begin{frame}{Material Properties}
   \begin{itemize}
     \item Functional sodium properties from \cite{sodiumProp}.
+    \item Temperature range of structural material small. 
     \item Clad and sodium thermal conductivity assumed constant \cite{ht9Prop}.
     \item Fuel thermal conductivity assumed a function of temperature
       \cite{fuelProp}.
@@ -71,28 +73,6 @@
   \end{figure}
 \end{frame}
 
-\begin{frame}{Calculating Reactor Power}
-  For a user-input $Q_{Rx}$, a normalization constant is calculated to convert
-  unnormalized flux $\widetilde{\phi_{g,e}}$ to normalized flux $\phi_{g,e}$.
-  \begin{align}
-    \label{eq:normalization_c}
-    c &= \frac{Q_{Rx}}{\sum_{g}^{G} \sum_{e}^{N_E} \kappa \Sigma_{f,g,e} \,
-      \widetilde{\phi_{g,e}} \, V_e} \\
-    \phi_{g,e} &= c \, \widetilde{\phi_{g,e}}
-  \end{align}
-  Element power is defined.
-  \begin{equation}
-    \label{eq:elementpwr}
-    q_{e} = \sum_g^G \kappa \Sigma_{f,e,g} \, \phi_{g,e} \, V_e .
-  \end{equation}
-  Assuming all heat generated in the element is generated within the fuel, the
-  volumetric heat generation rate is defined.
-  \begin{equation}
-    \label{eq:elementqppp_fuel}
-    q'''_{e} = \frac{q_e}{V_{fuel,e}}
-  \end{equation}
-\end{frame}
-
 \begin{frame}{Axial Convection Geometric Model}
   \begin{columns}
     \begin{column}{0.5\textwidth}
@@ -119,16 +99,6 @@
 \begin{frame}{Channel Enthalpy}
   Steady-state coolant enthalpy within the channel is given by an energy
   balance.
-  \begin{equation}
-    \label{eq:continuous_heat_balance}
-    h_i(z) = h_{in} + \frac{1}{\mdot_i} \int_0^z q'_i(z') \; dz'
-  \end{equation}
-  $h_{in}$ is given by a state relationship from a user-input $T_{inlet}$.
-  \begin{equation}
-    h_{in} = h(T_{inlet})
-  \end{equation}
-  Discretize the integral to calculate the enthalpy at the upper node of the
-  chunk.
   \begin{equation}
     h_{i,k+1/2} = h_{in} + \frac{1}{\mdot_i} \sum_{k=1}^{N_z} q_{i,k}
   \end{equation}
@@ -176,8 +146,7 @@
 \end{frame}
 
 \begin{frame}{Rod Surface Temperatures}
-  Once the clad surface temperature is known, subsequent surface temperatures
-  are given by radial heat conduction.
+  Subsequent surface temperatures are given by radial heat conduction.
   \begin{align}
     \label{eq:tc_forward}
     T_C &= q'''_{i,k} \frac{R_F^2}{2\,R_c\,H_c} + T_{\infty} \\
@@ -269,7 +238,7 @@
   \end{columns}
 \end{frame}
 
-\begin{frame}{Cross-section Treatment}
+\begin{frame}{Cross-Section Treatment}
   \begin{itemize}
     \item Cross-sections are now unique to each chunk because temperatures are
       unique to each chunk.
