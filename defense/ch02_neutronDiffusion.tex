@@ -2,17 +2,8 @@
 \label{sec:neutronDiffusion}
 
 \begin{frame}{Multigroup Neutron Diffusion Equation}
-  Begin with a set of energies $\{E_g\}$ for $g = 1,2,\ldots,G$ and arranged in
-  order of decreasing energy by convention.
-  \begin{equation}
-    0 < E_G < E_{G-1} < \ldots < E_2 < E_1
-  \end{equation}
-  Typically, for \mcc and fast reactors, $G=33$.
-\end{frame}
-
-\begin{frame}{Multigroup Neutron Diffusion Equation}
   In conventional notation, the multigroup neutron diffusion equation can be
-  written as 
+  written.
   \begin{equation}
     \label{eq:multigroup_diffusion}
     - \grad \cdot ( D_g(\vr) \grad \phi_g(\vr)) + \Sigma_{r,g}(\vr) \phi_g(\vr)= 
@@ -21,7 +12,6 @@
       \phi_{g'}(\vr) + \sum_{g'=1 \; g' \ne g}^{G} 
       \Sigma_{s,g' \rightarrow g}(\vr) \phi_{g'}(\vr)
   \end{equation}
-  where 
   \begin{conditions} % custom environment designed for this purpose
     D_g(\vr)    & diffusion coefficient for energy group $g$ \units{cm}, \\
     \phi_g(\vr) & scalar neutron flux for energy group $g$
@@ -38,39 +28,13 @@
       \parbox[t]{\columnwidth}{macroscopic scatter cross-section from
       energy group $g'$ to\\
       energy group $g$ \units{$\frac{1}{\text{cm}}$},} \\
-    G & total number of energy groups%.
+    G & total number of energy groups (typically $G=33$)%.
   \end{conditions}
-\end{frame}
-
-\begin{frame}{Combining Neutron Source}
-  \begin{itemize}
-    \item Neutron sources are combined into a single term.
-    \item This will resemble the FEM formulation.
-  \end{itemize}
-  \begin{equation}
-    \label{eq:multigroup_source}
-    - \grad \cdot( D_g(\vr) \grad \phi_g(\vr)) + \Sigma_{r,g}(\vr) \phi_g(\vr) = 
-      q_g(\vr)
-  \end{equation}
-  \begin{align}
-    \label{eq:q}
-    q_g(\vr) &= q_{fiss,g}(\vr) + q_{up,g}(\vr) + q_{down,g}(\vr) \\
-    \label{eq:qfiss}
-    q_{fiss,g}(\vr) &= \frac{\widetilde{\chi_g}(\vr)}{\keff} \sum_{g'=1}^{G} 
-      \nu \Sigma_{f,g'}(\vr) \phi_{g'}(\vr), \\
-    \label{eq:qup}
-    q_{up,g}(\vr) &= \sum_{g'=g+1}^{G} \Sigma_{s,g' \rightarrow g}(\vr)
-      \phi_{g'}(\vr), \\
-    \label{eq:qdown}
-    q_{down,g}(\vr) &= \sum_{g'=1}^{g-1} \Sigma_{s,g' \rightarrow g}(\vr)
-      \phi_{g'}(\vr),
-  \end{align}
 \end{frame}
 
 \begin{frame}{Boundary Conditions}
   Consider a domain $\Omega$ with boundary $\partial \Omega$ and let $\nhat$ be
   the outward-normal unit vector.
-
   \begin{enumerate}
     \item Mirror.
       \begin{equation}
@@ -81,33 +45,12 @@
         D_g(\vr) \grad \phi_g(\vr) \cdot \nhat + \albedo \phi_g(\vr)
           = 0 \; \forall \; \vr \in \partial \Omega
       \end{equation}
-      \vspace{-0.2in}
-      \begin{itemize}
-        \item Non-reentrant, $\albedo = \half$.
-        \item Mirror, $\albedo = 0$.
-        \item Zero Flux, $\albedo \rightarrow \infty$.
-      \end{itemize}
     \item Zero Flux. 
       \begin{equation}
         \phi_g(\vr) = 0 \; \forall \; \vr \in \partial \Omega
       \end{equation}
   \end{enumerate}
-
-  The order above corresponds to the order of boundary condition precedent with 
-  the greater the integer, the greater the precedent.
-\end{frame}
-
-\begin{frame}{Finite Element Method}
-  Multiply the multigroup neutron diffusion equation by a testing function
-  $v(\vr) \in H_1(\Omega)$ and integrate over the problem domain. 
-  
-  This yields the \textbf{Weak Form} of the problem.
-  \begin{equation}
-    \label{eq:fem_weak_form}
-    - \int_{\Omega} \grad \cdot (D_g(\vr) \grad \phi_g(\vr)) v(\vr) \; d\vr
-      + \int_{\Omega} \Sigma_{r,g}(\vr) \phi_g(\vr) v(\vr) \;d\vr=
-      \int_{\Omega} q_g(\vr) v(\vr) \;d\vr
-  \end{equation}
+  Note: all boundary conditions can be written as albedo boundary conditions.
 \end{frame}
 
 \begin{frame}{Finite Element Discretization}
@@ -123,44 +66,52 @@
   \begin{figure}
     \centering
     \includegraphics[width=0.4\textwidth]{./figs/fixed0}
-    \caption{Expample Square Mesh.}
+    \caption{Example Square Mesh.}
     \label{fig:fixed0}
   \end{figure}
 \end{frame}
 
-\begin{frame}{Constant Source Elements}
-  Allow the neutron source $q_g(\vr)$ to be constant over an element $\Omega_e$.
+\begin{frame}{Combining Neutron Source}
+  \begin{itemize}
+    \item Neutron sources are combined into a single term.
+    \item This will resemble the FEM formulation.
+  \end{itemize}
+  \begin{equation}
+    \label{eq:multigroup_source}
+    - \grad \cdot( D_g(\vr) \grad \phi_g(\vr)) + \Sigma_{r,g}(\vr) \phi_g(\vr) = 
+      q_g(\vr)
+  \end{equation}
 
-  Alternatively, a point source could be integrated numerically.
+  \begin{itemize}
+    \item Neutron source $q_g(\vr)$ is constant over an element $\Omega_e$.
+    \item Cross-sections constant within an element.
+  \end{itemize}
   \begin{align}
     q_g(\vr) &= q_{g,e} \; \forall \; \vr \in \Omega_e \\
-    q_{g,e} &= q_{fiss,g,e} + q_{up,g,e} + q_{down,g,e} \\
-    \label{eq:qelement_fiss}
-    q_{fiss,g,e} &= \frac{\chi_{g,e}}{\keff} \sum_{g'=1}^G \nu
-      \Sigma_{f,g',e} \phiavg_{g',e} \\
-    \label{eq:qelement_up}
-    q_{up,g,e} &= \sum_{g'=g+1}^G \Sigma_{s,g' \rightarrow g,e}
-      \phiavg_{g',e}\\
-    \label{eq:qelement_down}
-    q_{down,g,e} &= \sum_{g'=1}^{g-1} \Sigma_{s,g' \rightarrow g,e}
-      \phiavg_{g',e}\\
     \phiavg_{g,e} &= \frac{1}{N_p} \sum_{i \in \Omega_e}^{N_p} \phi_{i,g}
   \end{align}
-
-  Additionally, allow all cross-sections to be constant within an element.
 \end{frame}
 
-\begin{frame}
-  Separate the integration over the domain $\Omega$ into the summation of
-  integrals over $\Omega_e$.
-  \begin{equation} 
+\begin{frame}{Finite Element Method}
+  Multiply the multigroup neutron diffusion equation by a testing function
+  $v(\vr) \in H_1(\Omega)$ and integrate over the problem domain. 
+  
+  This yields the \textbf{Weak Form} of the problem.
+  \begin{align}
+    \label{eq:fem_weak_form}
+    - \int_{\Omega} \grad \cdot (D_g(\vr) \grad \phi_g(\vr)) v(\vr) \; d\vr
+      + \int_{\Omega} \Sigma_{r,g}(\vr) \phi_g(\vr) v(\vr) \;d\vr &=
+      \int_{\Omega} q_g(\vr) v(\vr) \;d\vr \\
     \label{eq:element_by_element}
     -\sum_{e=1}^{N_E} D_{g,e} 
       \int_{\Omega_e} \grad \cdot \grad \phi_g(\vr) v(\vr) \; d\vr +
       \sum_{e=1}^{N_E} \Sigma_{r,g,e} \int_{\Omega_e} \phi_g(\vr) v(\vr) 
-      \;d\vr = \sum_{e=1}^{N_E} q_{g,e} \int_{\Omega_e} v(\vr) 
+      \;d\vr &= \sum_{e=1}^{N_E} q_{g,e} \int_{\Omega_e} v(\vr) 
       \; d\vr
-  \end{equation}
+  \end{align}
+\end{frame}
+
+\begin{frame}
   Use the Second Green's Theorem to rewrite the first integral
   \cite{textbookli}.
   \begin{multline} 
@@ -226,7 +177,8 @@
 \begin{frame}{Properties of $\ma \, \vu = \vf$}
   Properties of the linear system include:
   \begin{itemize}
-    \item Symmetric, positive-definite \cite{textbookhughes}.
+    \item Sparse.
+    \item Matrix, $\ma$, is symmetric, positive-definite \cite{textbookhughes}.
     \item Solution, $\vu$, is unique and bounded by Lax-Milgram Lemma 
       \cite{textbookli}.
   \end{itemize}

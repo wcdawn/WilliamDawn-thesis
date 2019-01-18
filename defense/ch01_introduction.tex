@@ -21,7 +21,7 @@
   \end{itemize}
 \end{frame}
 
-\begin{frame}{But they did it in the 1960s!}
+\begin{frame}{But it's already been done!}
   \begin{itemize}
     \pause 
     \item You're right.
@@ -34,7 +34,7 @@
 
 \begin{frame}{\textit{Present} Simulation Procedure}
   \begin{itemize}
-    \item Estimate material temperatures.
+    \item Heuristically estimate material temperatures.
     \item Manually calculate thermally expanded dimensions.
     \item Manually calculate area fractions and number densities.
     \item Run \dif and get \keff and power distribution.
@@ -52,14 +52,14 @@
   \begin{itemize}
     \item User input.
       \begin{itemize}
+        \item Easy to use.
         \item Reactor geometry via \texttt{VTK} mesh.
         \item Temperature dependent cross-sections either plain-text or 
           \texttt{ISOTXS}.
         \item Pin dimensions and material compositions.
       \end{itemize}
     \item Simulate thermal expansion and thermal hydraulics internally.
-    \item Collect \keff, multigroup scalar fluxes, reactor power, and average
-      material temperatures.
+    \item Collect \keff, reactor power, and average material temperatures.
   \end{itemize}
   \vspace{0.25in}
   \begin{itemize}
@@ -70,7 +70,7 @@
   \end{itemize}
 \end{frame}
 
-\begin{frame}{Geometry Discussion}
+\begin{frame}{Geometry Description}
   \begin{itemize}
     \item Hexagonal.
     \item Boxed assemblies.
@@ -78,7 +78,7 @@
   \end{itemize}
 \end{frame}
 
-\begin{frame}
+\begin{frame}{Fuel Rod}
   \begin{figure}
     \centering
     \includegraphics[width=0.5\textwidth]{pin_model}
@@ -87,7 +87,7 @@
   \end{figure}
 \end{frame}
 
-\begin{frame}
+\begin{frame}{Hexagonal Assembly}
   \begin{figure}
     \centering
     \includegraphics[width=0.5\textwidth]{hex_can}
@@ -96,7 +96,7 @@
   \end{figure}
 \end{frame}
 
-\begin{frame}
+\begin{frame}{Fuel Assembly}
   \begin{figure}
     \centering
     \includegraphics[width=0.5\textwidth]{prism_hex}
