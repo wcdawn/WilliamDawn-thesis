@@ -210,13 +210,13 @@
       \begin{threeparttable}
         \begin{tabular}{cccc}
           \toprule
-          Refine & $\keff$ & $\keff$ error \units{pcm} & $\keff$ ratio \\
+          Refine & $\keff$ & $\keff$ error \units{pcm} \\
           \midrule
           \csvreader[
             late after line=\\,
             late after last line=\\,]
             {../ch03_diffusionResults/data/vver440.csv}{}
-            {\csvcoli & \csvcolvi & \csvcolvii & \csvcolviii}
+            {\csvcoli & \csvcolvi & \csvcolvii}
           Ref.\tnote{$\dagger$}  & 1.009700 \\
           \bottomrule
         \end{tabular}
