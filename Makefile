@@ -20,9 +20,9 @@ forcedefense :
 
 $(NAME).pdf : $(NAME).tex $(NAME).bib front.tex $(FIGURES) $(CHAPTERS) \
 	ncsuthesis.cls optional.tex
-	pdflatex -draftmode $(NAME)
+	pdflatex --draftmode $(NAME)
 	bibtex $(NAME)
-	pdflatex -draftmode $(NAME)
+	pdflatex --draftmode $(NAME)
 	pdflatex $(NAME)
 	grep -i "Warn" $(NAME).log
 
