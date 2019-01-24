@@ -17,43 +17,8 @@
     \item Eighteen cross-section regions.
     \item Forty-Nine material compositions.
     \item Dimensions and isotopic compositions fully specified.
-  \end{itemize}
-  \vspace{0.2in}
-  \begin{itemize}
     \item Cross-sections generated independently.
-    \item Dimensions \textit{appear} thermally expanded.
   \end{itemize}
-\end{frame}
-
-\begin{frame}{RESULTS ARE WRONG!}
-  \begin{itemize}
-    \item This chapter isn't written yet.
-    \item I know the results in this section are wrong.
-    \item Still working on the model, but I have the scripts to generate these
-      plots.
-    \item Please look at the ideas, not the numbers.
-  \end{itemize}
-\end{frame}
-
-\begin{frame}{Reactivity Coefficients}
-  Consider a series of reactor powers $P_i = \{0\%,\ldots,100\%\}$. The
-  reactivity at power $P_i$ due to feedback can be defined.
-  \begin{equation}
-    \rho_i = \frac{\keffsub{i} - \keffsub{0}}{\keffsub{i} \, \keffsub{0}}
-  \end{equation}
-  Define the following reactivity coefficients.
-  \begin{align}
-    \alpha_{Total} &= \frac{\rho_i(\text{\scriptsize ALL})-
-      \rho_0}{P_i} \\
-    \alpha_{T_{\!\mbox{\scriptsize \em exp}}} &= \frac{\rho_i(\text{\scriptsize 
-      No } T_{\!\mbox{\scriptsize \em exp}} )-
-      \rho_0}{P_i} \\
-    % (coolant temperature coefficient)
-    \alpha_{CTC,i} &= \frac{\rho_i(\text{\scriptsize ALL}) - 
-      \rho_i(T_{cool}+\Delta T_{cool})}{\Delta T_{cool}} \\
-    \alpha_{Doppler,i} &= \frac{\rho_i(\text{\scriptsize ALL}) - 
-      \rho_i(T_{fuel}+\Delta T_{fuel})}{\Delta T_{fuel}}
-  \end{align}
 \end{frame}
 
 \begin{frame}{Benchmark Result}
@@ -67,26 +32,70 @@
       \includegraphics[width=0.25\textwidth]{abr_phi_nod_group33}}
   \end{figure}
   \begin{block}{}
+    \centering
     $\keff =  1.006694 $ \qquad (\dif $-700\units{pcm}$)
   \end{block}
+\end{frame}
+
+\begin{frame}{Reactivity Coefficients}
+  The reactivity of a reactor can be defined.
+  \begin{equation}
+    \label{eq:reactivity}
+    \rho_i = \frac{\keffsub{i} - 1}{\keffsub{i}}
+  \end{equation}
+  A general reactivity coefficient is a derivative with respect to a variable of
+  interest.
+  \begin{align}
+    \label{eq:reactivity_coefficient}
+    \alpha_x(x_i) &= \left. \frac{\partial \rho}{\partial x} \right|_{x_i} \\
+    \Delta \rho &\approx \alpha_x(x_i) \, \Delta x
+  \end{align}
+\end{frame}
+
+\begin{frame}
+  Consider a series of reactor powers $P_i = \{0\%,\ldots,100\%\}$.
+  Define the following reactivity coefficients.
+  \begin{align}
+    \alpha_{power}(P_i) &= \frac{\rho(P_i) - \rho(P_i + \Delta Q_{Rx})}
+      {\Delta Q_{Rx}} \\
+    \alpha_{thexp}(P_i) &= \frac{\rho(\texp(P_i)) - 
+      \rho(\texp(P_i + \Delta Q_{Rx}))}
+      {\Delta Q_{Rx}} \\
+    % (coolant temperature coefficient)
+    \alpha_{CTC}(P_i) &= \frac{\rho(P_i) - \rho(T_{cool}+\Delta T_{cool})}
+      {\Delta T_{cool}} \\
+    \alpha_{Doppler}(P_i) &= \frac{\rho(P_i) - \rho_i(T_{fuel}+\Delta T_{fuel})}
+      {\Delta T_{fuel}}
+  \end{align}
 \end{frame}
 
 \begin{frame}{Eigenvalue Feedback}
   \begin{figure}
     \centering
-    \includegraphics[width=0.7\textwidth]{keff_feedback}
-    \caption{Linear Expansion Factor for HT9 Steel and U10Zr Fuel.}
-    \label{fig:lef_plot}
+    \includegraphics[width=0.7\textwidth]{keff_effects}
+    \caption{\keff Feedback Effects.}
+    \label{fig:keff_effects}
   \end{figure}
 \end{frame}
 
-\begin{frame}{Reactivity Coefficients}
+\begin{frame}{Temperature Reactivity Coefficients}
   \begin{figure}
     \centering
     \subfloat{
-      \includegraphics[width=0.5\textwidth]{alpha_ctc}}
+      \includegraphics[width=0.5\textwidth]{alpha_cool}}
     \hspace*{\fill}
     \subfloat{
-      \includegraphics[width=0.5\textwidth]{alpha_doppler}}
+      \includegraphics[width=0.5\textwidth]{alpha_fuel}}
+  \end{figure}
+\end{frame}
+
+\begin{frame}{Power Reactivity Coefficients}
+  \begin{figure}
+    \centering
+    \subfloat{
+      \includegraphics[width=0.5\textwidth]{alpha_thexp}}
+    \hspace*{\fill}
+    \subfloat{
+      \includegraphics[width=0.5\textwidth]{alpha_power}}
   \end{figure}
 \end{frame}

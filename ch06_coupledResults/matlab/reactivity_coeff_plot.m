@@ -114,7 +114,7 @@ close(gcf)
 figure
 h = plot(temperature_avg(:,1),alpha(:,3),'-o','LineWidth',LW);
 set(h, 'MarkerFaceColor', get(h, 'Color'));
-xlabel('\overline{T_{fuel}} [K]')
+xlabel('$$\overline{T_{fuel}}$$ [K]','Interpreter','latex')
 ylabel('\alpha_{Doppler} [pcm/K]')
 title('Doppler Reactivity Coefficient')
 set(gca,'FontName',FN,'FontSize',FS)
@@ -125,7 +125,7 @@ close(gcf)
 figure
 h = plot(temperature_avg(:,3),alpha(:,4),'-o','LineWidth',LW);
 set(h, 'MarkerFaceColor', get(h, 'Color'));
-xlabel('\overline{T_{cool}} [K]')
+xlabel('$$\overline{T_{cool}}$$ [K]','Interpreter','latex')
 ylabel('\alpha_{CTC} [pcm/K]')
 title('Coolant Temperature Reactivity Coefficient')
 set(gca,'FontName',FN,'FontSize',FS)
