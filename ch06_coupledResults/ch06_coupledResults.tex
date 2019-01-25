@@ -158,12 +158,13 @@
     thermal expansion temperatures for power $Q_{Rx,i} + \Delta Q_{Rx}$. Note
     that in \eref{eq:thermal_expansion_reactivity_coefficient}, only thermal
     expansion temperatures are changed, not the true reactor power $Q_{Rx}$.
-    A typical value of $\Delta Q_{Rx}$ is $10\% \, Q_{Rx,i}$.
+    A typical value of $\Delta Q_{Rx}$ is $10\% \cdot Q_{Rx,i}$.
+    %$10\% \, Q_{Rx,i}$.
 
   \subsection{Fuel Temperature (Doppler) Reactivity Coefficient}
   \label{sec:fuel_temperature_reactivity_coefficient}
-    The fuel temperature reactivity coefficient measures the reactivity change due
-    to an increase in fuel temperature. This coefficient is often termed the
+    The fuel temperature reactivity coefficient measures the reactivity change 
+    due to an increase in fuel temperature. This coefficient is often termed the
     Doppler coefficient because the reactivity effect is due to the Doppler
     broadening of resonance absorption peaks in heavy nuclei such as
     \isotope[238]{U} \cite{textbookknief}. Briefly, at high fuel temperatures, 
@@ -187,6 +188,23 @@
 
   \subsection{Coolant Temperature Reactivity Coefficient (CTC)}
   \label{sec:coolant_temperature_reactivity_coefficient}
+    The Coolant Temperature reactivity Coefficient (CTC) describes the
+    reactivity change due to an increase in coolant temperature. In LWRs, this
+    may be called the Moderator Temperature Coefficient (MTC) but in FRs, the
+    coolant does not serve to moderate neutrons. Feedback in the coolant is due
+    to two main phenomena: the decrease in absorption cross-sections at high
+    temperatures due to Doppler broadening and the decrease of density due to
+    temperature increase. The dominant effect is the decrease of sodium density
+    due to the temperature increase.
+
+    Unlike all other reactivity coefficients presented here, the CTC is
+    positive. This implies increases in coolant temperature will lead to an
+    increase in reactivity and subsequent increase in reactor power. In FRs, the
+    coolant serves as a parasitic neutron absorber. Therefore, a decrease in
+    sodium cross-sections encourages neutron absorption in fissile material
+    resulting in a reactivity increase. This does not pose a stability problem
+    as long as the power reactivity coefficient remains negative.
+
     Hello.
     \begin{equation}
       \label{eq:coolant_temperature_reactivity_coefficient}
