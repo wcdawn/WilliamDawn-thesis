@@ -55,11 +55,15 @@
 
 % thermalExpansion
 \newcommand{\texp}
-  {\ensuremath{{T_{\!\mbox{\scriptsize \em exp}}}}}
+  {\ensuremath{{T_{\!\mbox{\scriptsize \em exp}}}}\xspace}
 \newcommand{\texpfuel}
-  {\ensuremath{{T_{\!\mbox{\scriptsize \em exp,fuel}}}}}
+  {\ensuremath{{T_{\!\mbox{\scriptsize \em exp,fuel}}}}\xspace}
 \newcommand{\texpstruct}
-  {\ensuremath{T_{\!\mbox{\scriptsize \em exp,struct}}}}
+  {\ensuremath{T_{\!\mbox{\scriptsize \em exp,struct}}}\xspace}
+
+% coupledResults
+\newcommand{\leakage}{\ensuremath{\mathcal{L}}}
+
 
 % general macros
 \newcommand{\units}[1]{\ensuremath{\left[\text{{#1}}\right]}}
@@ -77,8 +81,5 @@
 
 \usepackage{array}
 \newcolumntype{L}{>{$}l<{$}}
-% \newenvironment{conditions}
-%   {\par\vspace{\abovedisplayskip}\noindent\begin{tabular}{>{$}l<{$} @{${}={}$} l}}
-%   {\end{tabular}\par\vspace{\belowdisplayskip}}
 \newenvironment{conditions}
   {\par\noindent\begin{tabular}{L @{${}={}$} l}}{\end{tabular}\par}

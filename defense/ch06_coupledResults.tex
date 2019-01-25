@@ -53,19 +53,22 @@
 \end{frame}
 
 \begin{frame}
-  Consider a series of reactor powers $P_i = \{0\%,\ldots,100\%\}$.
+  Consider a series of reactor powers $Q_{Rx,i} = \{0\%,\ldots,100\%\}$.
   Define the following reactivity coefficients.
   \begin{align}
-    \alpha_{power}(P_i) &= \frac{\rho(P_i) - \rho(P_i + \Delta Q_{Rx})}
-      {\Delta Q_{Rx}} \\
-    \alpha_{thexp}(P_i) &= \frac{\rho(\texp(P_i)) - 
-      \rho(\texp(P_i + \Delta Q_{Rx}))}
-      {\Delta Q_{Rx}} \\
+    \label{eq:power_reactivity_coefficient}
+    \alpha_{power}(Q_{Rx,i}) &= \frac{\rho(Q_{Rx,i}) - \rho(Q_{Rx,i} + 
+      \Delta Q_{Rx})} {\Delta Q_{Rx}} \\
+    \label{eq:thermal_expansion_reactivity_coefficient}
+    \alpha_{thexp}(Q_{Rx,i}) &= \frac{\rho(\texp(Q_{Rx,i})) -
+      \rho(\texp(Q_{Rx,i} + \Delta Q_{Rx}))}{\Delta Q_{Rx}} \\
     % (coolant temperature coefficient)
-    \alpha_{CTC}(P_i) &= \frac{\rho(P_i) - \rho(T_{cool}+\Delta T_{cool})}
-      {\Delta T_{cool}} \\
-    \alpha_{Doppler}(P_i) &= \frac{\rho(P_i) - \rho_i(T_{fuel}+\Delta T_{fuel})}
-      {\Delta T_{fuel}}
+    \label{eq:doppler_reactivity_coefficient}
+    \alpha_{CTC}(Q_{Rx,i}) &= \frac{\rho(Q_{Rx,i}) - \rho(T_{cool} + 
+      \Delta T_{cool})} {\Delta T_{cool}} \\
+    \label{eq:coolant_temperature_reactivity_coefficient}
+    \alpha_{Doppler}(Q_{Rx,i}) &= \frac{\rho(Q_{Rx,i}) - \rho_i(T_{fuel} + 
+      \Delta T_{fuel})} {\Delta T_{fuel}}
   \end{align}
 \end{frame}
 
