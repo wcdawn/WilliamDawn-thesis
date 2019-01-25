@@ -196,19 +196,33 @@
 
 \section{Results}
 \label{sec:results}
+  The figure is \fref{fig:abr_reactivity_coefficients}. The power reactivity
+  coefficient is \fref{fig:power_reactivity_coefficient}.
+
+  \begin{figure}
+    \centering
+    \includegraphics[width=0.7\textwidth]{keff_effects}
+    \caption{Feedback Effects on \keff.}
+    \label{fig:keff_effects}
+  \end{figure}
 
   \begin{figure}
     \centering
     \subfloat[Power Reactivity Coefficient.]{
-      \includegraphics[width=0.5\textwidth]{alpha_power}}
+      \includegraphics[width=0.5\textwidth]{alpha_power}
+      \label{fig:power_reactivity_coefficient}}
     \hspace*{\fill}
     \subfloat[Thermal Expansion Reactivity Coefficient.]{
-      \includegraphics[width=0.5\textwidth]{alpha_thexp}}
+      \includegraphics[width=0.5\textwidth]{alpha_thexp}
+      \label{fig:thermal_expansion_reactivity_coefficient}}
     \vspace{\baselineskip}
     \subfloat[Doppler Reactivity Coefficient.]{
-      \includegraphics[width=0.5\textwidth]{alpha_fuel}}
+      \includegraphics[width=0.5\textwidth]{alpha_fuel}
+      \label{fig:doppler_reactivity_coefficient}}
     \hspace*{\fill}
     \subfloat[Coolant Temperature Reactivity Coefficient.]{
-      \includegraphics[width=0.5\textwidth]{alpha_cool}}
+      \includegraphics[width=0.5\textwidth]{alpha_cool}
+      \label{fig:coolant_temperature_reactivity_coefficient}}
+    \caption{ABR Reactivity Coefficients.}
+    \label{fig:abr_reactivity_coefficients}
   \end{figure}
-
