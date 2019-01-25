@@ -195,7 +195,7 @@
     to two main phenomena: the decrease in absorption cross-sections at high
     temperatures due to Doppler broadening and the decrease of density due to
     temperature increase. The dominant effect is the decrease of sodium density
-    due to the temperature increase.
+    due to the temperature increase \cite{textbookknief}.
 
     Unlike all other reactivity coefficients presented here, the CTC is
     positive. This implies increases in coolant temperature will lead to an
@@ -205,17 +205,40 @@
     resulting in a reactivity increase. This does not pose a stability problem
     as long as the power reactivity coefficient remains negative.
 
-    Hello.
+    To calculate $\alpha_{CTC}$, coolant temperature is increased directly. A
+    simulation is conducted with feedback for reactor power $Q_{Rx,i}$ and the
+    temperature profile is stored. Then, the coolant temperature is uniformly
+    increased by $\Delta T_{cool}$ and the simulation is conducted again. This
+    procedure will result in $\keff(Q_{Rx,i})$ and 
+    ${\keff(T_{cool} + \Delta T_{cool})}$. The reactivity associated with each
+    \keff can be calculated given \eref{eq:reactivity} and the coolant
+    temperature coefficient is
     \begin{equation}
       \label{eq:coolant_temperature_reactivity_coefficient}
       \alpha_{CTC}(Q_{Rx,i}) = \frac{\rho(Q_{Rx,i}) - \rho(T_{cool} + 
-        \Delta T_{cool})} {\Delta T_{cool}}
+        \Delta T_{cool})} {\Delta T_{cool}}.
     \end{equation}
+    A typical value for $\Delta T_{cool}$ is $50 \units{K}$.
 
 \section{Results}
 \label{sec:results}
-  The figure is \fref{fig:abr_reactivity_coefficients}. The power reactivity
-  coefficient is \fref{fig:power_reactivity_coefficient}.
+  Returning to the ABR MET-1000 benchmark, reactivity coefficients are modeled
+  for this reactor. The methodology and formulae from
+  \sref{sec:reactivity_coefficients} are used. The reactor \keff as a function
+  of reactor power is plotted in \fref{fig:keff_effects}. Note \keff decreases
+  as power increases. 
+  
+  The coefficients themselves are plotted in 
+  \fref{fig:abr_reactivity_coefficients}. The combined power reactivity
+  coefficient is plotted in \fref{fig:power_reactivity_coefficient}. Note,
+  $\alpha_{power} < 0$ for all powers. At low reactor power, the reactivity
+  coefficient is dominated by the Doppler reactivity coefficient plotted in
+  \fref{fig:doppler_reactivity_coefficient}. At moderate reactor powers,
+  $\alpha_{power}$ becomes less negative due to the coolant temperature
+  coefficient plotted in \fref{fig:coolant_temperature_reactivity_coefficient}.
+  At high reactor powers, $\alpha_{power}$ becomes more negative due to the
+  dominance of the thermal expansion reactivity coefficient plotted in
+  \fref{fig:thermal_expansion_reactivity_coefficient}.
 
   \begin{figure}
     \centering
