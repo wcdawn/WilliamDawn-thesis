@@ -1,7 +1,7 @@
 %!PS-Adobe-3.0 EPSF-3.0
-%%Creator: (MATLAB, The Mathworks, Inc. Version 9.2.0.556344 \(R2017a\). Operating System: Windows 8)
+%%Creator: (MATLAB, The Mathworks, Inc. Version 9.4.0.813654 \(R2018a\). Operating System: Linux)
 %%Title: ../figs/iaea_refl.eps
-%%CreationDate: 2019-01-28T15:10:15
+%%CreationDate: 2019-01-28T16:39:37
 %%Pages: (atend)
 %%BoundingBox:    62    34   373   293
 %%LanguageLevel: 2
@@ -13,24 +13,24 @@
 /bd{bind def}bind def
 /ld{load def}bd
 /GR/grestore ld
-/M/moveto ld
-/LJ/setlinejoin ld
+/GS/gsave ld
+/RM/rmoveto ld
 /C/curveto ld
-/f/fill ld
-/LW/setlinewidth ld
-/GC/setgray ld
 /t/show ld
-/N/newpath ld
-/CT/concat ld
-/cp/closepath ld
-/S/stroke ld
 /L/lineto ld
+/ML/setmiterlimit ld
+/CT/concat ld
+/f/fill ld
+/N/newpath ld
+/S/stroke ld
 /CC/setcmykcolor ld
 /A/ashow ld
-/GS/gsave ld
+/cp/closepath ld
 /RC/setrgbcolor ld
-/RM/rmoveto ld
-/ML/setmiterlimit ld
+/LJ/setlinejoin ld
+/GC/setgray ld
+/LW/setlinewidth ld
+/M/moveto ld
 /re {4 2 roll M
 1 index 0 rlineto
 0 exch rlineto
@@ -197,20 +197,20 @@ b4_Inc_state restore
 } bd
 %%EndResource
 %FOPBeginFontDict
-%%IncludeResource: font Courier-Bold
-%%IncludeResource: font Helvetica
-%%IncludeResource: font Courier-BoldOblique
 %%IncludeResource: font Courier-Oblique
-%%IncludeResource: font Times-Roman
-%%IncludeResource: font Helvetica-BoldOblique
-%%IncludeResource: font Helvetica-Bold
+%%IncludeResource: font Courier-BoldOblique
+%%IncludeResource: font Courier-Bold
+%%IncludeResource: font ZapfDingbats
+%%IncludeResource: font Symbol
+%%IncludeResource: font Helvetica
 %%IncludeResource: font Helvetica-Oblique
-%%IncludeResource: font Times-BoldItalic
-%%IncludeResource: font Courier
+%%IncludeResource: font Helvetica-Bold
+%%IncludeResource: font Helvetica-BoldOblique
+%%IncludeResource: font Times-Roman
 %%IncludeResource: font Times-Italic
 %%IncludeResource: font Times-Bold
-%%IncludeResource: font Symbol
-%%IncludeResource: font ZapfDingbats
+%%IncludeResource: font Times-BoldItalic
+%%IncludeResource: font Courier
 %FOPEndFontDict
 %%BeginResource: encoding WinAnsiEncoding
 /WinAnsiEncoding [
@@ -269,6 +269,20 @@ b4_Inc_state restore
 ] def
 %%EndResource
 %FOPBeginFontReencode
+/Courier-Oblique findfont
+dup length dict begin
+  {1 index /FID ne {def} {pop pop} ifelse} forall
+  /Encoding WinAnsiEncoding def
+  currentdict
+end
+/Courier-Oblique exch definefont pop
+/Courier-BoldOblique findfont
+dup length dict begin
+  {1 index /FID ne {def} {pop pop} ifelse} forall
+  /Encoding WinAnsiEncoding def
+  currentdict
+end
+/Courier-BoldOblique exch definefont pop
 /Courier-Bold findfont
 dup length dict begin
   {1 index /FID ne {def} {pop pop} ifelse} forall
@@ -283,41 +297,6 @@ dup length dict begin
   currentdict
 end
 /Helvetica exch definefont pop
-/Courier-BoldOblique findfont
-dup length dict begin
-  {1 index /FID ne {def} {pop pop} ifelse} forall
-  /Encoding WinAnsiEncoding def
-  currentdict
-end
-/Courier-BoldOblique exch definefont pop
-/Courier-Oblique findfont
-dup length dict begin
-  {1 index /FID ne {def} {pop pop} ifelse} forall
-  /Encoding WinAnsiEncoding def
-  currentdict
-end
-/Courier-Oblique exch definefont pop
-/Times-Roman findfont
-dup length dict begin
-  {1 index /FID ne {def} {pop pop} ifelse} forall
-  /Encoding WinAnsiEncoding def
-  currentdict
-end
-/Times-Roman exch definefont pop
-/Helvetica-BoldOblique findfont
-dup length dict begin
-  {1 index /FID ne {def} {pop pop} ifelse} forall
-  /Encoding WinAnsiEncoding def
-  currentdict
-end
-/Helvetica-BoldOblique exch definefont pop
-/Helvetica-Bold findfont
-dup length dict begin
-  {1 index /FID ne {def} {pop pop} ifelse} forall
-  /Encoding WinAnsiEncoding def
-  currentdict
-end
-/Helvetica-Bold exch definefont pop
 /Helvetica-Oblique findfont
 dup length dict begin
   {1 index /FID ne {def} {pop pop} ifelse} forall
@@ -325,20 +304,27 @@ dup length dict begin
   currentdict
 end
 /Helvetica-Oblique exch definefont pop
-/Times-BoldItalic findfont
+/Helvetica-Bold findfont
 dup length dict begin
   {1 index /FID ne {def} {pop pop} ifelse} forall
   /Encoding WinAnsiEncoding def
   currentdict
 end
-/Times-BoldItalic exch definefont pop
-/Courier findfont
+/Helvetica-Bold exch definefont pop
+/Helvetica-BoldOblique findfont
 dup length dict begin
   {1 index /FID ne {def} {pop pop} ifelse} forall
   /Encoding WinAnsiEncoding def
   currentdict
 end
-/Courier exch definefont pop
+/Helvetica-BoldOblique exch definefont pop
+/Times-Roman findfont
+dup length dict begin
+  {1 index /FID ne {def} {pop pop} ifelse} forall
+  /Encoding WinAnsiEncoding def
+  currentdict
+end
+/Times-Roman exch definefont pop
 /Times-Italic findfont
 dup length dict begin
   {1 index /FID ne {def} {pop pop} ifelse} forall
@@ -353,6 +339,20 @@ dup length dict begin
   currentdict
 end
 /Times-Bold exch definefont pop
+/Times-BoldItalic findfont
+dup length dict begin
+  {1 index /FID ne {def} {pop pop} ifelse} forall
+  /Encoding WinAnsiEncoding def
+  currentdict
+end
+/Times-BoldItalic exch definefont pop
+/Courier findfont
+dup length dict begin
+  {1 index /FID ne {def} {pop pop} ifelse} forall
+  /Encoding WinAnsiEncoding def
+  currentdict
+end
+/Courier exch definefont pop
 %FOPEndFontReencode
 %%EndProlog
 %%Page: 1 1
@@ -393,7 +393,7 @@ GS
 /Times-Roman 13.333 F
 GS
 [1 0 0 1 0 0] CT
--3.5 -10.5 moveto 
+-3.5 -11 moveto 
 1 -1 scale
 (3) t 
 GR
@@ -403,7 +403,7 @@ GS
 /Times-Roman 13.333 F
 GS
 [1 0 0 1 0 0] CT
--18 4.5 moveto 
+-18.5 5 moveto 
 1 -1 scale
 (0.3328) t 
 GR
@@ -413,7 +413,7 @@ GS
 /Times-Roman 13.333 F
 GS
 [1 0 0 1 0 0] CT
--18 19.5 moveto 
+-18.5 21 moveto 
 1 -1 scale
 (0.3428) t 
 GR
@@ -437,7 +437,7 @@ GS
 /Times-Roman 13.333 F
 GS
 [1 0 0 1 0 0] CT
--3.5 -10.5 moveto 
+-3.5 -11 moveto 
 1 -1 scale
 (2) t 
 GR
@@ -447,7 +447,7 @@ GS
 /Times-Roman 13.333 F
 GS
 [1 0 0 1 0 0] CT
--18 4.5 moveto 
+-18.5 5 moveto 
 1 -1 scale
 (0.5482) t 
 GR
@@ -457,7 +457,7 @@ GS
 /Times-Roman 13.333 F
 GS
 [1 0 0 1 0 0] CT
--18 19.5 moveto 
+-18.5 21 moveto 
 1 -1 scale
 (0.5637) t 
 GR
@@ -481,7 +481,7 @@ GS
 /Times-Roman 13.333 F
 GS
 [1 0 0 1 0 0] CT
--3.5 -10.5 moveto 
+-3.5 -11 moveto 
 1 -1 scale
 (3) t 
 GR
@@ -491,7 +491,7 @@ GS
 /Times-Roman 13.333 F
 GS
 [1 0 0 1 0 0] CT
--18 4.5 moveto 
+-18.5 5 moveto 
 1 -1 scale
 (0.4388) t 
 GR
@@ -501,7 +501,7 @@ GS
 /Times-Roman 13.333 F
 GS
 [1 0 0 1 0 0] CT
--18 19.5 moveto 
+-18.5 21 moveto 
 1 -1 scale
 (0.4486) t 
 GR
@@ -525,7 +525,7 @@ GS
 /Times-Roman 13.333 F
 GS
 [1 0 0 1 0 0] CT
--3.5 -10.5 moveto 
+-3.5 -11 moveto 
 1 -1 scale
 (2) t 
 GR
@@ -535,7 +535,7 @@ GS
 /Times-Roman 13.333 F
 GS
 [1 0 0 1 0 0] CT
--18 4.5 moveto 
+-18.5 5 moveto 
 1 -1 scale
 (0.6247) t 
 GR
@@ -545,7 +545,7 @@ GS
 /Times-Roman 13.333 F
 GS
 [1 0 0 1 0 0] CT
--18 19.5 moveto 
+-18.5 21 moveto 
 1 -1 scale
 (0.6400) t 
 GR
@@ -569,7 +569,7 @@ GS
 /Times-Roman 13.333 F
 GS
 [1 0 0 1 0 0] CT
--3.5 -10.5 moveto 
+-3.5 -11 moveto 
 1 -1 scale
 (2) t 
 GR
@@ -579,7 +579,7 @@ GS
 /Times-Roman 13.333 F
 GS
 [1 0 0 1 0 0] CT
--18 4.5 moveto 
+-18.5 5 moveto 
 1 -1 scale
 (0.9794) t 
 GR
@@ -589,7 +589,7 @@ GS
 /Times-Roman 13.333 F
 GS
 [1 0 0 1 0 0] CT
--18 19.5 moveto 
+-18.5 21 moveto 
 1 -1 scale
 (0.9944) t 
 GR
@@ -613,7 +613,7 @@ GS
 /Times-Roman 13.333 F
 GS
 [1 0 0 1 0 0] CT
--3.5 -10.5 moveto 
+-3.5 -11 moveto 
 1 -1 scale
 (2) t 
 GR
@@ -623,7 +623,7 @@ GS
 /Times-Roman 13.333 F
 GS
 [1 0 0 1 0 0] CT
--18 4.5 moveto 
+-18.5 5 moveto 
 1 -1 scale
 (0.7892) t 
 GR
@@ -633,7 +633,7 @@ GS
 /Times-Roman 13.333 F
 GS
 [1 0 0 1 0 0] CT
--18 19.5 moveto 
+-18.5 21 moveto 
 1 -1 scale
 (0.8035) t 
 GR
@@ -657,7 +657,7 @@ GS
 /Times-Roman 13.333 F
 GS
 [1 0 0 1 0 0] CT
--3.5 -10.5 moveto 
+-3.5 -11 moveto 
 1 -1 scale
 (2) t 
 GR
@@ -667,7 +667,7 @@ GS
 /Times-Roman 13.333 F
 GS
 [1 0 0 1 0 0] CT
--18 4.5 moveto 
+-18.5 5 moveto 
 1 -1 scale
 (1.2689) t 
 GR
@@ -677,7 +677,7 @@ GS
 /Times-Roman 13.333 F
 GS
 [1 0 0 1 0 0] CT
--18 19.5 moveto 
+-18.5 21 moveto 
 1 -1 scale
 (1.2788) t 
 GR
@@ -701,7 +701,7 @@ GS
 /Times-Roman 13.333 F
 GS
 [1 0 0 1 0 0] CT
--3.5 -10.5 moveto 
+-3.5 -11 moveto 
 1 -1 scale
 (2) t 
 GR
@@ -711,7 +711,7 @@ GS
 /Times-Roman 13.333 F
 GS
 [1 0 0 1 0 0] CT
--18 4.5 moveto 
+-18.5 5 moveto 
 1 -1 scale
 (1.0764) t 
 GR
@@ -721,7 +721,7 @@ GS
 /Times-Roman 13.333 F
 GS
 [1 0 0 1 0 0] CT
--18 19.5 moveto 
+-18.5 21 moveto 
 1 -1 scale
 (1.0876) t 
 GR
@@ -745,7 +745,7 @@ GS
 /Times-Roman 13.333 F
 GS
 [1 0 0 1 0 0] CT
--3.5 -10.5 moveto 
+-3.5 -11 moveto 
 1 -1 scale
 (3) t 
 GR
@@ -755,7 +755,7 @@ GS
 /Times-Roman 13.333 F
 GS
 [1 0 0 1 0 0] CT
--18 4.5 moveto 
+-18.5 5 moveto 
 1 -1 scale
 (0.5927) t 
 GR
@@ -765,7 +765,7 @@ GS
 /Times-Roman 13.333 F
 GS
 [1 0 0 1 0 0] CT
--18 19.5 moveto 
+-18.5 21 moveto 
 1 -1 scale
 (0.5992) t 
 GR
@@ -789,7 +789,7 @@ GS
 /Times-Roman 13.333 F
 GS
 [1 0 0 1 0 0] CT
--3.5 -10.5 moveto 
+-3.5 -11 moveto 
 1 -1 scale
 (2) t 
 GR
@@ -799,7 +799,7 @@ GS
 /Times-Roman 13.333 F
 GS
 [1 0 0 1 0 0] CT
--18 4.5 moveto 
+-18.5 5 moveto 
 1 -1 scale
 (1.2399) t 
 GR
@@ -809,7 +809,7 @@ GS
 /Times-Roman 13.333 F
 GS
 [1 0 0 1 0 0] CT
--18 19.5 moveto 
+-18.5 21 moveto 
 1 -1 scale
 (1.2367) t 
 GR
@@ -833,7 +833,7 @@ GS
 /Times-Roman 13.333 F
 GS
 [1 0 0 1 0 0] CT
--3.5 -10.5 moveto 
+-3.5 -11 moveto 
 1 -1 scale
 (2) t 
 GR
@@ -843,7 +843,7 @@ GS
 /Times-Roman 13.333 F
 GS
 [1 0 0 1 0 0] CT
--18 4.5 moveto 
+-18.5 5 moveto 
 1 -1 scale
 (1.2549) t 
 GR
@@ -853,7 +853,7 @@ GS
 /Times-Roman 13.333 F
 GS
 [1 0 0 1 0 0] CT
--18 19.5 moveto 
+-18.5 21 moveto 
 1 -1 scale
 (1.2565) t 
 GR
@@ -877,7 +877,7 @@ GS
 /Times-Roman 13.333 F
 GS
 [1 0 0 1 0 0] CT
--3.5 -10.5 moveto 
+-3.5 -11 moveto 
 1 -1 scale
 (2) t 
 GR
@@ -887,7 +887,7 @@ GS
 /Times-Roman 13.333 F
 GS
 [1 0 0 1 0 0] CT
--18 4.5 moveto 
+-18.5 5 moveto 
 1 -1 scale
 (1.1063) t 
 GR
@@ -897,7 +897,7 @@ GS
 /Times-Roman 13.333 F
 GS
 [1 0 0 1 0 0] CT
--18 19.5 moveto 
+-18.5 21 moveto 
 1 -1 scale
 (1.1080) t 
 GR
@@ -921,7 +921,7 @@ GS
 /Times-Roman 13.333 F
 GS
 [1 0 0 1 0 0] CT
--3.5 -10.5 moveto 
+-3.5 -11 moveto 
 1 -1 scale
 (1) t 
 GR
@@ -931,7 +931,7 @@ GS
 /Times-Roman 13.333 F
 GS
 [1 0 0 1 0 0] CT
--18 4.5 moveto 
+-18.5 5 moveto 
 1 -1 scale
 (1.0057) t 
 GR
@@ -941,7 +941,7 @@ GS
 /Times-Roman 13.333 F
 GS
 [1 0 0 1 0 0] CT
--18 19.5 moveto 
+-18.5 21 moveto 
 1 -1 scale
 (0.9784) t 
 GR
@@ -965,7 +965,7 @@ GS
 /Times-Roman 13.333 F
 GS
 [1 0 0 1 0 0] CT
--3.5 -10.5 moveto 
+-3.5 -11 moveto 
 1 -1 scale
 (1) t 
 GR
@@ -975,7 +975,7 @@ GS
 /Times-Roman 13.333 F
 GS
 [1 0 0 1 0 0] CT
--18 4.5 moveto 
+-18.5 5 moveto 
 1 -1 scale
 (1.1787) t 
 GR
@@ -985,7 +985,7 @@ GS
 /Times-Roman 13.333 F
 GS
 [1 0 0 1 0 0] CT
--18 19.5 moveto 
+-18.5 21 moveto 
 1 -1 scale
 (1.1579) t 
 GR
@@ -1009,7 +1009,7 @@ GS
 /Times-Roman 13.333 F
 GS
 [1 0 0 1 0 0] CT
--3.5 -10.5 moveto 
+-3.5 -11 moveto 
 1 -1 scale
 (1) t 
 GR
@@ -1019,7 +1019,7 @@ GS
 /Times-Roman 13.333 F
 GS
 [1 0 0 1 0 0] CT
--18 4.5 moveto 
+-18.5 5 moveto 
 1 -1 scale
 (1.2084) t 
 GR
@@ -1029,7 +1029,7 @@ GS
 /Times-Roman 13.333 F
 GS
 [1 0 0 1 0 0] CT
--18 19.5 moveto 
+-18.5 21 moveto 
 1 -1 scale
 (1.1887) t 
 GR
@@ -1053,7 +1053,7 @@ GS
 /Times-Roman 13.333 F
 GS
 [1 0 0 1 0 0] CT
--3.5 -10.5 moveto 
+-3.5 -11 moveto 
 1 -1 scale
 (1) t 
 GR
@@ -1063,7 +1063,7 @@ GS
 /Times-Roman 13.333 F
 GS
 [1 0 0 1 0 0] CT
--18 4.5 moveto 
+-18.5 5 moveto 
 1 -1 scale
 (1.1851) t 
 GR
@@ -1073,7 +1073,7 @@ GS
 /Times-Roman 13.333 F
 GS
 [1 0 0 1 0 0] CT
--18 19.5 moveto 
+-18.5 21 moveto 
 1 -1 scale
 (1.1654) t 
 GR
@@ -1107,7 +1107,7 @@ GS
 /Times-Roman 13.333 F
 GS
 [1 0 0 1 0 0] CT
--6.5 12 moveto 
+-7 13 moveto 
 1 -1 scale
 (---) t 
 GR
@@ -1141,7 +1141,7 @@ GS
 /Times-Roman 13.333 F
 GS
 [1 0 0 1 0 0] CT
--6.5 12 moveto 
+-7 13 moveto 
 1 -1 scale
 (---) t 
 GR
@@ -1175,7 +1175,7 @@ GS
 /Times-Roman 13.333 F
 GS
 [1 0 0 1 0 0] CT
--6.5 12 moveto 
+-7 13 moveto 
 1 -1 scale
 (---) t 
 GR
@@ -1209,7 +1209,7 @@ GS
 /Times-Roman 13.333 F
 GS
 [1 0 0 1 0 0] CT
--6.5 12 moveto 
+-7 13 moveto 
 1 -1 scale
 (---) t 
 GR
@@ -1229,7 +1229,7 @@ N
 S
 GR
 GS
-[0.75 0 0 0.75 70.5 45.75] CT
+[0.75 0 0 0.75 70.5 45] CT
 /Times-Roman 13.333 F
 GS
 [1 0 0 1 0 0] CT
@@ -1239,7 +1239,7 @@ GS
 GR
 GR
 GS
-[0.75 0 0 0.75 70.5 57] CT
+[0.75 0 0 0.75 69.75 57] CT
 N
 2.609 0.141 M
 2 0.141 1.523 -0.148 QT
@@ -1289,7 +1289,7 @@ cp
 f
 GR
 GS
-[0.75 0 0 0.75 77.25 57] CT
+[0.75 0 0 0.75 76.5 57] CT
 /Times-Roman 13.333 F
 GS
 [1 0 0 1 0 0] CT
@@ -1299,7 +1299,7 @@ GS
 GR
 GR
 GS
-[0.75 0 0 0.75 72.75 68.25] CT
+[0.75 0 0 0.75 72.75 69] CT
 N
 /f-1398234693{2.609 0.141 M
 2 0.141 1.523 -0.148 QT
@@ -1350,7 +1350,7 @@ f-1398234693
 f
 GR
 GS
-[0.75 0 0 0.75 79.5 68.25] CT
+[0.75 0 0 0.75 79.5 69] CT
 /Times-Roman 13.333 F
 GS
 [1 0 0 1 0 0] CT
