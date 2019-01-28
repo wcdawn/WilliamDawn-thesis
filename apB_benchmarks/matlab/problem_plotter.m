@@ -2,13 +2,13 @@ clear
 close all
 
 % pseudo-input
-LW = 2;
+LW = 1;
 FN = 'Times New Roman';
-FS = 12;
-fname = '../data/vver440.csv';
 f2f = 1.0;
 
-max_around = @(ring)(max([(6*ring-1),1]));
+FS = 10;
+fname = '../data/iaea_refl.csv';
+outname = '../figs/iaea_refl.eps';
 
 % get data and put it in useful arrays
 data = csvread(fname);
@@ -16,14 +16,16 @@ refnum = data(:,1);
 ring = data(:,2);
 around = data(:,3);
 refpwr = data(:,4);
-% TODO
-% material = -1*ones(length(refpwr),1);
 material = data(:,5);
+if (size(data,2) > 5)
+    refpwr2 = data(:,6);
+end
 
 % allow negative 'around' numbers to go the other way
 for i = 1:length(around)
-    if (around(i) < 1)
-        around(i) = max_around(ring(i)) + around(i) + 1;
+    if (around(i) < 0)
+        max_around = max([6*(ring(i)-1),1]);
+        around(i) = max_around + around(i) + 1;
     end
 end
 
@@ -90,14 +92,26 @@ for i = 1:length(refnum)
     if (refpwr(i) == 0.0)
 %         this_str = sprintf('%d,%d\n%d\n---',ring(i),around(i),material(i));
         this_str = sprintf('%d\n---',material(i));
+%         this_str = sprintf('%d',material(i));
     else
 %         this_str = sprintf('%d,%d\n%d\n%.4f',ring(i),around(i),material(i),refpwr(i));
-        this_str = sprintf('%d\n%.4f',material(i),refpwr(i));
+%         this_str = sprintf('%d\n%.4f',material(i),refpwr(i));
+%         this_str = sprintf('%d',material(i));
+        this_str = sprintf('%d\n%.4f\n%.4f',material(i),refpwr(i),refpwr2(i));
     end
     text(xc,yc,this_str,'FontName',FN,'FontSize',FS,'HorizontalAlignment','center','VerticalAlignment','middle');
 end
+
+% place the key
+plot(hex(:,1)*f2f,max(ring)*f2f*.6+hex(:,2)*f2f,'k-','LineWidth',LW)
+key_str = sprintf('Material\n\\alpha=0.125\n\\alpha=0.50');
+% key_str = sprintf('Material');
+text(0,.6*max(ring)*f2f,key_str,'FontName',FN,'FontSize',FS,'HorizontalAlignment','center','VerticalAlignment','middle');
+
+
 hold off
+axis equal
 axis tight
 set(gca,'FontName',FN,'FontSize',FS,'visible','off');
-% print(gcf,'../figs/dummy.eps','-depsc2');
-% close(gcf)
+print(gcf,outname,'-depsc2');
+close(gcf)
