@@ -5,7 +5,7 @@ close all
 LW = 2;
 FN = 'Times New Roman';
 FS = 12;
-fname = '../data/hexpwr_vver440.gold';
+fname = '../data/vver440.csv';
 f2f = 1.0;
 
 max_around = @(ring)(max([(6*ring-1),1]));
