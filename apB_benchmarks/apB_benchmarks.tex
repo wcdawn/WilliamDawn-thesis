@@ -355,6 +355,7 @@
     occupy 0 \units{cm} to 151.5 \units{cm}. Reference effective neutron
     multiplication factors and control rod worths are provided in
     \tref{tab:monjukeff}.
+
     \begin{table}
       \caption{MONJU Effective Neutron Multiplication Factors and Rod Worths.}
       \label{tab:monjukeff}
@@ -371,12 +372,25 @@
         \end{tabular}
       \end{center}
     \end{table}
+
     \begin{figure}
       \centering
       \includegraphics[width=0.6\textwidth]{monju_geom}
       \caption{MONJU Geometry \cite{monjuBenchmark}.}
       \label{fig:monju_geom}
     \end{figure}
+
+    \begin{figure}
+      \centering
+      \subfloat[Control Rod Geometry.]{
+        \includegraphics[width=0.45\textwidth]{monju_control_rod_geometry}}
+      \hfill
+      \subfloat[Assembly Geometry.]{
+        \includegraphics[width=0.45\textwidth]{monju_assembly_geometry}}
+      \caption{MONJU Assembly Geometries.}
+      \label{fig:monju_assy_geom}
+    \end{figure}
+
     \begin{table}
       \caption{MONJU Cross Sections.}
       \label{tab:monjuxs}
@@ -401,6 +415,7 @@
         \end{tabular}
       \end{center}
     \end{table}
+
     \begin{table}
       \caption{MONJU Fission Spectrum.}
       \label{tab:monjuchi}
@@ -416,6 +431,7 @@
         \end{tabular}
       \end{center}
     \end{table}
+
   \subsection{KNK}
     \label{sec:knk}
     The presentation of this benchmark is found in \cite{takedaBenchmark}. It is
@@ -461,18 +477,21 @@
         \end{tabular}
       \end{center}
     \end{table}
+
     \begin{figure}
       \centering
       \includegraphics[width=\textwidth]{knk_geom}
       \caption{KNK Geometry \cite{takedaBenchmark}.}
       \label{fig:knk_geom}
     \end{figure}
+
     \begin{figure}
       \centering
       \includegraphics[width=0.6\textwidth]{knk_control_rod_geometry}
       \caption{KNK Control Rod Geometry.}
       \label{fig:knk_cr_geom}
     \end{figure}
+    
     \begin{table}
       \caption{KNK Fission Spectrum.}
       \label{tab:knkchi}
@@ -489,6 +508,7 @@
         \end{tabular}
       \end{center}
     \end{table}
+
     \newgeometry{margin=1in,lmargin=1.25in,footskip=\chapterfootskip, includehead, includefoot}
     \thispagestyle{lscapedplain}
     \begin{landscape}
@@ -529,7 +549,7 @@
     \end{landscape}
     \restoregeometry
     \pagestyle{plain}
-    \newgeometry{margin=1in,lmargin=1.25in,footskip=\chapterfootskip, includehead, includefoot}
+
     \newgeometry{margin=1in,lmargin=1.25in,footskip=\chapterfootskip, includehead, includefoot}
     \thispagestyle{lscapedplain}
     \begin{landscape}

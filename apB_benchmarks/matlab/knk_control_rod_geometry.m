@@ -54,6 +54,7 @@ ylabel('z [cm]')
 set(gca,'xtick',[])
 xlim([0,width*5])
 ylim([0,190])
+yticks([0,65,95,125,155,190])
 set(gca,'FontName',FN,'FontSize',FS)
 print(gcf,'../figs/knk_control_rod_geometry.eps','-depsc2');
 close(gcf)
