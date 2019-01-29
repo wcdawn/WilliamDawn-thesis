@@ -70,10 +70,10 @@ function doPlot(FS,ring,around,material,refpwr,refpwr2)
         
         % put the text there
         if (refpwr(i) == 0.0)
-            %this_str = sprintf('%d',material(i));
+            this_str = sprintf('%d',material(i));
             this_str = sprintf('%d\n---',material(i));
         else
-            %this_str = sprintf('%d',material(i));
+            this_str = sprintf('%d',material(i));
             this_str = sprintf('%d\n%.4f',material(i),refpwr(i));
             if (exist('refpwr2','var'))
                 this_str = ...

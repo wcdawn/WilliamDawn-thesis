@@ -128,7 +128,7 @@
     \begin{figure}
       \centering
       \includegraphics[width=0.6\textwidth]{snr}
-      \caption{SNR Geometry \cite{argonneBenchmark}.}
+      \caption{SNR Geometry.}
       \label{fig:snr_geom}
     \end{figure}
     \begin{table}
@@ -261,9 +261,8 @@
     \units{cm}. To the precision of the benchmark, the cross sections are
     summarized in \tref{tab:iaeakeff}.
     Assembly geometry and powers is provided for without and with 
-    reflector in \fref{fig:iaea_nore_geom} and \fref{fig:iaea_refl_geom} 
-    respectively. All cross sections are provided in \tref{tab:iaeaxs}. Fission
-    spectrum is provided in \tref{tab:iaeachi}.
+    reflector in \fref{fig:iaea_geom}. All cross sections are provided in 
+    \tref{tab:iaeaxs}. Fission spectrum is provided in \tref{tab:iaeachi}.
     \begin{table}
       \caption{IAEA Effective Neutron Multiplication Factors.}
       \label{tab:iaeakeff}
@@ -282,15 +281,13 @@
     \end{table}
     \begin{figure}
       \centering
-      \includegraphics[width=0.6\textwidth]{iaea_nore}
-      \caption{IAEA Without Reflector Geometry.}
-      \label{fig:iaea_nore_geom}
-    \end{figure}
-    \begin{figure}
-      \centering
-      \includegraphics[width=0.6\textwidth]{iaea_refl}
-      \caption{IAEA With Reflector Geometry.}
-      \label{fig:iaea_refl_geom}
+      \subfloat[Unreflected IAEA.]
+        {\includegraphics[width=0.6\textwidth]{iaea_nore}}
+      \vspace{0.2in}
+      \subfloat[Reflected IAEA.]
+        {\includegraphics[width=0.6\textwidth]{iaea_refl}}
+      \caption{IAEA Reflector Geometry.}
+      \label{fig:iaea_geom}
     \end{figure}
     \begin{table}
       \caption{IAEA Cross Sections.}
