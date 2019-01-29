@@ -137,5 +137,5 @@ set(gca,'xtick',[])
 ylabel('z [cm]')
 set(gca,'FontName',FN,'FontSize',12)
 print(gcf,'../figs/knk_assembly_geometry.eps','-depsc2')
-% close(gcf)
+close(gcf)
 
