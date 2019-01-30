@@ -108,11 +108,11 @@
     $\texpfuel$ corresponds to the average temperature of reactor fuel and
     $\texpstruct$ corresponds to the average temperature of steel in the
     reactor. Typically, these values come from a previous coupled diffusion and
-    thermal hydraulics simulation.
-    It is expected thermal expansion 
-    effects will be significant. However, thermal expansion factors are 
-    typically on the order $10^{-6}$ so small, local changes in temperature are 
-    not expected to affect the macroscopic simulation.
+    thermal hydraulics simulation and must be known before the simulation 
+    begins. It is expected thermal expansion effects will be significant. 
+    However, thermal expansion factors are typically on the order $10^{-6}$ so 
+    small, local changes in temperature are not expected to affect the 
+    macroscopic simulation.
 
     Given the assumptions of this model, a radial LEF can be defined using 
     \eref{eq:lef_ht9} as
@@ -128,7 +128,7 @@
       \label{eq:lef_a}
       F_a(\texpfuel) = \left(\frac{\Delta L}{L}\right)_{\text{U10Zr}}
     \end{equation}
-    and $F_a(\texpfuel) = F_z(\texpfuel)$. For a ``cold'' cooridnate 
+    and $F_a(\texpfuel) = F_z(\texpfuel)$. For a ``cold'' coordinate 
     $(x^C,y^C,z^C)$, the thermally expanded ``hot'' coordinate $(x^H,y^H,z^H)$ 
     can be expressed using radial and axial LEFs as
     \begin{align}
@@ -145,11 +145,12 @@
 
     Using the coordinate transforms in \eref{eq:expand_x}, \eref{eq:expand_y}, 
     and \eref{eq:expand_z}, consider the thermal expansion of a cold volume 
-    $V^C$. The volume is thermally expanded in the radial ($x$ and $y$) directions using
-    \eref{eq:lef_r} and the axial ($z$) direction using \eref{eq:lef_a}. The
-    volume $V^C$ has coordinate components $L_x^C$, $L_y^C$, and $L_z^C$
-    such that ${V^C = L_x^C \, L_y^C \, L_z^C}$. This volume is shown with
-    thermal expansion coefficients in \fref{fig:thexp_figure}.
+    $V^C$. The volume is thermally expanded in the radial ($x$ and $y$) 
+    directions using \eref{eq:lef_r} and the axial ($z$) direction using 
+    \eref{eq:lef_a}. The volume $V^C$ has coordinate components $L_x^C$, 
+    $L_y^C$, and $L_z^C$ such that ${V^C = L_x^C \, L_y^C \, L_z^C}$. This 
+    volume is shown with thermal expansion coefficients in 
+    \fref{fig:thexp_figure}.
 
     \begin{figure}
       \centering
@@ -182,12 +183,13 @@
     directions, the ratio of volumetric expansion is constant throughout the
     reactor.
 
-    The hexagonal assembly has total cross-sectional area $A$ and contains 
-    component cross sections with areas $A_i$. For example, the total area 
-    occupied by the fuel material could be considered $A_i$ and the total area 
-    of the hexagon described by the flat-to-flat dimension could be considered 
-    $A$. Define $A_i$ such that $\sum_{i} A_i = A$. Let the fractional area 
-    $a_i = A_i/A$ and $\sum_{i} a_i = 1$.
+    Consider the thermal expansion of fractional areas within a hexagonal
+    assembly. The hexagonal assembly has total cross-sectional area $A$ and 
+    contains component cross sections with areas $A_i$. For example, the total 
+    area occupied by the fuel material could be considered $A_i$ and the total 
+    area of the hexagon described by the flat-to-flat dimension could be 
+    considered $A$. Define $A_i$ such that $\sum_{i} A_i = A$. Let the 
+    fractional area $a_i = A_i/A$ and $\sum_{i} a_i = 1$.
 
     Using a method similar to the derivation of the volume ratio, a ratio can be
     derived for thermally expanded areas and area fractions. However, this would
@@ -205,7 +207,7 @@
     the error due to this assumption is small compared to the assumption of 
     uniform thermal expansion.
     
-    Due to the different thermal expansions of fuel and structural material 
+    Due to the different thermal expansion rates of fuel and structural material 
     within the cross-sectional area of the hexagonal assembly, the thermal 
     expansion of area fractions does not have a general formulaic relationship.
     Instead, area fractions are simply calculated at hot and cold conditions
@@ -215,13 +217,14 @@
   Thermal expansion affects the reactor in two major ways. First, thermal 
   expansion causes the physical dimensions of the reactor to increase. This is 
   modeled by the expansion of individual elements in the solution of the neutron 
-  diffusion equation via the finite element method 
-  (see \chref{ch:neutronDiffusion}) as well as the expansion of areas within the 
-  hexagons. Second, as a result in the increase in physical dimensions, the 
-  density of reactor materials decreases. This decrease in density is necessary
-  to preserve the quantity of material within the reactor. In this derivation,
-  the number of atoms in the reactor are conserved. The density change due to 
-  thermal expansion is observed as a decrease in cross-sections.
+  diffusion equation via the FEM
+  (see \chref{ch:neutronDiffusion}) as well as the expansion of area fractions
+  within the hexagons. Second, as a result in the increase in physical 
+  dimensions, the density of reactor materials decreases. This decrease in 
+  density is necessary to preserve the quantity of material within the reactor.
+  In this derivation, the number of atoms in the reactor are conserved. The 
+  density change due to thermal expansion is observed as a decrease in 
+  cross-sections.
 
   \subsection{Expansion of Elements and Area Fractions}
     Given the assumption of constant thermal expansion in radial and axial
@@ -229,19 +232,14 @@
     the unstructured mesh is expanded according to \eref{eq:expand_x}, 
     \eref{eq:expand_y}, and \eref{eq:expand_z}. By expanding in axial and radial
     directions uniformly throughout the reactor, it is certain that there will 
-    be no intersection or overlap of elements. In a realistic analysis, stress,
-    strain, contact pressures, et cetera must be accounted for but this is 
-    unnecessary here because the assumptions prohibit overlap and intersection 
-    conditions.  As previously discussed in
+    be no intersection or overlap of elements. As previously discussed in
     \sref{sec:model_details__assumptions_and_formulae}, the thermal expansion of
     area fractions is calculated directly.
 
   \subsection{Cross-section Effects}
     \label{sec:cross-section_effects}
     The conservation of reactor material is expressed as a conservation of 
-    number of atoms. Allow the superscript $H$ to represent ``hot'' conditions 
-    (i.e.  thermally expanded) and the superscript $C$ to represent ``cold'' 
-    conditions.  Then, the conservation of the number of atoms for species $i$, 
+    number of atoms. The conservation of the number of atoms for species $i$, 
     can be expressed as
     \begin{equation}
       \label{eq:conservation}
@@ -267,7 +265,7 @@
 
     The volume $V_i$ can be written in terms of element volume and area
     fraction. Let species $i$ be contained in region $j$ in finite element $e$. 
-    This model assumes area fractions are constant within an element and can be
+    This work assumes area fractions are constant within an element and can be
     treated as volume fractions. Then, the volume $V_i$ can be rewritten as 
     $V_i = a_j \, V_e$ where $a_j$ is the area fraction of region $j$ and $V_e$
     is the volume of the element $e$. Inserting this definition for $V_i$ into
@@ -279,7 +277,7 @@
     Recall from \sref{sec:model_details__assumptions_and_formulae} that the
     ratio $\frac{a_j^C}{a_j^C}$ is dictated by the relative expansion of the
     fuel radius and the other structural materials. The area fractions
-    themselves are calculated and the ratio is calculated subsequently. The 
+    themselves are calculated and the ratio is calculated directly. The 
     ratio $\frac{V_e^C}{V_e^H}$ is the standard volume ratio due to thermal 
     expansion and is given by \eref{eq:volume_ratio}. Inserting 
     \eref{eq:volume_ratio} into \eref{eq:nden_expansion_expanded}.

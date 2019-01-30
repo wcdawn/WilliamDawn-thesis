@@ -30,7 +30,8 @@
   Each submission to the benchmark has generated its own cross-sections using 
   several different cross-section libraries (e.g. ENDFB7.0, JEFF3.1, etc.). 
   Cross-sections were generated for this model using \mcc and the procedure 
-  outlined in \sref{sec:cross_section_treatment}. The reactor multigroup 
+  outlined in \sref{sec:cross_section_treatment} resulting in temperature
+  dependent cross-section libraries with 33 energy groups. The  multigroup 
   neutron diffusion equation is solved using both \dif and the method from
   \chref{ch:neutronDiffusion}. These methods agree to within 700 \units{pcm}. 
   The solution from the FEM as implemented in this work is $\keff = 1.006694$.
@@ -60,7 +61,7 @@
 
 \section{Reactivity Coefficients}
 \label{sec:reactivity_coefficients}
-  Reactivity of a reactor serves to compare the state of the reactor to the
+  Reactivity of a reactor can be used to compare the state of the reactor to the
   critical state. Reactivity $\rho$ is defined
   \begin{equation}
     \label{eq:reactivity}
@@ -150,7 +151,7 @@
     reactivity coefficient $\alpha_{power}$ in 
     \eref{eq:power_reactivity_coefficient}.  Therefore, the temperature
     distribution resulting from this study can be used to calculate the thermal
-    expansion temperatres for the case with increased power, 
+    expansion temperatures for the case with increased power, 
     ${\texp(Q_{Rx,i} + \Delta Q_{Rx})}$.
     Then, the thermal expansion reactivity coefficient is 
     \begin{equation}
@@ -203,14 +204,14 @@
     temperature increase. The dominant effect is the decrease of sodium density
     due to the temperature increase \cite{textbookknief}.
 
-    Unlike all other reactivity coefficients presented here, the CTC is
-    positive as is common in FRs. This implies increases in coolant temperature 
-    will lead to an increase in reactivity and cause a subsequent increase in 
-    reactor power. In FRs, the coolant acts as a parasitic neutron absorber. 
-    Therefore, a decrease in the sodium absorption cross-section encourages 
-    neutron absorption in fissile material in the fuel resulting in a reactivity 
-    increase. This does not pose a stability problem as long as the power 
-    reactivity coefficient remains negative.
+    Unlike all other reactivity coefficients presented here, the CTC of the ABR 
+    is positive as is common in FRs. This implies increases in coolant 
+    temperature will lead to an increase in reactivity and cause a subsequent 
+    increase in reactor power. In FRs, the coolant acts as a parasitic neutron 
+    absorber. Therefore, a decrease in the sodium absorption cross-section 
+    encourages neutron absorption in fissile material in the fuel resulting in a 
+    reactivity increase. This does not pose a stability problem as long as the 
+    power reactivity coefficient remains negative.
 
     To calculate $\alpha_{CTC}$, coolant temperature is increased directly with
     a procedure similar to that for the Doppler reactivity coefficient in
