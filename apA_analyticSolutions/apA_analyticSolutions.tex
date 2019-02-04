@@ -324,19 +324,18 @@
       \frac{\partial^2}{\partial y^2} \left( X(x)\,Y(y) \right) + 
       B^2 X(x)\,Y(y) &= 0 \\
     \label{eq:2d1g_above}
-    Y(y) \frac{\partial^2}{\partial x^2} X(x) + 
-      X(y) \frac{\partial^2}{\partial y^2} Y(x) + 
+    Y(y) \frac{d^2}{d x^2} X(x) + X(x) \frac{d^2}{d y^2} Y(y) + 
       B^2 X(x) \, Y(y) &= 0
   \end{align}
-  Divide by the quantity $X(x)\,Y(y)$ yields
+  Each of the partial derivatives operates on a function of only one variable,
+  so the derivatives become standard derivatives.
+  Dividing by the quantity $X(x)\,Y(y)$ yields
   \begin{equation}
     \label{eq:2d1g_divide_sum}
     \frac{1}{X(x)} \, \frac{d^2}{d x^2} X(x) + 
       \frac{1}{Y(y)} \, \frac{d^2}{d y^2} Y(y) + 
       B^2 = 0
   \end{equation}
-  Each of the partial derivatives operates on a function of only one variable,
-  so the derivatives become standard derivatives.
 
   The first two terms of \eref{eq:2d1g_divide_sum} are functions of only $x$ and
   $y$ respectively, and their sum is equal to a constant. Therefore, both of the
@@ -366,8 +365,9 @@
     \label{eq:2d1g_x_general}
     X(x) = c_1 \, \cos(\alpha \, x) + c_2 \, \sin(\alpha \, x).
   \end{equation}
-  $X(x)$ has solution similar to the form of the solution from \sref{sec:1d1g}
-  as the boundary conditions are similar. Using the method from \sref{sec:1d1g}, 
+  $X(x)$ has solution similar to the form of the solution from
+  \sref{sec:deriv_1d1g} as the boundary conditions are similar. Using the method 
+  from \sref{sec:deriv_1d1g}, 
   \begin{align}
     \label{eq:2d1g_x_alpha}
     \alpha &= \frac{\pi}{L_x} \\
