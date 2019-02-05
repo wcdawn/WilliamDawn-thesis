@@ -7,6 +7,8 @@ function doPlot(FS,ring,around,material,refpwr,refpwr2)
     f2f = 1.0;
     LW = 1;
     FN = 'Times New Roman';
+    
+    material_names = {'STEEL','AXBL','AXRF','TEST','DRIV','DRMOD','REFL','RFMOD','KNKREF','NASTL','CRD','NACRD'}'
 
     side = 1.0/sqrt(3.0);
     base = 0.5*side;
@@ -70,15 +72,17 @@ function doPlot(FS,ring,around,material,refpwr,refpwr2)
         
         % put the text there
         if (refpwr(i) == 0.0)
-            this_str = sprintf('%d',material(i));
-            this_str = sprintf('%d\n---',material(i));
+%             this_str = sprintf('%d',material(i));
+%             this_str = sprintf('%d\n---',material(i));
+            this_str = material_names{material(i)};
         else
-            this_str = sprintf('%d',material(i));
-            this_str = sprintf('%d\n%.4f',material(i),refpwr(i));
+%             this_str = sprintf('%d',material(i));
+%             this_str = sprintf('%d\n%.4f',material(i),refpwr(i));
             if (exist('refpwr2','var'))
                 this_str = ...
                     sprintf('%d\n%.4f\n%.4f',material(i),refpwr(i),refpwr2(i));
             end
+            this_str = material_names{material(i)};
         end
         text(xc,yc,this_str,'FontName',FN,'FontSize',FS,...
             'HorizontalAlignment','center','VerticalAlignment','middle');
