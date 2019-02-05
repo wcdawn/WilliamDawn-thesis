@@ -8,7 +8,8 @@ function doPlot(FS,ring,around,material,refpwr,refpwr2)
     LW = 1;
     FN = 'Times New Roman';
     
-    material_names = {'STEEL','AXBL','AXRF','TEST','DRIV','DRMOD','REFL','RFMOD','KNKREF','NASTL','CRD','NACRD'}'
+    material_names = {'STEEL','AXBL','AXRF','TEST','DRIV','DRMOD','REFL','RFMOD','KNKREF','NASTL','CRD','NACRD'}';
+    material_names = {'IC','OC','RB','CR','NA'};
 
     side = 1.0/sqrt(3.0);
     base = 0.5*side;

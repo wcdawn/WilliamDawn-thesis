@@ -70,40 +70,6 @@ figure
 hold on
 
 buffer = 0.;
-plot(rect_full(:,1)+buffer,rect_full(:,2),'-k','LineWidth',LW);
-text(width*0.5+buffer,95.,material_list(10),'FontName',FN,'FontSize',FS,'HorizontalAlignment','center','VerticalAlignment','middle');
-buffer = buffer + width;
-plot(rect_full(:,1)+buffer,rect_full(:,2),'-k','LineWidth',LW);
-text(width*0.5+buffer,95.,material_list(9),'FontName',FN,'FontSize',FS,'HorizontalAlignment','center','VerticalAlignment','middle');
-buffer = buffer + width;
-plot(rect_full(:,1)+buffer,rect_full(:,2),'-k','LineWidth',LW);
-text(width*0.5+buffer,95.,material_list(8),'FontName',FN,'FontSize',FS,'HorizontalAlignment','center','VerticalAlignment','middle');
-buffer = buffer + width;
-plot(rect_full(:,1)+buffer,rect_full(:,2),'-k','LineWidth',LW);
-text(width*0.5+buffer,95.,material_list(7),'FontName',FN,'FontSize',FS,'HorizontalAlignment','center','VerticalAlignment','middle');
-buffer = buffer + width;
-plot(rect_steel(:,1)+buffer,rect_steel(:,2),'-k','LineWidth',LW);
-plot(axial_blanket(:,1)+buffer,axial_blanket(:,2)+45,'-k','LineWidth',LW);
-plot(rect_fuel(:,1)+buffer,rect_fuel(:,2)+65,'-k','LineWidth',LW);
-plot(axial_blanket(:,1)+buffer,axial_blanket(:,2)+125,'-k','LineWidth',LW);
-plot(rect_steel(:,1)+buffer,rect_steel(:,2)+145,'-k','LineWidth',LW);
-text(width*0.5+buffer,22.5,material_list(1),'FontName',FN,'FontSize',FS,'HorizontalAlignment','center','VerticalAlignment','middle');
-text(width*0.5+buffer,55.0,material_list(3),'FontName',FN,'FontSize',FS,'HorizontalAlignment','center','VerticalAlignment','middle');
-text(width*0.5+buffer,95.0,material_list(6),'FontName',FN,'FontSize',FS,'HorizontalAlignment','center','VerticalAlignment','middle');
-text(width*0.5+buffer,135.,material_list(3),'FontName',FN,'FontSize',FS,'HorizontalAlignment','center','VerticalAlignment','middle');
-text(width*0.5+buffer,172.5,material_list(1),'FontName',FN,'FontSize',FS,'HorizontalAlignment','center','VerticalAlignment','middle');
-buffer = buffer + width;
-plot(rect_steel(:,1)+buffer,rect_steel(:,2),'-k','LineWidth',LW);
-plot(axial_blanket(:,1)+buffer,axial_blanket(:,2)+45,'-k','LineWidth',LW);
-plot(rect_fuel(:,1)+buffer,rect_fuel(:,2)+65,'-k','LineWidth',LW);
-plot(axial_blanket(:,1)+buffer,axial_blanket(:,2)+125,'-k','LineWidth',LW);
-plot(rect_steel(:,1)+buffer,rect_steel(:,2)+145,'-k','LineWidth',LW);
-text(width*0.5+buffer,22.5,material_list(1),'FontName',FN,'FontSize',FS,'HorizontalAlignment','center','VerticalAlignment','middle');
-text(width*0.5+buffer,55.0,material_list(3),'FontName',FN,'FontSize',FS,'HorizontalAlignment','center','VerticalAlignment','middle');
-text(width*0.5+buffer,95.0,material_list(5),'FontName',FN,'FontSize',FS,'HorizontalAlignment','center','VerticalAlignment','middle');
-text(width*0.5+buffer,135.,material_list(3),'FontName',FN,'FontSize',FS,'HorizontalAlignment','center','VerticalAlignment','middle');
-text(width*0.5+buffer,172.5,material_list(1),'FontName',FN,'FontSize',FS,'HorizontalAlignment','center','VerticalAlignment','middle');
-buffer = buffer + width;
 plot(rect_steel(:,1)+buffer,rect_steel(:,2),'-k','LineWidth',LW);
 plot(axial_blanket(:,1)+buffer,axial_blanket(:,2)+45,'-k','LineWidth',LW);
 plot(rect_fuel(:,1)+buffer,rect_fuel(:,2)+65,'-k','LineWidth',LW);
@@ -114,6 +80,11 @@ text(width*0.5+buffer,55.0,material_list(2),'FontName',FN,'FontSize',FS,'Horizon
 text(width*0.5+buffer,95.0,material_list(4),'FontName',FN,'FontSize',FS,'HorizontalAlignment','center','VerticalAlignment','middle');
 text(width*0.5+buffer,135.,material_list(2),'FontName',FN,'FontSize',FS,'HorizontalAlignment','center','VerticalAlignment','middle');
 text(width*0.5+buffer,172.5,material_list(1),'FontName',FN,'FontSize',FS,'HorizontalAlignment','center','VerticalAlignment','middle');
+plot([width*0.5+buffer,width*0.5+buffer],[0,190],'--k','LineWidth',LW)
+% CENTER-LINE SYMBOL
+text(width*0.5+buffer,195,sprintf('\x2104'),'FontSize',14,'FontName','Cambria Math','HorizontalAlignment','center')
+text(width*0.5+buffer,-5,sprintf('\x2104'),'FontSize',14,'FontName','Cambria Math','HorizontalAlignment','center')
+
 buffer = buffer + width;
 plot(rect_steel(:,1)+buffer,rect_steel(:,2),'-k','LineWidth',LW);
 plot(axial_blanket(:,1)+buffer,axial_blanket(:,2)+45,'-k','LineWidth',LW);
@@ -126,10 +97,49 @@ text(width*0.5+buffer,95.0,material_list(4),'FontName',FN,'FontSize',FS,'Horizon
 text(width*0.5+buffer,135.,material_list(2),'FontName',FN,'FontSize',FS,'HorizontalAlignment','center','VerticalAlignment','middle');
 text(width*0.5+buffer,172.5,material_list(1),'FontName',FN,'FontSize',FS,'HorizontalAlignment','center','VerticalAlignment','middle');
 
-plot([width*0.5+buffer,width*0.5+buffer],[0,190],'--k','LineWidth',LW)
-% CENTER-LINE SYMBOL
-text(width*0.5+buffer,195,sprintf('\x2104'),'FontSize',14,'FontName','Cambria Math','HorizontalAlignment','center')
-text(width*0.5+buffer,-5,sprintf('\x2104'),'FontSize',14,'FontName','Cambria Math','HorizontalAlignment','center')
+buffer = buffer + width;
+plot(rect_steel(:,1)+buffer,rect_steel(:,2),'-k','LineWidth',LW);
+plot(axial_blanket(:,1)+buffer,axial_blanket(:,2)+45,'-k','LineWidth',LW);
+plot(rect_fuel(:,1)+buffer,rect_fuel(:,2)+65,'-k','LineWidth',LW);
+plot(axial_blanket(:,1)+buffer,axial_blanket(:,2)+125,'-k','LineWidth',LW);
+plot(rect_steel(:,1)+buffer,rect_steel(:,2)+145,'-k','LineWidth',LW);
+text(width*0.5+buffer,22.5,material_list(1),'FontName',FN,'FontSize',FS,'HorizontalAlignment','center','VerticalAlignment','middle');
+text(width*0.5+buffer,55.0,material_list(3),'FontName',FN,'FontSize',FS,'HorizontalAlignment','center','VerticalAlignment','middle');
+text(width*0.5+buffer,95.0,material_list(5),'FontName',FN,'FontSize',FS,'HorizontalAlignment','center','VerticalAlignment','middle');
+text(width*0.5+buffer,135.,material_list(3),'FontName',FN,'FontSize',FS,'HorizontalAlignment','center','VerticalAlignment','middle');
+text(width*0.5+buffer,172.5,material_list(1),'FontName',FN,'FontSize',FS,'HorizontalAlignment','center','VerticalAlignment','middle');
+
+buffer = buffer + width;
+plot(rect_steel(:,1)+buffer,rect_steel(:,2),'-k','LineWidth',LW);
+plot(axial_blanket(:,1)+buffer,axial_blanket(:,2)+45,'-k','LineWidth',LW);
+plot(rect_fuel(:,1)+buffer,rect_fuel(:,2)+65,'-k','LineWidth',LW);
+plot(axial_blanket(:,1)+buffer,axial_blanket(:,2)+125,'-k','LineWidth',LW);
+plot(rect_steel(:,1)+buffer,rect_steel(:,2)+145,'-k','LineWidth',LW);
+text(width*0.5+buffer,22.5,material_list(1),'FontName',FN,'FontSize',FS,'HorizontalAlignment','center','VerticalAlignment','middle');
+text(width*0.5+buffer,55.0,material_list(3),'FontName',FN,'FontSize',FS,'HorizontalAlignment','center','VerticalAlignment','middle');
+text(width*0.5+buffer,95.0,material_list(6),'FontName',FN,'FontSize',FS,'HorizontalAlignment','center','VerticalAlignment','middle');
+text(width*0.5+buffer,135.,material_list(3),'FontName',FN,'FontSize',FS,'HorizontalAlignment','center','VerticalAlignment','middle');
+text(width*0.5+buffer,172.5,material_list(1),'FontName',FN,'FontSize',FS,'HorizontalAlignment','center','VerticalAlignment','middle');
+
+buffer = buffer + width;
+plot(rect_full(:,1)+buffer,rect_full(:,2),'-k','LineWidth',LW);
+text(width*0.5+buffer,95.,material_list(7),'FontName',FN,'FontSize',FS,'HorizontalAlignment','center','VerticalAlignment','middle');
+
+buffer = buffer + width;
+plot(rect_full(:,1)+buffer,rect_full(:,2),'-k','LineWidth',LW);
+text(width*0.5+buffer,95.,material_list(8),'FontName',FN,'FontSize',FS,'HorizontalAlignment','center','VerticalAlignment','middle');
+
+buffer = buffer + width;
+plot(rect_full(:,1)+buffer,rect_full(:,2),'-k','LineWidth',LW);
+text(width*0.5+buffer,95.,material_list(9),'FontName',FN,'FontSize',FS,'HorizontalAlignment','center','VerticalAlignment','middle');
+
+buffer = buffer + width;
+plot(rect_full(:,1)+buffer,rect_full(:,2),'-k','LineWidth',LW);
+text(width*0.5+buffer,95.,material_list(10),'FontName',FN,'FontSize',FS,'HorizontalAlignment','center','VerticalAlignment','middle');
+
+text(buffer*0.55,195,'\alpha=0.5','FontName',FN,'FontSize',FS+2);
+text(buffer*0.55,-5,'\alpha=0.5','FontName',FN,'FontSize',FS+2);
+text(buffer+1.2*width,95,'\alpha=0.5','FontName',FN,'FontSize',FS+2);
 
 hold off
 yticks([0,45,65,125,145,190])
