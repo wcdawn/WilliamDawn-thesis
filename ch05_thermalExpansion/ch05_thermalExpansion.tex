@@ -117,15 +117,15 @@
     To simplify the modeling of thermal expansion, material dimensions are
     uniformly expanded in radial and axial directions. It is assumed that 
     material expansion in the radial direction (both $x$ and $y$ directions) 
-    expands as HT9 because the dominating expansion in this direction is due to 
-    the expansion of the hexagonal assemblies themselves and the grid plate at
-    the base of the reactor. The exception to radial thermal expansion is that 
-    the radius of the fuel, $R_F$, expands as U10Zr.  Within a hexagonal 
-    assembly, the coolant flow area and the sodium bond area are allowed to 
-    vary because of the assumption that the sodium is liquid.  It is assumed 
-    that material expansion in the axial direction (the $z$ direction) expands 
-    as U10Zr because the dominating expansion in this direction is the 
-    elongation of the metallic fuel.
+    expands as HT9 because the dominating effect on reactivity due to thermal 
+    expansion in this direction is due to the expansion of the hexagonal 
+    assemblies themselves and the grid plate at the base of the reactor. The 
+    exception to radial thermal expansion is that the radius of the fuel, 
+    $R_F$, expands as U10Zr.  Within a hexagonal assembly, the coolant flow area 
+    and the sodium bond area are allowed to vary because of the assumption that 
+    the sodium is liquid.  It is assumed that material expansion in the axial 
+    direction (the $z$ direction) expands as U10Zr because the dominating 
+    expansion in this direction is the elongation of the metallic fuel.
     
     All dimensions in the reactor are expanded assuming the user-input 
     dimensions are at room-temperature conditions. Dimensions are expanded
@@ -135,15 +135,17 @@
     reactor. Typically, these values come from a previous coupled diffusion and
     thermal hydraulics simulation and must be known before the simulation 
     begins. It is expected thermal expansion effects will be significant. 
-    However, thermal expansion factors are typically on the order $10^{-6}$ so 
+    However, thermal expansion factors are typically on the order $10^{-2}$ so 
     small, local changes in temperature are not expected to affect the 
-    macroscopic simulation.
+    macroscopic simulation. The effect of thermal expansion from
+    room-temperature to reactor conditions is much more important than thermal
+    expansion due to local temperatures.
 
     Given the assumptions of this model, a radial LEF can be defined using 
     \eref{eq:lef_ht9} as
     \begin{equation}
       \label{eq:lef_r}
-      F_r(\texpstruct) = \left(\frac{\Delta L}{L}\right)_{\text{HT9}}
+      F_r(\texpstruct) = 1 + \left(\frac{\Delta L}{L}\right)_{\text{HT9}}
     \end{equation}
     which is a function of $\texpstruct$. Note that given the assumption of 
     uniform radial thermal expansion, ${F_x(\texpstruct) = F_y(\texpstruct) =
@@ -151,18 +153,18 @@
     Similarly, an axial LEF can be defined using \eref{eq:lef_u10zr} as 
     \begin{equation}
       \label{eq:lef_a}
-      F_a(\texpfuel) = \left(\frac{\Delta L}{L}\right)_{\text{U10Zr}}
+      F_a(\texpfuel) = 1 + \left(\frac{\Delta L}{L}\right)_{\text{U10Zr}}
     \end{equation}
     and $F_a(\texpfuel) = F_z(\texpfuel)$. For a ``cold'' coordinate 
     $(x^C,y^C,z^C)$, the thermally expanded ``hot'' coordinate $(x^H,y^H,z^H)$ 
     can be expressed using radial and axial LEFs as
     \begin{align}
       \label{eq:expand_x}
-      x^H &= x^C + x^C \, F_r(\texpstruct) \\
+      x^H &= x^C \, F_r(\texpstruct) \\
       \label{eq:expand_y}
-      y^H &= y^C + y^C \, F_r(\texpstruct) \\
+      y^H &= y^C \, F_r(\texpstruct) \\
       \label{eq:expand_z}
-      z^H &= z^C + z^C \, F_a(\texpfuel)
+      z^H &= z^C \, F_a(\texpfuel)
     \end{align}
     which is consistent with the assumption of uniform radial and axial 
     expansion. These formulae expand the distance from each coordinate to the
@@ -192,17 +194,17 @@
     \end{align}
     Then, recognizing the coordinate expansions,
     \begin{align}
-      V^H &= (L_x^C + L_x^C \, F_r(\texpstruct)) + 
-        (L_y^C + L_y^C \, F_r(\texpstruct)) + 
-        (L_z^C + L_z^C \, F_a(\texpfuel)), \\
-      V^H &= L_x^C \, L_y^C \, L_z^C \, (1 + F_r(\texpstruct))^2
-        (1+F_a(\texpfuel)), \\
-      V^H &= V^C (1 + F_r(\texpstruct))^2 (1+F_a(\texpfuel)).
+      V^H &= (L_x^C \, F_r(\texpstruct)) + 
+        (L_y^C \, F_r(\texpstruct)) + 
+        (L_z^C \, F_a(\texpfuel)), \\
+      V^H &= L_x^C \, L_y^C \, L_z^C \, (F_r(\texpstruct))^2
+        (F_a(\texpfuel)), \\
+      V^H &= V^C (F_r(\texpstruct))^2 (F_a(\texpfuel)).
     \end{align}
     The volume ratio is then
     \begin{equation}
       \label{eq:volume_ratio}
-      \frac{V^C}{V^H} = \frac{1}{(1+F_r(\texpstruct))^2 (1+F_a(\texpfuel))}.
+      \frac{V^C}{V^H} = \frac{1}{(F_r(\texpstruct))^2 (F_a(\texpfuel))}.
     \end{equation}
     Given the assumption of uniform thermal expansion in axial and radial
     directions, the ratio of volumetric expansion is constant throughout the
@@ -309,7 +311,7 @@
     \begin{equation}
       \label{eq:nden_thexp_update}
       N_i^H = N_i^C \frac{a_j^C}{a_j^H} 
-        \frac{1}{(1+F_r(\texpstruct))^2 (1+F_a(\texpfuel))}
+        \frac{1}{(F_r(\texpstruct))^2 (F_a(\texpfuel))}
     \end{equation}
     Therefore, to preserve the number of atoms in the reactor, number densities
     in the reactor must be updated according to \eref{eq:nden_thexp_update} in
