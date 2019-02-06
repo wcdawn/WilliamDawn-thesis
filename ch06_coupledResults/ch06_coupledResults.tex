@@ -1,4 +1,4 @@
-\chapter{Coupled Results}
+\chapter{Coupled Multiphysics Results}
 \label{ch:coupledResults}
 
 \section{Power Reactor Modeling}
@@ -18,7 +18,7 @@
   feedback are defined in \sref{sec:reactivity_coefficients}. Results are 
   presented in \sref{sec:results}.
 
-\section{Advance Burner Reactor -- MET-1000}
+\section{Advanced Burner Reactor -- MET-1000}
 \label{sec:abr}
   This reactor design is proposed by Organisation for Economic Co-operation and
   Development (OECD) Nuclear Energy Agency (NEA) \cite{abr}. The Advanced
@@ -34,7 +34,6 @@
   dependent cross-section libraries with 33 energy groups. The  multigroup 
   neutron diffusion equation is solved using both \dif and the method from
   \chref{ch:neutronDiffusion}. These methods agree to within 700 \units{pcm}. 
-  The solution from the FEM as implemented in this work is $\keff = 1.006694$.
 
   The reactor materials in the benchmark are shown in \fref{fig:abr_materials}. 
   Fast neutron flux is shown to peak in the core center and thermal neutron flux 
@@ -94,8 +93,8 @@
   in the calculation of $\alpha$. Therefore, consider a set of reactor powers
   varying from $0\%$ to $100\%$ as $Q_{Rx,i} = \{0\%,\ldots,100\%\}$.
 
-  Reactivity coefficients useful for Fast Reactor (FR) applications include the
-  power coefficient, thermal expansion coefficient, fuel temperature (Doppler)
+  Reactivity coefficients useful for fast reactor applications include the power 
+  coefficient, thermal expansion coefficient, fuel temperature (Doppler)
   coefficient, and coolant temperature coefficient (CTC) \cite{textbookknief}.
   Reactivity coefficients will be estimated with a first-order, forward-Euler,
   finite-difference approximation such that
@@ -133,16 +132,16 @@
     The thermal expansion reactivity coefficient describes the reactivity 
     response due solely to thermal expansion for a given increase in reactor 
     power. It is expected that thermal expansion will be the dominant 
-    contribution to the power reactivity coefficient in FRs. This is due to two 
-    main reasons: metal fuels expand significantly at high temperature (see 
-    \chref{ch:thermalExpansion}) and the large neutron leakage fraction 
-    (\leakage) in FRs \cite{PlentifulEnergy}. The leakage fraction is the 
-    fraction of neutrons created in the fuel due to fission that exit the core. 
-    Light Water Reactors (LWRs) typically have low and ultra-low leakage designs
-    with $\leakage \approx 2 \%$ \cite{textbookknief}. However, FRs simulated in 
-    this work have $\leakage \approx 20\%$ and therefore are therefore highly 
-    sensitive to decreases in fuel density and changing reactor dimensions due 
-    to thermal expansion.
+    contribution to the power reactivity coefficient in fast reactors. This is 
+    due to two main reasons: metal fuels expand significantly at high 
+    temperature (see \chref{ch:thermalExpansion}) and the large neutron leakage 
+    fraction (\leakage) in fast reactors \cite{PlentifulEnergy}. The leakage 
+    fraction is the fraction of neutrons created in the fuel due to fission that 
+    exit the core. Light Water Reactors (LWRs) typically have low and ultra-low 
+    leakage designs with $\leakage \approx 2 \%$ \cite{textbookknief}. However,
+    fast reactors simulated in this work have $\leakage \approx 20\%$ and 
+    therefore are therefore highly sensitive to decreases in fuel density and 
+    changing reactor dimensions due to thermal expansion.
 
     Thermal expansion temperatures, \texpfuel and \texpstruct, as implemented in 
     \chref{ch:thermalExpansion} must be known before the simulation. Note from
@@ -191,27 +190,32 @@
       \alpha_{Doppler}(Q_{Rx,i}) = \frac{\rho(Q_{Rx,i}) - \rho_i(T_{fuel} +
         \Delta T_{fuel})} {\Delta T_{fuel}}
     \end{equation}
+    Note that the Doppler reactivity coefficient is always negative.
     A typical value of $\Delta T_{fuel}$ is $20\units{K}$.
+    The definition in \eref{eq:doppler_reactivity_coefficient} is a
+    \textit{uniform} Doppler coefficient as opposed to a \textit{distributed} 
+    Doppler coefficient as temperatures are increased uniformly throughout the
+    reactor.
 
   \subsection{Coolant Temperature Reactivity Coefficient (CTC)}
   \label{sec:coolant_temperature_reactivity_coefficient}
     The Coolant Temperature reactivity Coefficient (CTC) describes the
     reactivity change due to an increase in coolant temperature. In LWRs, this
-    may be called the Moderator Temperature Coefficient (MTC) but in FRs, the
-    coolant is not designed to moderate neutrons. Feedback in the coolant is due
-    to two main phenomena: the decrease in absorption cross-sections in the
-    coolant due to Doppler broadening and the decrease of density due to
-    temperature increase. The dominant effect is the decrease of sodium density
-    due to the temperature increase \cite{textbookknief}.
+    may be called the Moderator Temperature Coefficient (MTC) but in fast
+    reactors, the coolant is not designed to moderate neutrons. Feedback in the 
+    coolant is due to two main phenomena: the decrease in absorption 
+    cross-sections in the coolant due to Doppler broadening and the decrease of 
+    density due to temperature increase. The dominant effect is the decrease of 
+    sodium density due to the temperature increase \cite{textbookknief}.
 
     Unlike all other reactivity coefficients presented here, the CTC of the ABR 
-    is positive as is common in FRs. This implies increases in coolant 
+    is positive as is common in fast reactors. This implies increases in coolant 
     temperature will lead to an increase in reactivity and cause a subsequent 
-    increase in reactor power. In FRs, the coolant acts as a parasitic neutron 
-    absorber. Therefore, a decrease in the sodium absorption cross-section 
-    encourages neutron absorption in fissile material in the fuel resulting in a 
-    reactivity increase. This does not pose a stability problem as long as the 
-    power reactivity coefficient remains negative.
+    increase in reactor power. In fast reactors, the coolant acts as a parasitic 
+    neutron absorber. Therefore, a decrease in the sodium absorption 
+    cross-section encourages neutron absorption in fissile material in the fuel 
+    resulting in a reactivity increase. This does not pose a stability problem 
+    as long as the power reactivity coefficient remains negative.
 
     To calculate $\alpha_{CTC}$, coolant temperature is increased directly with
     a procedure similar to that for the Doppler reactivity coefficient in

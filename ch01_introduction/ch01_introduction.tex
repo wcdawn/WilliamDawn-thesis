@@ -4,15 +4,16 @@
 \section{Motivation}
   Recent interest in advanced and next-generation nuclear power reactor designs 
   has encouraged further development of simulations for these reactors. A class 
-  of advanced nuclear power reactors is Fast Reactor (FR), which operate with 
+  of advanced nuclear power reactors is fast reactors, which operate with 
   predominantly high-energy (``fast'') neutrons in the fission reaction. Since 
-  early development of FRs, such as the Experimental Breeder Reactor I (EBR-I) 
-  in 1951 and Fermi 1 in 1956, there have been significant innovations in both 
-  nuclear modeling and computational methods. As development of FRs is 
-  revisited in the form of the Versatile Test Reactor (VTR) at Idaho National 
-  Laboratory (INL), modern improvements in simulation can be used to simulate 
-  FRs with modern best practices. These methods can easily be used for fast
-  reactors with a variety of coolants including sodium, lead, or molten salt.
+  early development of fast reactors, such as the Experimental Breeder Reactor I
+  (EBR-I) in 1951 and Fermi 1 in 1956, there have been significant innovations 
+  in both nuclear modeling and computational methods. As development of fast
+  reactors is revisited in the form of the Versatile Test Reactor (VTR) at Idaho 
+  National Laboratory (INL), modern improvements in simulation can be used to 
+  simulate fast reactors with modern best practices. These methods can easily be 
+  used for fast reactors with a variety of coolants including sodium, lead, or 
+  molten salt.
 
   Nuclear reactor simulations are inherently multi-physics simulations. For
   example, neutron reaction probabilities are described by cross-sections.
@@ -23,15 +24,15 @@
   of the reactor necessitate a simulation of the power distribution within the
   reactor as well as all physical effects which will be modeled. 
   
-  In this thesis, models for simulating FRs will be developed and demonstrated. 
-  Reactor power distribution will be modeled according to the multigroup neutron
-  diffusion equation as solved by the Finite Element Method (FEM) based on
-  unstructured meshes in hexagonal/triangular geometry. The multigroup neutron
-  diffusion solution code is verified through both benchmark and analytic
-  solutions. Multi-physics effects are modeled including heat transfer and 
-  thermal expansion. Thermal hydraulic effects are modeled as axial heat 
-  convection and radial heat conduction. Thermal expansion is modeled using 
-  simplified linear expansion models.
+  In this thesis, models for simulating fast reactors will be developed and 
+  demonstrated.  Reactor power distribution will be modeled according to the 
+  multigroup neutron diffusion equation as solved by the Finite Element Method 
+  (FEM) based on unstructured meshes in hexagonal/triangular geometry. The 
+  multigroup neutron diffusion solution code is verified through both 
+  benchmark and analytic solutions. Multi-physics effects are modeled including 
+  heat transfer and thermal expansion. Thermal hydraulic effects are modeled as 
+  axial heat convection and radial heat conduction. Thermal expansion is modeled 
+  using simplified linear expansion models.
 
   By employing a modern solution method to the neutron diffusion
   equation in the form of the FEM, the simulation can take advantage of 
@@ -39,16 +40,16 @@
   Additionally, the simulation allows for the incorporation of generalized 
   multi-physics effects whereas current state-of-the-art simulations require 
   data processing and manual iteration to simulate multi-physics effects. The 
-  final simulation is designed to simulate an operating FR and estimate 
-  feedback coefficients.
+  final simulation is designed to simulate an operating fast reactor and 
+  estimate feedback coefficients.
 
 \section{Geometry Description}
   \label{sec:geometry_description}
   Fast reactor spectra operate in a regime with smaller neutron cross-sections.
-  To compensate for this fact, FRs are typically designed with hexagonal,
-  triangularly pitched, fuel assemblies to maximize the fuel packing and
-  increase the fuel density. An example of an FR with hexagonal geometry
-  is shown in \fref{fig:reactor_materials}.
+  To compensate for this fact, fast reactors are typically designed with 
+  hexagonal, triangularly pitched, fuel assemblies to maximize the fuel packing 
+  and increase the fuel density. An example of a fast reactor with hexagonal 
+  geometry is shown in \fref{fig:reactor_materials}.
   This geometry is used to describe material properties in the form of 
   cross-sections as well as to describe coolant flow geometries. Dimensions of 
   assemblies are measured at room temperature and will later be expanded 
@@ -214,17 +215,17 @@
   equation are presented in \chref{ch:diffusionResults}.
 
   \chref{ch:thermalHydraulics} presents the formulation of axial heat convection
-  and radial heat conduction models for a typical FR. These models are used to
-  calculate material temperatures and update cross-sections for the simulation.
-  Results of the numerical model is compared to analytical models and example
-  system temperatures are shown.
+  and radial heat conduction models for a typical fast reactor. These models are 
+  used to calculate material temperatures and update cross-sections for the 
+  simulation.  Results of the numerical model is compared to analytical models 
+  and example system temperatures are shown.
 
   The materials are expanded according to thermal expansion behavior as
   described in \chref{ch:thermalExpansion}. 
   
-  All of these models allows for the realistic
-  simulation of an FR and results of the simulation of a model FR are presented
-  in \chref{ch:coupledResults}.
+  All of these models allows for the realistic simulation of a fast reactor and 
+  results of the simulation of a model fast reactor are presented in 
+  \chref{ch:coupledResults}.
  
   Finally, \chref{ch:conclusions} presents a 
   summary and the conclusions of this research. Additionally, recommendations 

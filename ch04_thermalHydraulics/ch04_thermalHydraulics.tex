@@ -3,10 +3,10 @@
 
 \section{Introduction}
   Material temperatures and densities are a pivotal part of the multi-physics 
-  problem of simulating a Fast Reactor (FR). Temperatures are necessary for
+  problem of simulating a fast reactor. Temperatures are necessary for
   calculating reactor cross-sections for an accurate power distribution and can
   be used as input for a thermal hydraulic simulation. Thermal hydraulic models
-  are developed for standard FR geometry as described in
+  are developed for standard fast reactor geometry as described in
   \sref{sec:geometry_description}. Recall, the standard assembly is a hexagonal 
   can and filled with many cylindrical rods. 
 
@@ -17,16 +17,16 @@
   channels and perfect fluid mixing within the flow channel. These assumptions 
   are valid for simulating fast reactors with canned assemblies and assembly 
   designs which encourage within-assembly mixing. Hexagonal assemblies, as 
-  common to FRs and described in \sref{sec:geometry_description}, satisfy this 
-  assumption with canned assemblies to prevent cross-flow between channels and 
-  mixing encouraged by wire wrapping. The second model is a steady-state, 
-  one-dimensional, radial heat conduction model within a cylindrical rod to 
-  calculate average cladding, bond, and fuel temperatures.
+  common to fast reactors and described in \sref{sec:geometry_description}, 
+  satisfy this assumption with canned assemblies to prevent cross-flow between 
+  channels and mixing encouraged by wire wrapping. The second model is a 
+  steady-state, one-dimensional, radial heat conduction model within a 
+  cylindrical rod to calculate average cladding, bond, and fuel temperatures.
 
   \begin{figure}
     \centering
     \includegraphics[width=\textwidth]{enthalpy_rise}
-    \caption{Typical FR Enthalpy Rise.}
+    \caption{Typical Fast Reactor Enthalpy Rise.}
     \label{fig:enthalpy_rise}
   \end{figure}
 
@@ -45,7 +45,7 @@
   a functional form of the thermal conductivity is given in \cite{ht9Prop}. Both
   sodium and steel have relatively high thermal conductivities and their thermal
   conductivities do not change significantly over the operating temperatures of
-  SFRs. Therefore, the thermal conductivity of sodium within the bond and HT9 
+  sodium cooled fast reactors. Therefore, the thermal conductivity of sodium within the bond and HT9 
   are assumed constant at the average value as reported in \cite{sodiumProp} and
   \cite{ht9Prop} respectively. These constant values are given in 
   \tref{tab:constant_k}.
@@ -903,7 +903,7 @@
 
   Linear interpolation is valid for materials minimally effected by Doppler 
   broadening. Such materials include cladding and sodium as these materials do 
-  not change temperature significantly over the operating range of SFRs
+  not change temperature significantly over the operating range of fast reactors
   and have relatively few neutron absorption resonances. The fuel material is 
   interpolated according to a square-root interpolation because the Doppler 
   effect obeys square-root behavior. Square-root interpolation is necessary
@@ -960,10 +960,10 @@
 
   \subsection{Coolant Cross-Sections}
     The main effect on coolant cross sections due to temperature is due to the
-    change in fluid density. The mass-density of the of liquid sodium (as used 
-    in SFRs) is given as a function of temperature $\rho(T)$ by a state 
-    relationship in \cite{sodiumProp}. Natural sodium is entirely composed of 
-    \isotope[23]{Na} and has atomic weight ${M_{Na} = 22.989769
+    change in fluid density. The mass-density of the of liquid sodium 
+    is given as a function of temperature $\rho(T)$ by a state relationship in 
+    \cite{sodiumProp}. Natural sodium is entirely composed of \isotope[23]{Na} 
+    and has atomic weight ${M_{Na} = 22.989769
     \units{$\frac{\text{gram}}{\text{mol}}$}}$ \cite{nuclides}.
     Then, the number density of the coolant is given as
     \begin{equation}
