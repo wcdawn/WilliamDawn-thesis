@@ -12,7 +12,7 @@
 
   In metal fueled reactors such as EBR-II and PRISM, thermal expansion 
   represents a significant reactivity feedback effect and requires modeling. 
-  The Preliminary Safety Information Document for PRISM presents an 
+  The preliminary safety information document for PRISM presents an 
   estimate for thermal expansion feedback such that a 1\% change in radial 
   dimension results in $-0.5 \units{$\Delta k$}$ indicating a significant effect 
   \cite{GEFR793}. Additionally, thermal expansion has been proven to serve as an 
@@ -47,8 +47,8 @@
 
 \section{Model Details}
   \label{sec:model_details}
-  Highly detailed thermal expansion modeling can be performed using the Finite
-  Element Method (FEM) to calculate local stresses and strains on all reactor
+  Highly detailed thermal expansion modeling can be performed using the finite
+  element method to calculate local stresses and strains on all reactor
   structural components such as fuel pins, wire wraps, and assembly boxes. 
   However, the model developed here for the simulation of
   fast reactors does not estimate temperature and heat generation at all 
@@ -56,17 +56,17 @@
   thermal expansion model is developed to simulate the effect of thermal 
   expansion on reactivity.
 
-  In the model, linear dimensions are expanded based on material properties.
-  All sodium in the reactor is assumed to be liquid so effects of thermal
-  expansion within the sodium are assumed to be described by the change in
-  density as a function of temperature as described by state equations in
-  \cite{sodiumProp}. Additionally, the mass of sodium within the reactor is not
-  conserved. In a Sodium-cooled Fast Reactor (SFR), sodium in the coolant is 
-  allowed to flow into and out of an expansion vessel external to the reactor.
-  The sodium in the bond region flows upward from the fuel region into a gas 
-  plenum at the top of the fuel rod as the fuel expands. However, this is not 
-  modeled as the sodium level in the bond is not tracked. Instead, the mass of 
-  sodium in the bond region is allowed to vary during the simulation.
+  In the model presented in this work, linear dimensions are expanded based on 
+  material properties.  All sodium in the reactor is assumed to be liquid so 
+  effects of thermal expansion within the sodium are assumed to be described by 
+  the change in density as a function of temperature as described by state 
+  equations in \cite{sodiumProp}. Additionally, the mass of sodium within the 
+  reactor is not conserved. In a liquid-metal-cooled reactor, sodium in the 
+  coolant is allowed to flow into and out of an expansion vessel external to the 
+  reactor.  The sodium in the bond region flows upward from the fuel region into 
+  a gas plenum at the top of the fuel rod as the fuel expands. However, this is 
+  not modeled as the sodium level in the bond is not tracked. Instead, the mass 
+  of sodium in the bond region is allowed to vary during the simulation.
 
   \subsection{Material Properties}
     \label{sec:model_details__material_properties}
@@ -82,6 +82,7 @@
       \left( \frac{\Delta L}{L} \right)_{\text{HT9}} = 
         -2.191 \times 10^{-3} + 5.678 \times 10^{-6} \, T + 
         8.111 \times 10^{-9} \, T^2 - 2.576 \times 10^{-12} \, T^3 ,
+        % zero at 282.26 [K]
     \end{equation}
     \begin{multline}
       \label{eq:lef_u10zr}
@@ -93,13 +94,16 @@
           -0.25252 + 6.669 \times 10^{-4} \, T - 5.441 \times 10^{-7} \, T^2 
             + 1.518 \times 10^{-10} \, T^3 & \text{otherwise}
         \end{cases}
+        % zero at 318.34 [K]
     \end{multline}
     for $T$ in \units{K}. Note that U10Zr undergoes a phase change at 
-    $923 \units{K}$ that increases the LEF at this point. The LEF of HT9 and 
-    U10Zr over the range of operating temperatures of fast reactors are plotted 
-    in \fref{fig:lef_plot}. It is observed that the LEF of U10Zr is as much as 
-    twice that of HT9. This implies fuel material will expand significantly more 
-    than structural material which is expected behavior for metallic fuel.
+    $923 \units{K}$ that increases the LEF at this point. Both \eref{eq:lef_ht9}
+    and \eref{eq:lef_u10zr} evaluate to zero near room temperature. The LEF of 
+    HT9 and U10Zr over the range of operating temperatures of fast reactors are 
+    plotted in \fref{fig:lef_plot}. It is observed that the LEF of U10Zr is as 
+    much as twice that of HT9. This implies fuel material will expand 
+    significantly more than structural material which is expected behavior for 
+    metallic fuel.
 
     \begin{figure}
       \centering
