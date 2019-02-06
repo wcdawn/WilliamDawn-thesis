@@ -325,14 +325,15 @@
   previously mentioned in \sref{sec:model_details__assumptions_and_formulae}, 
   the user must input an effective temperature to which the reactor is thermally 
   expanded. This user-input values of $\texpstruct$ and $\texpfuel$ are varied 
-  and all other thermal feedback effects are disabled in the simulation. It is 
+  and all other thermal feedback effects are disabled in the simulation. For
+  this simplified demonstration, $\texpstruct=\texpfuel$. It is 
   expected that thermal expansion will cause a significant decrease in $\keff$ 
   and represent negative reactivity insertion. Effective neutron multiplication 
   factor as a function of thermal expansion is plotted in \fref{fig:thexp_study} 
   and the associated reactivity, calculated as
   \begin{equation}
     \label{eq:reactivity_formula}
-    \rho \units{pcm} = \frac{\keff - \kref}{\keff \, \kref} \times 10^5
+    \Delta \rho \units{pcm} = \frac{\keff - \kref}{\keff \, \kref} \times 10^5
   \end{equation}
   is plotted in \fref{fig:thexp_study_reactivity}. In
   \eref{eq:reactivity_formula}, $\keff$ is the calculated effective neutron 
