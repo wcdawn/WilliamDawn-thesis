@@ -26,7 +26,7 @@ plt = plot(temperature,rho,'-o','LineWidth',LW);
 set(plt,'MarkerFaceColor',get(plt,'Color'));
 title('Thermal Expansion Reactivity Study')
 xlabel('Thermal Expansion Temperature [K]')
-ylabel('\rho [pcm]')
+ylabel('\Delta \rho [pcm]')
 set(gca,'FontName','Times New Roman')
 print(gcf,'../figs/thexp_study_reactivity.eps','-depsc2');
 close(gcf)
