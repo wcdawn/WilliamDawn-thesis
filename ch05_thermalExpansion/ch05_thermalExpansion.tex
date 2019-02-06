@@ -2,27 +2,48 @@
 \label{ch:thermalExpansion}
 
 \section{Necessity of Modeling}
-  The Fast Reactor (FR) as modeled is entirely composed of
+  The Fast Reactor as modeled is entirely composed of
   metals and, as such, experiences significant thermal expansion. While other 
   designs may employ non-metallic fuel material (e.g. oxides or carbides), these 
-  are not considered. Reactor designs with metal fuel include 
-  Experimental Breeder Reactor II (EBR-II) as designed and built by Argonne 
-  National Laboratory (ANL) and PRISM as designed by GE-Hitachi Nuclear Energy 
+  are not considered in this work. Reactor designs with metal fuel include 
+  Experimental Breeder Reactor II (EBR-II), as designed and built by Argonne 
+  National Laboratory (ANL), and PRISM, as designed by GE-Hitachi Nuclear Energy 
   (GEH).
 
   In metal fueled reactors such as EBR-II and PRISM, thermal expansion 
-  represents a significant feedback effect and requires modeling. PRISM 
-  estimates a thermal expansion feedback such that a 1\% change in radial 
+  represents a significant reactivity feedback effect and requires modeling. 
+  The Preliminary Safety Information Document for PRISM presents an 
+  estimate for thermal expansion feedback such that a 1\% change in radial 
   dimension results in $-0.5 \units{$\Delta k$}$ indicating a significant effect 
   \cite{GEFR793}. Additionally, thermal expansion has been proven to serve as an 
-  inherent safety feature of SFRs. In the remarkable EBR-II demonstrations in 
-  April 1986, two major accident events were performed on the reactor while 
-  operating at full power. Operators forced the reactor to undergo Unprotected 
-  Loss-Of-Flow (ULOF) and Unprotected Loss-Of-Heat-Sink (ULOHS) events. EBR-II 
-  was safely shutdown due to nothing other than inherent thermal feedback 
-  effects. These experiments demonstrated conclusively the passive safety of SFR
-  designs due in part to the thermal expansion of materials 
-  \cite{PlentifulEnergy}.
+  inherent safety feature of fast reactors. In the remarkable EBR-II 
+  demonstrations in April 1986, two major accident events were performed on the 
+  reactor while operating at full power. Operators forced the reactor to undergo 
+  Unprotected Loss-Of-Flow (ULOF) and Unprotected Loss-Of-Heat-Sink (ULOHS) 
+  events. EBR-II was safely shutdown due to nothing other than inherent
+  multiphysics feedback effects. These experiments demonstrated conclusively the 
+  passive safety of SFR designs due in part to the thermal expansion of 
+  materials \cite{PlentifulEnergy}.
+
+  EBR-II system response to ULOF was demonstrated by bypassing the normal loss 
+  of flow scram (i.e. shutdown) function. The control rod drive motors were 
+  deenergized and the main coolant pumps were tripped and allowed to coast down. 
+  Natural circulation flow follows and after an initial temperature peak, 
+  material temperatures returned to normal operating temperatures 
+  \cite{ebriitests}. The ULOHS was demonstrated by shutting down coolant pumps 
+  in the secondary coolant system, thereby disabling heat rejection from the 
+  primary coolant system. No subsequent automatic or manual action was taken. In 
+  the ULOHS demonstration, material temperatures do not peak and instead quickly 
+  reduce below operating temperatures \cite{ebriitests}.
+
+  The inherent safety demonstration test at EBR-II demonstrated the passive
+  safety of the liquid-metal-cooled reactor design. These tests are simply not 
+  possible with Light Water Reactors (LWRs) currently operating in the U.S. 
+  Using nothing but natural phenomena, the reactor was demonstrated to shutdown 
+  and subsequent heat removal was achieved \cite{ebriitests}. These tests are 
+  pivotal the strategy to demonstrate the performance of similar reactors in 
+  Anticipated Transients Without Scram (ATWS). The tests also demonstrate the 
+  importance of modeling multiphysics effects in fast reactor applications.
 
 \section{Model Details}
   \label{sec:model_details}
