@@ -1,21 +1,73 @@
-\chapter{Summary, Conclusions, and Recommendations}
+\chapter{Discussion, Conclusions, and Recommendations}
 \label{ch:conclusions}
 
-\section{Overview of Simulation Results}
+\section{Discussion of Simulation Results}
+
+  The purpose of this thesis is to simulate a Fast Reactor (FR) at operating
+  reactor power conditions with coupled multiphysics simulations. The method
+  developed allows for solution to the multigroup neutron diffusion equation for
+  general unstructured mesh. The coupled multiphysics models allows for inherent
+  modeling instead of thermal feedback effects instead of using extremely
+  simplified and manual models. By including all simulations in a single
+  simulation suite, a user can more easily observe the interaction of 
+  physical phenomena and feedback.
+
+  In \chref{ch:neutronDiffusion}, a rigorous and general framework is developed
+  for solving the multigroup neutron diffusion equation using the FEM for
+  general unstructured mesh. Insights are provided into the use of both
+  two-dimension triangular elements and three-dimensional wedge (pentahedral)
+  elements. Both of these geometries are natural choices for FRs which typically
+  employ hexagonal geometries. Using the developed methods,
+  \chref{ch:diffusionResults} then demonstrates solution verification and
+  solution validation for both analytic and reactor benchmark problems. The
+  multigroup neutron diffusion solver as implemented is shown to converge to the
+  correct answer at the correct convergence rate.
+
+  \chref{ch:thermalHydraulics} presents the details of the thermal hydraulic
+  models employed. These models include an axial convection model and a radial
+  conduction model. The results of the thermal hydraulic calculations are
+  material temperatures that are used to interpolate cross-section tables and
+  update coolant density to generate temperature-dependent cross-sections.
+
+  In \chref{ch:thermalExpansion}, a simplified thermal expansion model is
+  presented. The model expands materials linearly assuming expansion as either
+  HT9 Stainless-Steel structural material or U10Zr fuel material. The model
+  requires an \textit{a priori} assumption of material temperatures but results
+  are not highly sensitive to these temperatures due to the magnitudes of
+  thermal expansion coefficients.
+
+  Finally, \chref{ch:coupledResults} presents the culmination of all models
+  implemented. A typical FR as presented in a benchmark problem is simulated.
+  Using the models developed, reactivity coefficients can be estimated for an
+  operating reactor. These coefficients describe dynamic reactor behavior and
+  agree with expected values. These reactivity coefficients also describe the
+  mechanisms for inherent safety in a FR.
 
 \section{Conclusions}
-
+  
+  It has been demonstrated that the FEM can be used to efficiently simulate the
+  power distribution in a nuclear power reactor. Use of the FEM has allowed for 
+  the local simulation of multiphysics effects within elements. By simulating
+  thermal hydraulic feedback and thermal expansion effects, reactivity effects
+  are estimated. Prior to this coupling method, the simulation of feedback
+  effects required either manual iterative process between thermal hydraulic 
+  codes and neutron diffusion codes or the use of simplified estimates of 
+  temperatures. 
+  
 \section{Recommendations for Future Research}
 
-  \subsection{Code Enhancements}
-    \begin{itemize}
-      \item Depletion
-      \item Higher Order Elements
-      \item SPN
-      \item Enhanced Thermal Models
-      \item Parallelization
-    \end{itemize}
+  The results of this thesis demonstrate a framework for an all-in-one reactor 
+  simulator for FR simulations. Future work includes code enhancements,
+  added features, and simulation of new reactors. Ultimately, the goal is to
+  develop a reactor simulation suite that can be used to perform core design
+  calculations and analyze dynamic reactive behavior.
 
+  \subsection{Encouraging Code Usage}
+    
+
+  \subsection{Code Enhancements}
+    Depletion, Higher Order elements, \& SPN
+ 
   \subsection{Further Investigations}
     \begin{itemize}
       \item SuperPhenix Benchmark
