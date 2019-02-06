@@ -29,16 +29,23 @@
   
   Each submission to the benchmark has generated its own cross-sections using 
   several different cross-section libraries (e.g. ENDFB7.0, JEFF3.1, etc.). 
-  Cross-sections were generated for this model using \mcc and the procedure 
-  outlined in \sref{sec:cross_section_treatment} resulting in temperature
-  dependent cross-section libraries with 33 energy groups. The  multigroup 
-  neutron diffusion equation is solved using both \dif and the method from
-  \chref{ch:neutronDiffusion}. These methods agree to within 700 \units{pcm}. 
+  Therefore, using this benchmark as a verification problem is not feasible.
+  Instead, cross-sections were generated for this model using \mcc and the
+  procedure outlined in \sref{sec:cross_section_treatment}. This procedure 
+  resulted  in temperature dependent cross-section libraries with 33 energy 
+  groups. The  multigroup neutron diffusion equation is solved using these same
+  cross-sections using both \dif and the method from \chref{ch:neutronDiffusion}.
+  These two methods using the same cross-sections agree to within 700 
+  \units{pcm}. The \dif and FEM models were minimally refined. A more formal 
+  refinement study would presumably show further error reduction.
 
   The reactor materials in the benchmark are shown in \fref{fig:abr_materials}. 
-  Fast neutron flux is shown to peak in the core center and thermal neutron flux 
-  is shown to peak in the structural material surrounding the core in
-  \fref{fig:abr_fluxes}.
+  Though, the model used for benchmark comparison and subsequent reactivity
+  coefficient calculations, the combined fast ($\phi_1$) and thermal ($\phi_2$)
+  fluxes are plotted in \fref{fig:abr_fluxes}. Fast flux is shown to peak in
+  the center of the core in the active fuel region. Thermal flux is shown to
+  peak in core structural material, at the periphery of the active fuel region,
+  as well as in control rod locations within the core.
 
   \begin{figure}
     \centering
@@ -52,8 +59,8 @@
     \subfloat[$\phi_{1}$]{
       \includegraphics[width=0.25\textwidth]{abr_phi_nod_group1}}
     \hspace{0.2in}
-    \subfloat[$\phi_{33}$]{
-      \includegraphics[width=0.25\textwidth]{abr_phi_nod_group33}}
+    \subfloat[$\phi_{2}$]{
+      \includegraphics[width=0.25\textwidth]{abr_phi_nod_group2}}
     \caption{Fast (left) and Thermal (right) Neutron Flux in ABR.}
     \label{fig:abr_fluxes}
   \end{figure}
