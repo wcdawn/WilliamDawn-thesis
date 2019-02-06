@@ -2,10 +2,11 @@
 \begin{abstract}
   Renewed interest in advanced nuclear power reactors such as the Versatile Test 
   Reactor (VTR) at Idaho National Laboratory (INL) has encouraged enhanced 
-  modeling of Sodium Cooled Fast Reactors (SFRs). Since their inception in the 
+  modeling of Fast Reactors (FRs). Since their inception in the 
   early days of nuclear engineering with reactors such as at the Experimental 
-  Breeder Reactor and Fermi 1, many new modeling techniques have been developed.
-  This work seeks to introduce modern methods to the simulation of SFRs.
+  Breeder Reactor (EBR-I) and Fermi 1, many new modeling techniques have been 
+  developed. This work seeks to introduce modern methods to the simulation of 
+  FRs.
 
   In this work, the multigroup neutron diffusion equation is solved via the
   Finite Element Method (FEM). This method allows for the use of unstructured
@@ -13,20 +14,24 @@
   thermal expansion can be modeled and used to distort the mesh. Additionally,
   the FEM will allow for simplified spatial refinement by means of both 
   mesh refinement and the use of higher-order methods without regenerating the 
-  mesh.  % TODO WEDGES
+  mesh. Unique to this thesis is the use of pentahedral wedge elements in the
+  FEM mesh. Wedge elements are selected for their natural description of
+  hexagonal geometry common to FRs.
 
-  Thermal feedback effects within a SFR are also modeled in this work. A
+  Thermal feedback effects within a FR are also modeled in this work. A
   simplified thermal hydraulic model is used, modeling both axial heat 
   convection and radial heat conduction. Temperatures from this model are used 
   to calculate on-the-fly, temperature dependent neutron cross-sections to 
-  capture the effects of Doppler feedback. Additionally, a thermal expansion 
+  capture reactivity feedback effects. Additionally, a thermal expansion 
   model is used to simulate the thermal expansion of fuel and structural 
   components within the reactor.  These effects have been demonstrated to 
   significantly impact reactor behavior in experiments such as those performed 
   at Experimental Breeder Reactor II (EBR-II).
 
-  Using these models, a typical SFR is simulated at operating conditions. The 
-  models as implemented demonstrate expected reactor behavior for an SFR and can
+  Using these models, a typical FR is simulated at operating conditions. The 
+  models as implemented demonstrate expected reactor behavior for an FR. For the
+  simulated reactor, reactivity feedback coefficients are calculated which would
+  not be possible without a coupled multiphysics model. These results can
   be used to visualize the inherent safety features and feedback effects of such 
   a nuclear reactor.
   
@@ -40,21 +45,22 @@
 
 %% -------------------------------- Dedication ------------------------------ %%
 \begin{dedication}
-  \centering To the future of clean electricity and natural beauty.
+  \centering To the future of clean electricity.
 \end{dedication}
 
 %% -------------------------------- Biography ------------------------------- %%
 \begin{biography}
   William C. Dawn was born and raised in Stafford, Virginia. He attended public
   schools there for his primary education, participating in the Commonwealth
-  Governor's School in High School. William earned a B.S. degree in Nuclear
-  Eneingeering from North Carolina State University (NC State) in May 2017. 
-  After his Master's degree, William will remain at NC State to pursue a Ph.D.
-  degree in Nuclear Engineering. 
+  Governor's School in High School. William earned a Bachelor's of Science 
+  degree in Nuclear Eneingeering from North Carolina State University (NC State)
+  in May 2017. After his Master's degree, William will remain at NC State to 
+  pursue a Ph.D. degree in Nuclear Engineering. 
 
   William is a fellow of the Integrated University Program (IUP) facilitated by
-  DOE-NE. During his undergraduate and graduate careers, he has had the
-  opportunity to work with GE-Hitachi Nuclear Energy LLC. and Oak Ridge National
+  U.S. Department of Energy Office of Nuclear Energy (DOE-NE). During his 
+  undergraduate and graduate careers, he has had the opportunity to work with 
+  GE-Hitachi Nuclear Energy Americas LLC (GEH) and Oak Ridge National
   Laboratory (ORNL). William has also made contributions to the Consortium for
   Advanced Simulation of LWRs (CASL).
 \end{biography}
