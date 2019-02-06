@@ -158,28 +158,10 @@
   hydraulic model (see \chref{ch:thermalHydraulics}), these relationships are 
   functions of reactor power and coolant mass flow rate. These parameters are
   not known before the simulation for a general reactor. Instead, a simplified
-  temperature relationship is used to generate the cross-section libraries.
-
-  In each cross-section library, the coolant is maintained at some nominal
-  temperature. For this work, that temperature is $400 \units{K}$. Maintaining 
-  the coolant temperature as constant in this manner is acceptable because the 
-  dominant effect of temperature on the macroscopic cross-sections in the 
-  coolant is the density change of the fluid, not the Doppler effect. With
-  constant coolant temperature, the fuel temperature is then varied over some 
-  range. In this work, libraries are generated for average fuel temperatures
-  of $400 \units{K}$, $600 \units{K}$, $900 \units{K}$, and $1200 \units{K}$.
-  At each fuel temperature, the clad temperature is related as 
-  \begin{equation}
-    T_{clad} = \max \left\{ w \, T_{fuel}, T_{cool} \right\}
-  \end{equation}
-  % note: weight for T_{cool} should be 0.63 if perturbed coolant is desired
-  where $w$ is a weighting factor, $T_{fuel}$ is the chosen fuel temperature
-  for the library, and $T_{cool}$ is the chosen coolant temperature for the
-  library. A weighting of $w=0.7$ was selected based on analysis of the ratio
-  $T_{clad}/T_{fuel}$ for a representative high power channel
-  within an example reactor simulation.  Temperature in non-fissile assemblies 
-  is set to $T_{cool}$ during the collapse as there is no heat generation 
-  modeled in these regions.
+  one-dimensional single-channel model is used to estimate temperatures for the
+  cross-section libraries. This model is based on the axial convection and
+  radial conduction models in \chref{ch:thermalHydraulics}. Temperatures from
+  the model are given in \tref{tab:xstemps}.
 
   \begin{table}
     \caption{Temperatures Selected for Cross-section Libraries.}
@@ -190,19 +172,20 @@
         $T_{cool} \units{K}$ & $T_{clad} \units{K}$ & $T_{fuel} \units{K}$ \\
         \midrule
         628.15 & 628.15 & 628.15  \\
-        628.90 & 681.90 & 717.90  \\
         708.65 & 757.50 & 807.15  \\
-        ??? & ??? & ??? \\
+        896.87 & 920.47 & 961.46 \\
+        1072.81 & 1114.83 & 1183.14 \\
         \bottomrule
       \end{tabular}
     \end{center}
   \end{table}
 
-  Ultimately, the microscopic cross-sections are accumulated in four separate 
-  libraries at temperatures given in \tref{tab:xstemps}. Then, these libraries 
-  are used to calculate on-the-fly cross-sections during the simulation using a
-  temperature interpolation method.
-  For each region, average macroscopic cross
+  Note that the maximum temperatures in \tref{tab:xstemps} are greater than 
+  temperatures observed at reactor operating conditions. This is necessary so 
+  that even at perturbed reactor conditions (e.g. $110\%$ full power), the peak 
+  core temperatures can still be interpolated within the libraries.
+
+  For each material region, average macroscopic cross
   sections are calculated by homogenizing the microscopic cross-section and with 
   number densities $N_{i,j}$ for isotope ${j=1,2,\ldots,N_{iso}}$ in region
   ${i=1,2,\ldots,N_{reg}}$.  For the $x$ reaction type, the 
