@@ -83,23 +83,27 @@
 
   The dimensions within a single rod are shown in \fref{fig:pin_model} and the
   dimensions within a hexagonal assembly can are shown in \fref{fig:hex_can}. In
-  \fref{fig:hex_can}, $T\!h_{Can}$ is the thickness of the assembly can,
+  \fref{fig:hex_can}, $T\!h_{can}$ is the thickness of the assembly can,
   $F\!2\!F$ is the flat-to-flat measurement of the outside of the hexagonal can,
   and \textit{Pitch} is the distance between the center of two rods.
   Using the geometry described in 
   these figures, the material cross-sectional areas are calculated according to 
-  the given formulae where $N_{rod}$ is the number of rods in the assembly.
+  the given formulae where $N_{rod}$ is the number of rods in the assembly and
+  $A\!P$ is the assembly pitch. $A\!P > F\!2\!F$ to account for inter-assembly
+  sodium gaps.
   \begin{align}
     \label{eq:afrac_first}
-    A_{total} &= \frac{\sqrt{3}}{2} F\!2\!F^2 \\
-    A_{can} &= A_{total} - 
-      \frac{\sqrt{3}}{2} \left(  F\!2\!F - 2 \, T\!h_{Can} \right) \\
+    A_{total} &= \frac{\sqrt{3}}{2} A\!P^2 \\
+    A_{box} &= A_{total} - 
+      \frac{\sqrt{3}}{2} \left(  F\!2\!F - 2 \, T\!h_{can} \right) \\
     A_{wrap} &= N_{rod} \frac{\pi}{4} D_{wrap}^2 \\
     A_{clad} &= N_{rod} \pi (R_C^2 - R_B^2) \\
     A_{bond} &= N_{rod} \pi (R_B^2 - R_F^2) \\
     A_{fuel} &= N_{rod} \pi R_F^2 \\
+    A_{cool} &= A_{total} - A_{box} - A_{wrap} - A_{clad} - A_{bond} -
+      A_{fuel}\\
     \label{eq:afrac_last}
-    A_{cool} &= A_{total} - A_{can} - A_{wrap} - A_{clad} - A_{bond} - A_{fuel}
+    A_{struct} &= A_{box} + A_{wrap} + A_{clad}
   \end{align}
   Calculating the areas as above allows for calculation of cross-sectional area
   fractions. Assuming constant dimensions in the axial
