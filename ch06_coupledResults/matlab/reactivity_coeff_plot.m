@@ -12,6 +12,7 @@ powerfudge = 10.; % [%]
 % [power, tfuel_avg, tclad_avg, tcool_avg, k_ref, k_perturb_power,
 %    k_perturb_thexp, fuelfudge, coolfudge]
 data = csvread(fname);
+data(size(data,1),:) = [];
 
 % parse data
 nPower = size(data,1);
@@ -54,7 +55,7 @@ for i = 1:nCondition
     set(h, 'MarkerFaceColor', get(h, 'Color'));
 end
 hold off
-xlim([0,power(end)])
+xlim([0,100])
 xlabel('% Power')
 ylabel('k_{eff}')
 title('k_{eff} Effects')
