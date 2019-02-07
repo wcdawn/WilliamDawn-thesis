@@ -62,14 +62,48 @@
   goal is to develop a reactor simulation suite that can be used to perform core 
   design calculations and analyze dynamic reactive behavior.
 
-  \subsection{Encouraging Code Usage}
-    
+  \subsection{Depletion Capabilities}
+    To serve as a practical and useful reactor simulator, this suite must be
+    expanded to include depletion capabilities. The code as presented in this
+    work can be used to design a clean (i.e. undepleted) fast reactor. However,
+    any reactor design must be capable of extended and continuous operation
+    during an operating cycle. Depletion calculations inform the reactor design
+    by establishing the required excess reactivity at the beginning of cycle.
+    Control strategies must then be designed to control this excess reactivity. 
 
-  \subsection{Code Enhancements}
-    Depletion, Higher Order elements, \& SPN
- 
-  \subsection{Further Investigations}
-    \begin{itemize}
-      \item SuperPhenix Benchmark
-      \item EBR-II modeling
-    \end{itemize}
+    Depletion calculations require solving the Bateman equations in the matrix
+    exponential format. Preliminary investigations have been conducted for the
+    implementation of the \gls{cram} \cite{cram}. The \gls{cram} will be
+    implemented using the \gls{fem} mesh. A subsequent mesh study will be
+    required to determine if it is possible to use a coarse mesh for refinement
+    or if the fine mesh must also be used in depletion calculations.
+
+  \subsection{Higher Order Finite Elements}
+    Recall the \gls{fem} as presented in \chref{ch:neutronDiffusion} employs
+    only linear triangular and wedge elements. The \gls{fem} as derived can be
+    implemented for polynomials of arbitrary order. Work in \cite{Hosseini2013} 
+    suggests that quadratic elements provide a significant reduction of error
+    without the need to reduce the mesh spacing. With linear finite elements,
+    the \gls{fem} is second-order spatially convergent. Quadratic finite
+    elements convey third-order spatial convergence and cubic finite elements
+    convey fourth-order spatial convergence. Incorporating higher order finite
+    elements will allow for simple solution refinement without regenerating a
+    mesh.
+
+  \subsection{Encouraging Code Usage}
+    The simulation suite is designed to be used for practical fast nuclear power
+    reactor simulations. An important factor in this code being practical is its
+    adoption by users. Encouraging the usage of the simulation package will
+    allow for user feedback. Additionally, users employing the code in a variety
+    of simulations will encourage the development of future features that may be
+    necessary for unique reactor designs. Future possible reactors to be 
+    simulated include the SuperPhenix benchmark and simulation of the
+    \gls{ebr-ii} inherent safety demonstrations \cite{ebriitests}.
+    
+    \renewcommand{\thefootnote}{\fnsymbol{footnote}}
+    Currently, the code is maintained in a private Github repository so it may 
+    easily be shared in the future. The author may be contacted\footnotemark 
+    for access to the repository. 
+
+    \footnotetext{William C. Dawn: 
+      \texttt{\href{mailto:wcdawn@ncsu.edu}{wcdawn@ncsu.edu}}}
