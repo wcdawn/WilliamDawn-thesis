@@ -1,32 +1,32 @@
-%% ------------------------------ Abstract ---------------------------------- %%
+%% ------------------------------ Abstrglst ---------------------------------- %%
 \begin{abstract}
-  Renewed interest in advanced nuclear power reactors such as the Versatile Test 
-  Reactor (VTR) at Idaho National Laboratory (INL) has encouraged enhanced 
+  Renewed interest in advanced nuclear power reactors such as the 
+  \gls{vtr} at \gls{inl} has encouraged enhanced 
   modeling of fast nuclear power reactors. Since their inception in the early 
-  days of nuclear engineering with reactors such as at the Experimental 
-  Breeder Reactor I (EBR-I) and Fermi 1, many new modeling techniques have been 
-  developed. This work seeks to introduce modern methods to the multiphysics 
-  simulation of fast reactors.
+  days of nuclear engineering with reactors such as at the \gls{ebr-i}
+  and Fermi 1, many new modeling techniques have been developed. This work 
+  seeks to introduce modern methods and multiphysics simulation of fast 
+  reactors.
 
   In this work, the multigroup neutron diffusion equation is solved via the
-  Finite Element Method (FEM), allowing for the use of unstructured
-  and general meshes. By using an unstructured mesh, physical phenomena such as
-  thermal expansion can be modeled and used to distort the mesh. Additionally,
-  the FEM will allow for simplified spatial refinement by means of both 
-  mesh refinement and the use of higher-order methods without regenerating the 
-  mesh. Unique to this thesis is the use of pentahedral wedge elements in the
-  FEM mesh. Wedge elements are selected for their natural description of
-  hexagonal geometry common to fast reactors.
+  \gls{fem}, allowing for the use of unstructured and general meshes. By using an 
+  unstructured mesh, physical phenomena such as thermal expansion can be modeled 
+  and used to distort the mesh. Additionally, the \gls{fem} will allow for 
+  simplified spatial refinement by means of both mesh refinement and the use of 
+  higher-order methods without regenerating the mesh. Unique to this thesis is 
+  the use of pentahedral wedge elements in the \gls{fem} mesh. Wedge elements 
+  are selected for their natural description of hexagonal geometry common to 
+  fast reactors.  
 
-  Thermal feedback effects within a fast reactor are also modeled in this work. A
-  simplified thermal hydraulic model is used, modeling both axial heat 
+  Thermal feedback effects within a fast reactors are also modeled in this work.
+  A simplified thermal hydraulic model is used, modeling both axial heat 
   convection and radial heat conduction. Temperatures from this model are used 
   to calculate temperature dependent neutron cross-sections and
   capture reactivity feedback effects. Additionally, a thermal expansion 
   model is used to simulate the thermal expansion of fuel and structural 
   components within the reactor.  These effects have been demonstrated to 
   significantly impact reactor behavior in experiments such as those performed 
-  at Experimental Breeder Reactor II (EBR-II).
+  at \gls{ebr-ii}.
 
   Using these models, a typical fast reactor is simulated at operating 
   conditions. The models as implemented demonstrate expected reactor behavior 
@@ -34,7 +34,7 @@
   coefficients are calculated which would not be possible without a coupled 
   multiphysics model. These results can be used to visualize the inherent safety 
   features and feedback effects of such a nuclear reactor.
-  
+
 \end{abstract}
 
 %% ---------------------------- Copyright page ------------------------------ %%
@@ -52,15 +52,15 @@
 \begin{biography}
   William C. Dawn was born and raised in Stafford, Virginia. He attended public
   schools there for his primary education, participating in the Commonwealth
-  Governor's School in High School. William earned a Bachelor's of Science 
+  Governor's School in High School. William earned a Bglshelor's of Science 
   degree in Nuclear Eneingeering from North Carolina State University (NC State)
   in May 2017. After his Master's degree, William will remain at NC State to 
   pursue a Ph.D. degree in Nuclear Engineering. 
 
-  William is a fellow of the Integrated University Program (IUP) facilitated by
+  William is a fellow of the Integrated University Program (IUP) fglsilitated by
   U.S. Department of Energy Office of Nuclear Energy (DOE-NE). During his 
   undergraduate and graduate careers, he has had the opportunity to work with 
-  GE-Hitachi Nuclear Energy Americas LLC (GEH) and Oak Ridge National
+  GE-Hitglshi Nuclear Energy Americas LLC (GEH) and Oak Ridge National
   Laboratory (ORNL). William has also made contributions to the Consortium for
   Advanced Simulation of LWRs (CASL).
 \end{biography}
@@ -97,3 +97,7 @@
 \thesislistoftables
 
 \thesislistoffigures
+
+\clearpage
+\printglossary[type=\acronymtype,title={LIST OF ACRONYMS},nonumberlist]
+\addcontentsline{toc}{chapter}{LIST OF ACRONYMS}

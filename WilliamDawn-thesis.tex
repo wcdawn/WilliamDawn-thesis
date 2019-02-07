@@ -22,6 +22,8 @@
 \usepackage{threeparttable} % for table with footnote
 \usepackage{amssymb} % for \therefore and \implies
 \usepackage{isotope} % isotope notation e.g. \isotope[235]{U}
+\usepackage[acronym]{glossaries}
+\include{acronym}
 \usepackage[outdir=./hidden_epstopdf/]{epstopdf}
 \pdfminorversion=7 % needed to use PDF 1.7 definition. 1.5 is default.
 
@@ -328,6 +330,8 @@ Multiphysics Models}
 %%---------------------------------------------------------------------------%%
 \frontmatter
 \include{front}
+\glsresetall
+
 %%---------------------------------------------------------------------------%%
 \mainmatter
 
@@ -374,6 +378,7 @@ Multiphysics Models}
 \include{apB_benchmarks/apB_benchmarks}
 
 \restoregeometry
+
 
 %%---------------------------------------------------------------------------%%
 %\ensureoddstart

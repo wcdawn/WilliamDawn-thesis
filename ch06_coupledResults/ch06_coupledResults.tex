@@ -6,7 +6,7 @@
   The motivation for this work is to model nuclear power reactors with
   multiphysics feedback. This has been accomplished by modeling the reactor 
   power distribution with the multigroup neutron diffusion equation solved via 
-  the Finite Element Method (FEM) (\chref{ch:neutronDiffusion}). Axial heat
+  the \gls{fem} (\chref{ch:neutronDiffusion}). Axial heat
   convection and radial heat conduction models are used to estimate reactor
   material temperatures (\chref{ch:thermalHydraulics}).
   Simplified thermal expansion modeling is used to model reactor dimensions 
@@ -20,9 +20,8 @@
 
 \section{Advanced Burner Reactor -- MET-1000}
 \label{sec:abr}
-  This reactor design is proposed by Organisation for Economic Co-operation and
-  Development (OECD) Nuclear Energy Agency (NEA) \cite{abr}. The Advanced
-  Burner Reactor (ABR) is fueled with a ternary metallic fuel and has a 1000
+  This reactor design is proposed by \gls{oecd} \gls{nea} \cite{abr}. The 
+  \gls{abr} is fueled with a ternary metallic fuel and has a 1000
   \units{MWth} rating; hence, MET-1000. This is a medium-sized metallic reactor 
   with a total of 180 hexagonal assemblies and is 4.8 \units{m} tall. The 
   benchmark is fully specified and thirty-one independent results are submitted. 
@@ -205,22 +204,22 @@
     Doppler coefficient as temperatures are increased uniformly throughout the
     reactor.
 
-  \subsection{Coolant Temperature Reactivity Coefficient (CTC)}
+  \subsection{\gls{ctc}}
   \label{sec:coolant_temperature_reactivity_coefficient}
-    The Coolant Temperature reactivity Coefficient (CTC) describes the
-    reactivity change due to an increase in coolant temperature. In LWRs, this
-    may be called the Moderator Temperature Coefficient (MTC) but in fast
+    The \acrfull{ctc} describes the
+    reactivity change due to an increase in coolant temperature. In \glspl{lwr}, 
+    this may be called the \gls{mtc} but in fast
     reactors, the coolant is not designed to moderate neutrons. Feedback in the 
     coolant is due to two main phenomena: the decrease in absorption 
     cross-sections in the coolant due to Doppler broadening and the decrease of 
     density due to temperature increase. The dominant effect is the decrease of 
     sodium density due to the temperature increase \cite{textbookknief}.
 
-    Unlike all other reactivity coefficients presented here, the CTC of the ABR 
-    is positive as is common in fast reactors. This implies increases in coolant 
-    temperature will lead to an increase in reactivity and cause a subsequent 
-    increase in reactor power. In fast reactors, the coolant acts as a parasitic 
-    neutron absorber. Therefore, a decrease in the sodium absorption 
+    Unlike all other reactivity coefficients presented here, the \gls{ctc} of the 
+    \gls{abr} is positive as is common in fast reactors. This implies increases 
+    in coolant temperature will lead to an increase in reactivity and cause a 
+    subsequent increase in reactor power. In fast reactors, the coolant acts as 
+    a parasitic neutron absorber. Therefore, a decrease in the sodium absorption 
     cross-section encourages neutron absorption in fissile material in the fuel 
     resulting in a reactivity increase. This does not pose a stability problem 
     as long as the power reactivity coefficient remains negative.
@@ -244,8 +243,8 @@
 
 \section{Results}
 \label{sec:results}
-  Returning to the ABR MET-1000 benchmark, reactivity coefficients are modeled
-  for this reactor. The methodology and formulae from
+  Returning to the \gls{abr} MET-1000 benchmark, reactivity coefficients are 
+  modeled for this reactor. The methodology and formulae from
   \sref{sec:reactivity_coefficients} are used. The reactor \keff as a function
   of reactor power is plotted in \fref{fig:keff_effects}. Note \keff decreases
   as power increases and the \keff for the case with increased sodium

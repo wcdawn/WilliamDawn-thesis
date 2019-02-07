@@ -1,5 +1,5 @@
 # Makefile
-CHAPTERS=ch*/ch*.tex ap*/ap*.tex variable_definitions.tex
+CHAPTERS=ch*/ch*.tex ap*/ap*.tex variable_definitions.tex acronym.tex
 FIGURES=ch*/figs/*.* ap*/figs/*.*
 NAME=WilliamDawn-thesis
 AUX=$(NAME).aux front.aux ch*/*.aux ap*/*.aux optional.aux 

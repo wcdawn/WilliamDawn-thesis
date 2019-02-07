@@ -6,14 +6,24 @@
 *.out
 *.toc
 
+# bibliography data
 *.blg
 *.bbl
 *.bcf
-
 *.run.xml
 *.bib
 
+# vim tmp files
 **.swp
+
+# glossaries files
+*.acn
+*.acr
+*.alg
+*.glg
+*.glo
+*.gls
+*.ist
 
 # this may get added later...
 *.pdf

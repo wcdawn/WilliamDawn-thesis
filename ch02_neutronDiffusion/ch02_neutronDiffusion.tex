@@ -2,27 +2,25 @@
 \label{ch:neutronDiffusion}
 
 \section{Introduction}
-  This chapter will describe the solution of the
-  multigroup neutron diffusion equations for general geometry via the Finite
-  Element Method (FEM). The solution 
-  method and derivations here are general to the multigroup neutron diffusion 
-  equation and it's application to fast reactors or any standard reactor 
-  geometry is straightforward. For typical fast reactor applications, diffusion 
-  theory approximates the neutron distribution within the reactor well. 
-  The diffusion approximation is a standard assumption for fast reactors because 
-  neutron mean-free-paths within the reactor are large relative to material 
-  dimensions.
+  This chapter will describe the solution of the multigroup neutron diffusion 
+  equations for general geometry via the \gls{fem}. The solution method and 
+  derivations here are general to the multigroup neutron diffusion equation and 
+  it's application to fast reactors or any standard reactor geometry is 
+  straightforward. For typical fast reactor applications, diffusion theory 
+  approximates the neutron distribution within the reactor well. The diffusion 
+  approximation is a standard assumption for fast reactors because neutron 
+  mean-free-paths within the reactor are large relative to material dimensions.
 
-  Spatial discretization will be done with the Finite 
-  Element Method (FEM). This spatial discretization method is selected for 
-  several reasons. It allows for easily increasing the spatial convergence order
-  of the method by increasing the order of the elements without refining the
-  mesh. For example, with a given mesh, quadratic elements instead of linear
-  elements could be used to spatially refine the solution. Additionally, 
-  coordinates of nodes and elements can be easily updated to reflect physical 
-  phenomena, such as thermal expansion (see \chref{ch:thermalExpansion}). 
-  Finally, material properties are calculated on an element basis allowing for 
-  detailed updates to the material properties during the calculation.
+  Spatial discretization will be done with the \gls{fem}. This spatial 
+  discretization method is selected for several reasons. It allows for easily 
+  increasing the spatial convergence order of the method by increasing the order
+  of the elements without refining the mesh. For example, with a given mesh, 
+  quadratic elements instead of linear elements could be used to spatially 
+  refine the solution. Additionally, coordinates of nodes and elements can be 
+  easily updated to reflect physical phenomena, such as thermal expansion (see 
+  \chref{ch:thermalExpansion}).  Finally, material properties are calculated on 
+  an element basis allowing for detailed updates to the material properties 
+  during the calculation.
 
 \section{Multigroup Neutron Diffusion Equation}
   In the multigroup neutron diffusion equation, an energy structure is 
@@ -161,18 +159,18 @@
 \section{Formulation of Finite Element Equations}
   \label{sec:formulation}
   This section presents the derivation of the spatial discretization of the
-  multigroup neutron diffusion equation based on the (FEM). The method results 
-  in a linear system of equations for a fixed source iteration. Details are also 
-  provided on constructing the finite element matrix for use with triangular and 
-  wedge elements.
+  multigroup neutron diffusion equation based on the \gls{fem}. The method 
+  results in a linear system of equations for a fixed source iteration. Details 
+  are also provided on constructing the finite element matrix for use with 
+  triangular and wedge elements.
 
   \subsection{Derivation}
     \label{sec:formulation:derivation}
     The remaining continuous variable in the problem to be discretized in
     \eref{eq:multigroup_source}  is the spatial variable $\vr$. This will be 
-    discretized according to the FEM. The problem is solved in a finite domain 
-    $\vr \in \Omega$ where $\partial \Omega$ represents the boundary of the 
-    domain where some boundary condition is specified. Boundary condition 
+    discretized according to the \gls{fem}. The problem is solved in a finite 
+    domain $\vr \in \Omega$ where $\partial \Omega$ represents the boundary of 
+    the domain where some boundary condition is specified. Boundary condition 
     options include:
     \begin{enumerate}
       \item Mirror. $\grad \phi_g(\vr) \cdot \nhat = 0$ for 
@@ -237,8 +235,8 @@
       q_{down,g,e} &= \sum_{g'=1}^{g-1} \Sigma_{s,g' \rightarrow g,e}
         \phiavg_{g',e}
     \end{align}
-    For first-order, linear implementations of the FEM, the element-average 
-    flux $\phiavg_{g,e}$ is
+    For first-order, linear implementations of the \gls{fem}, the 
+    element-average flux $\phiavg_{g,e}$ is
     \begin{equation}
       \label{eq:phiavg}
       \phiavg_{g,e} = \frac{1}{N_p} \sum_{i \in \Omega_e}^{N_p} \phi_{i,g}
@@ -368,7 +366,7 @@
         \int_{\Omega_e} \basis_i(\vr) \; d\vr \right)
     \end{multline}
     Which can be written in the notation common to the mathematical discussions 
-    of the FEM
+    of the \gls{fem}
     \begin{equation}
       \label{eq:fem_notation}
       a(\basis_i,\basis_j) = f(\basis_i)
@@ -384,14 +382,14 @@
     
     The diffusion coefficient $D_g(\vr)$ is non-zero and bounded and
     the removal cross-section $\Sigma_{r,g}(\vr)$ is bounded. Given these
-    conditions, the Lax-Milgram Lemma implies the solution to the FEM as derived
-    here is both unique and bounded (see Theorem 9.3 \cite{textbookli}). This is 
-    not the entire solution description as the source function $q_g(\vr)$ is 
-    updated on each power iteration (see \sref{sec:power_iterations}). What the
-    satisfaction of the Lax-Milgram Lemma does imply in this instance is that 
-    for a fixed source in a given power iteration, a unique and bounded solution
-    exists. The multigroup neutron diffusion problem remains an eigenvalue 
-    problem.
+    conditions, the Lax-Milgram Lemma implies the solution to the \gls{fem}
+    equations as derived here is both unique and bounded (see Theorem 9.3 
+    \cite{textbookli}). This is not the entire solution description as the 
+    source function $q_g(\vr)$ is updated on each power iteration (see 
+    \sref{sec:power_iterations}). What the satisfaction of the Lax-Milgram Lemma
+    does imply in this instance is that for a fixed source in a given power 
+    iteration, a unique and bounded solution exists. The multigroup neutron 
+    diffusion problem remains an eigenvalue problem.
     
     In the matrix notation of \eref{eq:matrix_notation}, matrix $\ma$ is 
     described by integral quantities, vector $\vu$ is the unknown magnitudes of
@@ -428,8 +426,8 @@
     
     The above derivation reduces to a linear system of
     equations. These equations are constructed from the integral quantities 
-    specified by the FEM and the coefficients given by the cross-sections and
-    fixed source regions. The integral quantities themselves are expressed 
+    specified by the \gls{fem} and the coefficients given by the cross-sections 
+    and fixed source regions. The integral quantities themselves are expressed 
     explicitly in the \sref{sec:matrix_quantities}.
     
   \subsection{Matrix Quantities}
@@ -610,13 +608,12 @@
       
       $A_{\Delta}$ is computed according to \eref{eq:area_triangle} and
       $A_{\Box}$ is computed as the sum of the area of two triangles, employing
-      the same formula.
-      For a simple extruded triangle,
-      the volume calculation is straightforward and is the product of triangular
-      area and linear height. However, allowing the nodes to
-      move with respect to each other makes the volume of the element difficult
-      to calculate. Therefore, the Jacobian is used to calculate $V_e$. For more
-      detail, see \sref{sec:quadratures}, especially \tref{tab:jacobi}.
+      the same formula.  For a simple extruded triangle, the volume calculation 
+      is straightforward and is the product of triangular area and linear 
+      height. However, allowing the nodes to move with respect to each other 
+      makes the volume of the element difficult to calculate. Therefore, the 
+      Jacobian is used to calculate $V_e$. For more detail, see 
+      \sref{sec:quadratures}, especially \tref{tab:jacobi}.
 
   \subsection{Quadratures}
     \label{sec:quadratures}
@@ -640,7 +637,7 @@
     quadrature and $n=N$.
     
     Two-dimensional and three-dimensional quadratures are necessary for the 
-    FEM. Triangular quadratures are not as simple to derive
+    \gls{fem}. Triangular quadratures are not as simple to derive
     as line quadratures and the number of points need not equal the order of the
     polynomial integrated. The triangular quadrature as implemented here is 
     symmetric and open. That is, there are no points on the boundary of the 
@@ -690,7 +687,7 @@
     
     All of the quadratures described here are tabulated for a reference element
     be it a line, triangle, quadrilateral, or wedge. Integration in the 
-    FEM is performed on an arbitrary element in space. Therefore, it is 
+    \gls{fem} is performed on an arbitrary element in space. Therefore, it is 
     necessary to perform a coordinate transform when using a quadrature set.
     % get VERY explicit here so someone else can actually solve the problem...
     Integration with transformed coordinates from domain $\Omega$ to the
@@ -762,12 +759,12 @@
 
     With the Jacobian populated as \eref{eq:calcJacobian}, $J=\lvert\mj\rvert$
     is simply the matrix determinant. For the quadrature integration of 
-    derivative quantities as necessary in the FEM, the derivatives must also be
-    translated from the reference element to the spatial element. This is 
-    performed according to \algorithmref{algorithm:deriv_int}. The notation is 
-    dense as the method requires two sets of coordinates. First, the coordinate 
-    in the reference element $(\xi,\zeta,\eta)$ and second, the coordinate in 
-    Cartesian space $(x,y,z)$.
+    derivative quantities as necessary in the \gls{fem}, the derivatives must 
+    also be translated from the reference element to the spatial element. This 
+    is performed according to \algorithmref{algorithm:deriv_int}. The notation 
+    is dense as the method requires two sets of coordinates. First, the 
+    coordinate in the reference element $(\xi,\zeta,\eta)$ and second, the 
+    coordinate in Cartesian space $(x,y,z)$.
 
     The vector $\vd_{i,\,(\xi,\zeta,\eta)}$ is the gradient vector for
     $\basis_i$ with respect to the reference coordinates $(\xi,\zeta,\eta)$.
@@ -812,7 +809,7 @@
 
 \section{Power Iterations}
   \label{sec:power_iterations}
-  The FEM is used to solve a fixed source problem for a given source
+  The \gls{fem} is used to solve a fixed source problem for a given source
   distribution $q_g(\vr)$. However, for multigroup problems with a fission 
   source, the problem is an eigenvalue problem and the source is not known a 
   priori.  For eigenvalue problems, the problem is also not a fixed-source 
@@ -821,7 +818,7 @@
   and eigenvector.
 
   \subsection{Convergence of Power Iteration Method}
-    Noting the FEM equations can be written as matrix form
+    Noting the \gls{fem} equations can be written as matrix form
     \eref{eq:matrix_notation}, the finite diffusion equation can be rewritten as
     shown in \cite{gehinThesis}.
     \begin{equation}
@@ -1004,7 +1001,7 @@
     \end{equation}
 
 \section{Implementation}
-  A FEM neutron diffusion solution has been developed using 
+  A \gls{fem} neutron diffusion solution has been developed using 
   the above formulae. The program begins by reading a geometry description 
   specified in a plain text VTK file \cite{vtk}. The VTK format is chosen 
   because it is a standard that can be used with visualization tools such as 
@@ -1021,11 +1018,10 @@
     The algorithm for the solution to the diffusion equation is similar to most
     implementations of the power iteration method to solve the multigroup
     neutron diffusion equation. The algorithm itself is presented in 
-    \algorithmref{algorithm:general}. The steps unique to the FEM are steps 
-    \ref{state:fem_matrix} and \ref{state:fem_vector}. These require the 
+    \algorithmref{algorithm:general}. The steps unique to the \gls{fem} are 
+    steps \ref{state:fem_matrix} and \ref{state:fem_vector}. These require the 
     quantities previously derived and form the linear system described by the 
-    FEM. 
-    
+    \gls{fem}.  
     In step \ref{state:rcm} the matrix is reordered. Mathematically this has no
     effect on the result as the linear system represented is equivalent. This 
     choice to reorder the system is made to improve computational efficiency. 
@@ -1096,8 +1092,8 @@
     triplet storage, reduced column, and reduced row storage \cite{sparseBLAS}.
     For this work a \twotable method is chosen which was uniquely 
     developed. \twotable storage is chosen for its simplicity and implementation
-    with the FEM. Future work may include a reduced row implementation but there
-    will be a trade-off between memory minimization and computational 
+    with the \gls{fem}. Future work may include a reduced row implementation but 
+    there will be a trade-off between memory minimization and computational 
     efficiency.
     
     The \twotable method is composed of two separate matrices in memory. An 
@@ -1185,11 +1181,11 @@
     to solve this system in an efficient manner. Options are restricted in this
     work because the solution must operate with a sparsely stored linear 
     system and result in no fill-in. This immediately demands an iterative 
-    method. The linear system described by the FEM can then be exploited for its 
-    unique properties to select a favorable solution method.
+    method. The linear system described by the \gls{fem} can then be exploited 
+    for its unique properties to select a favorable solution method.
     
     The finite element matrix $\ma$ for the problem described in 
-    \eref{eq:multigroup_source} is Symmetric Positive Definite (SPD) if the
+    \eref{eq:multigroup_source} is \gls{spd} if the
     multigroup equations are solved one group at a time. Note, the matrix will
     not have this especially useful property if all the groups were instead 
     solved simultaneously. Symmetry condition is straight-forward and is 
@@ -1223,8 +1219,8 @@
         a \left( \sum_{i=1}^{N} x_i \basis_i, \sum_{j=1}^{N} x_j \basis_j 
         \right)
     \end{equation}
-    By construction of the FEM, $w(\vr) = \sum_{i=1}^{N} x_i \basis_i$ where 
-    $w(\vr)$ is a piecewise continuous polynomial of arbitrary order.
+    By construction of the \gls{fem}, $w(\vr) = \sum_{i=1}^{N} x_i \basis_i$ 
+    where $w(\vr)$ is a piecewise continuous polynomial of arbitrary order.
     \begin{equation}
       \vx^{T} \ma \vx = a \left(w(\vr),w(\vr)\right)
     \end{equation}
@@ -1246,17 +1242,17 @@
     this is verified here for the general matrix and not tested during
     simulations.
     
-    Conventional methods used to solve a linear system described by an SPD
-    matrix include Gauss-Seidel iteration with Successive Over-Relaxation (SOR) 
-    and the Conjugate Gradient (CG) Krylov subspace method. SOR needs
-    \textit{a priori} knowledge of the optimized over-relaxation factor
-    $\omega_{opt}$ for optimal performance. In practice, this is performed 
-    analytically with contrived solutions or in a modified guess-and-check 
-    method. The CG method is chosen because it requires no 
-    \textit{a priori} knowledge and produced a solution to the same tolerance in 
-    a comparable wall-time without the need for guess-and-check iterations.
+    Conventional methods used to solve a linear system described by an \gls{spd}
+    matrix include Gauss-Seidel iteration with \gls{sor} and the \gls{cg} Krylov 
+    subspace method. \gls{sor} needs \textit{a priori} knowledge of the 
+    optimized over-relaxation factor $\omega_{opt}$ for optimal performance. In 
+    practice, this is performed analytically with contrived solutions or in a 
+    modified guess-and-check method. The \gls{cg} method is chosen because it 
+    requires no \textit{a priori} knowledge and produced a solution to the same 
+    tolerance in a comparable wall-time without the need for guess-and-check 
+    iterations.
     
-    A simple recipe for the CG method is presented in Algorithm 2.4.1
+    A simple recipe for the \gls{cg} method is presented in Algorithm 2.4.1
     \cite{Kelley1995IterativeEquations} and its implementation in this 
     work is replicated in \algorithmref{algorithm:CG}.
     
@@ -1299,7 +1295,7 @@
     the computational time of the diffusion solutions is spent in the linear 
     system solution, is is crucial that this process be efficient.
 
-    With the solution of the linear system, the implementation of the FEM to 
-    solve the multigroup neutron diffusion problem is completed. Results in the
-    form of analytic and benchmark verification problems are presented in
+    With the solution of the linear system, the implementation of the \gls{fem}
+    to solve the multigroup neutron diffusion problem is completed. Results in 
+    the form of analytic and benchmark verification problems are presented in
     \chref{ch:diffusionResults}.

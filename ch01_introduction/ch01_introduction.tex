@@ -6,14 +6,13 @@
   has encouraged further development of simulations for these reactors. A class 
   of advanced nuclear power reactors is fast reactors, which operate with 
   predominantly high-energy (``fast'') neutrons in the fission reaction. Since 
-  early development of fast reactors, such as the Experimental Breeder Reactor I
-  (EBR-I) in 1951 and Fermi 1 in 1956, there have been significant innovations 
+  early development of fast reactors, such as  \gls{ebr-i}
+  in 1951 and Fermi 1 in 1956, there have been significant innovations 
   in both nuclear modeling and computational methods. As development of fast
-  reactors is revisited in the form of the Versatile Test Reactor (VTR) at Idaho 
-  National Laboratory (INL), modern improvements in simulation can be used to 
-  simulate fast reactors with modern best practices. These methods can easily be 
-  used for fast reactors with a variety of coolants including sodium, lead, or 
-  molten salt.
+  reactors is revisited in the form of the \gls{vtr} at \gls{inl}, modern 
+  improvements in simulation can be used to simulate fast reactors with modern 
+  best practices. These methods can easily be used for fast reactors with a 
+  variety of coolants including sodium, lead, or molten salt.
 
   Nuclear reactor simulations are inherently multi-physics simulations. For
   example, neutron reaction probabilities are described by cross-sections.
@@ -26,8 +25,8 @@
   
   In this thesis, models for simulating fast reactors will be developed and 
   demonstrated.  Reactor power distribution will be modeled according to the 
-  multigroup neutron diffusion equation as solved by the Finite Element Method 
-  (FEM) based on unstructured meshes in hexagonal/triangular geometry. The 
+  multigroup neutron diffusion equation as solved by the \gls{fem}
+  based on unstructured meshes in hexagonal/triangular geometry. The 
   multigroup neutron diffusion solution code is verified through both 
   benchmark and analytic solutions. Multi-physics effects are modeled including 
   heat transfer and thermal expansion. Thermal hydraulic effects are modeled as 
@@ -35,7 +34,7 @@
   using simplified linear expansion models.
 
   By employing a modern solution method to the neutron diffusion
-  equation in the form of the FEM, the simulation can take advantage of 
+  equation in the form of the \gls{fem}, the simulation can take advantage of 
   developments in numerical methods including the solution of linear systems. 
   Additionally, the simulation allows for the incorporation of generalized 
   multi-physics effects whereas current state-of-the-art simulations require 
@@ -206,7 +205,7 @@
   \end{equation}
 
 \section{Thesis Organization}
-  In \chref{ch:neutronDiffusion}, the derivation of the FEM solution to the
+  In \chref{ch:neutronDiffusion}, the derivation of the \gls{fem} solution to the
   multigroup neutron diffusion equation is
   presented for triangular and wedge elements. The resulting eigenvalue problem
   is solved using the Power Method. Results from the diffusion solution are
