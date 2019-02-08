@@ -28,11 +28,11 @@
   motors were deenergized and the main coolant pumps were tripped and allowed to 
   coast down.  Natural circulation flow follows and after an initial temperature 
   peak, material temperatures returned to normal operating temperatures 
-  \cite{ebriitests}. The ULOHS was demonstrated by shutting down coolant pumps 
-  in the secondary coolant system, thereby disabling heat rejection from the 
-  primary coolant system. No subsequent automatic or manual action was taken. In 
-  the \gls{ulohs} demonstration, material temperatures do not peak and instead 
-  quickly reduce below operating temperatures \cite{ebriitests}.
+  \cite{ebriitests}. The \gls{ulohs}was demonstrated by shutting down coolant 
+  pumps in the secondary coolant system, thereby disabling heat rejection from 
+  the primary coolant system. No subsequent automatic or manual action was 
+  taken. In the \gls{ulohs} demonstration, material temperatures do not peak and 
+  instead quickly reduce below operating temperatures \cite{ebriitests}.
 
   The inherent safety demonstration test at \gls{ebr-ii} demonstrated the passive
   safety of the liquid-metal-cooled reactor design. These tests are simply not 
@@ -139,7 +139,7 @@
     room-temperature to reactor conditions is much more important than thermal
     expansion due to local temperatures.
 
-    Given the assumptions of this model, a radial LEF can be defined using 
+    Given the assumptions of this model, a radial \gls{lef}can be defined using 
     \eref{eq:lef_ht9} as
     \begin{equation}
       \label{eq:lef_r}
@@ -148,14 +148,14 @@
     which is a function of $\texpstruct$. Note that given the assumption of 
     uniform radial thermal expansion, ${F_x(\texpstruct) = F_y(\texpstruct) =
     F_r(\texpstruct)}$.
-    Similarly, an axial LEF can be defined using \eref{eq:lef_u10zr} as 
+    Similarly, an axial \gls{lef} can be defined using \eref{eq:lef_u10zr} as 
     \begin{equation}
       \label{eq:lef_a}
       F_a(\texpfuel) = 1 + \left(\frac{\Delta L}{L}\right)_{\text{U10Zr}}
     \end{equation}
     and $F_a(\texpfuel) = F_z(\texpfuel)$. For a ``cold'' coordinate 
     $(x^C,y^C,z^C)$, the thermally expanded ``hot'' coordinate $(x^H,y^H,z^H)$ 
-    can be expressed using radial and axial LEFs as
+    can be expressed using radial and axial \glspl{lef} as
     \begin{align}
       \label{eq:expand_x}
       x^H &= x^C \, F_r(\texpstruct) \\
@@ -242,7 +242,7 @@
   Thermal expansion affects the reactor in two major ways. First, thermal 
   expansion causes the physical dimensions of the reactor to increase. This is 
   modeled by the expansion of individual elements in the solution of the neutron 
-  diffusion equation via the FEM
+  diffusion equation via the \gls{fem}
   (see \chref{ch:neutronDiffusion}) as well as the expansion of area fractions
   within the hexagons. Second, as a result in the increase in physical 
   dimensions, the density of reactor materials decreases. This decrease in 

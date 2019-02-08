@@ -1,35 +1,35 @@
-\chapter{Discussion, Conclusions, and Recommendations}
+\chapter{Summary, Conclusions, and Recommendations}
 \label{ch:conclusions}
 
-\section{Discussion of Simulation Results}
+\section{Summary of Simulation Results}
 
   The purpose of this thesis is to simulate a fast nuclear power reactor at 
-  operating conditions with coupled multiphysics simulations. The method
+  operating conditions with coupled multiphysics feedback. The method
   developed allows for solution to the multigroup neutron diffusion equation for
   general unstructured mesh and an arbitrary energy group structure. The coupled 
   multiphysics models allows for inherent modeling thermal feedback effects 
   instead of using extremely simplified models or calculations by hand. By 
   including all multiphysics models in a single simulation suite, a user can 
-  more easily observe the interaction of physical phenomena and feedback.
+  easily observe the interaction of physical phenomena and feedback.
 
   In \chref{ch:neutronDiffusion}, a rigorous and general framework is developed
   for solving the multigroup neutron diffusion equation via the \gls{fem} for
-  general unstructured mesh. Insights are provided into the use of both
+  unstructured mesh. Insights are provided into the use of both
   two-dimension triangular elements and three-dimensional wedge (pentahedral)
   elements. Both of these geometries are natural choices for fast reactors which 
-  typically employ hexagonal geometries. Using the developed methods,
-  \chref{ch:diffusionResults} then demonstrates solution verification and
-  solution validation for both analytic and reactor benchmark problems. The
-  multigroup neutron diffusion solver as implemented is shown to converge to the
-  correct answer at the correct convergence rate.
+  typically employ hexagonal geometries. Using the methods developed,
+  \chref{ch:diffusionResults} then demonstrates code verification and solution
+  solution verification and for both analytic and reactor benchmark problems. 
+  The multigroup neutron diffusion solver as implemented is shown to converge to 
+  the correct $\keff$ value and flux distribution at the correct convergence 
+  rate.
 
   \chref{ch:thermalHydraulics} presents the details of the thermal hydraulic
   models employed. These models include an axial convection model and a radial
-  conduction model. The results of the thermal hydraulic calculations are
-  material temperatures. These material temperatures are used to interpolate 
-  cross-section tables and update coolant density to generate 
-  temperature-dependent cross-sections. The formulae for the calculation of
-  temperature-dependent cross-sections are also provided.
+  conduction model. Temperatures resulting from these thermal hydraulic models
+  are used to interpolate cross-section tables and update coolant density to 
+  generate temperature-dependent cross-sections. The formulae for the 
+  interpolation of temperature-dependent cross-sections are also provided.
 
   In \chref{ch:thermalExpansion}, a simplified thermal expansion model is
   presented. The model expands materials linearly assuming materials thermally
@@ -38,23 +38,26 @@
   temperatures but results are not highly sensitive to these temperatures due 
   to the magnitudes of thermal expansion coefficients.
 
-  Finally, \chref{ch:coupledResults} presents the coupling of all models
-  implemented. A typical fast reactor, presented in a benchmark problem, is 
-  simulated. Using the models developed, reactivity coefficients can be 
-  estimated for an operating reactor. These coefficients provide insight into 
-  dynamic reactor behavior and agree with expected values. These reactivity 
-  coefficients also describe the mechanisms for inherent safety in a fast 
-  reactor.
+  The culmination of these multiphysics models is presented in a coupled
+  simulation in \chref{ch:coupledResults}. A typical fast reactor, presented in 
+  a benchmark problem, is simulated \cite{abr}. Using the models developed, 
+  reactivity coefficients can be estimated for an operating reactor. These 
+  coefficients provide insights into dynamic reactor behavior and agree with 
+  expected values. These reactivity coefficients also describe the mechanisms 
+  for inherent safety in a fast reactor.
 
 \section{Conclusions}
   
   It has been demonstrated that the \gls{fem} can be used to efficiently 
   simulate the power distribution in a nuclear power reactor. Use of the
   \gls{fem} has allowed for the local simulation of multiphysics effects within 
-  elements. By simulating thermal hydraulic feedback and thermal expansion 
+  elements. The \gls{fem} framework allows for intuitive storage coupling of
+  multiphysics effects because physics simulations can all share the same mesh.
+
+  By simulating thermal hydraulic feedback and thermal expansion 
   effects, reactivity effects are estimated. Prior to this work, the 
   simulation of feedback effects required either manual iteration between 
-  thermal hydraulic calculations and neutron diffusion codes or the use of 
+  thermal hydraulic calculations and a neutron diffusion solver or the use of 
   simplified estimates of temperatures. This work has demonstrated a practical
   implementation of fast reactor multiphysics simulations by utilizing the
   \gls{fem} and a finite element framework.
@@ -62,22 +65,24 @@
 \section{Recommendations for Future Research}
 
   In addition to general efficiency improvements (e.g. increased use of sparse
-  matrices) future work includes code enhancements, added features, and 
-  simulation of new reactors. Ultimately, the goal is to develop a reactor 
-  simulation suite that can be used by industry professionals to perform core 
-  design calculations and analyze dynamic reactive behavior. 
+  matrices and vectorization) future work includes code enhancements, added 
+  features, and simulation of new reactors. Ultimately, the goal is to develop a
+  reactor simulation suite that can be used by industry professionals to perform 
+  core design optimization calculations and analyze dynamic reactor behavior. 
 
   \subsection{Depletion Capabilities}
     To serve as a useful reactor simulator, this suite must be expanded to 
     include depletion capabilities. The code as presented in this work can be 
     used to design and optimize a clean (i.e. cycle-zero) fast reactor. However,
-    any reactor design must be capable of extended and continuous operation
-    during an operating cycle. Depletion calculations inform the reactor design
-    by establishing the required excess reactivity at the beginning of cycle.
-    Control strategies must then be designed to control this excess reactivity. 
+    any practical reactor design must be capable of extended and continuous 
+    operation during an operating cycle. Depletion calculations inform the 
+    reactor design by establishing the required excess reactivity at the 
+    beginning of cycle.  Control strategies must then be designed to control 
+    this excess reactivity. 
 
-    Depletion calculations require solving the Bateman equations in the matrix
-    exponential format. Preliminary investigations have been conducted for the
+    Depletion calculations require solving the Bateman equations and the
+    associated matrix exponential system of equations. Preliminary 
+    investigations have been conducted for the
     implementation of the \gls{cram} as the depletion solver \cite{cram}. The 
     \gls{cram} will be implemented using the \gls{fem} mesh. A subsequent mesh 
     study will be required to determine if it is possible to use a coarse mesh 
@@ -86,16 +91,28 @@
 
   \subsection{Higher Order Finite Elements}
     Recall the \gls{fem} as presented in \chref{ch:neutronDiffusion} employs
-    only linear triangular and linear wedge elements. The \gls{fem} as derived 
-    can be implemented for polynomials of arbitrary order. Work by Hosseini
-    \cite{Hosseini2013} suggests that for finite element solutions to the
-    multigroup neutron diffusion equation, quadratic elements provide a 
+    only linear triangular and linear wedge elements. However, the \gls{fem} as 
+    derived can be implemented for polynomials of arbitrary order. Work by 
+    Hosseini \cite{Hosseini2013} suggests that for finite element solutions to 
+    the multigroup neutron diffusion equation, quadratic elements provide a 
     significant reduction of error without the need to reduce the mesh spacing. 
     With linear finite elements, the \gls{fem} is second-order spatially 
     convergent. Quadratic finite elements convey third-order spatial convergence 
     and cubic finite elements convey fourth-order spatial convergence. 
     Incorporating higher order finite elements will allow for simple solution 
     refinement without mesh regeneration.
+
+  \subsection{\texorpdfstring{\glsentrylong{spn}}{Simplified PN} Solution}
+    The \gls{spn} equations can provide considerable accuracy compared to the
+    diffusion equation by incorporating angular dependence of flux rather than
+    assuming isotropic scalar flux. The \gls{spn} equations reduce to a system
+    of diffusion-like equations. Work by Ryu and Joo has demonstrated that the
+    \gls{fem} can be used to solve the \gls{spn} equations in general geometry
+    \cite{Ryu2013}.
+    Implementation of the \gls{spn} equations would require the development of a
+    new solver but much of the \gls{fem} framework can be reused. Implementation
+    of the \gls{spn} method could provide enhanced accuracy for full-scale
+    reactor problems.
 
   \subsection{Encouraging Code Usage}
     The simulation suite is designed to be used for practical fast nuclear power

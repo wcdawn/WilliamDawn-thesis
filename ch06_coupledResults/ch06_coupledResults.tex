@@ -18,7 +18,7 @@
   feedback are defined in \sref{sec:reactivity_coefficients}. Results are 
   presented in \sref{sec:results}.
 
-\section{Advanced Burner Reactor -- MET-1000}
+\section{\glsentrylong{abr} -- MET-1000}
 \label{sec:abr}
   This reactor design is proposed by \gls{oecd} \gls{nea} \cite{abr}. The 
   \gls{abr} is fueled with a ternary metallic fuel and has a 1000
@@ -35,7 +35,7 @@
   groups. The  multigroup neutron diffusion equation is solved using these same
   cross-sections using both \dif and the method from 
   \chref{ch:neutronDiffusion}.  These two methods using the same cross-sections 
-  agree to within 700 \units{pcm}. The \dif and FEM models were minimally 
+  agree to within 700 \units{pcm}. The \dif and \gls{fem} models were minimally 
   refined. A more formal refinement study would presumably show further error 
   reduction.
 
@@ -47,10 +47,12 @@
   peak in core structural material, at the periphery of the active fuel region,
   as well as in control rod locations within the core.
 
+  % describe that there are no multiphysics benchmarks
+
   \begin{figure}
     \centering
     \includegraphics[width=0.4\textwidth]{abr_materials}
-    \caption{Materials in ABR.}
+    \caption{Materials in \gls{abr}.}
     \label{fig:abr_materials}
   \end{figure}
 
@@ -61,7 +63,7 @@
     \hspace{0.2in}
     \subfloat[$\phi_{2}$]{
       \includegraphics[width=0.25\textwidth]{abr_phi_nod_group2}}
-    \caption{Fast (left) and Thermal (right) Neutron Flux in ABR.}
+    \caption{Fast (left) and Thermal (right) Neutron Flux in \gls{abr}.}
     \label{fig:abr_fluxes}
   \end{figure}
 
@@ -144,7 +146,7 @@
     temperature (see \chref{ch:thermalExpansion}) and the large neutron leakage 
     fraction (\leakage) in fast reactors \cite{PlentifulEnergy}. The leakage 
     fraction is the fraction of neutrons created in the fuel due to fission that 
-    exit the core. Light Water Reactors (LWRs) typically have low and ultra-low 
+    exit the core. \glspl{lwr} typically have low and ultra-low 
     leakage designs with $\leakage \approx 2 \%$ \cite{textbookknief}. However,
     fast reactors simulated in this work have $\leakage \approx 20\%$ and 
     therefore are therefore highly sensitive to decreases in fuel density and 
@@ -204,9 +206,10 @@
     Doppler coefficient as temperatures are increased uniformly throughout the
     reactor.
 
-  \subsection{Coolant Temperature Coefficient (CTC)}
+  \subsection{\texorpdfstring{\glsentryfull{ctc}}{Coolant Temperature
+    Coefficient (CTC)}}
   \label{sec:coolant_temperature_reactivity_coefficient}
-    The \acrfull{ctc} describes the
+    The \gls{ctc} describes the
     reactivity change due to an increase in coolant temperature. In \glspl{lwr}, 
     this may be called the \gls{mtc} but in fast
     reactors, the coolant is not designed to moderate neutrons. Feedback in the 
@@ -289,6 +292,6 @@
     \subfloat[Coolant Temperature Reactivity Coefficient.]{
       \includegraphics[width=0.5\textwidth]{alpha_cool}
       \label{fig:coolant_temperature_reactivity_coefficient}}
-    \caption{ABR Reactivity Coefficients.}
+    \caption{\gls{abr} Reactivity Coefficients.}
     \label{fig:abr_reactivity_coefficients}
   \end{figure}

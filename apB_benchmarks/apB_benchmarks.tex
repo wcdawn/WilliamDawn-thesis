@@ -2,56 +2,50 @@
 \label{ap:benchmarks}
 
 \section{Introduction}
-  Two-dimension and three-dimension reactor type problems are presented here.
-  These are not original works but replications of data from elsewhere. The
-  intent is to make the data more easily accessible for others solving similar
-  problems.
+  Two-dimension and three-dimension reactor type benchmark problems are 
+  presented here. These are not original works but replications of data from 
+  elsewhere. The intent is to make the data more easily accessible for others 
+  solving similar problems.
 
   All reactors in this section are based on a hexagonal design common to fast
-  reactors. Not all reactors are fast reactors however.
+  reactors. However, Not all reactors are fast reactors.
   These tests were used to perform solution verification for neutron 
   diffusion equation  solution method in \chref{ch:neutronDiffusion}. As such, 
   the cross sections presented are those necessary to solve the multigroup 
   neutron diffusion equation. All units are \units{cm} and 
-  \units{$\frac{1}{cm}$} where applicable. 
+  \units{$\frac{1}{\text{cm}}$} where applicable. 
 
   For each problem, geometry and cross sections are presented. The notation for
   cross sections are common to the field and noted below.
   \begin{conditions} % custom environment designed for this purpose
     D_g    & diffusion coefficient for energy group $g$ \units{cm}, \\
-    \phi_g & scalar neutron flux for energy group $g$
-      \units{$\frac{1}{\text{cm}^2 \; \text{s}}$}, \\
-    \Sigma_{t,g} & macroscopic total cross-section for energy group $g$ 
+    \Sigma_{r,g} & macroscopic removal cross-section for energy group $g$ 
       \units{$\frac{1}{\text{cm}}$}, \\
-    \widetilde{\chi_g} & effective fission spectrum for energy group $g$,\\
-    \keff & effective neutron multiplication factor, \\
     \nu \Sigma_{f,g} & number of fission neutrons times microscopic fission
       cross-section in energy group $g$ \units{$\frac{1}{\text{cm}}$}, \\
     \Sigma_{s,g' \rightarrow g} & macroscopic scatter cross-section from
       energy group $g'$ to energy group $g$ \units{$\frac{1}{\text{cm}}$}, \\
-    G & total number of energy groups.
+    \chi_g & effective fission spectrum for energy group $g$,\\
+    \keff & effective neutron multiplication factor.
   \end{conditions}
-  When available, reference power distributions are presented. For three
-  dimensional problems, the calculation of control rod worth provides a useful
-  test of the method. This requires the simulation of multiple geometric 
-  configurations with the control rods at varying axial positions. For 
-  three-dimension problems, the reactors are simulated with control rods fully 
-  withdrawn, 50\% inserted, and fully inserted.
+  A reference $\keff$ is presented for each benchmark to the precision of the
+  solution. When available, reference power distributions are presented. 
 
-\section{Two Dimension}
+\section{Two-Dimension}
   The two-dimension benchmarks presented represent various energy group
-  structures, geometries, assembly sizes, and boundary conditions. By testing
-  each of a variety of these parameters, a solution verification using these
-  benchmarks will describe the performance of a general neutron diffusion
-  solution method.
-
+  structures, geometries, assembly sizes, and boundary conditions. By varying
+  these parameters, the combination of these benchmarks constitutes a rigorous
+  testing suite that can be used for solution verification of general multigroup
+  neutron diffusion solvers.
+  
   \subsection{VVER440}
     \label{sec:vver440}
     This benchmark is presented with solution by Chao and Shatilla
     \cite{chao}. The problem is
     one-twelfth of a VVER-440 reactor with seven control rods inserted. There
-    are 25 assemblies across the core diameter and a layer of reflectors in the
-    last ring of assemblies as shown in \fref{fig:vver440_geom}. Each assembly
+    are 25 assemblies across the core diameter. The last ring of assemblies at
+    the core periphery are non-fissile reflector assemblies as shown in 
+    \fref{fig:vver440_geom}. Each assembly
     has a flat-to-flat measurement of 14.7 \units{cm}. Vacuum boundary
     condition ($\albedo = 0.5$) is applied on the core periphery and all other
     boundaries are mirror boundary conditions ($\grad \phi \cdot \nhat = 0$). To 
@@ -110,7 +104,7 @@
     one-twelfth of a reactor with no control rods inserted. There are 17
     assemblies across the core diameter with the outer rings being blanket
     assemblies as shown in \fref{fig:snr_geom}. Each assembly has a flat-to-flat
-    measurement of 11.2003 \units{cm}. Vacuum boundary condition ($\albedo =
+    measurement of 11.20 \units{cm}. Vacuum boundary condition ($\albedo =
     0.5$) is applied on the core periphery and all other boundaries are mirror
     boundary conditions ($\grad \phi \cdot \nhat = 0$). To the precision of the 
     benchmark, the effective neutron multiplication factor is $\keff = 1.124$. 
@@ -123,23 +117,6 @@
       \caption{SNR Geometry.}
       \label{fig:snr_geom}
     \end{figure}
-
-    \begin{table}
-      \caption{SNR Fission Spectrum.}
-      \label{tab:snrchi}
-      \begin{center}
-        \begin{tabular}{cc}
-          \toprule
-          &Fission Spectrum \\
-          \midrule
-          $\chi_1$ &0.768 \\
-          $\chi_2$ &0.232 \\
-          $\chi_3$ &0.000 \\
-          $\chi_4$ &0.000 \\
-          \bottomrule
-        \end{tabular}
-      \end{center}
-    \end{table}
 
     \newgeometry{margin=1in,lmargin=1.25in,footskip=\chapterfootskip, includehead, includefoot}
     \thispagestyle{lscapedplain}
@@ -180,7 +157,24 @@
     \thispagestyle{plain}
     \newgeometry{margin=1in,lmargin=1.25in,footskip=\chapterfootskip, includehead, includefoot}
 
-  \subsection{HWR}
+    \begin{table}
+      \caption{SNR Fission Spectrum.}
+      \label{tab:snrchi}
+      \begin{center}
+        \begin{tabular}{cc}
+          \toprule
+          &Fission Spectrum \\
+          \midrule
+          $\chi_1$ &0.768 \\
+          $\chi_2$ &0.232 \\
+          $\chi_3$ &0.000 \\
+          $\chi_4$ &0.000 \\
+          \bottomrule
+        \end{tabular}
+      \end{center}
+    \end{table}
+
+  \subsection{\texorpdfstring{\glsentryshort{hwr}}{HWR}}
     \label{sec:hwr}
     This benchmark is presented with solution by Chao and Shatilla \cite{chao}. 
     It is based on a
@@ -201,12 +195,12 @@
     \begin{figure}
       \centering
       \includegraphics[width=\textwidth]{hwr}
-      \caption{HWR Geometry.}
+      \caption{\gls{hwr} Geometry.}
       \label{fig:hwr_geom}
     \end{figure}
 
     \begin{table}
-      \caption{HWR Cross Sections.}
+      \caption{\gls{hwr} Cross Sections.}
       \label{tab:hwrxs}
       \begin{center}
         \begin{tabular}{cccccc}
@@ -237,7 +231,7 @@
     \end{table}
 
     \begin{table}
-      \caption{HWR Fission Spectrum.}
+      \caption{\gls{hwr} Fission Spectrum.}
       \label{tab:hwrchi}
       \begin{center}
         \begin{tabular}{cc}
@@ -366,8 +360,9 @@
     boundary condition ($\albedo = 0.5$) is applied on the core periphery. Cross
     sections are provided in \tref{tab:monjuxs}. No fission spectrum is
     specified in the benchmark but the one used in these simulations is provided
-    in \tref{tab:monjuchi}. In determining this fission spectrum, it is observed
-    that the benchmark results are not highly sensitive to the fission spectrum.
+    in \tref{tab:monjuchi}. In determining this fission spectrum, it was
+    observed that the benchmark results are not highly sensitive to the fission 
+    spectrum.
 
     The reactor is simulated with three different control rod configurations; 
     patterns A, B, and C. Axially, all problems have a lower blanket extending
@@ -385,7 +380,7 @@
     75.75 \units{cm} to 151.5 \units{cm} and sodium material occupies 
     0 \units{cm} to 75.5 \units{cm}. In pattern C, the control assemblies in
     ring 5 and 6 that were previously half inserted are fully inserted and
-    occupy 0 \units{cm} to 151.5 \units{cm}. Control rod withdrawal patterns are
+    occupy 0 \units{cm} to 151.5~\units{cm}. Control rod withdrawal patterns are
     shown in \fref{fig:monju_cr_geom}. 
     
     Reference effective neutron
@@ -538,23 +533,6 @@
       \label{fig:knk_cr_geom}
     \end{figure}
     
-    \begin{table}
-      \caption{KNK Fission Spectrum.}
-      \label{tab:knkchi}
-      \begin{center}
-        \begin{tabular}{cc}
-          \toprule
-          &Fission Spectrum \\ 
-          \midrule
-          $\chi_1$&0.908564 \\
-          $\chi_2$&0.087307 \\
-          $\chi_3$&0.004129 \\
-          $\chi_4$&0.000000 \\
-          \bottomrule
-        \end{tabular}
-      \end{center}
-    \end{table}
-
     \newgeometry{margin=1in,lmargin=1.25in,footskip=\chapterfootskip, includehead, includefoot}
     \thispagestyle{lscapedplain}
     \begin{landscape}
@@ -638,3 +616,19 @@
     \pagestyle{plain}
     \newgeometry{margin=1in,lmargin=1.25in,footskip=\chapterfootskip, includehead, includefoot}
 
+    \begin{table}
+      \caption{KNK Fission Spectrum.}
+      \label{tab:knkchi}
+      \begin{center}
+        \begin{tabular}{cc}
+          \toprule
+          &Fission Spectrum \\ 
+          \midrule
+          $\chi_1$&0.908564 \\
+          $\chi_2$&0.087307 \\
+          $\chi_3$&0.004129 \\
+          $\chi_4$&0.000000 \\
+          \bottomrule
+        \end{tabular}
+      \end{center}
+    \end{table}
