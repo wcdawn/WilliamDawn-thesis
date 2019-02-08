@@ -35,20 +35,17 @@
   Thermodynamic properties of reactor materials are required for these models.
   The coolant properties are the most extensive with density, enthalpy, 
   thermal conductivity, dynamic viscosity, and heat capacity required. In this
-  thesis, sodium coolant is considered. However, these thermal hydraulic
-  properties can be easily changed to allow for the simulation of fast reactors
-  with other coolants such as lead or molten salt. The 
-  functional forms of sodium thermal hydraulic properties are given in 
-  \cite{sodiumProp}. 
+  thesis, sodium coolant is considered \cite{sodiumProp}. However, these thermal 
+  hydraulic properties can be easily changed to allow for the simulation of 
+  fast reactors with other coolants such as lead or molten salt. 
   Thermal conductivity values are also required for the cladding and fuel
-  material. Typical cladding for fast reactor designs is HT9 stainless-steel and
-  a functional form of the thermal conductivity is given in \cite{ht9Prop}. Both
-  sodium and steel have relatively high thermal conductivities and their thermal
-  conductivities do not change significantly over the operating temperatures of
-  sodium cooled fast reactors. Therefore, the thermal conductivity of sodium 
-  within the bond and HT9 are assumed constant at the average value as reported 
-  in \cite{sodiumProp} and \cite{ht9Prop} respectively. These constant values 
-  are given in \tref{tab:constant_k}.
+  material. Typical cladding for fast reactor designs is HT9 stainless-steel
+  \cite{ht9Prop}. Both sodium and steel have relatively high thermal 
+  conductivities and their thermal conductivities do not change significantly 
+  over the operating temperatures of sodium cooled fast reactors. Therefore, the 
+  thermal conductivity of sodium within the bond \cite{sodiumProp} and HT9
+  \cite{ht9Prop} are assumed constant. These constant values are given in 
+  \tref{tab:constant_k}.
     
   \begin{table}
     \caption{Constant Thermal Conductivity for Sodium and HT9.}
@@ -68,8 +65,8 @@
   Fuel composition is assumed to be of the form U-XZr where
   X is the weight fraction of Zr in the fuel. A typical value for X is 10\% and
   this is assumed for this work.
-  A fuel thermal conductivity given in \cite{fuelProp} as a function of material
-  temperature and zirconium weight fraction.
+  Fuel thermal conductivity given in as a function of material
+  temperature and zirconium weight fraction \cite{fuelProp}.
   A plot of thermal conductivity for U-10Zr as a function of temperature is 
   given in \fref{fig:kfuel_plot}. The functional form of the thermal
   conductivity for U-XZr is given in \eref{eq:kfuel_first} through
@@ -91,7 +88,7 @@
   units \units{K} and thermal conductivities are in units 
   \units{$\frac{\text{W}}{\text{m K}}$}.
   For the expression of fuel thermal 
-  conductivity cited, the integral of thermal conductivity is unbounded as 
+  conductivity, the integral of thermal conductivity is unbounded as 
   $T \rightarrow 0$ so thermal conductivity is assumed constant below 300 
   \units{K} which is below the melting point of most fact reactor coolants,
   including sodium, so this assumption is valid for sodium-cooled reactor
@@ -281,7 +278,7 @@
     at axial level $k$. The final result of this model is $h_{i,k}$, the bulk 
     coolant enthalpy in each chunk. Given, $h_{i,k}$, the average bulk coolant 
     temperature in the chunk $T_{\infty,i,k} = T(h_{i,k})$ can be calculated 
-    using a state relationship in \cite{sodiumProp}. Bulk coolant temperature 
+    using a state relationship \cite{sodiumProp}. Bulk coolant temperature 
     will be an input into the radial conduction model, 
     \sref{sec:radial_conduction_model}, to calculate temperatures in the fuel 
     rod.
@@ -306,10 +303,11 @@
   calculating temperatures at key locations. Material temperature is calculated
   at the fuel center-line, fuel surface, bond surface, and clad surface. The
   derivation of these quantities are presented in \sref{sec:surface_temps}. 
-  Similar results can be found in \cite{FastSpectrumReactors}. With the
-  temperatures at these locations calculated, the average temperature within
-  each material is calculated. These average temperatures are essential for the
-  accurate simulation of the reactor as they influence multigroup constants.
+  Similar results have been obtained by others \cite{FastSpectrumReactors}. 
+  With the temperatures at these locations calculated, the average temperature 
+  within each material is calculated. These average temperatures are essential 
+  for the accurate simulation of the reactor as they influence multigroup 
+  constants.
 
   \subsection{Geometric Model}
     For the purposes of the radial model, the geometry is shown in
@@ -366,8 +364,8 @@
       generation. In this region, $q'''_{i,k}$ as specified by 
       \eref{eq:chunkqppp_fuel} is assumed constant within the fuel. 
       Additionally, the thermal conductivity in the fuel will be assumed to have
-      the general form $k_F(T)$. For this work, $k_F(T)$ is specified by the
-      functional form from \cite{fuelProp}. For the assumed fuel composition, 
+      the general form $k_F(T)$. For this work, $k_F(T)$ is specified by a
+      functional form \cite{fuelProp}. For the assumed fuel composition, 
       the thermal conductivity is plotted in \fref{fig:kfuel_plot}.
 
       The steady-state heat conduction equation with constant volumetric heat
@@ -632,7 +630,7 @@
       the convective heat transfer coefficient, $T_C$ is the clad surface
       temperature, and $T_{\infty}$ is the bulk coolant temperature. Using the
       relationships in \sref{sec:axial_convection_model}, $T_{\infty}$ is given
-      by the state relationship $T_{\infty} = T(h_c)$ from \cite{sodiumProp}.
+      by the state relationship $T_{\infty} = T(h_c)$ \cite{sodiumProp}.
       The heat flux at the clad surface is related to the volumetric heat 
       generation rate in the fuel according to 
       \begin{equation}
@@ -644,8 +642,7 @@
       The coefficient $H_c$ must be calculated via an applicable correlation.
       The Subbotin-Ushakov correlation is selected because it is valid for 
       coolant in heavy liquid metal cooled reactor designs with triangular 
-      pitch assemblies. This correlation is presented in \cite{subbotinUshakov}
-      in which various common correlations for this application is reviewed.
+      pitch assemblies. 
       This correlation is selected because it is validated by experimental data
       and is valid for a wide range of operating conditions common to metal 
       cooled fast reactors. The correlation relates the P\'eclet number, $Pe$,
@@ -669,7 +666,7 @@
       Calculating the nondimensional numbers begins with the calculation of 
       cross-sectional flow area and wetted perimeter. As all properties 
       calculated are the channel average properties, the flow area and wetted
-      perimeters are calculated for the average fuel rod using formulae from 
+      perimeters are calculated for the average fuel rod 
       \cite{FastSpectrumReactors}. Then, the cross-sectional flow area is
       \begin{equation}
         \label{eq:correlation_ax}
@@ -962,7 +959,7 @@
   \subsection{Coolant Cross-Sections}
     The main effect on coolant cross sections due to temperature is due to the
     change in fluid density. The mass-density of the of liquid sodium 
-    is given as a function of temperature $\rho(T)$ by a state relationship in 
+    is given as a function of temperature $\rho(T)$ by a state relationship 
     \cite{sodiumProp}. Natural sodium is entirely composed of \isotope[23]{Na} 
     and has atomic weight ${M_{Na} = 22.989769
     \units{$\frac{\text{gram}}{\text{mol}}$}}$ \cite{nuclides}.

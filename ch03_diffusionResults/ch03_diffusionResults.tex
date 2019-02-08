@@ -10,7 +10,8 @@
   also the flux solution are known exactly. 
 
   Running these comparisons serves as a verification of this implementation of 
-  the \gls{fem}. The strategy used comes from \cite{oberkampf}. The first step is 
+  the \gls{fem}. The strategy employed in this work is developed by Oberkampf
+  and Trucano \cite{oberkampf}. The first step is 
   ``code verification.'' Code verification compares computational results to 
   exact analytic or manufactured results. Code verification serves to 
   demonstrate that the code itself is solving the equations correctly as 
@@ -53,10 +54,10 @@
   \end{equation}
 
   It has been shown that for a bounded second spatial derivative 
-  within the problem domain, the \gls{fem} derived in \chref{ch:neutronDiffusion} 
-  is second-order convergent in space (\cite{textbookli} Remark 7.13).
-  This implies the error in the maximal norm defined in \eref{eq:infnorm} is
-  bounded as
+  within the problem domain, the \gls{fem} derived in 
+  \chref{ch:neutronDiffusion} is second-order convergent in space 
+  \cite{textbookli}. This implies the error in the maximal norm defined in 
+  \eref{eq:infnorm} is bounded as
   \begin{equation} 
     \label{eq:error_bound}
     \|\ve\|_{\infty} \le c h^2 \| \grad^2 \phi(\vr) \|_{\infty}
@@ -309,9 +310,9 @@
   observed relative to the reference \keff value similar to analytic problems.
   
   \subsection{VVER440}
-    Proposed in \cite{chao} and described in \sref{sec:vver440}, this
-    benchmark is a two-dimensional hexagonal problem based on a
-    VVER-440 reactor. The VVER-440 is a 
+    Proposed by Chao and Shatilla \cite{chao} and described in 
+    \sref{sec:vver440}, this benchmark is a two-dimensional hexagonal problem 
+    based on a VVER-440 reactor. The VVER-440 is a 
     light-water moderated reactor and operates principally with thermal 
     neutron spectrum. Cross sections are provided for a two-group energy 
     structure.
@@ -353,7 +354,8 @@
     \end{table}
 
   \subsection{SNR}
-    Proposed in \cite{argonneBenchmark} and described in \sref{sec:snr}, this
+    Proposed in the Argonne Code Center Benchmark Problem Book 
+    \cite{argonneBenchmark} and described in \sref{sec:snr}, this
     benchmark is a  two-dimensional problem based on the SNR reactor. The SNR
     is a \gls{sfr} and operates principally with fast
     neutrons. Cross sections are provided for a four-group energy structure.
@@ -395,11 +397,10 @@
     \end{table}
 
   \subsection{Heavy Water Reactor}
-    Proposed in \cite{chao} and described in \sref{sec:hwr}, this
-    benchmark is a two-dimensional problem based on a large \gls{hwr}. This is 
-    a heavy water moderated reactor and operates
-    principally with thermal neutrons. Cross sections are provided for a
-    two-group energy structure.
+    Proposed by Chao and Shatilla \cite{chao} and described in \sref{sec:hwr}, 
+    this benchmark is a two-dimensional problem based on a large \gls{hwr}. This 
+    is a heavy water moderated reactor and operates principally with thermal 
+    neutrons. Cross sections are provided for a two-group energy structure.
 
     Power comparison between the most refined mesh and the reference solution 
     are presented graphically in \fref{fig:diffusion_hwr} according to the
@@ -438,10 +439,10 @@
     \end{table}
 
   \subsection{IAEA}
-    Proposed in \cite{chao} and described in \sref{sec:iaea}, this
-    two-dimensional problem was originally based on a cartesian
+    Proposed by Chao and Shatilla \cite{chao} and described in \sref{sec:iaea}, 
+    this two-dimensional problem was originally based on a cartesian
     grid two-dimensional Pressurized Water Reactor (PWR) but was converted to
-    hexagonal geometry to represent a VVER reactor in \cite{chao}. As it is
+    hexagonal geometry to represent a VVER reactor \cite{chao}. As it is
     originally based on a PWR design, the reactor operates principally with a 
     thermal neutron spectrum. Cross sections are provided for a two-group energy 
     structure.
@@ -584,14 +585,14 @@
   for $x = \{B,C\}$.
 
   \subsection{MONJU}
-    Proposed in \cite{monjuBenchmark} and described in \sref{sec:monju}, this 
-    three-dimension fast reactor benchmark problem is based on an \gls{sfr}
-    operating principally with fast neutrons. Cross sections are provided for a 
-    three-group energy structure. However, the fission spectrum, $\chi$, is not
-    provided in the specifications. Instead, a fission spectrum is selected for 
-    benchmark agreement. This assumed fission spectrum is presented in 
-    \tref{tab:monjuchi}. The rod worth measurements appear insensitive to the
-    choice of fission spectrum. 
+    Proposed by Komano et al. \cite{monjuBenchmark} and described in 
+    \sref{sec:monju}, this three-dimension fast reactor benchmark problem is 
+    based on an \gls{sfr} operating principally with fast neutrons. Cross 
+    sections are provided for a three-group energy structure. However, the 
+    fission spectrum, $\chi$, is not provided in the specifications. 
+    Instead, a fission spectrum is selected for benchmark agreement. This 
+    assumed fission spectrum is presented in \tref{tab:monjuchi}. The rod worth 
+    measurements appear insensitive to the choice of fission spectrum. 
 
     Reference data can be found in \tref{tab:monjukeff}. Results from the
     finite element method implementation are presented in \tref{tab:monju}. 
@@ -602,7 +603,7 @@
 
     \begin{table}
       \begin{center}
-        \caption{MONJU Benchmark Rod Worth Results. \cite{monjuBenchmark}}
+        \caption{MONJU Benchmark Rod Worth Results.}
         \label{tab:monju}
         \begin{threeparttable}
           \begin{tabular}{ccll}
@@ -625,15 +626,15 @@
     \end{table}
   
   \subsection{KNK}
-    Proposed in \cite{takedaBenchmark} and described in \sref{sec:knk}, this
-    three-dimension, benchmark problem is based on an \gls{sfr} and is a model 
-    of the KNK-II core. Cross sections are provided for a four-group energy
-    structure. There are many materials specified in the problem so it also
-    aids in testing material mapping in the code. However, the reference data is
-    for a transport solution. In this work, the cross-sections from the
-    transport problem are used to solve the neutron diffusion equation. This 
-    explains some of the numerical differences in the results but general 
-    trends are reflected. 
+    Proposed by Takeda and Ikeda \cite{takedaBenchmark} and described in 
+    \sref{sec:knk}, this three-dimension, benchmark problem is based on an 
+    \gls{sfr} and is a model of the KNK-II core. Cross sections are provided for 
+    a four-group energy structure. There are many materials specified in the 
+    problem so it also aids in testing material mapping in the code. However, 
+    the reference data is for a transport solution. In this work, the 
+    cross-sections from the transport problem are used to solve the neutron 
+    diffusion equation. This explains some of the numerical differences in the 
+    results but general trends are reflected. 
 
     Reference data can be found in \tref{tab:knkkeff}. Results from the finite
     element neutron diffusion solution are presented in \tref{tab:knk}. The

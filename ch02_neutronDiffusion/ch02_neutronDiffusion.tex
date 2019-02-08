@@ -258,7 +258,9 @@
         \; d\vr
     \end{equation}
     The Second Green's Theorem is used to rewrite the integral in the first
-    term. A proof can be found in \cite{textbookli} in Theorem 9.2. The Second 
+    term. A proof invoking the Second Green's Theorem has been published by Li
+    \cite{textbookli}.% in Theorem 9.2.
+    The Second 
     Green's Theorem is 
     \begin{equation} 
       \label{eq:greens}
@@ -383,8 +385,8 @@
     The diffusion coefficient $D_g(\vr)$ is non-zero and bounded and
     the removal cross-section $\Sigma_{r,g}(\vr)$ is bounded. Given these
     conditions, the Lax-Milgram Lemma implies the solution to the \gls{fem}
-    equations as derived here is both unique and bounded (see Theorem 9.3 
-    \cite{textbookli}). This is not the entire solution description as the 
+    equations as derived here is both unique and bounded 
+    \cite{textbookli}. This is not the entire solution description as the 
     source function $q_g(\vr)$ is updated on each power iteration (see 
     \sref{sec:power_iterations}). What the satisfaction of the Lax-Milgram Lemma
     does imply in this instance is that for a fixed source in a given power 
@@ -443,7 +445,8 @@
 
     \subsubsection{Linear Triangles}
       Linear triangles are common to two-dimensional finite element methods and
-      have been investigated in many applications
+      have been investigated in many methods for the solution of the few-group
+      neutron diffusion equation
       \cite{Hosseini2017,Hosseini2013,Hosseini2015}. The linear triangle element 
       is a triangle defined by three corner coordinates with basis functions 
       located on each corner. General and Representative triangle elements are
@@ -479,9 +482,10 @@
       
       The use of reference triangles and Jacobians are general in nature.
       However, for linear triangles there are simple expressions
-      for the integral quantities for an arbitrary triangle given in 
+      for the integral quantities for an arbitrary triangle can be derived
       \cite{textbookwhite}. The expression for
-      the line integral is found in \cite{computerLab}. For a triangle with 
+      the line integral for the arbitrary element can also be derived
+      \cite{computerLab}. For a triangle with 
       corners $\{ x_i,y_i \}$ with $i=1,2,3$
       \begin{align}
         \int_{\Omega_e} \grad \basis_i(\vr) \cdot \grad \basis_j(\vr) 
@@ -641,8 +645,7 @@
     as line quadratures and the number of points need not equal the order of the
     polynomial integrated. The triangular quadrature as implemented here is 
     symmetric and open. That is, there are no points on the boundary of the 
-    triangle. The weights and coordinates for this triangular quadrature are 
-    found in \cite{triangleQuadrature}. Any triangular quadrature will suffice
+    triangle \cite{triangleQuadrature}. Any triangular quadrature will suffice
     that exactly integrates polynomials of a given order. There is no fixed
     relationship between $n$ and $N$ and for this quadrature, $n \ne N$.
     
@@ -708,8 +711,8 @@
     isoparametric elements such as triangles and wedges, the Jacobi is constant 
     over the element and can be precalculated to avoid populating, and 
     evaluating the determinant of a matrix for each integration point. For the 
-    elements of concern, these values are presented in \tref{tab:jacobi} as 
-    found in \cite{textbookcolorado}.
+    elements of concern, these values are presented in \tref{tab:jacobi} 
+    \cite{textbookcolorado}.
     \begin{table}
       \caption{Jacobi for Selected Elements.}
       \label{tab:jacobi}
@@ -820,7 +823,7 @@
   \subsection{Convergence of Power Iteration Method}
     Noting the \gls{fem} equations can be written as matrix form
     \eref{eq:matrix_notation}, the finite diffusion equation can be rewritten as
-    shown in \cite{gehinThesis}.
+    shown by Gehin \cite{gehinThesis}.
     \begin{equation}
       \label{eq:gehin_notation}
       \mb(\vPhi,\keff) \vPhi = \frac{1}{\keff} \mm \vPhi
@@ -1031,8 +1034,8 @@
     other random rows in the matrix. This step of reordering the matrix $\ma$ 
     seeks to decrease the bandwidth of the matrix and encourage cache hits when
     accessing coupled values in the linear system. The ordering chosen is the
-    Reverse Cuthill-McKee (RCM) method and common to sparse linear systems and 
-    described in \cite{rcm}.
+    Reverse Cuthill-McKee (RCM) method and common to sparse linear systems
+    \cite{rcm}.
     
     \begin{algorithm}
       \caption{General Iteration Scheme}
@@ -1167,7 +1170,7 @@
     to a sequential positive integer. Nodes with zero-flux boundary conditions 
     are set to a negative integer (-1) and are omitted in the actual solution of 
     the system. Other strategies have been proposed such as the penalty approach 
-    \cite{textbookhughes} and manually forcing the solution of the linear system 
+    \cite{textbookhughes} and forcing the solution of the linear system 
     \cite{textbookli}. This method is chosen because it decreases the degree of 
     freedom of the linear system while encouraging a well conditioned matrix. 
     Now, the degree of freedom of the matrix is equal to the number of nodes 
@@ -1200,9 +1203,8 @@
     \begin{equation} \label{eq:positive_definite}
       \vx^{T} \ma \vx > 0 \qquad \forall \vx \in \realn, \; \vx \ne 0
     \end{equation}
-    Following the proof of Theorem 1.9 in \cite{textbookhughes}. Let 
-    $\vx = \{x_i\}$ for $i = 1,2,\ldots,N$. Then the vector-matrix and 
-    matrix-vector products can be rewritten as summations.
+    Let $\vx = \{x_i\}$ for $i = 1,2,\ldots,N$. Then the vector-matrix and 
+    matrix-vector products can be rewritten as summations \cite{textbookhughes}.
     \begin{equation}
       \vx^{T} \ma \vx = \sum_{i=1}^{N} \sum_{j=1}^{N} x_i A_{ij} x_j
     \end{equation}
@@ -1252,9 +1254,8 @@
     tolerance in a comparable wall-time without the need for guess-and-check 
     iterations.
     
-    A simple recipe for the \gls{cg} method is presented in Algorithm 2.4.1
-    \cite{Kelley1995IterativeEquations} and its implementation in this 
-    work is replicated in \algorithmref{algorithm:CG}.
+    A simple recipe for the \gls{cg} method is replicated in
+    \algorithmref{algorithm:CG} \cite{Kelley1995IterativeEquations}
     
     \begin{algorithm}
       \caption{Conjugate Gradient Method.}
