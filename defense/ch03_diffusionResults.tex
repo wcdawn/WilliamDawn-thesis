@@ -4,7 +4,7 @@
 \begin{frame}{Verification and Validation}
   \begin{itemize}
     \item Comparison against analytic solutions and benchmark problems.
-    \item Strategy from \cite{oberkampf}.
+    \item Strategy developed by Oberkampf and Trucano \cite{oberkampf}.
     \item ``Code Verification''
       \begin{itemize}
         \item Compare computational results to exact analytic or manufactured
@@ -30,11 +30,12 @@
     \label{eq:error_bound}
     \|\ve\|_{\infty} \le c h^2 \| \grad^2 \phi(\vr) \|_{\infty}
   \end{equation}
-  It is useful to define the following errors.
+  It is useful to define the following errors as \gls{rms} error and maximum
+  error.
   \begin{align}
     \ve &= \phi(\vr) - \phi_{FEM} \\
     \label{eq:rms}
-    \text{\gls{rms}}(\ve) &= \sqrt{\frac{1}{N} \sum_{i=1}^{N} e_i^2} \\
+    \text{\glsentryshort{rms}}(\ve) &= \sqrt{\frac{1}{N} \sum_{i=1}^{N} e_i^2}\\
     \label{eq:infnorm}
     \|\ve\|_{\infty} &= \max_{i=1,2,\ldots,N} \lvert e_i \rvert \\
     \label{eq:keff_err}
@@ -295,7 +296,7 @@
         \end{tabular}
         \begin{tablenotes}
           \item[$\dagger$] Value in parentheses is difference to reference
-            value from \cite{monjuBenchmark}.
+            value \cite{monjuBenchmark}.
         \end{tablenotes}
       \end{threeparttable}
     \end{center}

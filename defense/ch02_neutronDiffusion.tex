@@ -50,7 +50,6 @@
         \phi_g(\vr) = 0 \; \forall \; \vr \in \partial \Omega
       \end{equation}
   \end{enumerate}
-  Note: all boundary conditions can be written as albedo boundary conditions.
 \end{frame}
 
 \begin{frame}{\gls{fem} Discretization}
@@ -81,21 +80,23 @@
     - \grad \cdot( D_g(\vr) \grad \phi_g(\vr)) + \Sigma_{r,g}(\vr) \phi_g(\vr) = 
       q_g(\vr)
   \end{equation}
+  \begin{align}
+    q_g(\vr) &= q_{g,e} \; \forall \; \vr \in \Omega_e \\
+    \phiavg_{g,e} &= \frac{1}{N_p} \sum_{i \in \Omega_e}^{N_p} \phi_{i,g}
+  \end{align}
 
   \begin{itemize}
     \item Neutron source $q_g(\vr)$ is constant over an element $\Omega_e$.
     \item Cross-sections constant within an element.
   \end{itemize}
-  \begin{align}
-    q_g(\vr) &= q_{g,e} \; \forall \; \vr \in \Omega_e \\
-    \phiavg_{g,e} &= \frac{1}{N_p} \sum_{i \in \Omega_e}^{N_p} \phi_{i,g}
-  \end{align}
 \end{frame}
 
-\begin{frame}{Finite Element Method}
+\begin{frame}{\glsentryfull{fem}}
   Multiply the multigroup neutron diffusion equation by a testing function
-  $v(\vr) \in H_1(\Omega)$ and integrate over the problem domain. 
+  $v(\vr) \in H_1(\Omega)$ and integrate over the problem domain. $H_1(\Omega)$
+  is a Sobolev space.
   
+  \vspace{0.25in}
   This yields the \textbf{Weak Form} of the problem.
   \begin{align}
     \label{eq:fem_weak_form}
@@ -305,7 +306,7 @@
           \label{state:chi_collapse}
         \For{$g=1,G$}
           \State Update $q_{down,g}$ from current data $\phiavg^{(s)}$
-          \State Calculate total effective source in each element.
+          \State Calculate total source in each element.
           \State Update finite element Vector $\vf_g$ with new source.
             \label{state:fem_vector}
           \State Solve $\ma \vu = \vf$ using an iterative technique (Conjugate

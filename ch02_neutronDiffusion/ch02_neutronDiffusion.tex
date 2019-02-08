@@ -1057,7 +1057,7 @@
           \label{state:chi_collapse}
         \For{$g=1,G$}
           \State Update $q_{down,g}$ from current data $\phiavg^{(s)}$
-          \State Calculate total effective source in each element.
+          \State Calculate total source in each element.
           \State Update finite element Vector $\vf_g$ with new source.
             \label{state:fem_vector}
           \State Solve $\ma \vu = \vf$ using an iterative technique (See
@@ -1076,7 +1076,7 @@
     updates into the power iteration method. This invalidates the proof from
     \sref{sec:power_iterations} but is performed to simulate thermal hydraulic
     and thermal expansion effects as described in \chref{ch:thermalHydraulics}
-    and \chref{ch:thermalExpansion} respectively. This procedufre is commonly
+    and \chref{ch:thermalExpansion} respectively. This procedure is commonly
     used in practice and no convergence problems have been observed. This update
     also requires recalculating the finite element matrix $\ma_g$ for each 
     group.

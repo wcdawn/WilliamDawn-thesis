@@ -20,7 +20,6 @@
     \item Calculate dimensions once at the beginning of simulation.
     \item Radial $(x,y)$ expansion modeled as steel. Expand at $\texpstruct$.
     \item Axial $(z)$ expansion modeled as fuel. Expand at $\texpfuel$.
-    \item Sodium volume allowed to ``float''.
     \item Expand all linear dimensions.
     \item Decrease local densities accordingly to preserve material.
   \end{itemize}
@@ -70,7 +69,7 @@
 
 \begin{frame}{Number Density Expansion}
   \begin{itemize}
-    \item The volume occupied by material $j$ is the product of the 
+    \item The volume occupied by a material is the product of the 
       area fraction of the material and the volume of the element.
     \item To preserve the number of atoms in the reactor, the number density 
       must be diluted.
@@ -97,6 +96,7 @@
   \end{figure}
   \begin{equation}
     \label{eq:reactivity_formula}
-    \rho \units{pcm} = \frac{\keff - \kref}{\keff \, \kref} \times 10^5
+    \Delta \rho \units{\gls{pcm}} = \frac{\keff - \kref}{\keff \, \kref} \times
+      10^5
   \end{equation}
 \end{frame}

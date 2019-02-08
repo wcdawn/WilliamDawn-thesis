@@ -29,7 +29,7 @@
 
 \begin{frame}{Material Properties}
   \begin{itemize}
-    \item Functional sodium properties from \cite{sodiumProp}.
+    \item Functional sodium properties \cite{sodiumProp}.
     \item Temperature range of structural material small. 
     \item Clad and sodium thermal conductivity assumed constant \cite{ht9Prop}.
     \item Fuel thermal conductivity assumed a function of temperature
@@ -125,8 +125,8 @@
 \begin{frame}{Clad Surface Temperature -- Subbotin-Ushakov}
   Using Newton's Law of Cooling.
   \begin{align}
-    q''_{clad} &= H_c (T_C - T_{\infty}) %\\
-    %q''_{clad} &= q'''_{i,k} \frac{R_F^2}{2 R_C}
+    q''_{clad} &= H_c (T_C - T_{\infty}) \\
+    q''_{clad} &= q'''_{i,k} \frac{R_F^2}{2 R_C}
   \end{align}
   $H_c$ is given by the Subbotin-Ushakov correlation \cite{subbotinUshakov}
   which relates the Nusselt and P\'eclet numbers for ${1 < Pe < 4,000}$ and 
@@ -140,8 +140,8 @@
   \end{align}
   Then the clad surface temperature, $T_C$ follows.
   \begin{align}
-    H_c &= \frac{N\!u \, k}{D_e} %\\
-    %T_C &= \frac{q''_{clad}}{H_c} + T_{\infty}
+    H_c &= \frac{N\!u \, k}{D_e} \\
+    T_C &= \frac{q''_{clad}}{H_c} + T_{\infty}
   \end{align}
 \end{frame}
 
