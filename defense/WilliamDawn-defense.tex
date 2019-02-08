@@ -32,7 +32,7 @@
 			isbn=false,
 			maxnames=2, %for et al to be used
 			maxalphanames=1, %to avoid printing a + for every et al in abbreviation
-			doi=false
+			doi=false,
 ]{biblatex}		
 \addbibresource{../WilliamDawn-thesis.bib}
 \renewcommand*{\labelalphaothers}{}
@@ -80,6 +80,8 @@
 \usepackage[acronym]{glossaries}
 \usepackage{acronym}
 \input{acronym}
+\glstocfalse
+\renewcommand{\glossarysection}[2][]{}
 
 
 % Information to be included in the title page:
@@ -137,7 +139,7 @@
 \end{frame}
 
 \begin{frame}[allowframebreaks]{References}
-  \printbibliography
+  \printbibliography[heading=none]
 \end{frame}
 
 \begin{frame}[allowframebreaks]{Acronyms}
