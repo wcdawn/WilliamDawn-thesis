@@ -62,6 +62,10 @@
 \makeatother
 \captionsetup[algorithm]{font=scriptsize}
 
+\usepackage[acronym]{glossaries}
+\usepackage{acronym}
+\input{acronym}
+
 % Information to be included in the title page:
 \title[Fast Reactor and FEM]
   {Simulation of Fast Reactors with the Finite Element Method and Multiphysics 
@@ -118,6 +122,10 @@
 
 \begin{frame}[allowframebreaks]{References}
   \printbibliography
+\end{frame}
+
+\begin{frame}[allowframebreaks]{Acronyms}
+  \printglossary[type=\acronymtype,nonumberlist]
 \end{frame}
 
 \begin{frame}{Source Codes}

@@ -16,6 +16,7 @@ $(DEFENSE).pdf : $(DEFENSE).tex $(DEFENSE_EXTRA) $(FIGURES) beamerthemeNCSU.sty\
 	../WilliamDawn-thesis.bib
 	pdflatex --draftmode --shell-escape $(DEFENSE)
 	bibtex $(DEFENSE)
+	makeglossaries $(DEFENSE)
 	pdflatex --draftmode --shell-escape $(DEFENSE)
 	pdflatex --shell-escape $(DEFENSE)
 	grep -i "Warn" $(DEFENSE).log
