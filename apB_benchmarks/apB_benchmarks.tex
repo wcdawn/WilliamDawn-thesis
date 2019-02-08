@@ -39,6 +39,12 @@
   withdrawn, 50\% inserted, and fully inserted.
 
 \section{Two Dimension}
+  The two-dimension benchmarks presented represent various energy group
+  structures, geometries, assembly sizes, and boundary conditions. By testing
+  each of a variety of these parameters, a solution verification using these
+  benchmarks will describe the performance of a general neutron diffusion
+  solution method.
+
   \subsection{VVER440}
     \label{sec:vver440}
     The presentation of this benchmark is found in \cite{chao}. The problem is
@@ -323,6 +329,26 @@
     \end{table}
 
 \section{Three-Dimension}
+  For three-dimensional benchmarks, control rod worth
+  measurement is instead used to observe agreement of the diffusion solution 
+  to the benchmark solution. To measure control rod worth, three cases are run
+  $\{A,B,C\}$ with control rods fully removed in case $A$, partially inserted
+  in case $B$, and fully inserted in case $C$. 
+  Rod worth is presented in 
+  units \units{$\Delta k$} and calculated as 
+  \begin{equation}
+    \text{Rod Worth}_x \units{$\Delta k$} = \frac{\keffsub{A} - \keffsub{x}}
+      {\keffsub{A} \, \keffsub{x}}
+  \end{equation}
+  for $x = \{B,C\}$. That is, rod worth is always compared to the case with
+  control rods fully removed, case $A$. Additionally, Rod Difference is
+  presented in units \units{$\% \Delta$k} as
+  \begin{equation}
+    \text{Rod Difference}_x \units{$\% \Delta k$} = (\keffsub{A} - \keffsub{x}) 
+      \times 100 \%
+  \end{equation}
+  for $x = \{B,C\}$.
+
   \subsection{MONJU}
     \label{sec:monju}
     The presentation of this benchmark is found in \cite{monjuBenchmark}. It is
@@ -463,10 +489,10 @@
 
     Reference results for the KNK problem are presented for the solution to the
     neutron transport equation. The reference presents Monte Carlo solutions and
-    analytic solutions to the neutron transport equation as these converge to
+    other solutions to the neutron transport equation and these converge to
     the same solution. For diffusion solutions to these simulations, agreement
     is expected to within some tolerance. However, comparison can also be
-    difficult as the equations solved are wholly different.
+    difficult as the equations solved are entirely different.
 
     \begin{table}
       \caption{KNK Effective Neutron Multiplication Factors and Rod Worths.}
