@@ -24,7 +24,7 @@
 \end{frame}
 
 \begin{frame}{Error Analysis}
-  FEM with linear elements is second-order convergent in space
+  \gls{fem} with linear elements is second-order convergent in space
   \cite{textbookli}.
   \begin{equation} 
     \label{eq:error_bound}
@@ -34,7 +34,7 @@
   \begin{align}
     \ve &= \phi(\vr) - \phi_{FEM} \\
     \label{eq:rms}
-    \text{RMS}(\ve) &= \sqrt{\frac{1}{N} \sum_{i=1}^{N} e_i^2} \\
+    \text{\gls{rms}}(\ve) &= \sqrt{\frac{1}{N} \sum_{i=1}^{N} e_i^2} \\
     \label{eq:infnorm}
     \|\ve\|_{\infty} &= \max_{i=1,2,\ldots,N} \lvert e_i \rvert \\
     \label{eq:keff_err}
@@ -84,8 +84,9 @@
       \resizebox{\textwidth}{!}{
       \begin{tabular}{cccccccccc}
         \toprule
-        Refine & $\keff$ & $\keff$ error \units{pcm} & $\keff$ ratio & RMS & 
-          RMS ratio  & $\|e\|_{\infty}$ & $\|e\|_{\infty}$ ratio \\
+        Refine & $\keff$ & $\keff$ error \units{pcm} & $\keff$ ratio & 
+          \gls{rms} & \gls{rms} ratio  & $\|e\|_{\infty}$ & 
+          $\|e\|_{\infty}$ ratio \\
         \midrule
         \csvreader[
           late after line=\\,
@@ -124,8 +125,8 @@
       \begin{threeparttable}
       \begin{tabular}{cccccccccc}
         \toprule
-        Refine & $\keff$ & $\keff$ error \units{pcm} & $\keff$ ratio & RMS & 
-          RMS ratio  & $\|e\|_{\infty}$ & $\|e\|_{\infty}$ ratio \\
+        Refine & $\keff$ & $\keff$ error \units{pcm} & $\keff$ ratio & \gls{rms} & 
+          \gls{rms} ratio  & $\|e\|_{\infty}$ & $\|e\|_{\infty}$ ratio \\
         \midrule
 
         0     &0.895108&10160.26&4.18   &5.34E-02&2.57     &2.12E-01&1.62\\
@@ -148,7 +149,7 @@
         \item[$\dagger$] Refinement ratio $\approx 1$ but next case $\approx
           8$.\\
           This is due to the movement of mesh nodes in the process of circular
-          remeshing.
+          mesh regeneration.
         \end{tablenotes}
       \end{threeparttable}
     }
@@ -198,12 +199,12 @@
         Benchmark & Dimensions & Groups & Reactor Type &
           \parbox[t]{0.6in}{\centering Neutron \\ Spectrum} \\
         \midrule
-        VVER440 & 2 & 2 & LWR & Thermal \\
-        SNR     & 2 & 4 & SFR & Fast \\
-        HWR     & 2 & 2 & HWR & Thermal \\
-        IAEA ($\times4$)    & 2 & 2 & PWR & Thermal \\
-        MONJU   & 3 & 3 & SFR & Fast \\
-        KNK     & 3 & 4 & SFR & Fast \\
+        VVER440 & 2 & 2 & \glsentryshort{lwr} & Thermal \\
+        SNR     & 2 & 4 & \glsentryshort{sfr} & Fast \\
+        HWR     & 2 & 2 & \glsentryshort{hwr} & Thermal \\
+        IAEA ($\times4$)    & 2 & 2 & \glsentryshort{pwr} & Thermal \\
+        MONJU   & 3 & 3 & \glsentryshort{sfr} & Fast \\
+        KNK     & 3 & 4 & \glsentryshort{sfr} & Fast \\
         \bottomrule
       \end{tabular}
     }
@@ -214,7 +215,7 @@
 \begin{frame}{VVER440}
   \begin{itemize}
     \item Two-dimensional.
-    \item Light Water Reactor (LWR).
+    \item \gls{lwr}.
     \item Two-group.
   \end{itemize}
   \begin{table}
@@ -272,7 +273,7 @@
 \begin{frame}{MONJU}
   \begin{itemize}
     \item Three-dimensional.
-    \item Sodium-cooled Fast Reactor (SFR).
+    \item \gls{sfr}.
     \item Three-group.
     \item Fission spectrum, $\chi$ not provided and instead selected for
       benchmark agreement.

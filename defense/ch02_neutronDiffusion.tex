@@ -74,7 +74,7 @@
 \begin{frame}{Combining Neutron Source}
   \begin{itemize}
     \item Neutron sources are combined into a single term.
-    \item This will resemble the FEM formulation.
+    \item This will resemble the \gls{fem} formulation.
   \end{itemize}
   \begin{equation}
     \label{eq:multigroup_source}
@@ -161,7 +161,7 @@
       \int_{\Omega_e} \basis_i(\vr) \; d\vr \right)
   \end{multline}
 
-  Rewriting in the form common to FEM.
+  Rewriting in the form common to \gls{fem}.
   \begin{equation}
     \label{eq:fem_notation}
     a(\basis_i,\basis_j) = f(\basis_i)
@@ -178,11 +178,11 @@
   Properties of the linear system include:
   \begin{itemize}
     \item Sparse.
-    \item Matrix, $\ma$, is symmetric, positive-definite \cite{textbookhughes}.
+    \item Matrix, $\ma$, is \gls{spd} \cite{textbookhughes}.
     \item Solution, $\vu$, is unique and bounded by Lax-Milgram Lemma 
       \cite{textbookli}.
   \end{itemize}
-  Solution via Conjugate Gradient (CG) method 
+  Solution via \gls{cg} method 
   \cite{Kelley1995IterativeEquations}.
 
   It is natural to populate the matrix $\ma$ in an element-by-element procedure.
@@ -271,7 +271,7 @@
     \item Nodes are re-indexed such that physically proximate nodes have
       proximate indices.
     \item Improve cache hits.
-    \item Reverse Cuthill-McKee (RCM) order is chosen \cite{rcm}.
+    \item \gls{rcm} order is chosen \cite{rcm}.
   \end{itemize}
   \vspace{-0.25in}
   \begin{figure}
@@ -291,7 +291,7 @@
       \begin{algorithmic}[1]
       \State Read mesh from VTK.
       \State Initialize $\phiavg^{(0)}$.
-      \State Order the nodes of the mesh into RCM order.
+      \State Order the nodes of the mesh into \gls{rcm} order.
         \label{state:rcm}
       \State Calculate $\Sigma_s$, $\Sigma_t$, and $\nu \Sigma_f$ for each 
         element.

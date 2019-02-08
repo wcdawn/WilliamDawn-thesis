@@ -41,11 +41,10 @@
   For all benchmark and analytic problems solved, a convergence study is 
   presented. Define an error vector $\ve = \phi(\vr) - \phi_{FEM}$ where
   $\phi_{FEM}$ is the solution to the finite element system of equations. Then, 
-  error is considered in terms of both Root Mean Squared (RMS) error calculated 
-  as 
+  error is considered in terms of both \gls{rms} error calculated as 
   \begin{equation} 
     \label{eq:rms}
-    \text{RMS}(\ve) = \sqrt{\frac{1}{N} \sum_{i=1}^{N} e_i^2},
+    \text{\gls{rms}}(\ve) = \sqrt{\frac{1}{N} \sum_{i=1}^{N} e_i^2},
   \end{equation}
   and error is considered in the maximal norm calculated as
   \begin{equation} 
@@ -133,7 +132,7 @@
       \begin{center}
         \begin{tabular}{ccccc}
           \toprule
-          Refine & RMS & RMS ratio & $\|e\|_{\infty}$ & 
+          Refine & \gls{rms} & \gls{rms} ratio & $\|e\|_{\infty}$ & 
             $\|e\|_{\infty}$ ratio \\
           \midrule
           \csvreader[
@@ -161,8 +160,8 @@
       \begin{center}
         \begin{tabular}{cccccccccc}
           \toprule
-          Refine & $\keff$ & $\keff$ error \units{pcm} & $\keff$ ratio & RMS & 
-            RMS ratio  & $\|e\|_{\infty}$ & $\|e\|_{\infty}$ ratio \\
+          Refine & $\keff$ & $\keff$ error \units{pcm} & $\keff$ ratio & \gls{rms} & 
+            \gls{rms} ratio  & $\|e\|_{\infty}$ & $\|e\|_{\infty}$ ratio \\
           \midrule
           \csvreader[
             late after line=\\,
@@ -189,8 +188,8 @@
       \begin{center}
         \begin{tabular}{cccccccccc}
           \toprule
-          Refine & $\keff$ & $\keff$ error \units{pcm} & $\keff$ ratio & RMS & 
-            RMS ratio  & $\|e\|_{\infty}$ & $\|e\|_{\infty}$ ratio \\
+          Refine & $\keff$ & $\keff$ error \units{pcm} & $\keff$ ratio & \gls{rms} & 
+            \gls{rms} ratio  & $\|e\|_{\infty}$ & $\|e\|_{\infty}$ ratio \\
           \midrule
           \csvreader[
             late after line=\\,
@@ -249,8 +248,8 @@
       \begin{center}
         \begin{tabular}{cccccccccc}
           \toprule
-          Refine & $\keff$ & $\keff$ error \units{pcm} & $\keff$ ratio & RMS & 
-            RMS ratio  & $\|e\|_{\infty}$ & $\|e\|_{\infty}$ ratio \\
+          Refine & $\keff$ & $\keff$ error \units{pcm} & $\keff$ ratio & \gls{rms} & 
+            \gls{rms} ratio  & $\|e\|_{\infty}$ & $\|e\|_{\infty}$ ratio \\
           \midrule
           \csvreader[
             late after line=\\,
@@ -278,8 +277,8 @@
       \begin{center}
         \begin{tabular}{cccccccccc}
           \toprule
-          Refine & $\keff$ & $\keff$ error \units{pcm} & $\keff$ ratio & RMS & 
-            RMS ratio  & $\|e\|_{\infty}$ & $\|e\|_{\infty}$ ratio \\
+          Refine & $\keff$ & $\keff$ error \units{pcm} & $\keff$ ratio & \gls{rms} & 
+            \gls{rms} ratio  & $\|e\|_{\infty}$ & $\|e\|_{\infty}$ ratio \\
           \midrule
           \csvreader[
             late after line=\\,

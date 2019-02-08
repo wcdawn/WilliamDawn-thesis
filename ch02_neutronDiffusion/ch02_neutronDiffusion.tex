@@ -1034,7 +1034,7 @@
     other random rows in the matrix. This step of reordering the matrix $\ma$ 
     seeks to decrease the bandwidth of the matrix and encourage cache hits when
     accessing coupled values in the linear system. The ordering chosen is the
-    Reverse Cuthill-McKee (RCM) method and common to sparse linear systems
+    \gls{rcm} method and common to sparse linear systems
     \cite{rcm}.
     
     \begin{algorithm}
@@ -1043,7 +1043,7 @@
       \begin{algorithmic}[1]
       \State Read mesh from VTK.
       \State Initialize $\phiavg^{(0)}$.
-      \State Order the nodes of the mesh into RCM order.
+      \State Order the nodes of the mesh into \gls{rcm} order.
         \label{state:rcm}
       \State Calculate $\Sigma_s$, $\Sigma_t$, and $\nu \Sigma_f$ for each 
         element.

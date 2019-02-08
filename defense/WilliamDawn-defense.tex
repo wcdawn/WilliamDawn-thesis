@@ -1,4 +1,18 @@
-\documentclass[10pt]{beamer}
+\documentclass[
+  10pt,
+  hyperref={pdfauthor={William C. Dawn},
+  pdftitle={Fast Reactor with FEM Multiphysics},
+  pdfcreator={pdftex},
+  pdfsubject={NC State Defense},
+  pdfkeywords={nuclear, sodium, fast, reactor, nuclear reactor, 
+    finite element, multiphysics},
+%  colorlinks=true,
+%  linkcolor=black,
+%  citecolor=black,
+%  filecolor=black,
+%  urlcolor=black,
+  }
+]{beamer}
 %\documentclass[handout,12pt]{beamer} % includes notes
 \usetheme{NCSU}
 
@@ -18,7 +32,8 @@
 			isbn=false,
 			maxnames=2, %for et al to be used
 			maxalphanames=1, %to avoid printing a + for every et al in abbreviation
-			doi=false]{biblatex}		
+			doi=false
+]{biblatex}		
 \addbibresource{../WilliamDawn-thesis.bib}
 \renewcommand*{\labelalphaothers}{}
 \renewcommand*{\bibfont}{\scriptsize}
@@ -65,6 +80,7 @@
 \usepackage[acronym]{glossaries}
 \usepackage{acronym}
 \input{acronym}
+
 
 % Information to be included in the title page:
 \title[Fast Reactor and FEM]
