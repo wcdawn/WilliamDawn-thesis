@@ -1,40 +1,37 @@
-%% ------------------------------ Abstrglst ---------------------------------- %%
+%% ------------------------------ Abstract ---------------------------------- %%
 \glsenablehyper
 \begin{abstract}
-  Renewed interest in advanced nuclear power reactors such as the 
-  \gls{vtr} at \gls{inl} has encouraged enhanced 
-  modeling of fast nuclear power reactors. Since their inception in the early 
-  days of nuclear engineering with reactors such as at the \gls{ebr-i}
-  and Fermi 1, many new modeling techniques have been developed. This work 
-  seeks to introduce modern methods and multiphysics simulation of fast 
-  reactors.
+  Renewed interest in advanced nuclear power reactors such as the \gls{vtr} at
+  \gls{inl} has encouraged enhanced modeling of fast nuclear power reactors.
+  Since the inception of fast reactors in the early days of nuclear engineering,
+  with reactors such as at the \gls{ebr-i} and Fermi 1, many new modeling
+  techniques have been developed.  This work seeks to introduce modern methods
+  and multiphysics simulation of fast reactors.
 
   In this work, the multigroup neutron diffusion equation is solved via the
-  \gls{fem}, allowing for the use of unstructured and general meshes. By using 
-  an unstructured mesh, physical phenomena such as thermal expansion can be 
-  modeled and used to distort the mesh. Additionally, the \gls{fem} will allow 
-  for simplified spatial refinement by means of both mesh refinement and the use 
-  of higher-order methods without regenerating the mesh. Unique to this thesis 
-  is the use of pentahedral wedge elements in the \gls{fem} mesh for
-  three-dimension simulations. Wedge elements are selected for their natural 
+  \gls{fem}, allowing for the use of unstructured and general meshes. By using
+  an unstructured mesh, physical phenomena such as thermal expansion can be
+  modeled and allowed to distort the mesh. Additionally, the \gls{fem} will
+  allow for spatial refinement by means of both traditional mesh refinement and
+  the use of higher-order methods without regenerating the mesh. Unique to this
+  thesis is the use of pentahedral wedge elements in the \gls{fem} mesh for
+  three-dimension simulations. Wedge elements are selected for their natural
   description of hexagonal geometry common to fast reactors.  
 
   Thermal feedback effects within a fast reactors are also modeled in this work.
-  A simplified thermal hydraulic model is used, modeling both axial heat 
-  convection and radial heat conduction. Temperatures from this model are used 
-  to calculate temperature dependent neutron cross-sections and
-  simulate reactivity feedback effects. Additionally, a thermal expansion 
-  model is used to simulate the thermal expansion of fuel and structural 
-  components within the reactor. Thermal feedback effects significantly impact
-  reactor behavior and contribute to the passive safety of fast reactor designs
-  as demonstrated in the experiments performed at \gls{ebr-ii}
-  \cite{ebriitests}.
+  A simplified thermal hydraulic model is developed, modeling both axial heat
+  convection and radial heat conduction. Temperatures from this model are used
+  to calculate temperature dependent neutron cross-sections. In addition to the
+  thermal hydraulic model, a thermal expansion model is developed.  Thermal
+  feedback effects significantly impact reactor behavior and contribute to the
+  passive safety of fast reactor designs as demonstrated in the experiments
+  performed at \gls{ebr-ii} \cite{ebriitests}.
   
   Using the multiphysics models developed in this work, a typical fast reactor 
   is simulated at operating conditions. The models as implemented demonstrate 
   expected reactor behavior for a fast reactor. For the simulated reactor, 
   reactivity feedback coefficients are calculated which would not be possible 
-  without a coupled multiphysics model. These results can be used to demonstrate
+  without a coupled multiphysics model. These results can be used to describe
   the passive safety features and feedback effects of such a nuclear reactor.
 
 \end{abstract}
@@ -55,13 +52,13 @@
 \begin{biography}
   William C. Dawn was born and raised in Stafford, Virginia. He attended public
   schools there for his primary education, participating in the Commonwealth
-  Governor's School in High School. William earned a Bachelor's of Science 
+  Governor's School in High School. William earned a Bachelor's of Science
   degree in Nuclear Engineering from North Carolina State University (NC State)
-  in May 2017. After his Master's degree, William will remain at NC State to 
+  in May 2017. After his Master's degree, William will remain at NC State to
   pursue a Ph.D. degree in Nuclear Engineering. 
 
-  William is a fellow of the \gls{iup} facilitated by \gls{doe-ne}. During his 
-  undergraduate and graduate careers, he has had the opportunity to work with 
+  William is a fellow of the \gls{iup} facilitated by \gls{doe-ne}. During his
+  undergraduate and graduate careers, he has had the opportunity to work with
   \gls{geh} and \gls{ornl}. William has also made contributions to the
   \gls{casl}.
 \end{biography}
