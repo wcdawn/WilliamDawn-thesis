@@ -165,28 +165,29 @@
   Rewriting in the form common to \gls{fem}.
   \begin{equation}
     \label{eq:fem_notation}
-    a(\basis_i,\basis_j) = f(\basis_i)
+    a_g(\basis_i,\basis_j) = f_g(\basis_i)
   \end{equation}
   In the form common to linear systems.
   \begin{gather}
     \label{eq:matrix_notation}
-    \ma \, \vu = \vf \\
-    \vu = \{\upsilon_{i,g}\}
+    \ma_g \, \vu_g = \vf_g \\
+    \vu_g = \{\upsilon_{i,g}\}
   \end{gather}
 \end{frame}
 
-\begin{frame}{Properties of $\ma \, \vu = \vf$}
+\begin{frame}{Properties of $\ma_g \, \vu_g = \vf_g$}
   Properties of the linear system include:
   \begin{itemize}
     \item Sparse.
-    \item Matrix, $\ma$, is \gls{spd} \cite{textbookhughes}.
-    \item Solution, $\vu$, is unique and bounded by Lax-Milgram Lemma 
+    \item Matrix, $\ma_g$, is \gls{spd} \cite{textbookhughes}.
+    \item Solution, $\vu_g$, is unique and bounded by Lax-Milgram Lemma 
       \cite{textbookli}.
   \end{itemize}
   Solution via \gls{cg} method 
   \cite{Kelley1995IterativeEquations}.
 
-  It is natural to populate the matrix $\ma$ in an element-by-element procedure.
+  It is natural to populate the matrix $\ma_g$ in an element-by-element 
+  procedure.
   \begin{align}
     \label{eq:matrix_population}
     A_{i,j,g,e} &= \albedo \int_{\partial \Omega_e} \basis_i(\vr) 
@@ -294,25 +295,25 @@
       \State Initialize $\phiavg^{(0)}$.
       \State Order the nodes of the mesh into \gls{rcm} order.
         \label{state:rcm}
-      \State Calculate $\Sigma_s$, $\Sigma_t$, and $\nu \Sigma_f$ for each 
-        element.
+      \State Calculate $\Sigma_{s,g'\rightarrow g}$, $\Sigma_{r,g}$, and 
+        $\nu \Sigma_{f,g}$ for each element.
       \State Calculate finite element matrix $\ma_g$ for each group. Store this. 
         \label{state:fem_matrix}
       \While{Power Iteration}
         \State Update the iteration counter. $s=s+1$
         \State Update $q_{fiss,g}$ and $q_{up,g}$ for all groups from previous 
           data $\phiavg^{(s-1)}$.
-        \State Update $\chi$ in each element using previous data.
+        \State Update $\widetilde{\chi_g}$ in each element using previous data.
           \label{state:chi_collapse}
         \For{$g=1,G$}
-          \State Update $q_{down,g}$ from current data $\phiavg^{(s)}$
+          \State Update $q_{down,g}$ from current data $\phiavg_g^{(s)}$
           \State Calculate total source in each element.
           \State Update finite element Vector $\vf_g$ with new source.
             \label{state:fem_vector}
-          \State Solve $\ma \vu = \vf$ using an iterative technique (Conjugate
-            Gradient).
-          \State Parse $\vu$ for $\phi$ solution on nodes.
-          \State Calculate element-average $\phiavg$.
+          \State Solve $\ma_g \vu_g = \vf_g$ using an iterative technique
+            (\gls{cg}).
+          \State Parse $\vu_g$ for $\phi_g$ solution on nodes.
+          \State Calculate element-average $\phiavg_g$.
         \EndFor
         \State Update $\keff$.
         \State Check convergence.

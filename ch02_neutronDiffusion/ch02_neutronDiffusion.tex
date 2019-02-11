@@ -2,13 +2,13 @@
 \label{ch:neutronDiffusion}
 
 \section{Introduction}
-  This chapter will describe the solution of the multigroup neutron diffusion 
-  equations for general geometry via the \gls{fem}. The solution method and 
-  derivations here are general to the multigroup neutron diffusion equation and 
-  it's application to fast reactors or any standard reactor geometry is 
-  straightforward. For typical fast reactor applications, diffusion theory 
-  approximates the neutron distribution within the reactor well. The diffusion 
-  approximation is a standard assumption for fast reactors because neutron 
+  This chapter will describe the solution of the multigroup neutron diffusion
+  equations for general geometry via the \glsentryfull{fem}. The solution method
+  and derivations here are general to the multigroup neutron diffusion equation
+  and it's application to any standard reactor geometry is
+  straightforward. For typical fast reactor applications, diffusion theory
+  approximates the neutron distribution within the reactor well. The diffusion
+  approximation is a standard assumption for fast reactors because neutron
   mean-free-paths within the reactor are large relative to material dimensions.
 
   Spatial discretization will be done with the \gls{fem}. This spatial 
@@ -46,6 +46,7 @@
   \end{equation}
   where 
   \begin{conditions} % custom environment designed for this purpose
+    \vr & spatial position vector, \\
     D_g(\vr)    & diffusion coefficient for energy group $g$ \units{cm}, \\
     \phi_g(\vr) & scalar neutron flux for energy group $g$
       \units{$\frac{1}{\text{cm}^2 \; \text{s}}$}, \\
@@ -60,9 +61,9 @@
     G & total number of energy groups.
   \end{conditions}
 
-  The total neutron cross-section includes the contribution due to 
-  within-group scattering. That is, due to $\Sigma_{s,g\rightarrow g}$. This can
-  be subtracted from both sides of \eref{eq:multigroup_diffusion} for simplicity 
+  The total neutron cross-section includes the contribution due to within-group
+  scattering. That is, due to $\Sigma_{s,g\rightarrow g}$. This can be
+  subtracted from both sides of \eref{eq:multigroup_diffusion} for simplicity
   and numeric efficiency. Rewriting \eref{eq:multigroup_diffusion} with this
   modification yields
   \begin{equation} 
@@ -73,12 +74,11 @@
       \phi_{g'}(\vr) + \sum_{g'=1, g' \ne g}^{G} 
       \Sigma_{s,g' \rightarrow g}(\vr) \phi_{g'}(\vr)
   \end{equation}
-  where $\Sigma_{r,g}$ is the removal cross-section defined as 
+  where $\Sigma_{r,g}$ is the removal cross-section defined as
   $\Sigma_{r,g}(\vr) = \Sigma_{t,g}(\vr) - \Sigma_{s,g\rightarrow g}(\vr)$. The
   removal cross-section now describes the removal of neutrons from the element
-  of phase space due to nuclear interactions. 
-  For simplicity, the neutron sources in \eref{eq:multigroup_removal} can be 
-  combined into a single term.
+  of phase space due to nuclear interactions.  For simplicity, the neutron
+  sources in \eref{eq:multigroup_removal} can be combined into a single term.
   \begin{equation}
     \label{eq:multigroup_source}
     - \grad \cdot( D_g(\vr) \grad \phi_g(\vr)) + \Sigma_{r,g}(\vr) \phi_g(\vr) = 
@@ -102,28 +102,28 @@
     q_{down,g}(\vr) &= \sum_{g'=1}^{g-1} \Sigma_{s,g' \rightarrow g}(\vr)
       \phi_{g'}(\vr),
   \end{align}
-  where the difference between $q_{up}$ and $q_{down}$ are the limits of the 
+  where the difference between $q_{up}$ and $q_{down}$ are the limits of the
   summation. $q_{up}$ represents the neutron source due to scattering from lower
   energy groups (up-scattering) and $q_{down}$ represents the neutron source due
   to scattering from higher energy groups (down-scattering). This form allows
-  for operator splitting of the neutron source term.
-  In an iterative scheme, it will be necessary for fission and up-scatter 
-  sources to use a different flux iterate than down-scatter so this separation
-  of sources will prove useful.
+  for operator splitting of the neutron source term. In an iterative scheme, it
+  will be necessary for fission and up-scatter sources to use a different flux
+  iterate than down-scatter so this separation of sources will prove useful.
 
-  The combined source form is useful for solving the
-  multigroup neutron diffusion problem for an arbitrary number of groups.
-  \eref{eq:multigroup_source}
-  is solved for each energy group and interaction between groups is
-  described in the source term, $q_g(\vr)$. In other literature, the multigroup
-  equation may be solved for all groups simultaneously by treating interaction 
-  between groups explicitly. By solving each group independently (as done here)
-  the method remains general. Additionally, for many-group energy structures, as
-  common to fast reactor applications, solving each group independently is 
-  typically more computationally efficient as such linear systems have favorable 
-  conditioning and are dimensionally smaller. Fast reactors are also dominated
-  by down-scatter as opposed to thermal reactors which experience significant
-  up-scatter.
+  The combined source form is useful for solving the multigroup neutron
+  diffusion problem for an arbitrary number of groups.
+  \eref{eq:multigroup_source} is solved for each energy group and interaction
+  between groups is described in the source term, $q_g(\vr)$. In other
+  literature, the multigroup equation may be solved for all groups
+  simultaneously by treating interaction between groups explicitly. By solving
+  each group independently (as done here) the method remains general.
+  Additionally, for many-group energy structures, as common to fast reactor
+  applications, solving each group independently is typically more
+  computationally efficient as such linear systems have favorable conditioning
+  and are dimensionally smaller. Finally, fast reactors are also dominated by
+  down-scatter as opposed to thermal reactors which experience significant
+  up-scatter implying that the term $q_{up,g}(\vr)$ will not have to be updated
+  frequently and the one-at-a-time solution method will benefit.
 
   Typically, reactor materials are described isotopically and 
   $\chi$ may be specified isotopically. However, for calculating the fission 
@@ -132,24 +132,24 @@
   element is needed. From an isotopic description, $q_{fiss,g}$ is given as
   \begin{equation}
     \label{eq:isotopic_chi}
-    q_{fiss,g}(\vr) = \sum_{i=1}^{N_I} \chi_{i,g}(\vr)
+    q_{fiss,g}(\vr) = \sum_{i=1}^{N_{iso}} \chi_{i,g}(\vr)
       \nu \Sigma_{f,i,g}(\vr) \phi_g(\vr)
   \end{equation}
-  where $\chi_{i,g}$ is the isotopic $\chi$ and $N_I$ is the 
+  where $\chi_{i,g}$ is the isotopic $\chi$ and $N_{iso}$ is the 
   number of isotopes at position $\vr$. Next, require $q_{fiss,g}$ to have the 
   form of \eref{eq:element_chi}.
   \begin{equation}
     \label{eq:element_chi}
     q_{fiss,g}(\vr) = \widetilde{\chi_g}(\vr) \, 
-      \sum_{i=1}^{N_I} \nu \Sigma_{f,i,g}(\vr) \phi_g(\vr)
+      \sum_{i=1}^{N_{iso}} \nu \Sigma_{f,i,g}(\vr) \phi_g(\vr)
   \end{equation}
   Setting \eref{eq:isotopic_chi} equal to \eref{eq:element_chi} yields the
   expression for $\widetilde{\chi_g}$ based on isotopic data.
   \begin{equation}
     \label{eq:chi_collapse}
-    \widetilde{\chi_g}(\vr) = \frac{\sum_{i=1}^{N_I} \chi_{i,g}(\vr)
+    \widetilde{\chi_g}(\vr) = \frac{\sum_{i=1}^{N_{iso}} \chi_{i,g}(\vr)
       \nu \Sigma_{f,i,g}(\vr) \phi_g(\vr)}
-      {\sum_{i=1}^{N_I} \nu \Sigma_{f,i,g}(\vr) \phi_g(\vr)}
+      {\sum_{i=1}^{N_{iso}} \nu \Sigma_{f,i,g}(\vr) \phi_g(\vr)}
   \end{equation}
   Noting that \eref{eq:chi_collapse} requires the solution $\phi_g(\vr)$. This
   means that $\chi_g$ must be calculated for each element for each iteration of
@@ -159,29 +159,30 @@
 \section{Formulation of Finite Element Equations}
   \label{sec:formulation}
   This section presents the derivation of the spatial discretization of the
-  multigroup neutron diffusion equation based on the \gls{fem}. The method 
-  results in a linear system of equations for a fixed source iteration. Details 
-  are also provided on constructing the finite element matrix for use with 
+  multigroup neutron diffusion equation based on the \gls{fem}. The method
+  results in a linear system of equations for a fixed source iteration. Details
+  are also provided on constructing the finite element matrix for use with
   triangular and wedge elements.
 
   \subsection{Derivation}
     \label{sec:formulation:derivation}
     The remaining continuous variable in the problem to be discretized in
-    \eref{eq:multigroup_source}  is the spatial variable $\vr$. This will be 
+    \eref{eq:multigroup_source} is the spatial variable $\vr$. This will be 
     discretized according to the \gls{fem}. The problem is solved in a finite 
     domain $\vr \in \Omega$ where $\partial \Omega$ represents the boundary of 
-    the domain where some boundary condition is specified. Boundary condition 
+    the domain and some boundary condition is specified. Boundary condition 
     options include:
     \begin{enumerate}
       \item Mirror. $\grad \phi_g(\vr) \cdot \nhat = 0$ for 
         $\vr \in \partial \Omega$.
       \item Albedo. $D_g(\vr) \grad \phi_g(\vr) \cdot \nhat + 
         \albedo \phi_g(\vr)=0$ for $\vr \in \partial \Omega$,
-        where $\albedo$ is a real constant specified
+        where $\albedo \in \real$ is a scalar constant specified
         by the user. For non-reentrant boundary condition, $\albedo = \half$.
       \item Zero Flux. $\phi_g(\vr) = 0$ for $\vr \in \partial \Omega$.
     \end{enumerate}
-    $\nhat$ represents the unit outward normal vector at the boundary.
+    $\nhat$ represents the unit outward normal vector at the boundary $\partial
+    \Omega$.
     (Note: the order of the above list corresponds to the order of boundary 
     condition precedent in code with the greater the integer, the greater the 
     precedent.)
@@ -193,14 +194,14 @@
         \Omega_{N_E} 
     \end{equation}
     such that $\Omega = \{\Omega_e\}$ for $e = 1,2,\ldots,N_E$ is a set of
-    non-overlapping elements $\Omega_i \cap \Omega_j = \emptyset$ for $i \ne j$ 
+    non-overlapping elements $\Omega_i \cap \Omega_j = \emptyset$ for $i \ne j$
     and $N_E$ is the total number of elements. Elements are in an unstructured
-    mesh and can be generated by any number of mesh generation methods 
-    (e.g. Delaunay triangulation) to describe the geometry of the problem.
+    mesh and can be generated by any number of mesh generation methods (e.g.
+    Delaunay triangulation) to describe the geometry of the problem.
     
-    Proceeding with the Galerkin Finite Element Method,
-    \eref{eq:multigroup_source} is multiplied by a testing function 
-    $v(\vr) \in H_1(\Omega)$ where $H$ is the Sobolev space. 
+    Proceeding with the Galerkin \gls{fem}, \eref{eq:multigroup_source} is
+    multiplied by a testing function $v(\vr) \in H_1(\Omega)$ where $H$ is the
+    Sobolev space. 
     \begin{equation}
       \label{eq:testing_function_multiply}
       -\grad \cdot (D_g(\vr) \grad \phi_g(\vr)) v(\vr) + 
@@ -217,12 +218,12 @@
         \int_{\Omega} q_g(\vr) v(\vr) \;d\vr
     \end{equation}
     
-    For the purposes of this work, material cross-sections and the
-    neutron source $q_{g,e}$ are assumed to be constant within an element. In
-    the future, $q_g$ could be considered discrete at each node rather than each
-    element.
-    To calculate a constant neutron source within an element, \eref{eq:q} is
-    used to calculate the average neutron source $\phiavg_{g,e}$ in an element.
+    For the purposes of this work, material cross-sections and the neutron
+    source $q_{g,e}$ are assumed to be constant within an element. In the
+    future, $q_g$ could be considered discrete at each node rather than each
+    element.  To calculate a constant neutron source within an element,
+    \eref{eq:q} is used to calculate the average neutron source $\phiavg_{g,e}$
+    in an element.
     \begin{align}
       q_{g,e} &= q_{fiss,g,e} + q_{up,g,e} + q_{down,g,e} \\
       \label{eq:qelement_fiss}
@@ -235,7 +236,7 @@
       q_{down,g,e} &= \sum_{g'=1}^{g-1} \Sigma_{s,g' \rightarrow g,e}
         \phiavg_{g',e}
     \end{align}
-    For first-order, linear implementations of the \gls{fem}, the 
+    For first-order, linear implementations of the \gls{fem}, the
     element-average flux $\phiavg_{g,e}$ is
     \begin{equation}
       \label{eq:phiavg}
@@ -260,8 +261,7 @@
     The Second Green's Theorem is used to rewrite the integral in the first
     term. A proof invoking the Second Green's Theorem has been published by Li
     \cite{textbookli}.% in Theorem 9.2.
-    The Second 
-    Green's Theorem is 
+    The Second Green's Theorem is 
     \begin{equation} 
       \label{eq:greens}
       -\int_{\Omega_e} \grad \cdot \grad \phi_g(\vr) v(\vr) \;d\vr =
@@ -269,12 +269,12 @@
         (\grad \phi_g(\vr) \cdot \nhat) \, v(\vr)\; ds +
         \int_{\Omega_e} \grad \phi_g(\vr) \cdot \grad v(\vr) \; d\vr
     \end{equation}
-    where $\grad \phi_g(\vr) \cdot \nhat$ is the outward normal 
-    derivative and the integral $ds$ is a line integral in two dimensions or a 
-    surface integral in three dimensions. Recognizing that this quantity will
-    only be relevant on the boundary of the problem, the value of the outward
-    normal derivative will be specified as a boundary condition. Specifically,
-    the albedo boundary condition which has the form 
+    where $\grad \phi_g(\vr) \cdot \nhat$ is the outward normal derivative and
+    the integral $ds$ is a line integral in two dimensions or a surface integral
+    in three dimensions. Recognizing that this quantity will only be relevant on
+    the boundary of the problem, the value of the outward normal derivative will
+    be specified as a boundary condition. Specifically, the albedo boundary
+    condition which has the form 
     \begin{align}
       D_g(\vr) \grad \phi_g(\vr) \cdot \nhat + \albedo \phi_g(\vr) &= 0 \\
       D_g(\vr) \grad \phi_g(\vr) \cdot \nhat &= -\albedo \phi_g(\vr)
@@ -282,10 +282,10 @@
     for $\vr \in \partial \Omega$. Note that all allowed boundary conditions
     (mirror, albedo, and zero-flux) can be specified as an albedo condition. For
     mirror boundaries, $\albedo = 0$ and for zero-flux boundaries, $\albedo
-    \rightarrow \infty$.
-    Substituting \eref{eq:greens} into  \eref{eq:element_by_element} and 
-    assuming the outward normal derivative is specified in the form of an albedo
-    boundary condition with $\albedo$ constant throughout the problem boundary.
+    \rightarrow \infty$.  Substituting \eref{eq:greens} into
+    \eref{eq:element_by_element} and assuming the outward normal derivative is
+    specified in the form of an albedo boundary condition with $\albedo$
+    constant throughout the problem boundary.
     \begin{multline} 
       -\sum_{e=1}^{N_E} D_{g,e} \int_{\partial \Omega_e} v(\vr) \grad
       \phi_g(\vr) \cdot \nhat \;ds + \sum_{e=1}^{N_E} 
@@ -313,9 +313,11 @@
     where coefficients $\vu = \{\upsilon_{g,i}\}$ are unknown and will be 
     determined and $DOF$ is the total number degrees of freedom of the problem. 
     Typically $DOF$ is the number of nodes minus any nodes for which the flux is 
-    fixed (e.g. zero-flux nodes). Typically, these basis functions have unit 
+    fixed (e.g. zero-flux nodes). 
+    
+    Typically, these basis functions have unit 
     magnitude and are centered at the node  points so the coefficients 
-    $\upsilon_i$ are the approximated solution at the nodes. It is also 
+    $\upsilon_i$ are the \gls{fem} solution at the nodes. It is also 
     convenient for basis functions to have compact support. That is, basis 
     functions are created such that they are zero almost everywhere except some
     minimal region. Compact support in this implementation is chosen such that
@@ -327,7 +329,7 @@
     basis functions are explored.
 
     The test function $v(\vr)$ is also chosen as a linear combination of the 
-    basis functions.
+    same basis functions.
     \begin{equation} 
       \label{eq:linear_superposition}
       v(\vr) = \sum_{j=1}^{DOF} \basis_j(\vr)
@@ -371,33 +373,33 @@
     of the \gls{fem}
     \begin{equation}
       \label{eq:fem_notation}
-      a(\basis_i,\basis_j) = f(\basis_i)
+      a_g(\basis_i,\basis_j) = f_g(\basis_i)
     \end{equation}
-    where $a(\basis_i,\basis_j)$ is the bilinear form and $f(\basis_i)$ is the 
-    linear form of the finite element system.
-    Or, \eref{eq:linear_equation} can be written in matrix format as
+    where $a_g(\basis_i,\basis_j)$ is the bilinear form of the \gls{fem} for 
+    group $g$ and $f_g(\basis_i)$ is the linear form of the \gls{fem} for group
+    $g$.
+    \eref{eq:linear_equation} can also be written in matrix format as
     \begin{equation}
       \label{eq:matrix_notation}
-      \ma \, \vu = \vf
+      \ma_g \, \vu_g = \vf_g
     \end{equation}
-    where $\vu = \{\upsilon_{i,g}\}$. 
+    where $\vu_g = \{\upsilon_{i,g}\}$. 
     
-    The diffusion coefficient $D_g(\vr)$ is non-zero and bounded and
-    the removal cross-section $\Sigma_{r,g}(\vr)$ is bounded. Given these
-    conditions, the Lax-Milgram Lemma implies the solution to the \gls{fem}
-    equations as derived here is both unique and bounded 
-    \cite{textbookli}. This is not the entire solution description as the 
-    source function $q_g(\vr)$ is updated on each power iteration (see 
-    \sref{sec:power_iterations}). What the satisfaction of the Lax-Milgram Lemma
-    does imply in this instance is that for a fixed source in a given power 
-    iteration, a unique and bounded solution exists. The multigroup neutron 
-    diffusion problem remains an eigenvalue problem.
+    The diffusion coefficient $D_g(\vr)$ is non-zero and bounded and the removal
+    cross-section $\Sigma_{r,g}(\vr)$ is bounded. Given these conditions, the
+    Lax-Milgram Lemma implies the solution to the \gls{fem} equations as derived
+    here is both unique and bounded \cite{textbookli}. This is not the entire
+    solution description as the source function $q_g(\vr)$ is updated on each
+    power iteration (see \sref{sec:power_iterations}). What the satisfaction of
+    the Lax-Milgram Lemma does imply is, for a fixed source problem 
+    in a given power iteration, a unique and bounded solution exists. The
+    multigroup neutron diffusion problem remains an eigenvalue problem.
     
-    In the matrix notation of \eref{eq:matrix_notation}, matrix $\ma$ is 
-    described by integral quantities, vector $\vu$ is the unknown magnitudes of
-    the basis functions $\{\upsilon_{g,i}\}$, and vector $\vf$ is described by
-    the source integral quantity. Inspecting the elements matrix $\ma$ and the
-    vector $\vf$ reveals 
+    In the matrix notation of \eref{eq:matrix_notation}, matrix $\ma_g$ is 
+    described by integral quantities, vector $\vu_g$ is the unknown magnitudes 
+    of the basis functions $\{\upsilon_{g,i}\}$, and vector $\vf_g$ is described
+    by source integral quantities. Inspecting the elements matrix $\ma_g$ and
+    the vector $\vf_g$ reveals 
     \begin{align}
       \label{eq:matrix_population}
       A_{i,j,g,e} &= \albedo \int_{\partial \Omega_e} \basis_i(\vr) 
@@ -413,44 +415,41 @@
       A_{i,j,g} &= \sum_{e=1}^{N_E} A_{i,j,g,e}, \\
       f_{i,g} &=  \sum_{e=1}^{N_E} f_{i,g,e},
     \end{align}
-    which leads to the natural population of the matrix $\ma$ on an 
-    element-by-element basis. Matrix $\ma$ is assembled by looping
-    through all elements and summing their contribution to the matrix. 
-    Note that the contribution due to the surface integral will be zero in 
-    elements not on the problem boundary and may also be zero for problems with
-    select boundary conditions. See \sref{sec:boundary_conditions} for boundary
-    condition discussion. The population of the vector $\vf$ is done similarly
-    in an element-by-element fashion. Then, the matrix $\ma$ and the vector 
-    $\vf$ are known for each energy group. The equations are solved for one
-    energy group at a time and $\phi_g$ is calculated and stored. The matrix
-    $\ma$ will be shown to be symmetric positive definite in
-    \sref{sec:linear_system_solution}.
+    which leads to the natural population of the matrix $\ma_g$ on an
+    element-by-element basis. Matrix $\ma_g$ is assembled by looping through all
+    elements and summing their contribution to the matrix.  Note that the
+    contribution due to the surface integral will be zero in elements not on the
+    problem boundary and may also be zero for problems with select boundary
+    conditions. See \sref{sec:boundary_conditions} for boundary condition
+    discussion. The population of the vector $\vf_g$ is done similarly in an
+    element-by-element fashion. Then, the matrix $\ma_g$ and the vector $\vf_g$
+    are known for each energy group. The equations are solved for one energy
+    group at a time and $\phi_g$ is calculated and stored. The matrix $\ma_g$
+    will be shown to be \gls{spd} in \sref{sec:linear_system_solution}.
     
-    The above derivation reduces to a linear system of
-    equations. These equations are constructed from the integral quantities 
-    specified by the \gls{fem} and the coefficients given by the cross-sections 
-    and fixed source regions. The integral quantities themselves are expressed 
-    explicitly in the \sref{sec:matrix_quantities}.
+    The above derivation reduces to a linear system of equations. These
+    equations are constructed from the integral quantities specified by the
+    \gls{fem} and the coefficients given by the cross-sections and fixed source
+    regions. The integral quantities themselves are expressed explicitly in the
+    \sref{sec:matrix_quantities}.
     
   \subsection{Matrix Quantities}
     \label{sec:matrix_quantities}
-    For certain simple elements, the integral quantities described in 
+    For selected, simple elements, the integral quantities described in 
     \eref{eq:matrix_population} and \eref{eq:vector_population} have exact 
     analytic forms. For this work, linear triangles and linear wedges
     are investigated and many of the integrals have exact expressions. If these 
     quantities cannot be expressed exactly, or doing so would be computationally
-    inefficient, numerical quadratures are used. For certain problems, these 
-    quadratures can express the integrals exactly. This will be discussed in 
-    \sref{sec:quadratures}.
+    inefficient, numerical quadratures are used. Given proper selection of
+    the quadrature set, a quadrature rule can express the integrals exactly. 
+    This will be discussed in \sref{sec:quadratures}.
 
     \subsubsection{Linear Triangles}
-      Linear triangles are common to two-dimensional finite element methods and
-      have been investigated in many methods for the solution of the few-group
-      neutron diffusion equation
-      \cite{Hosseini2017,Hosseini2013,Hosseini2015}. The linear triangle element 
-      is a triangle defined by three corner coordinates with basis functions 
-      located on each corner. General and Representative triangle elements are
-      shown in \fref{fig:triangle_elements}.
+      Linear triangles are common to two-dimensional \glspl{fem} and have been
+      investigated in many methods for the solution of the few-group neutron
+      diffusion equation \cite{Hosseini2017,Hosseini2013,Hosseini2015}. The
+      linear triangle element is a triangle defined by three corner coordinates
+      with basis functions located on each corner. 
 
       \begin{figure}
         \centering
@@ -466,13 +465,12 @@
       It is difficult to analytically calculate the desired integral quantities
       for an arbitrary triangle. Instead, a simplified reference element is
       created and quantities are calculated for the reference element and then
-      translated to the arbitrary element using a Jacobian. 
-      The reference triangle $T_{ref}$ is located in
-      $\xi \in [0,1]$ and $\eta \in [0,1-\xi]$. General and reference triangles
-      are shown in \fref{fig:triangle_elements}. The
-      basis functions are zero outside of the reference triangle and within the
-      reference triangle, basis functions for the are provided in the
-      coordinates of $T_{ref}$.
+      translated to the arbitrary element using a Jacobian.  The reference
+      triangle $T_{ref}$ is located in $\xi \in [0,1]$ and $\eta \in [0,1-\xi]$.
+      General and reference triangles are shown in \fref{fig:triangle_elements}.
+      The basis functions are zero outside of the reference triangle. Within
+      the reference triangle, basis functions for the are provided in the
+      natural coordinates of $T_{ref}$.
       \begin{align}
         \basis_i(\xi,\eta) &= 0 \quad \forall \; (\xi,\eta) \notin T_{ref} \\
         \basis_1(\xi,\eta) &= \xi \\
@@ -480,13 +478,11 @@
         \basis_3(\xi,\eta) &= 1-\xi-\eta
       \end{align}
       
-      The use of reference triangles and Jacobians are general in nature.
-      However, for linear triangles there are simple expressions
-      for the integral quantities for an arbitrary triangle can be derived
-      \cite{textbookwhite}. The expression for
-      the line integral for the arbitrary element can also be derived
-      \cite{computerLab}. For a triangle with 
-      corners $\{ x_i,y_i \}$ with $i=1,2,3$
+      For linear triangles, simple expressions for the integral quantities for
+      an arbitrary triangle can be derived \cite{textbookwhite}. The expression
+      for the line integral for the arbitrary element can also be derived
+      \cite{computerLab}. For a general triangle with corners $( x_i,y_i )$ with
+      $i=1,2,3$
       \begin{align}
         \int_{\Omega_e} \grad \basis_i(\vr) \cdot \grad \basis_j(\vr) 
           \;d\vr &= \frac{1}{4 A_e}
@@ -522,9 +518,9 @@
           (a_1 b_2 - a_2 b_1)^2},
       \end{align}
       where $a_i$ is the $i^{th}$ component of vector $\va$ and $b_i$ is the
-      $i^{th}$ component of vector $\vb$.
-      For higher order triangular elements, it may be necessary to employ a 
-      quadrature to calculate the necessary integral quantities.
+      $i^{th}$ component of vector $\vb$.  For higher order triangular elements,
+      it may be necessary to employ a quadrature to calculate the necessary
+      integral quantities.
 
     \subsubsection{Linear Wedges}
       A wedge element is a pentahedron with six corner nodes, and is sometimes
@@ -656,8 +652,9 @@
     Wedge quadrature sets are simply tensor products of a line Gaussian 
     quadrature and a triangular quadrature. 
     
-    Basis functions are polynomials of first, second, or third order. These 
-    quadratures are capable of exactly integrating polynomial functions of given
+    Though only linear functions are used here, basis functions are generally
+    polynomials of first, second, or third order. The quadratures described
+    are capable of exactly integrating polynomial functions of given
     order so there exists a quadrature order that will exactly integrate the 
     finite element quantities to numeric precision. The table of the order
     required for exact integration are provided in \tref{tab:quadrature_orders}.
@@ -707,12 +704,13 @@
 
     Isoparametric elements are elements in which shape functions can be used to
     relate global coordinates, $(x,y,z)$, to local coordinates
-    $(\xi,\zeta,\eta)$. Generally, non-curved elements are isoparametric. For 
-    isoparametric elements such as triangles and wedges, the Jacobi is constant 
-    over the element and can be precalculated to avoid populating, and 
-    evaluating the determinant of a matrix for each integration point. For the 
-    elements of concern, these values are presented in \tref{tab:jacobi} 
+    $(\xi,\zeta,\eta)$. Generally, non-curved elements are isoparametric. For
+    isoparametric elements such as triangles and wedges, the Jacobi is constant
+    over the element and can be pre-calculated to avoid populating, and
+    evaluating the determinant of a matrix for each integration point. For the
+    elements of concern, these values are presented in \tref{tab:jacobi}
     \cite{textbookcolorado}.
+
     \begin{table}
       \caption{Jacobi for Selected Elements.}
       \label{tab:jacobi}
@@ -780,8 +778,8 @@
       \vd_{i,\,(x,y,z)} = \grad_{(x,y,z)} N_i(\vr)
     \end{equation}
     In \algorithmref{algorithm:deriv_int}, the quadrature has points $\{\vx_p\}$ 
-    and weights $\{w_p\}$ for $p = 1,2,\ldots,N$ and the value of the integral
-    is represented by \eref{eq:deriv_integral}.
+    and weights $\{w_p\}$ for $p = 1,2,\ldots,N$ and the value of the integral,
+    $v$, is represented by \eref{eq:deriv_integral}.
     \begin{equation}
       \label{eq:deriv_integral}
       v = \int_{\Omega_e} \grad \basis_i(\vr) \cdot \grad \basis_j(\vr) \;
@@ -813,17 +811,17 @@
 \section{Power Iterations}
   \label{sec:power_iterations}
   The \gls{fem} is used to solve a fixed source problem for a given source
-  distribution $q_g(\vr)$. However, for multigroup problems with a fission 
-  source, the problem is an eigenvalue problem and the source is not known a 
-  priori. For eigenvalue problems, the problem is also not a fixed-source 
-  problem and has many solutions. The method of Power Iterations allows 
-  eigenvalue problems to be solved iteratively for the fundamental eigenvalue 
-  and eigenvector.
+  distribution $q_g(\vr)$. However, for multigroup problems with a fission
+  source, the problem is an eigenvalue problem and the source is not known
+  \textit{a priori}. For eigenvalue problems, the problem does not have a fixed
+  source and the system has many solutions. The method of Power Iterations
+  allows eigenvalue problems to be solved iteratively for the fundamental
+  eigenvalue and eigenvector.
 
   \subsection{Convergence of Power Iteration Method}
     Noting the \gls{fem} equations can be written as matrix form
-    \eref{eq:matrix_notation}, the finite diffusion equation can be rewritten as
-    shown by Gehin \cite{gehinThesis}.
+    \eref{eq:matrix_notation}, the discretized multigroup neutron diffusion 
+    equation can be rewritten as shown by Gehin \cite{gehinThesis}.
     \begin{equation}
       \label{eq:gehin_notation}
       \mb(\vPhi,\keff) \vPhi = \frac{1}{\keff} \mm \vPhi
@@ -847,8 +845,8 @@
     therefore, $\mr$ is a non-symmetric, non-negative matrix.
 
     In the solution of \eref{eq:multigroup_diffusion}, the largest eigenvalue,
-    $\keff$, is desired. The solution can be found using the method of power
-    iterations which can be written as 
+    $\keff$, is desired with its associated eigenvalue, $\phi_g$.. The solution 
+    can be found using the method of power iterations which can be written as 
     \begin{align}
       \label{eq:power_iteration_phi}
       \vPhi^{(s+1)} &= \frac{1}{\keff^{(s)}} \mr \vPhi^{(s)} \\
@@ -953,7 +951,7 @@
     \end{equation}
     and it can be seen that for problems with small dominance ratio, the power
     iteration method will converge more quickly. As the dominance ratio
-    approaches unity, $d \rightarrow 1$, the Power Iteration method will be
+    approaches unity, $d \rightarrow 1$, the power iteration method will be
     slower to converge. Convergence criteria are then specified as an absolute 
     tolerance in the sense of the eigenvalue
     \begin{equation}
@@ -969,17 +967,16 @@
 
     It is important to note that all of the analysis in this section assumed the
     matrix $\mr$ does not change between iterations. For simple multigroup
-    criticality calculations, this assumption is correct. However, in realistic
-    power reactor simulations, the cross-sections of the problem may be 
-    considered functions of material temperature or may have some variable
-    number density. For these problems, the matrix $\mr$ is necessarily updated
-    between power iterations in a nonlinear manner. For nonlinear power
+    criticality calculations, this assumption is correct. However, in
+    multiphysics nuclear power reactor simulations, the cross-sections of the 
+    problem may be considered functions of material temperature or may have some
+    variable number density. For these problems, the matrix $\mr$ is necessarily
+    updated between power iterations in a nonlinear manner. For nonlinear power
     iteration updates, convergence is no longer guaranteed. The argument for
-    convergence with nonlinear power iterations in this implementation falls 
+    convergence with nonlinear power iterations in this implementation falls
     back to the stability of the physical system.
     
   \subsection{Calculation of Source with Power Iterations}
-
     The multigroup neutron diffusion equation \eref{eq:multigroup_source} can be
     written with the source term $q_g(\vr)$ expanded into its component parts.
     \begin{equation} \label{eq:multigroup_source_expand}
@@ -993,7 +990,7 @@
     $q_{up,g}(\vr)$ requires lower energy groups (i.e. $g' > g$). The
     down-scatter component $q_{down,g}(\vr)$ requires higher energy groups (i.e.
     $g' < g$). Based on these requirements, these source components can be
-    calculated based on different iterations within the Power Iteration method.
+    calculated based on different iterations within the power iteration method.
     This is described in \algorithmref{algorithm:general}.
     \eref{eq:multigroup_source_expand} is then more explicitly written.
     \begin{equation} 
@@ -1030,9 +1027,9 @@
     effect on the result as the linear system represented is equivalent. This 
     choice to reorder the system is made to improve computational efficiency. 
     Indexing nodes that are physically proximate with proximate indices causes 
-    rows in the finite element matrix $\ma$ to be closely coupled to nearby
-    rows. In a general unstructured and unordered mesh rows may be coupled to 
-    other random rows in the matrix. This step of reordering the matrix $\ma$ 
+    rows in the finite element matrix $\ma_g$ to be closely coupled to nearby
+    rows. In a general unstructured and unordered mesh, rows may be coupled to 
+    other random rows in the matrix. This step of reordering the matrix $\ma_g$ 
     seeks to decrease the bandwidth of the matrix and encourage cache hits when
     accessing coupled values in the linear system. The ordering chosen is the
     \gls{rcm} method and common to sparse linear systems
@@ -1058,25 +1055,25 @@
       \State Initialize $\phiavg^{(0)}$.
       \State Order the nodes of the mesh into \gls{rcm} order.
         \label{state:rcm}
-      \State Calculate $\Sigma_s$, $\Sigma_t$, and $\nu \Sigma_f$ for each 
-        element.
+      \State Calculate $\Sigma_{s,g'\rightarrow g}$, $\Sigma_{r,g}$, and 
+        $\nu \Sigma_{f,g}$ for each element.
       \State Calculate finite element matrix $\ma_g$ for each group. Store this. 
         \label{state:fem_matrix}
       \While{Power Iteration}
         \State Update the iteration counter. $s=s+1$
         \State Update $q_{fiss,g}$ and $q_{up,g}$ for all groups from previous 
           data $\phiavg^{(s-1)}$.
-        \State Update $\chi$ in each element using previous data.
+        \State Update $\widetilde{\chi_g}$ in each element using previous data.
           \label{state:chi_collapse}
         \For{$g=1,G$}
-          \State Update $q_{down,g}$ from current data $\phiavg^{(s)}$
+          \State Update $q_{down,g}$ from current data $\phiavg_g^{(s)}$
           \State Calculate total source in each element.
           \State Update finite element Vector $\vf_g$ with new source.
             \label{state:fem_vector}
-          \State Solve $\ma \vu = \vf$ using an iterative technique (See
+          \State Solve $\ma_g \vu_g = \vf_g$ using an iterative technique (See
             \sref{sec:linear_system_solution}).
-          \State Parse $\vu$ for $\phi$ solution on nodes.
-          \State Calculate element-average $\phiavg$.
+          \State Parse $\vu_g$ for $\phi_g$ solution on nodes.
+          \State Calculate element-average $\phiavg_g$.
         \EndFor
         \State Update $\keff$.
         \State Check convergence.
@@ -1086,24 +1083,24 @@
     \end{algorithm}
 
     Step \ref{state:nonlinear} incorporates the possibility of non-linear
-    updates into the power iteration method. This invalidates the proof from
-    \sref{sec:power_iterations} but is performed to simulate thermal hydraulic
-    and thermal expansion effects as described in \chref{ch:thermalHydraulics}
-    and \chref{ch:thermalExpansion} respectively. This procedure is commonly
-    used in practice and no convergence problems have been observed. This update
-    also requires recalculating the finite element matrix $\ma_g$ for each 
-    group.
+    updates into the power iteration method. This invalidates the proof of
+    convergence from \sref{sec:power_iterations} but is performed to simulate
+    thermal hydraulic and thermal expansion effects as described in
+    \chref{ch:thermalHydraulics} and \chref{ch:thermalExpansion} respectively.
+    This procedure is commonly used in practice and no convergence problems have
+    been observed. This update also requires recalculating the finite element
+    matrix $\ma_g$ for each group.
     
-    A benefit of this implementation is that the finite element vector $\vf$ 
-    must be updated on each power iteration of the solution whereas the matrix 
-    $\ma$ is described entirely by geometry and the material cross-sections. For
-    this reason, $\ma$ can be generated once at the beginning of the problem and 
-    stored for the duration of the calculation (with no non-linear updates).
-    \FloatBarrier % make sure the algorithm is in the correct section
+    A benefit of this implementation is that the finite element vector $\vf_g$
+    must be updated on each power iteration of the solution whereas the matrix
+    $\ma_g$ is described entirely by geometry and the material cross-sections.
+    For this reason, $\ma_g$ can be generated once at the beginning of the
+    problem and stored for the duration of the calculation (with no non-linear
+    updates). \FloatBarrier % make sure the algorithm is in the correct section
 
   \subsection{Memory and Storage}
-    The finite element matrix $\ma$ is large and sparse so a sparse storage and
-    sparse solution to the linear system are required. Many sparse matrix 
+    The finite element matrix $\ma_g$ is large and sparse so a sparse storage 
+    and sparse solution to the linear system are required. Many sparse matrix 
     implementations have been described and implemented in the past including
     triplet storage, reduced column, and reduced row storage \cite{sparseBLAS}.
     For this work a \twotable method is chosen which was uniquely 
@@ -1130,52 +1127,54 @@
       \label{eq:idx_example}
       \texttt{IDX}(:,5) = (8, 200, 48, 96, 5 )
     \end{equation}
+
     \begin{figure}
       \centering
       \includegraphics[width=0.5\textwidth]{adjacency_graph}
       \caption{Example Unstructured Mesh.}
       \label{fig:adjacency_graph}
     \end{figure}
-    \eref{eq:idx_example} only an example because the order of the nodes in row
-    5 is arbitrary. Similarly, a numeric example is provided in 
+
+    \eref{eq:idx_example} is only an example because the order of the nodes in 
+    row 5 is arbitrary. Similarly, a numeric example is provided in 
     \eref{eq:idx_number} (note that the value ``3'' is arbitrary).
     \begin{equation}
       \label{eq:idx_number}
       \left.
       \begin{array}{c}
         \texttt{IDX}(7,3) = 8 \\
-        \texttt{VAL}(7,3) = 12.1
+        \texttt{VAL}(7,3,g) = 12.1
       \end{array}
       \right\}
       \implies
-      A_{7,8} = 12.1
+      A_{7,8,g} = 12.1
     \end{equation}
-    \eref{eq:idx_number} indicates that the value of matrix $\ma$ in the
-    seventh row in the eighth column is 12.1. This will allow for simple row 
-    operations and efficient matrix-vector multiplication which will be 
-    necessary in the solution of the linear system.
+    \eref{eq:idx_number} indicates that the value of matrix $\ma_g$ for group
+    $g$ in the seventh row in the eighth column is 12.1. This will allow for 
+    simple row operations and efficient matrix-vector multiplication which will
+    be necessary in the solution of the linear system.
 
   \subsection{Boundary Conditions}
     \label{sec:boundary_conditions}
     Boundary conditions merit brief consideration. There are many ways to 
     implement boundary conditions and all result in mathematically the same 
-    answer. The choices made for this work are presented below. Mirror 
+    solution. The choices made for this work are presented below. Mirror 
     boundary conditions require $\grad \phi_g(\vr) = 0$ for 
-    $\vr \in \partial \Omega$. These are also known as ``natural'' boundary
-    conditions because the finite element matrix $\ma$ requires no additional 
+    $\vr \in \partial \Omega$. These are termed ``natural'' boundary
+    conditions because the finite element matrix $\ma_g$ requires no additional 
     treatment and this condition is natural. In the albedo representation, this
     is equivalent to $\albedo = 0$.
     
     Albedo boundary conditions are treated with an additional contribution to 
-    the finite element matrix $\ma$. These contributions represent a line 
+    the finite element matrix $\ma_g$. These contributions represent a line 
     integral in two dimensions and a surface integral in three dimensions. These
     values are found in \eref{eq:matrix_population} and the quantities are 
     expressed in \sref{sec:matrix_quantities} or by quadratures 
     \sref{sec:quadratures}.
     
-    Zero-flux boundary conditions require $\phi(\vr) = 0$ for 
+    Zero-flux boundary conditions require $\phi_g(\vr) = 0$ for 
     $\vr \in \partial \Omega$. These are treated by removing these entries from
-    the finite element matrix $\ma$. Entries are removed by using an index 
+    the finite element matrix $\ma_g$. Entries are removed by using an index 
     vector. In a natural system (see mirror boundary conditions above) each node
     corresponds to a row/column of the matrix. With entries removed, node number
     and index number may not exactly agree. A vector \texttt{ID} is introduced
@@ -1192,25 +1191,24 @@
     
   \subsection{Linear System Solution}
     \label{sec:linear_system_solution}
-    For a non-singular linear system $\ma \vu = \vf$, where $\ma$ is a square 
-    matrix, there exists a unique solution. Many strategies have been proposed 
-    to solve this system in an efficient manner. Options are restricted in this
-    work because the solution must operate with a sparsely stored linear 
-    system and result in no fill-in. This immediately demands an iterative 
-    method. The linear system described by the \gls{fem} can then be exploited 
+    For a non-singular linear system $\ma_g \vu_g = \vf_g$, where $\ma_g$ is a 
+    square matrix, there exists a unique solution. Many strategies have been 
+    proposed to solve this system in an efficient manner. Options are restricted
+    in this work because the solution must operate with a sparsely stored linear
+    system and result in no fill-in. This immediately demands an iterative
+    method. The linear system described by the \gls{fem} can then be exploited
     for its unique properties to select a favorable solution method.
     
-    The finite element matrix $\ma$ for the problem described in 
-    \eref{eq:multigroup_source} is \gls{spd} if the
-    multigroup equations are solved one group at a time. Note, the matrix will
-    not have this especially useful property if all the groups were instead 
-    solved simultaneously. Symmetry condition is straight-forward and is 
-    observed in the elemental matrix description \eref{eq:matrix_population}. 
-    Briefly, ${A_{i,j,g,e}=A_{j,i,g,e}}$.
-    Positive definiteness is a particularly useful condition but is often 
-    difficult to prove. $\ma$ is sometimes diagonally dominant for conveniently
-    ordered meshes composed certain elements but generally, the matrix is not 
-    diagonally dominant. 
+    The finite element matrix $\ma_g$ for the problem described in
+    \eref{eq:multigroup_source} is \gls{spd} if the multigroup equations are
+    solved one group at a time as they are in this work. Note, the matrix will 
+    not have this especially useful property if all the groups were instead
+    solved simultaneously. The symmetry condition is straight-forward and is
+    observed in the elemental matrix description \eref{eq:matrix_population}.
+    Briefly, ${A_{i,j,g,e}=A_{j,i,g,e}}$.  Positive definiteness is a
+    particularly useful condition but is often difficult to prove. $\ma_g$ is
+    sometimes diagonally dominant for conveniently ordered meshes composed
+    certain elements but generally, the matrix is not diagonally dominant. 
     
     A matrix $\ma \in \realnn$ is positive definite if
     \begin{equation} \label{eq:positive_definite}
@@ -1247,11 +1245,11 @@
     \end{equation}
     
     A given matrix can be verified as positive definite by one of two methods.
-    First, all eigenvalues of the matrix have positive real components. Second, 
-    the matrix has a Cholesky decomposition such that $\ma = \ml \ml^*$ where 
-    $\ml$ is a lower triangular matrix with positive diagonal entries and 
-    $\ml^*$ is the conjugate transpose of the matrix \cite{textbookipsen}. For 
-    real valued matrices, the conjugate transpose is equivalent to the 
+    First, all eigenvalues of the matrix have positive real components. Second,
+    the matrix has a Cholesky decomposition such that $\ma = \ml \, \ml^*$ where
+    $\ml$ is a lower triangular matrix with positive diagonal entries and
+    $\ml^*$ is the conjugate transpose of the matrix \cite{textbookipsen}. For
+    real valued matrices, the conjugate transpose is equivalent to the
     conventional transpose. Though this may be useful for debugging or numerical
     analysis purposes, these operations are computationally expensive. Instead,
     this is verified here for the general matrix and not tested during
@@ -1259,12 +1257,12 @@
     
     Conventional methods used to solve a linear system described by an \gls{spd}
     matrix include Gauss-Seidel iteration with \gls{sor} and the \gls{cg} Krylov 
-    subspace method. \gls{sor} needs \textit{a priori} knowledge of the 
+    subspace method. \gls{sor} requires \textit{a priori} knowledge of the 
     optimized over-relaxation factor $\omega_{opt}$ for optimal performance. In 
-    practice, this is performed analytically with contrived solutions or in a 
+    practice, this is performed analytically for contrived solutions or in a 
     modified guess-and-check method. The \gls{cg} method is chosen because it 
     requires no \textit{a priori} knowledge and produced a solution to the same 
-    tolerance in a comparable wall-time without the need for guess-and-check 
+    tolerance in a reduced wall-time without the need for guess-and-check 
     iterations.
     
     A simple recipe for the \gls{cg} method is replicated in
