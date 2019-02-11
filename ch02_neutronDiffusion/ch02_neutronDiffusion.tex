@@ -883,9 +883,9 @@
     distinct. The eigenvalues are then numbered in the sequence:
     \begin{equation}
       \label{eq:eigen_order}
-      \mu_0 < \mu_1 < \mu_2 < \cdots < \mu_I
+      \mu_0 < \mu_1 < \mu_2 < \cdots < \mu_N
     \end{equation}
-    where $I$ is the rank of the problem. The eigenvectors have the 
+    where $N$ is the rank of the problem. The eigenvectors have the 
     orthogonality relations:
     \begin{equation}
       \label{eq:eigen_orthogonality}
@@ -895,13 +895,13 @@
     normalized such that:
     \begin{equation}
       \label{eq:eigen_normalization}
-      \vu_n^T \vu_n = 1 \qquad \text{for } n = 1, 2, \ldots, I.
+      \vu_n^T \vu_n = 1 \qquad \text{for } n = 1, 2, \ldots, N.
     \end{equation}
     The initial vector $\vPhi^{(0)}$ may be expressed as a projection onto the
     eigenvectors using a linear superposition of eigenvectors.
     \begin{equation}
       \label{eq:eigen_projection}
-      \vPhi^{(0)} = \sum_{n=1}^{I} c_n^{(0)} \vu_n
+      \vPhi^{(0)} = \sum_{n=1}^{N} c_n^{(0)} \vu_n
     \end{equation}
     where $c_n^{(0)}$ is a coefficient given by the orthogonality relationship
     from \eref{eq:eigen_orthogonality} such that
@@ -920,25 +920,25 @@
     \eref{eq:phi_expand_begin}.
     \begin{align}
       \vPhi^{(s+1)} &= \mu^{(s)} \, \mu^{(s-1)} \, \ldots \, 
-        \mu^{(0)} \sum_{n=1}^I c_n^{(0)} \, \mr \, \vu_n \\
-      &= \left( \prod_{p=0}^{s} \mu^{(p)} \right) \sum_{n=1}^I c_n^{(0)} \, 
+        \mu^{(0)} \sum_{n=1}^N c_n^{(0)} \, \mr \, \vu_n \\
+      &= \left( \prod_{p=0}^{s} \mu^{(p)} \right) \sum_{n=1}^N c_n^{(0)} \, 
         \mr \, \vu_n
     \end{align}
     Recalling the relationship \eref{eq:eigen_projection}
     \begin{equation}
       \label{eq:phi_expand_above}
       \vPhi^{(s+1)} = \left( \prod_{p=0}^s \mu^{(p)} \right) 
-        \sum_{n=1}^I c_n^{(0)} \frac{1}{\mu_n^{(s+1)}} \vu_n
+        \sum_{n=1}^N c_n^{(0)} \frac{1}{\mu_n^{(s+1)}} \vu_n
     \end{equation}
     \eref{eq:phi_expand_above} can be rewritten by dividing and multiplying by
     $\mu_0$ and dividing and multiplying by $c_0$.
     \begin{align}
       \vPhi^{(s+1)} &= \left( \prod_{p=0}^s \frac{\mu^{(p)}}{\mu_0} 
-        \right) c_0 \left( \vu_0 \sum_n^I \frac{c_n^{(0)}}{c_0^{(0)}}
+        \right) c_0 \left( \vu_0 \sum_n^N \frac{c_n^{(0)}}{c_0^{(0)}}
         \frac{\mu_0}{\mu_n^{(s+1)}} \vu_n \right) \\
       \label{eq:eigen_phi_converge}
       \vPhi^{(s+1)} &\approx \text{const.} \left( 
-        \vu_0 \sum_n^I \frac{c_n^{(0)}}{c_0^{(0)}}
+        \vu_0 \sum_n^N \frac{c_n^{(0)}}{c_0^{(0)}}
         \frac{\mu_0}{\mu_n^{(s+1)}} \vu_n \right)
     \end{align}
     The ordering of unique eigenvalues required by \eref{eq:eigen_order} 
@@ -946,7 +946,7 @@
     convergence rate is determined by the dominance ratio, $d$, where
     \begin{equation}
       \label{eq:dominance_ratio}
-      d \equiv \max_{n=1,2,\ldots,I} \frac{\mu_0}{\mu_n} =
+      d \equiv \max_{n=1,2,\ldots,N} \frac{\mu_0}{\mu_n} =
         \frac{\mu_0}{\mu_1}
     \end{equation}
     and it can be seen that for problems with small dominance ratio, the power
@@ -1052,7 +1052,7 @@
       \label{algorithm:general}
       \begin{algorithmic}[1]
       \State Read mesh from VTK.
-      \State Initialize $\phiavg^{(0)}$.
+      \State Initialize $\phiavg_g^{(0)}$.
       \State Order the nodes of the mesh into \gls{rcm} order.
         \label{state:rcm}
       \State Calculate $\Sigma_{s,g'\rightarrow g}$, $\Sigma_{r,g}$, and 
