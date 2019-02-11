@@ -18,7 +18,7 @@
   quadratic elements instead of linear elements could be used to spatially 
   refine the solution. Additionally, coordinates of nodes and elements can be 
   easily updated to reflect physical phenomena, such as thermal expansion (see 
-  \chref{ch:thermalExpansion}).  Finally, material properties are calculated on 
+  \chref{ch:thermalExpansion}). Finally, material properties are calculated on 
   an element basis allowing for detailed updates to the material properties 
   during the calculation.
 
@@ -313,7 +313,7 @@
     where coefficients $\vu = \{\upsilon_{g,i}\}$ are unknown and will be 
     determined and $DOF$ is the total number degrees of freedom of the problem. 
     Typically $DOF$ is the number of nodes minus any nodes for which the flux is 
-    fixed (e.g. zero-flux nodes).  Typically, these basis functions have unit 
+    fixed (e.g. zero-flux nodes). Typically, these basis functions have unit 
     magnitude and are centered at the node  points so the coefficients 
     $\upsilon_i$ are the approximated solution at the nodes. It is also 
     convenient for basis functions to have compact support. That is, basis 
@@ -322,7 +322,7 @@
     basis functions have unit value on a single mesh node and are zero on all
     other mesh nodes. Basis functions are typically piecewise continuous 
     polynomials of arbitrary degree. For selected elements, basis functions will
-    be defined explicitly in \sref{sec:matrix_quantities}.  Linear and quadratic
+    be defined explicitly in \sref{sec:matrix_quantities}. Linear and quadratic
     polynomials are common but for the work presented here, only linear
     basis functions are explored.
 
@@ -419,7 +419,7 @@
     Note that the contribution due to the surface integral will be zero in 
     elements not on the problem boundary and may also be zero for problems with
     select boundary conditions. See \sref{sec:boundary_conditions} for boundary
-    condition discussion.  The population of the vector $\vf$ is done similarly
+    condition discussion. The population of the vector $\vf$ is done similarly
     in an element-by-element fashion. Then, the matrix $\ma$ and the vector 
     $\vf$ are known for each energy group. The equations are solved for one
     energy group at a time and $\phi_g$ is calculated and stored. The matrix
@@ -612,7 +612,7 @@
       
       $A_{\Delta}$ is computed according to \eref{eq:area_triangle} and
       $A_{\Box}$ is computed as the sum of the area of two triangles, employing
-      the same formula.  For a simple extruded triangle, the volume calculation 
+      the same formula. For a simple extruded triangle, the volume calculation 
       is straightforward and is the product of triangular area and linear 
       height. However, allowing the nodes to move with respect to each other 
       makes the volume of the element difficult to calculate. Therefore, the 
@@ -664,7 +664,7 @@
 
     \begin{table}
       \begin{center}
-        \caption{Quadrature Orders for \gls{fem} Quantities.}
+        \caption{Quadrature Orders for \glsentryshort{fem} Quantities.}
         \label{tab:quadrature_orders}
         \begin{threeparttable}
           \begin{tabular}{lccc}
@@ -815,7 +815,7 @@
   The \gls{fem} is used to solve a fixed source problem for a given source
   distribution $q_g(\vr)$. However, for multigroup problems with a fission 
   source, the problem is an eigenvalue problem and the source is not known a 
-  priori.  For eigenvalue problems, the problem is also not a fixed-source 
+  priori. For eigenvalue problems, the problem is also not a fixed-source 
   problem and has many solutions. The method of Power Iterations allows 
   eigenvalue problems to be solved iteratively for the fundamental eigenvalue 
   and eigenvector.
@@ -944,7 +944,7 @@
         \frac{\mu_0}{\mu_n^{(s+1)}} \vu_n \right)
     \end{align}
     The ordering of unique eigenvalues required by \eref{eq:eigen_order} 
-    requires $\mu_0 / \mu_n < 1$ and the problem is convergent.  The 
+    requires $\mu_0 / \mu_n < 1$ and the problem is convergent. The 
     convergence rate is determined by the dominance ratio, $d$, where
     \begin{equation}
       \label{eq:dominance_ratio}
@@ -1024,7 +1024,7 @@
     \algorithmref{algorithm:general}. The steps unique to the \gls{fem} are 
     steps \ref{state:fem_matrix} and \ref{state:fem_vector}. These require the 
     quantities previously derived and form the linear system described by the 
-    \gls{fem}.  
+    \gls{fem}. 
     In step \ref{state:rcm} the matrix is reordered. Mathematically this has no
     effect on the result as the linear system represented is equivalent. This 
     choice to reorder the system is made to improve computational efficiency. 

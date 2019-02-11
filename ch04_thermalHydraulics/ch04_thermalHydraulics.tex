@@ -2,7 +2,7 @@
 \label{ch:thermalHydraulics}
 
 \section{Introduction}
-  Material temperatures and densities are a pivotal part of the multi-physics 
+  Material temperatures and densities are a pivotal part of the multiphysics 
   problem of simulating a fast reactor. Temperatures are necessary for
   calculating reactor cross-sections for an accurate power distribution and can
   be used as input for a thermal hydraulic simulation. Thermal hydraulic models
@@ -13,7 +13,7 @@
   In this simulation, two thermal hydraulic models are employed. The first is a 
   steady-state, one-dimensional, axial heat convection model to calculate bulk
   coolant temperatures and densities as the coolant flows vertically through a 
-  channel.  This model is valid for the assumption of no cross-flow between 
+  channel. This model is valid for the assumption of no cross-flow between 
   channels and perfect fluid mixing within the flow channel. These assumptions 
   are valid for simulating fast reactors with canned assemblies and assembly 
   designs which encourage within-assembly mixing. Hexagonal assemblies, as 
@@ -180,8 +180,7 @@
     \begin{figure}
       \centering
       \includegraphics[width=0.7\textwidth]{chunk_description}
-      \caption{Progression of Element (left), to Chunk (center), to Channel
-        (right).}
+      \caption{Progression of Element, to Chunk, to Channel.}
       \label{fig:chunk_description}
     \end{figure}
     
@@ -194,7 +193,7 @@
 
   \subsection{Channel Mass Flow}
     The channel mass flow, $\mdot_i$, must be calculated given a user 
-    specified total reactor inlet mass flow rate $\mdot_{Rx}$.  Mass flow is 
+    specified total reactor inlet mass flow rate $\mdot_{Rx}$. Mass flow is 
     partitioned into each channel assuming constant mass flux at the reactor 
     inlet according to 
     \begin{equation}
@@ -245,7 +244,7 @@
     $q'_i(z)$ is the linear heat generation rate for channel $i$ at elevation 
     $z$. $h_{in}$ is related to a user specified coolant inlet temperature,
     $T_{inlet}$, by a state relationship for the coolant 
-    $h_{in} = h(T_{inlet})$.  
+    $h_{in} = h(T_{inlet})$. 
 
     The integral in \eref{eq:continuous_heat_balance} can be discretized along
     the channel and converted to a summation. In this discretization, the model
@@ -808,7 +807,7 @@
 
       To calculate more accurate fuel cross-sections, an effective fuel 
       temperature should be used which weights the fuel surface temperature 
-      higher than the average value.  Due to self-shielding in the fuel, the 
+      higher than the average value. Due to self-shielding in the fuel, the 
       temperature corresponding to the average neutron flux is nearer to the 
       surface of the fuel as neutron flux decreases significantly within the 
       fuel material itself. For the purposes of this model, the use of volume 
@@ -1129,7 +1128,7 @@
             \units{$\frac{\text{W}}{\text{m}^3}$} \\
           $\mdot$     & 68.56  &\units{$\frac{\text{kg}}{\text{s}}$} \\
           %$k_F$       & 36.82  &\units{$\frac{\text{W}}{\text{m K}}$} \\
-          $T_{inlet}$ & 400.   &\units{K} \\
+          $T_{inlet}$ & 400. &\units{K} \\
           $h_{in}$    & 246.62 &\units{$\frac{\text{kJ}}{\text{kg}}$} \\
           $H$         & 1.2    &\units{m} \\
           $R_F$       & 0.27051 & \units{cm} \\
