@@ -1025,6 +1025,7 @@
     steps \ref{state:fem_matrix} and \ref{state:fem_vector}. These require the 
     quantities previously derived and form the linear system described by the 
     \gls{fem}. 
+
     In step \ref{state:rcm} the matrix is reordered. Mathematically this has no
     effect on the result as the linear system represented is equivalent. This 
     choice to reorder the system is made to improve computational efficiency. 
@@ -1035,7 +1036,19 @@
     seeks to decrease the bandwidth of the matrix and encourage cache hits when
     accessing coupled values in the linear system. The ordering chosen is the
     \gls{rcm} method and common to sparse linear systems
-    \cite{rcm}.
+    \cite{rcm}. An example of the bandwidth reduction provided by the \gls{rcm}
+    algorithm is shown in \fref{fig:sparsity_pattern}. The plots show the
+    sparsity pattern of the matrix before and after reordering. After
+    reordering, the matrix bandwidth is reduced from 2,326 to 81.
+
+    \begin{figure}
+      \centering
+      \subfloat{\includegraphics[width=0.4\textwidth]{uno_pattern}}
+      \hspace{0.1in}
+      \subfloat{\includegraphics[width=0.4\textwidth]{rcm_pattern}}
+      \caption{Demonstration of \glsentryshort{rcm} Matrix Ordering.}
+      \label{fig:sparsity_pattern}
+    \end{figure}
     
     \begin{algorithm}
       \caption{General Iteration Scheme}
