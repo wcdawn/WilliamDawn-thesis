@@ -187,7 +187,7 @@
     \label{eq:tf_bar}
     \overline{T_F} = T_0 - \frac{q'''_{i,k}}{8 \overline{k_F}} R_F^2
   \end{equation}
-  $\overline{T_F}$ is used to calculate fuel cross-sections. Due to
+  $\overline{T_F}$ is used to calculate fuel cross sections. Due to
   self-shielding in the fuel, an effective fuel temperature would weight the
   surface temperature more.
 \end{frame}
@@ -229,38 +229,38 @@
       \end{figure}
 \end{frame}
 
-%\begin{frame}{Cross-Section Treatment}
+%\begin{frame}{Cross Section Treatment}
 %  \begin{itemize}
-%    \item Cross-sections are now unique to each chunk because temperatures are
+%    \item Cross sections are now unique to each chunk because temperatures are
 %      unique to each chunk.
 %    \item Coolant. 
 %      \begin{itemize}
-%        \item Number density and microscopic cross-sections are functionalized 
+%        \item Number density and microscopic cross sections are functionalized 
 %          and updated based on $T_{\infty,i,k}$.
 %        \item Linear interpolation for cross sections.
 %      \end{itemize}
 %    \item Clad. 
 %      \begin{itemize}
-%        \item Macroscopic cross-section updated based on $\overline{T_{C,i,k}}$.
+%        \item Macroscopic cross section updated based on $\overline{T_{C,i,k}}$.
 %        \item Linear interpolation.
 %      \end{itemize}
 %    \item Bond.
 %      \begin{itemize}
-%        \item Assumed to have the same macroscopic cross-section as coolant.
+%        \item Assumed to have the same macroscopic cross section as coolant.
 %        \item Represents a small volume.
 %        \item Consistent with homogenization approximation.
 %      \end{itemize}
 %    \item Fuel.
 %      \begin{itemize}
-%        \item Macroscopic cross-section update based on $\overline{T_{F,i,k}}$.
+%        \item Macroscopic cross section update based on $\overline{T_{F,i,k}}$.
 %        \item Square-root interpolation due to Doppler effect.
 %      \end{itemize}
 %  \end{itemize}
 %\end{frame}
 
-\begin{frame}{Cross-Section Treatment -- Coolant}
+\begin{frame}{Cross Section Treatment -- Coolant}
   \begin{itemize}
-    \item Number density and microscopic cross-sections are functionalized 
+    \item Number density and microscopic cross sections are functionalized 
       and updated based on $T_{\infty,i,k}$.
     \item Linear interpolation for cross sections.
   \end{itemize}
@@ -272,7 +272,7 @@
     N_{Na}(T) &= \frac{\rho_{Na}(T) \, N_A}{M_{Na}}
   \end{align}
 
-  Microscopic cross-section functionalization for ${T_{n} < T_{\infty,i,k} <
+  Microscopic cross section functionalization for ${T_{n} < T_{\infty,i,k} <
   T_{n+1}}$.
   \begin{equation}
     \label{eq:xs_cool}
@@ -282,13 +282,13 @@
   \end{equation}
 \end{frame}
 
-\begin{frame}{Cross-Section Treatment -- Clad}
+\begin{frame}{Cross Section Treatment -- Clad}
   \begin{itemize}
-    \item Macroscopic cross-section updated based on $\overline{T_{C,i,k}}$.
+    \item Macroscopic cross section updated based on $\overline{T_{C,i,k}}$.
     \item Linear interpolation.
   \end{itemize}
 
-  Macroscopic cross-section functionalization for ${T_n < \overline{T_{C,i,k}} <
+  Macroscopic cross section functionalization for ${T_n < \overline{T_{C,i,k}} <
   T_{n+1}}$.
   \begin{equation}
     \label{eq:xs_linear_interpolation}
@@ -298,9 +298,9 @@
   \end{equation}
 \end{frame}
 
-\begin{frame}{Cross-Section Treatment -- Bond}
+\begin{frame}{Cross Section Treatment -- Bond}
   \begin{itemize}
-    \item Assumed to have the same macroscopic cross-section as coolant.
+    \item Assumed to have the same macroscopic cross section as coolant.
     \item Represents a small volume.
     \item Consistent with homogenization approximation.
   \end{itemize}
@@ -308,11 +308,11 @@
 
 \begin{frame}{Cross-section Treatment -- Fuel}
   \begin{itemize}
-    \item Macroscopic cross-section update based on $\overline{T_{F,i,k}}$.
+    \item Macroscopic cross section update based on $\overline{T_{F,i,k}}$.
     \item Square-root interpolation due to Doppler effect.
   \end{itemize}
 
-  Macroscopic cross-section functionalization for ${T_n < \overline{T_{F,i,k}} <
+  Macroscopic cross section functionalization for ${T_n < \overline{T_{F,i,k}} <
   T_{n+1}}$.
   \begin{equation}
     \Sigma_{x,i,k,g} = 

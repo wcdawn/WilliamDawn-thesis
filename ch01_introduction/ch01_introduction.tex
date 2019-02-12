@@ -14,11 +14,11 @@
   
 
   Nuclear reactor simulations are inherently multiphysics simulations. For
-  example, neutron reaction probabilities are described by cross-sections.
-  Neutron cross-sections are dependent on material temperatures and densities,
+  example, neutron reaction probabilities are described by cross sections.
+  Neutron cross sections are dependent on material temperatures and densities,
   both of which vary over the operating range of a nuclear power reactor. As
   reactor power changes, material temperatures and densities change, therefore
-  cross-sections change and affect the reactor power. The multiphysics nature
+  cross sections change and affect the reactor power. The multiphysics nature
   of the reactor necessitate a simulation of the power distribution within the
   reactor as well as all feedback effects which will be modeled. 
   
@@ -46,7 +46,7 @@
 \section{Geometry Description}
   \label{sec:geometry_description}
   The high-energy neutron spectra inherent to fast reactors results in
-  relatively small neutron cross-sections.  To compensate for this fact, fast
+  relatively small neutron cross sections.  To compensate for this fact, fast
   reactors are typically designed with hexagonal, triangularly pitched, fuel
   assemblies to maximize fuel packing.  An example of a fast reactor with
   hexagonal fuel assemblies is shown in \fref{fig:reactor_materials}.
@@ -61,13 +61,13 @@
   \begin{figure}
     \centering
     \includegraphics[width=0.5\textwidth]{prism_hex}
-    \caption{Example of Fast Reactor Fuel Assembly Cross-section.}
+    \caption{Example of Fast Reactor Fuel Assembly Cross Section.}
     \label{fig:prism_hex}
   \end{figure}
 
   A cross-sectional representation of a hexagonal assembly, is shown in
   \fref{fig:prism_hex}.  This geometry is used to describe material properties
-  such as neutron cross-sections and is also used to describe coolant flow
+  such as neutron cross sections and is also used to describe coolant flow
   geometries.  Dimensions of assemblies are measured at room temperature and
   will later be expanded according to the thermal expansion model in
   \chref{ch:thermalExpansion}.
@@ -109,7 +109,7 @@
   Calculating the areas as above allows for calculation of cross-sectional area
   fractions. Assuming constant dimensions in the axial direction, these area
   fractions are equivalent to volume fractions and are useful for neutron
-  cross-section homogenization. Additionally, these formulae allow for thermal
+  cross section homogenization. Additionally, these formulae allow for thermal
   expansion as the liquid sodium in the bond and the liquid coolant are allowed
   to vary to allow for the expansion of other materials.
 
@@ -127,7 +127,7 @@
     \label{fig:hex_can}
   \end{figure}
 
-\section{Cross-Section Treatment}
+\section{Cross Section Treatment}
   \label{sec:cross_section_treatment}
   Reactor materials are ``smeared'' into homogeneous regions. This treatment is
   common to fast reactors because of the relatively large neutron
@@ -138,14 +138,14 @@
   includes cladding, wire wrap, and assembly can. These four regions are then
   homogenized into a hexagonal assembly.
 
-  For realistic reactor simulations cross-sections generated consistently with
+  For realistic reactor simulations cross sections generated consistently with
   the homogenization assumption. In this work, work, multigroup microscopic
-  cross-sections are generated using the computer program \mcc \cite{mcc}.  The
-  cross-section generator uses 2,082 fine energy groups to collapse down to an
+  cross sections are generated using the computer program \mcc \cite{mcc}.  The
+  cross section generator uses 2,082 fine energy groups to collapse down to an
   arbitrary number of energy-groups. For this simulation, the recommended and
   default 33-group energy structure is used. \mcc solves the
   infinite-homogeneous neutron transport equation for isotopic number densities
-  as input by the user.  Cross-sections for each assembly type are generated
+  as input by the user.  Cross sections for each assembly type are generated
   separately to accurately simulate the neutron energy spectrum within the
   assembly. This procedure results in a unique material cross sections for each
   assembly type. For example, each assembly type contains steel; therefore,
@@ -155,21 +155,21 @@
   assemblies or reflector assemblies, the default \isotope[238]{U} fission
   spectrum is assumed.
 
-  Cross-section libraries are generated for several different temperatures to
-  capture temperature-dependent cross-section effects. These libraries are then
-  used during the simulation to calculate cross-sections as a function of
+  Cross section libraries are generated for several different temperatures to
+  capture temperature-dependent cross section effects. These libraries are then
+  used during the simulation to calculate cross sections as a function of
   material temperatures.  The fuel, clad, and coolant temperatures in a
   simulated reactor can be calculated with a thermal hydraulic model (see
   \chref{ch:thermalHydraulics}), these relationships are functions of reactor
   power and coolant mass flow rate. These parameters are not known before the
   simulation for a general reactor. Instead, a simplified one-dimensional,
-  single-channel model is used to estimate temperatures for cross-section
+  single-channel model is used to estimate temperatures for cross section
   library generation. This model is based on the axial convection and radial
   conduction models in \chref{ch:thermalHydraulics}. Temperatures from the model
   are given in \tref{tab:xstemps}.
 
   \begin{table}
-    \caption{Temperatures Selected for Cross-section Libraries.}
+    \caption{Temperatures Selected for Cross Section Libraries.}
     \label{tab:xstemps}
     \begin{center}
       \begin{tabular}{crrr}
@@ -193,10 +193,10 @@
   libraries.
 
   For each material region, average macroscopic cross
-  sections are calculated using microscopic cross-sections from \mcc and  
+  sections are calculated using microscopic cross sections from \mcc and  
   user-input number densities. Allow $N_{i,j}$ to be the number density for
   isotope ${j=1,2,\ldots,N_{iso}}$ in region ${i=1,2,\ldots,N_{reg}}$.
-  Then, the macroscopic cross-section for the $x$ reaction type in a homogenized
+  Then, the macroscopic cross section for the $x$ reaction type in a homogenized
   hexagonal assembly is defined as
   \begin{equation}
     \Sigma_{x,g}^r = \frac{\sum_{i=1}^{N_{reg}} \sum_{j=1}^{N_{iso}} V_i N_{j} 
@@ -223,7 +223,7 @@
 
   \chref{ch:thermalHydraulics} presents the formulation of axial heat convection
   and radial heat conduction models for a typical fast reactor. These models are 
-  used to calculate material temperatures and update cross-sections for the 
+  used to calculate material temperatures and update cross sections for the 
   simulation. Results of the numerical model are compared to analytical models 
   and example material temperatures are shown.
 

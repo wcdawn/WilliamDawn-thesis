@@ -39,7 +39,7 @@
     \label{eq:infnorm}
     \|\ve\|_{\infty} &= \max_{i=1,2,\ldots,N} \lvert e_i \rvert \\
     \label{eq:keff_err}
-    \keff \; \text{ error } \units{pcm} &= (\kref - \keff) \times 10^5
+    \keff \; \text{ error } \units{\glsentryshort{pcm}} &= (\kref - \keff) \times 10^5
   \end{align}
   The order is second-order spatially convergent.
   \begin{equation}
@@ -85,7 +85,7 @@
       \resizebox{\textwidth}{!}{
       \begin{tabular}{cccccccccc}
         \toprule
-        Refine & $\keff$ & $\keff$ error \units{pcm} & $\keff$ ratio & 
+        Refine & $\keff$ & $\keff$ error \units{\glsentryshort{pcm}} & $\keff$ ratio & 
           \gls{rms} & \gls{rms} ratio  & $\|e\|_{\infty}$ & 
           $\|e\|_{\infty}$ ratio \\
         \midrule
@@ -118,6 +118,7 @@
 \end{frame}
 
 \begin{frame}{Three-Dimension, One-Group, Finite Cylinder}
+
   \begin{table}
     %\caption{Finite Cylinder Convergence Study Results.}
     \label{tab:finite_cyl}
@@ -126,23 +127,14 @@
       \begin{threeparttable}
       \begin{tabular}{cccccccccc}
         \toprule
-        Refine & $\keff$ & $\keff$ error \units{pcm} & $\keff$ ratio & \gls{rms} & 
+        Refine & $\keff$ & $\keff$ error \units{\glsentryshort{pcm}} & $\keff$ ratio & \gls{rms} & 
           \gls{rms} ratio  & $\|e\|_{\infty}$ & $\|e\|_{\infty}$ ratio \\
         \midrule
-
         0     &0.895108&10160.26&4.18   &5.34E-02&2.57     &2.12E-01&1.62\\
         1     &0.972412&2429.90 &4.16   &2.07E-02&3.19     &1.31E-01&4.65\\
         2\tnote{$\dagger$}     &0.990870&584.06  &3.90   &6.50E-03&1.85     &2.81E-02&1.79\\
         3     &0.995215&149.61  &3.99   &3.51E-03&9.22     &1.57E-02&8.28\\
         4     &0.996336&37.48   &       &3.81E-04&         &1.90E-03&    \\
-
-        %\csvreader[
-        %  late after line=\\,
-        %  late after last line=\\,]
-        %  {../ch03_diffusionResults/data/finite_cyl.csv}{}
-        %  {\csvcoli & \csvcolii & \csvcoliii & \csvcoliv & \csvcolv & 
-        %  \csvcolvi & \csvcolxi & \csvcolxii}
-
         Ref. & 0.996711 \\
         \bottomrule
       \end{tabular}
@@ -156,7 +148,9 @@
     }
     \end{center}
   \end{table}
+
   \vspace{-0.2in}
+
   \begin{figure}
     \centering
     \subfloat{\includegraphics[width=0.35\textwidth]{cir0}}
@@ -165,7 +159,9 @@
     %\caption{Mesh Refinement of Curved Mesh.}
     \label{fig:circle_meshes}
   \end{figure}
+
   \vspace{-0.2in}
+
   \begin{equation}
     \label{eq:analytic_finite_cyl}
     \phi(r,z) = \phi_0 \, 
@@ -226,7 +222,7 @@
       \begin{threeparttable}
         \begin{tabular}{cccc}
           \toprule
-          Refine & $\keff$ & $\keff$ error \units{pcm} \\
+          Refine & $\keff$ & $\keff$ error \units{\glsentryshort{pcm}} \\
           \midrule
           \csvreader[
             late after line=\\,

@@ -19,11 +19,11 @@
   cross sections are common to the field and noted below.
   \begin{conditions} % custom environment designed for this purpose
     D_g    & diffusion coefficient for energy group $g$ \units{cm}, \\
-    \Sigma_{r,g} & macroscopic removal cross-section for energy group $g$ 
+    \Sigma_{r,g} & macroscopic removal cross section for energy group $g$ 
       \units{$\frac{1}{\text{cm}}$}, \\
     \nu \Sigma_{f,g} & number of fission neutrons times microscopic fission
-      cross-section in energy group $g$ \units{$\frac{1}{\text{cm}}$}, \\
-    \Sigma_{s,g' \rightarrow g} & macroscopic scatter cross-section from
+      cross section in energy group $g$ \units{$\frac{1}{\text{cm}}$}, \\
+    \Sigma_{s,g' \rightarrow g} & macroscopic scatter cross section from
       energy group $g'$ to energy group $g$ \units{$\frac{1}{\text{cm}}$}, \\
     \chi_g & effective fission spectrum for energy group $g$,\\
     \keff & effective neutron multiplication factor.
@@ -40,19 +40,18 @@
   
   \subsection{VVER440}
     \label{sec:vver440}
-    This benchmark is presented with solution by Chao and Shatilla
-    \cite{chao}. The problem is
-    one-twelfth of a VVER-440 reactor with seven control rods inserted. There
-    are 25 assemblies across the core diameter. The last ring of assemblies at
-    the core periphery are non-fissile reflector assemblies as shown in 
-    \fref{fig:vver440_geom}. Each assembly
-    has a flat-to-flat measurement of 14.7 \units{cm}. Vacuum boundary
-    condition ($\albedo = 0.5$) is applied on the core periphery and all other
-    boundaries are mirror boundary conditions ($\grad \phi \cdot \nhat = 0$). To 
-    the precision of the benchmark, the effective neutron multiplication factor 
-    is $\keff = 1.00970$. Cross sections for the problem are given in
-    \tref{tab:vver440xs}. The fission spectrum is given in
-    \tref{tab:vver440chi}. Assembly powers are given in \fref{fig:vver440_geom}.
+    This benchmark is presented with solution by Chao and Shatilla \cite{chao}.
+    The problem is one-twelfth of a VVER-440 reactor with seven control rods
+    inserted. There are 25 assemblies across the core diameter. The last ring of
+    assemblies at the core periphery are non-fissile reflector assemblies as
+    shown in \fref{fig:vver440_geom}. Each assembly has a flat-to-flat
+    measurement of 14.7 \units{cm}. Vacuum boundary condition ($\albedo = 0.5$)
+    is applied on the core periphery and all other boundaries are mirror
+    boundary conditions ($\grad \phi \cdot \nhat = 0$). To the precision of the
+    benchmark, the effective neutron multiplication factor is $\keff = 1.00970$.
+    Cross sections for the problem are given in \tref{tab:vver440xs}. The
+    fission spectrum is given in \tref{tab:vver440chi}. Assembly powers are
+    given in \fref{fig:vver440_geom}.
 
     \begin{figure}
       \centering

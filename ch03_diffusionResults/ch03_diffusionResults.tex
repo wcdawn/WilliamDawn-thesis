@@ -40,7 +40,7 @@
 \section{Error Analysis}
   For all benchmark and analytic problems solved, a convergence study is 
   presented. Define an error vector $\ve = \phi(\vr) - \phi_{FEM}$ where
-  $\phi_{FEM}$ is the solution to the finite element system of equations. Then, 
+  $\phi_{FEM}$ is the solution to the \gls{fem} system of equations. Then, 
   error is considered in terms of both \gls{rms} error calculated as 
   \begin{equation} 
     \label{eq:rms}
@@ -69,41 +69,46 @@
   
   Mesh refinement studies are presented herein. For each refinement, $h$ is 
   halved by introducing new elements and placing new nodes at the midway point
-  between existing nodes. Then, let $i$ be the refinement index and the
-  refinement ratio for a second-order convergent method is 
+  between existing nodes. Let $i$ be the refinement index and the refinement 
+  ratio for a second-order convergent method is 
   \begin{equation}
     4 = \frac{x^{(i-1)}}{x^{(i)}}
   \end{equation}
   such that for some quantity $x$, the error should theoretically decrease by a
   factor of four for each refinement. As these are numerical solutions, the 
   ratio rarely equals exactly four. It is observed that a few refinements are 
-  often necessary before the ratio approaches the expected value. This is 
-  especially the case when the second derivative is not bounded in problems with 
-  heterogeneous materials.
-  
-  For benchmark problems, only $\keff$ is analyzed and expected to converge
-  at the appropriate rate because the neutron flux solution is not known 
-  exactly. When assembly powers were available, these are also
-  presented graphically. In the graphical power representation, the key is 
-  presented in \fref{fig:hex_description}.
-
-  \begin{figure}
-    \centering
-    \includegraphics[width=0.2\textwidth]{hex_description}
-    \caption{Key for Hexagonal Power Plots.}
-    \label{fig:hex_description}
-  \end{figure}
+  often necessary before the convergence reaches the asymptotic regime and the 
+  ratio approaches the expected value. This is especially the case when the 
+  second derivative is not bounded in problems with heterogeneous materials.
   
   For analytic solutions, the error of the function $\phi$ itself can be 
   analyzed because the solution is known exactly. The derivations of the exact 
-  solutions are presented in \apref{ap:analyticSolutions}. 
+  solutions are presented in \apref{ap:analyticSolutions}. Both RMS errors and
+  maximal errors are presented. It is observed that the RMS error refinement
+  ratio approaches the expected value of four before the maximal error
+  refinement ratio because the RMS error is an integral quantity over the
+  problem domain whereas the maximal error is a point-wise quantity.
+
   For analytic criticality  problems, $\keff$ is also presented and the ratio 
-  between refinements should assume the expected rate. $\keff$ error is 
-  calculated with \eref{eq:keff_err} in units of Percent Mille, \units{pcm}.
+  between refinements should assume the expected rate. Though the convergence is
+  defined in \eref{eq:error_bound} is for the flux itself, it can be shown that
+  for physical cross sections (positive, bounded, and non-zero), $\keff$ will 
+  converge at the same rate.  $\keff$ error is calculated with 
+  \eref{eq:keff_err} in units of percent-mille \units{\glsentryshort{pcm}}.
   \begin{equation}
     \label{eq:keff_err}
-    \keff \; \text{ error } \units{pcm} = (\kref - \keff) \times 10^5
+    \keff \; \text{ error } \units{\glsentryshort{pcm}} = (\kref - \keff) \times 10^5
   \end{equation}
+
+  For benchmark problems, only $\keff$ is analyzed and expected to converge
+  at approximately the appropriate rate because the neutron flux solution is not 
+  known exactly. However, the magnitude of the error and the convergence rate
+  will both be influenced by the quality of the benchmark. For example, a
+  benchmark that specifies $\keff$ to only a few significant figures cannot be 
+  expected to converge to an error smaller than the least significant digit. 
+  When assembly powers were available, these are also presented graphically. 
+  % this is used to put the key over top of figures. really hacky.
+  \def\Put(#1,#2)#3{\leavevmode\makebox(0,0){\put(#1,#2){#3}}}
 
 \section{Analytic Solutions}
   As a demonstration of the proper implementation of and solution to the 
@@ -119,11 +124,11 @@
 
   \subsection{One-Dimension, One-Group, Fixed Source}
     \label{sec:1dfixedsrc}
-    Arguably the simplest solution to the neutron diffusion equation, this 
-    problem  solves a domain $x \in [0,1]$ for a fixed unit source throughout
-    the  problem. The exact solution is derived in \sref{sec:deriv_1dfixedsrc}
-    and is presented in \eref{eq:analytic_1dfixedsrc}. Results 
-    from the convergence study are presented in \tref{tab:1dfixedsrc}.
+    Arguably the simplest solution to the neutron diffusion equation, this
+    problem consists of a fixed unit source throughout the  problem. The exact 
+    solution is derived in \sref{sec:deriv_1dfixedsrc} and is presented in
+    \eref{eq:analytic_1dfixedsrc}. Results from the convergence study are
+    presented in \tref{tab:1dfixedsrc}.
 
     \begin{table}
       \caption{One-Dimension, One-Group, Fixed Source Convergence Study 
@@ -146,13 +151,12 @@
 
   \subsection{One-Dimension, One-Group, Criticality}
     \label{sec:1d1g}
-    This problem tests the calculation of the source term and the general 
-    power iteration implementation in the solution method. This problem solves
-    a fissile material in the domain $x \in [0,100]$.
-    The exact solution is derived in \sref{sec:deriv_1d1g} and
-    presented in \eref{eq:analytic_1d1g}. Results from
-    the convergence study are presented in \tref{tab:1d1g}. The exact value 
-    for the effective multiplication factor is $\kref = 1.998028$.
+    This problem tests the calculation of the source term and the general power
+    iteration implementation in the solution method.  The exact solution is
+    derived in \sref{sec:deriv_1d1g} and presented in \eref{eq:analytic_1d1g}.
+    Results from the convergence study are presented in \tref{tab:1d1g}. The
+    exact value for the effective multiplication factor is $\kref = 1.998028$.
+
     \begin{table}
       \caption{One-Dimension, One-Group, Criticality Convergence Study
         Results.}
@@ -160,7 +164,7 @@
       \begin{center}
         \begin{tabular}{cccccccccc}
           \toprule
-          Refine & $\keff$ & $\keff$ error \units{pcm} & $\keff$ ratio & \gls{rms} & 
+          Refine & $\keff$ & $\keff$ error \units{\glsentryshort{pcm}} & $\keff$ ratio & \gls{rms} & 
             \gls{rms} ratio  & $\|e\|_{\infty}$ & $\|e\|_{\infty}$ ratio \\
           \midrule
           \csvreader[
@@ -176,11 +180,12 @@
     \end{table}
 
   \subsection{Two-Dimension, One-Group, Criticality}
-    This problem tests the ability to solve truly two-dimensional problems.
-    The exact solution is derived in \sref{sec:deriv_2d1g} and
-    presented in \eref{eq:analytic_2d1g}. Results from
-    the convergence study are presented in \tref{tab:2d1g}. The exact value 
-    for the effective multiplication factor is $\kref = 1.996060$.
+    This problem tests the ability to solve truly two-dimensional problems. The
+    exact solution is derived in \sref{sec:deriv_2d1g} and presented in
+    \eref{eq:analytic_2d1g}. Results from the convergence study are presented in
+    \tref{tab:2d1g}. The exact value for the effective multiplication factor is
+    $\kref = 1.996060$.
+
     \begin{table}
       \caption{Two-Dimension, One-Group, Criticality Convergence Study
         Results.}
@@ -204,15 +209,21 @@
     \end{table}
 
   \subsection{One-Dimension, Two-Group, Criticality }
+
     This problem tests the solution of multigroup problems. The results 
     presented are the convergence of $\keff$ and the convergence of the ratio
-    of relative magnitude of thermal to fast flux $\phi_2/\phi_1$.
+    of relative magnitude of thermal to fast flux $\phi_2/\phi_1$. A proof is
+    not provided that the relative magnitude should observe the expected
+    convergence rate. However, the method is second-order convergent and the
+    expected convergence rate is, in fact, observed.
+
     The exact solutions are derived in \sref{sec:deriv_1d2g} and
     the solutions are presented in \eref{eq:1d2g_1} and
     \eref{eq:1d2g_2}. Results from the convergence study are presented in 
     \tref{tab:1d2g}. The exact value for the effective multiplication factor 
     is $\kref = 0.892349$ and the exact value for the relative flux ratio
     is $(\phi_2/\phi_1)_{ref} = 0.261324$.
+
     \begin{table}
       \caption{One-Dimension, Two-Group, Criticality Convergence Study
         Results.}
@@ -220,7 +231,7 @@
       \begin{center}
         \begin{tabular}{ccccccc}
           \toprule
-          Refine & $\keff$ & $\keff$ error \units{pcm} & $\keff$ ratio & 
+          Refine & $\keff$ & $\keff$ error \units{\glsentryshort{pcm}} & $\keff$ ratio & 
             $\phi_2/\phi_1$ & $\phi_2/\phi_1$ error & $\phi_2/\phi_1$ ratio \\
           \midrule
           \csvreader[
@@ -237,10 +248,19 @@
 
   \subsection{One-Dimension, One-Group, Two-Region, Criticality}
     This problem tests the mapping of materials to regions within the problem.
-    The exact solution is derived in \sref{sec:deriv_2reg} and
-    presented in \eref{eq:analytic_2reg}. Results from
-    the convergence study are presented in \tref{tab:2reg}. The exact value 
-    for the effective multiplication factor is $\kref = 0.962188$.
+    The exact solution is derived in \sref{sec:deriv_2reg} and presented in
+    \eref{eq:analytic_2reg}. Results from the convergence study are presented in
+    \tref{tab:2reg}. The exact value for the effective multiplication factor is
+    $\kref = 0.962188$. The results in \tref{tab:2reg} show that the convergence
+    of $\keff$ quickly achieves the expected convergence ratio of four. However,
+    the RMS error and maximal errors do not appear to be approaching four
+    quickly. This is attributed to the nature of the problem. Recall the
+    statement of the convergence order required a bounded second 
+    derivative of the flux as in \eref{eq:error_bound}. The second derivative of
+    the flux in this problem is unbounded due to the material discontinuity. It
+    is observed that the maximal error occurs at the change of material
+    properties.
+
     \begin{table}
       \caption{One-Dimension, One-Group, Two-Region, Criticality Convergence
         Study Results.}
@@ -248,7 +268,7 @@
       \begin{center}
         \begin{tabular}{cccccccccc}
           \toprule
-          Refine & $\keff$ & $\keff$ error \units{pcm} & $\keff$ ratio & \gls{rms} & 
+          Refine & $\keff$ & $\keff$ error \units{\glsentryshort{pcm}} & $\keff$ ratio & \gls{rms} & 
             \gls{rms} ratio  & $\|e\|_{\infty}$ & $\|e\|_{\infty}$ ratio \\
           \midrule
           \csvreader[
@@ -264,31 +284,69 @@
     \end{table}
 
   \subsection{Three-Dimension, One-Group, Finite Cylinder}
-    This problem is a finite cylinder with zero-flux
-    boundary conditions. The cylinder is three-dimensional but the solution
-    can be reduced to two dimensions (radial and axial directions). 
-    The exact solution is derived in \sref{sec:deriv_finite_cyl} and the
-    solution is presented in \eref{eq:analytic_finite_cyl}. Results from the
-    convergence study are presented in \tref{tab:finite_cyl}. The exact value
-    for the effective multiplication factor is $\kref = 0.996711$.
+    This problem is a finite cylinder composed of fissile material. The cylinder
+    is three-dimensional but the analytic solution can be reduced to two
+    dimensions (radial and axial directions). The solution with the \gls{fem}
+    uses a fully three-dimensional solution and wedge finite elements. The exact 
+    solution is derived in \sref{sec:deriv_finite_cyl} and the solution is 
+    presented in \eref{eq:analytic_finite_cyl}. Results from the convergence 
+    study are presented in \tref{tab:finite_cyl}. The exact value for the 
+    effective multiplication factor is $\kref = 0.996711$. 
+    
+    It is observed in \tref{tab:finite_cyl} that the convergence rate of the
+    flux appears to fluctuate about the expected value of four. This is
+    attributed to the process of refining circular meshes. Previously, the mesh
+    was refined by simply introducing additional nodes at the midpoint between
+    existing nodes. With a circular (or curved) mesh, this is not acceptable. It
+    is necessary to totally regenerate the mesh for each refinement so that the
+    problem boundary may be better approximated. For example, if only six nodes
+    were on the problem boundary in the zeroth refinement, the cylinder would be
+    approximated as a hexagon throughout the mesh refinement study. This mesh
+    regeneration necessity means that the nodes are moving throughout the domain
+    during refinement process. For an illustration of the nodes moving, see
+    \fref{fig:ch03_circle_meshes}.
+
+    \begin{figure}
+      % figures and matlab script located in apA
+      \centering
+      \subfloat{\includegraphics[width=0.35\textwidth]{cir0}}
+      \vspace{0.2in}
+      \subfloat{\includegraphics[width=0.35\textwidth]{cir2}}
+      \caption{Mesh Refinement of Curved Mesh.}
+      \label{fig:ch03_circle_meshes}
+    \end{figure}
+    
+    \tref{tab:finite_cyl} shows that for refinement two, the refinement ratio is
+    especially poor. However, for refinement three, the refinement ratio is
+    roughly twice the expected rate.  Therefore, on average, the flux appears to
+    be converging at the correct rate despite difficulties with mesh
+    regeneration.
+
     \begin{table}
       \caption{Finite Cylinder Convergence Study Results.}
       \label{tab:finite_cyl}
       \begin{center}
+        \begin{threeparttable}
         \begin{tabular}{cccccccccc}
           \toprule
-          Refine & $\keff$ & $\keff$ error \units{pcm} & $\keff$ ratio & \gls{rms} & 
+          Refine & $\keff$ & $\keff$ error \units{\glsentryshort{pcm}} & $\keff$ ratio & \gls{rms} & 
             \gls{rms} ratio  & $\|e\|_{\infty}$ & $\|e\|_{\infty}$ ratio \\
           \midrule
-          \csvreader[
-            late after line=\\,
-            late after last line=\\,]
-            {ch03_diffusionResults/data/finite_cyl.csv}{}
-            {\csvcoli & \csvcolii & \csvcoliii & \csvcoliv & \csvcolv & 
-            \csvcolvi & \csvcolxi & \csvcolxii}
+          0     &0.895108&10160.26&4.18   &5.34E-02&2.57     &2.12E-01&1.62\\
+          1     &0.972412&2429.90 &4.16   &2.07E-02&3.19     &1.31E-01&4.65\\
+          2\tnote{$\dagger$}     &0.990870&584.06  &3.90   &6.50E-03&1.85     &2.81E-02&1.79\\
+          3     &0.995215&149.61  &3.99   &3.51E-03&9.22     &1.57E-02&8.28\\
+          4     &0.996336&37.48   &       &3.81E-04&         &1.90E-03&    \\
           Ref. & 0.996711 \\
           \bottomrule
         \end{tabular}
+          \begin{tablenotes}
+          \item[$\dagger$] Refinement ratio $\approx 1$ but next case $\approx
+            8$.\\
+            This is due to the movement of mesh nodes in the process of circular
+            mesh regeneration.
+          \end{tablenotes}
+        \end{threeparttable}
       \end{center}
     \end{table}
 
@@ -297,35 +355,36 @@
   The work presented here was designed simulate nuclear power reactors with
   special attention to fast reactor applications. However, the solution to the
   multigroup neutron diffusion equation remains general for all power reactors.
-  In this section, two-dimension 
-  benchmark problems with similar reactor physics phenomena have been examined.
-  These problems come from existing benchmarks based on hexagonal 
-  geometry. Initial refinement is based on six triangles per hexagon and
-  these triangles are split with each refinement. This collection of benchmarks 
-  represent various energy group 
-  structures, geometries, assembly sizes,  boundary conditions, as well as 
-  other properties. Data used in these problems is concisely presented in 
-  \apref{ap:benchmarks}. Mesh refinement studies are provided and convergence is
-  observed relative to the reference \keff value similar to analytic problems.
+  In this section, two-dimension nuclear reactor benchmark problems have been
+  examined.  These problems come from existing benchmarks based on hexagonal
+  geometry. Initial refinement is based on six triangles per hexagon and these
+  triangles are split with each refinement. This collection of benchmarks
+  represents various energy group structures, geometries, assembly sizes,
+  boundary conditions, as well as other properties. Data used in these problems
+  is concisely presented in \apref{ap:benchmarks}. Mesh refinement studies are
+  provided and convergence is observed relative to the reference \keff value
+  similar to analytic problems. Recall that the convergence rate and the error
+  of the converged $\keff$ value will both be effected by the quality of the
+  benchmark.
   
   \subsection{VVER440}
-    Proposed by Chao and Shatilla \cite{chao} and described in 
-    \sref{sec:vver440}, this benchmark is a two-dimensional hexagonal problem 
-    based on a VVER-440 reactor. The VVER-440 is a 
-    light-water moderated reactor and operates principally with thermal 
-    neutron spectrum. Cross sections are provided for a two-group energy 
-    structure.
+    Proposed by Chao and Shatilla \cite{chao} and described in
+    \sref{sec:vver440}, this benchmark is a two-dimensional hexagonal problem
+    based on a VVER-440 reactor. The VVER-440 is a light-water moderated reactor
+    and operates principally with thermal neutron spectrum. Cross sections are
+    provided for a two-group energy structure.
     
-    Power comparison between the most refined mesh and the reference solution 
-    are presented graphically in \fref{fig:diffusion_vver440} according to the
-    key in \fref{fig:hex_description}. Numerical mesh convergence study for 
-    the quantity $\keff$ is presented in \tref{tab:vver440}.
+    Power comparison between the most refined mesh and the reference solution
+    are presented graphically in \fref{fig:diffusion_vver440}. Numerical mesh
+    convergence study for the quantity $\keff$ is presented in
+    \tref{tab:vver440}.
 
     \begin{figure}
       \centering
       \includegraphics[width=\textwidth]{diffusion_vver440}
       \caption{VVER440 Benchmark Power Comparison for Most Refined Mesh.}
       \label{fig:diffusion_vver440}
+      \Put(-125,500){\includegraphics[width=0.10\textwidth]{hex_description}}
     \end{figure}
 
     \begin{table}
@@ -335,7 +394,7 @@
         \begin{threeparttable}
           \begin{tabular}{cccc}
             \toprule
-            Refine & $\keff$ & $\keff$ error \units{pcm} & $\keff$ ratio \\
+            Refine & $\keff$ & $\keff$ error \units{\glsentryshort{pcm}} & $\keff$ ratio \\
             \midrule
             \csvreader[
               late after line=\\,
@@ -353,22 +412,23 @@
     \end{table}
 
   \subsection{SNR}
-    Proposed in the Argonne Code Center Benchmark Problem Book 
-    \cite{argonneBenchmark} and described in \sref{sec:snr}, this
-    benchmark is a  two-dimensional problem based on the SNR reactor. The SNR
-    is a \gls{sfr} and operates principally with fast
-    neutrons. Cross sections are provided for a four-group energy structure.
+    Proposed in the Argonne Code Center Benchmark Problem Book
+    \cite{argonneBenchmark} and described in \sref{sec:snr}, this benchmark is a
+    two-dimensional problem based on the SNR reactor. The SNR is a \gls{sfr} and
+    operates principally with fast neutrons. Cross sections are provided for a
+    four-group energy structure.
 
-    Power comparison between the most refined mesh and numerical solution
-    given by \dif are presented graphically in \fref{fig:diffusion_snr}
-    according to the key in \fref{fig:hex_description}. A numerical mesh
-    convergence study for the quantity $\keff$ is presented in \tref{tab:snr}.
+    Power comparison between the most refined mesh and numerical solution given
+    by \dif are presented graphically in \fref{fig:diffusion_snr} (the benchmark
+    does not specify a power distribution). A numerical mesh convergence study 
+    for the quantity $\keff$ is presented in \tref{tab:snr}.
 
     \begin{figure}
       \centering
       \includegraphics[width=\textwidth]{diffusion_snr}
       \caption{SNR Benchmark Power Comparison for Most Refined Mesh.}
       \label{fig:diffusion_snr}
+      \Put(-125,550){\includegraphics[width=0.10\textwidth]{hex_description}}
     \end{figure}
     
     \begin{table}
@@ -378,14 +438,14 @@
         \begin{threeparttable}
           \begin{tabular}{cccc}
             \toprule
-            Refine & $\keff$ & $\keff$ error \units{pcm} & $\keff$ ratio \\
+            Refine & $\keff$ & $\keff$ error \units{\glsentryshort{pcm}} & $\keff$ ratio \\
             \midrule
             \csvreader[
               late after line=\\,
               late after last line=\\,]
               {ch03_diffusionResults/data/snr.csv}{}
               {\csvcoli & \csvcolvi & \csvcolvii & \csvcolviii}
-            Ref. \tnote{$\dagger$} & 1.124000 \\
+            Ref. \tnote{$\dagger$} & 1.124 \\
             \bottomrule
           \end{tabular}
           \begin{tablenotes}
@@ -401,10 +461,10 @@
     is a heavy water moderated reactor and operates principally with thermal 
     neutrons. Cross sections are provided for a two-group energy structure.
 
-    Power comparison between the most refined mesh and the reference solution 
-    are presented graphically in \fref{fig:diffusion_hwr} according to the
-    key in \fref{fig:hex_description}. A numerical mesh convergence study for 
-    the quantity $\keff$ is presented in \tref{tab:hwr}.
+    Power comparison between the most refined mesh and the reference solution
+    are presented graphically in \fref{fig:diffusion_hwr} according to the. A
+    numerical mesh convergence study for the quantity $\keff$ is presented in
+    \tref{tab:hwr}.
 
     \begin{figure}
       \centering
@@ -412,6 +472,7 @@
       \caption{\glsentryshort{hwr} Benchmark Power Comparison for Most Refined 
         Mesh.}
       \label{fig:diffusion_hwr}
+      \Put(-125,500){\includegraphics[width=0.10\textwidth]{hex_description}}
     \end{figure}
 
     \begin{table}
@@ -421,7 +482,7 @@
         \begin{threeparttable}
           \begin{tabular}{cccc}
             \toprule
-            Refine & $\keff$ & $\keff$ error \units{pcm} & $\keff$ ratio \\
+            Refine & $\keff$ & $\keff$ error \units{\glsentryshort{pcm}} & $\keff$ ratio \\
             \midrule
             \csvreader[
               late after line=\\,
@@ -439,13 +500,12 @@
     \end{table}
 
   \subsection{IAEA}
-    Proposed by Chao and Shatilla \cite{chao} and described in \sref{sec:iaea}, 
-    this two-dimensional problem was originally based on a Cartesian
-    grid two-dimensional \gls{pwr} but was converted to
-    hexagonal geometry to represent a VVER reactor \cite{chao}. As it is
-    originally based on a \gls{pwr} design, the reactor operates principally 
-    with a thermal neutron spectrum. Cross sections are provided for a two-group 
-    energy structure.
+    Proposed by Chao and Shatilla \cite{chao} and described in \sref{sec:iaea},
+    this two-dimensional problem was originally based on a Cartesian grid
+    two-dimensional \gls{pwr} but was converted to hexagonal geometry to
+    represent a VVER reactor \cite{chao}. As it is originally based on a
+    \gls{pwr} design, the reactor operates principally with a thermal neutron
+    spectrum. Cross sections are provided for a two-group energy structure.
 
     The reactor is presented in four scenarios; both with and without
     reflective assemblies as well as with $\albedo = 0.125$ and $\albedo =
@@ -463,7 +523,7 @@
         \begin{threeparttable}
           \begin{tabular}{cccc}
             \toprule
-            Refine & $\keff$ & $\keff$ error \units{pcm} & $\keff$ ratio \\
+            Refine & $\keff$ & $\keff$ error \units{\glsentryshort{pcm}} & $\keff$ ratio \\
             \midrule
             \csvreader[
               late after line=\\,
@@ -489,7 +549,7 @@
         \begin{threeparttable}
           \begin{tabular}{cccc}
             \toprule
-            Refine & $\keff$ & $\keff$ error \units{pcm} & $\keff$ ratio \\
+            Refine & $\keff$ & $\keff$ error \units{\glsentryshort{pcm}} & $\keff$ ratio \\
             \midrule
             \csvreader[
               late after line=\\,
@@ -515,7 +575,7 @@
         \begin{threeparttable}
           \begin{tabular}{cccc}
             \toprule
-            Refine & $\keff$ & $\keff$ error \units{pcm} & $\keff$ ratio \\
+            Refine & $\keff$ & $\keff$ error \units{\glsentryshort{pcm}} & $\keff$ ratio \\
             \midrule
             \csvreader[
               late after line=\\,
@@ -541,7 +601,7 @@
         \begin{threeparttable}
           \begin{tabular}{cccc}
             \toprule
-            Refine & $\keff$ & $\keff$ error \units{pcm} & $\keff$ ratio \\
+            Refine & $\keff$ & $\keff$ error \units{\glsentryshort{pcm}} & $\keff$ ratio \\
             \midrule
             \csvreader[
               late after line=\\,
@@ -594,12 +654,12 @@
     assumed fission spectrum is presented in \tref{tab:monjuchi}. The rod worth 
     measurements appear insensitive to the choice of fission spectrum. 
 
-    Reference data can be found in \tref{tab:monjukeff}. Results from the
-    finite element method implementation are presented in \tref{tab:monju}. 
-    The error (difference between reference and calculated results) are 
-    presented in parenthesis next to the quantities. 
-    Rod Worth is presented as calculated in \eref{eq:rodworth}. Rod Difference
-    is presented as calculated in \eref{eq:roddifference}.
+    Reference data can be found in \tref{tab:monjukeff}. Results from the finite
+    element method implementation are presented in \tref{tab:monju}.  The error
+    (difference between reference and calculated results) are presented in
+    parenthesis next to the quantities. Rod worth is presented as calculated in
+    \eref{eq:rodworth}. Rod difference is presented as calculated in
+    \eref{eq:roddifference}.
 
     \begin{table}
       \begin{center}
@@ -626,22 +686,22 @@
     \end{table}
   
   \subsection{KNK}
-    Proposed by Takeda and Ikeda \cite{takedaBenchmark} and described in 
-    \sref{sec:knk}, this three-dimension, benchmark problem is based on an 
-    \gls{sfr} and is a model of the KNK-II core. Cross sections are provided for 
-    a four-group energy structure. There are many materials specified in the 
-    problem so it also aids in testing material mapping in the code. However, 
-    the reference data is for a transport solution. In this work, the 
-    cross-sections from the transport problem are used to solve the neutron 
-    diffusion equation. This explains some of the numerical differences in the 
+    Proposed by Takeda and Ikeda \cite{takedaBenchmark} and described in
+    \sref{sec:knk}, this three-dimension, benchmark problem is based on an
+    \gls{sfr} and is a model of the KNK-II core. Cross sections are provided for
+    a four-group energy structure. There are many materials specified in the
+    problem so it also aids in testing material mapping in the code. However,
+    the reference data is for a transport solution. In this work, the
+    cross sections from the transport problem are used to solve the neutron
+    diffusion equation. This explains some of the numerical differences in the
     results but general trends are reflected. 
 
     Reference data can be found in \tref{tab:knkkeff}. Results from the finite
     element neutron diffusion solution are presented in \tref{tab:knk}. The
-    error (difference between reference and calculated results) are presented
-    in parenthesis next to the quantities.
-    Rod Worth is presented as calculated in \eref{eq:rodworth}. Rod Difference
-    is presented as calculated in \eref{eq:roddifference}.
+    error (difference between reference and calculated results) are presented in
+    parenthesis next to the quantities. Rod worth is presented as calculated in
+    \eref{eq:rodworth}. Rod difference is presented as calculated in
+    \eref{eq:roddifference}.
 
     \begin{table}
       \begin{center}

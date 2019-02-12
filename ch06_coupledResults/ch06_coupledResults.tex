@@ -26,16 +26,16 @@
   with a total of 180 hexagonal assemblies and is 4.8 \units{m} tall. The 
   benchmark is fully specified and thirty-one independent results are submitted. 
   
-  Each submission to the benchmark uses independently generated cross-sections 
-  from several different cross-section libraries (e.g. ENDFB7.0, JEFF3.1, etc.). 
+  Each submission to the benchmark uses independently generated cross sections 
+  from several different cross section libraries (e.g. ENDFB7.0, JEFF3.1, etc.). 
   Therefore, using this benchmark as a verification problem is not feasible.
-  Instead, cross-sections were generated for this model using \mcc and the
+  Instead, cross sections were generated for this model using \mcc and the
   procedure outlined in \sref{sec:cross_section_treatment}. This procedure 
-  resulted in temperature dependent cross-section libraries with 33 energy 
+  resulted in temperature dependent cross section libraries with 33 energy 
   groups. The multigroup neutron diffusion equation is solved using these same
-  cross-sections using both \dif and the method from 
-  \chref{ch:neutronDiffusion}. These two methods using the same cross-sections 
-  agree to within 700 \units{pcm}. The \dif and \gls{fem} models were minimally 
+  cross sections using both \dif and the method from 
+  \chref{ch:neutronDiffusion}. These two methods using the same cross sections 
+  agree to within 700 \units{\glsentryshort{\glsentryshort{pcm}}}. The \dif and \gls{fem} models were minimally 
   refined. A more formal refinement study would presumably show further error 
   reduction. 
   
@@ -78,9 +78,9 @@
   critical state. Reactivity $\rho$ is defined
   \begin{equation}
     \label{eq:reactivity}
-    \rho \units{pcm} = \frac{\keff-1}{\keff} \times 10^5
+    \rho \units{\glsentryshort{pcm}} = \frac{\keff-1}{\keff} \times 10^5
   \end{equation}
-  where \units{pcm} are units of percent-mille.
+  where \units{\glsentryshort{pcm}} are units of percent-mille.
   Recall $\keff < 1$ for a subcritical reactor, $\keff=1$ for a critical
   reactor, and $\keff > 1$ for a supercritical reactor. Therefore $\rho < 0$
   for a subcritical reactor, $\rho = 0$ for a critical reactor, and $\rho > 0$
@@ -219,7 +219,7 @@
     this may be called the \gls{mtc} but in fast
     reactors, the coolant is not designed to moderate neutrons. Feedback in the 
     coolant is due to two main phenomena: the decrease in absorption 
-    cross-sections in the coolant due to Doppler broadening and the decrease of 
+    cross sections in the coolant due to Doppler broadening and the decrease of 
     density due to temperature increase. The dominant effect is the decrease of 
     sodium density due to the temperature increase \cite{textbookknief}.
 
@@ -228,7 +228,7 @@
     in coolant temperature will lead to an increase in reactivity and cause a 
     subsequent increase in reactor power. In fast reactors, the coolant acts as 
     a parasitic neutron absorber. Therefore, a decrease in the sodium absorption 
-    cross-section encourages neutron absorption in fissile material in the fuel 
+    cross section encourages neutron absorption in fissile material in the fuel 
     resulting in a reactivity increase. This does not pose a stability problem 
     as long as the power reactivity coefficient remains negative.
 

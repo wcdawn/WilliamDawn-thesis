@@ -30,7 +30,7 @@
     0 < E_G < E_{G-1} < \ldots < E_2 < E_1
   \end{equation}
   Multigroup constants can be calculated using this energy group 
-  structure from energy-dependent cross-sections, and a representative flux 
+  structure from energy dependent cross sections, and a representative flux 
   spectrum. Generation of multigroup constants is performed using \mcc and is 
   described in \sref{sec:cross_section_treatment}.
 
@@ -50,18 +50,18 @@
     D_g(\vr)    & diffusion coefficient for energy group $g$ \units{cm}, \\
     \phi_g(\vr) & scalar neutron flux for energy group $g$
       \units{$\frac{1}{\text{cm}^2 \; \text{s}}$}, \\
-    \Sigma_{t,g}(\vr) & macroscopic total cross-section for energy group $g$ 
+    \Sigma_{t,g}(\vr) & macroscopic total cross section for energy group $g$ 
       \units{$\frac{1}{\text{cm}}$}, \\
     \widetilde{\chi_g}(\vr) & effective fission spectrum for energy group $g$,\\
     \keff & effective neutron multiplication factor, \\
     \nu \Sigma_{f,g}(\vr) & number of fission neutrons times microscopic fission
-      cross-section in energy group $g$ \units{$\frac{1}{\text{cm}}$}, \\
-    \Sigma_{s,g' \rightarrow g} (\vr) & macroscopic scatter cross-section from
+      cross section in energy group $g$ \units{$\frac{1}{\text{cm}}$}, \\
+    \Sigma_{s,g' \rightarrow g} (\vr) & macroscopic scatter cross section from
       energy group $g'$ to energy group $g$ \units{$\frac{1}{\text{cm}}$}, \\
     G & total number of energy groups.
   \end{conditions}
 
-  The total neutron cross-section includes the contribution due to within-group
+  The total neutron cross section includes the contribution due to within-group
   scattering. That is, due to $\Sigma_{s,g\rightarrow g}$. This can be
   subtracted from both sides of \eref{eq:multigroup_diffusion} for simplicity
   and numeric efficiency. Rewriting \eref{eq:multigroup_diffusion} with this
@@ -74,9 +74,9 @@
       \phi_{g'}(\vr) + \sum_{g'=1, g' \ne g}^{G} 
       \Sigma_{s,g' \rightarrow g}(\vr) \phi_{g'}(\vr)
   \end{equation}
-  where $\Sigma_{r,g}$ is the removal cross-section defined as
+  where $\Sigma_{r,g}$ is the removal cross section defined as
   $\Sigma_{r,g}(\vr) = \Sigma_{t,g}(\vr) - \Sigma_{s,g\rightarrow g}(\vr)$. The
-  removal cross-section now describes the removal of neutrons from the element
+  removal cross section now describes the removal of neutrons from the element
   of phase space due to nuclear interactions.  For simplicity, the neutron
   sources in \eref{eq:multigroup_removal} can be combined into a single term.
   \begin{equation}
@@ -218,7 +218,7 @@
         \int_{\Omega} q_g(\vr) v(\vr) \;d\vr
     \end{equation}
     
-    For the purposes of this work, material cross-sections and the neutron
+    For the purposes of this work, material cross sections and the neutron
     source $q_{g,e}$ are assumed to be constant within an element. In the
     future, $q_g$ could be considered discrete at each node rather than each
     element.  To calculate a constant neutron source within an element,
@@ -386,7 +386,7 @@
     where $\vu_g = \{\upsilon_{i,g}\}$. 
     
     The diffusion coefficient $D_g(\vr)$ is non-zero and bounded and the removal
-    cross-section $\Sigma_{r,g}(\vr)$ is bounded. Given these conditions, the
+    cross section $\Sigma_{r,g}(\vr)$ is bounded. Given these conditions, the
     Lax-Milgram Lemma implies the solution to the \gls{fem} equations as derived
     here is both unique and bounded \cite{textbookli}. This is not the entire
     solution description as the source function $q_g(\vr)$ is updated on each
@@ -429,7 +429,7 @@
     
     The above derivation reduces to a linear system of equations. These
     equations are constructed from the integral quantities specified by the
-    \gls{fem} and the coefficients given by the cross-sections and fixed source
+    \gls{fem} and the coefficients given by the cross sections and fixed source
     regions. The integral quantities themselves are expressed explicitly in the
     \sref{sec:matrix_quantities}.
     
@@ -968,7 +968,7 @@
     It is important to note that all of the analysis in this section assumed the
     matrix $\mr$ does not change between iterations. For simple multigroup
     criticality calculations, this assumption is correct. However, in
-    multiphysics nuclear power reactor simulations, the cross-sections of the 
+    multiphysics nuclear power reactor simulations, the cross sections of the 
     problem may be considered functions of material temperature or may have some
     variable number density. For these problems, the matrix $\mr$ is necessarily
     updated between power iterations in a nonlinear manner. For nonlinear power
@@ -1008,7 +1008,7 @@
   ParaView \cite{ParaView} and VisIt \cite{VisIt}. Additionally, open-source C 
   and Python packages exist for easy manipulation of the format. Cross sections
   are specified in either a plain text user format or the ISOTXS format as 
-  common to fast reactor applications and the multigroup cross-section generator
+  common to fast reactor applications and the multigroup cross section generator
   \mcc \cite{mcc}. The multigroup neutron diffusion equation is solved according
   to \eref{eq:multigroup_source}. The resulting effective neutron multiplication 
   factor, $\keff$, is written to an output file. The multigroup neutron flux is
@@ -1093,7 +1093,7 @@
     
     A benefit of this implementation is that the finite element vector $\vf_g$
     must be updated on each power iteration of the solution whereas the matrix
-    $\ma_g$ is described entirely by geometry and the material cross-sections.
+    $\ma_g$ is described entirely by geometry and the material cross sections.
     For this reason, $\ma_g$ can be generated once at the beginning of the
     problem and stored for the duration of the calculation (with no non-linear
     updates). \FloatBarrier % make sure the algorithm is in the correct section

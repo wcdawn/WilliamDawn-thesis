@@ -4,7 +4,7 @@
 \section{Introduction}
   Material temperatures and densities are a pivotal part of the multiphysics 
   problem of simulating a fast reactor. Temperatures are necessary for
-  calculating reactor cross-sections for an accurate power distribution and can
+  calculating reactor cross sections for an accurate power distribution and can
   be used as input for a thermal hydraulic simulation. Thermal hydraulic models
   are developed for standard fast reactor geometry as described in
   \sref{sec:geometry_description}. Recall, the standard assembly is a hexagonal 
@@ -732,7 +732,7 @@
   \subsection{Average Temperatures}
     \label{sec:average_temps}
     Average material temperatures are used to evaluate material properties such
-    as densities, cross-sections, and thermal expansion within the different 
+    as densities, cross sections, and thermal expansion within the different 
     material regions. The
     derivations in this section require the fuel center-line and surface
     temperatures from \sref{sec:surface_temps}. To calculate the average
@@ -803,9 +803,9 @@
       \end{equation}
       \eref{eq:tf_bar} then yields the average temperature in the fuel region
       assuming the thermal conductivity is constant at the effective value
-      $k_F$. $\overline{T_F}$ will be used to calculate fuel cross-sections. 
+      $k_F$. $\overline{T_F}$ will be used to calculate fuel cross sections. 
 
-      To calculate more accurate fuel cross-sections, an effective fuel 
+      To calculate more accurate fuel cross sections, an effective fuel 
       temperature should be used which weights the fuel surface temperature 
       higher than the average value. Due to self-shielding in the fuel, the 
       temperature corresponding to the average neutron flux is nearer to the 
@@ -889,14 +889,14 @@
       \end{equation}
       where $T_B$ is the bond surface temperature. With the use of
       \eref{eq:tc_bar}, the average clad temperature $\overline{T_C}$ can be
-      calculated and used for calculating cross-sections.
+      calculated and used for calculating cross sections.
 
-\section{Cross-Section Treatment}
+\section{Cross Section Treatment}
   The purpose of calculating average material temperatures is to calculate
-  cross-sections for use in the neutron diffusion equation. Cross-sections are
-  calculated by interpolating between temperatures in cross-section libraries
+  cross sections for use in the neutron diffusion equation. Cross sections are
+  calculated by interpolating between temperatures in cross section libraries
   generated according to \sref{sec:cross_section_treatment} in order to simulate
-  the Doppler effect as it relates to neutron cross-sections.
+  the Doppler effect as it relates to neutron cross sections.
 
   Linear interpolation is valid for materials minimally effected by Doppler 
   broadening. Such materials include cladding and sodium as these materials do 
@@ -915,24 +915,24 @@
   For a discussion of power iterations, see \sref{sec:power_iterations}.
   
   When
-  the temperatures are updated, the cross-sections are also updated. Updating
+  the temperatures are updated, the cross sections are also updated. Updating
   the material-cross sections requires recomputing the finite element matrix
   (see \eref{eq:matrix_population})
   which proves to be the most computationally expensive part of the update. 
-  Note that the update of cross-sections during a power iteration makes the
+  Note that the update of cross sections during a power iteration makes the
   iterative method non-linear and the convergence of the method is no longer
   guaranteed. However, this procedure is commonly used in practice and no 
   convergence problems have been observed. The general procedure to update
-  cross-sections is given in \algorithmref{algorithm:temperature_update}.
+  cross sections is given in \algorithmref{algorithm:temperature_update}.
 
-  In \algorithmref{algorithm:temperature_update}, the cross-sections are
+  In \algorithmref{algorithm:temperature_update}, the cross sections are
   updated using the average material temperatures. Average material
   temperatures are unique within each chunk. Therefore, instead of having
-  cross-sections constant throughout the reactor and only a function of
+  cross sections constant throughout the reactor and only a function of
   material, cross sections are now unique within each chunk.
 
   \begin{algorithm}
-    \caption{Temperature and Cross-section Update Procedure.}
+    \caption{Temperature and Cross Section Update Procedure.}
     \label{algorithm:temperature_update}
     \begin{algorithmic}[1]
       \State Complete $N_{iter}$ power iterations to calculate
@@ -955,7 +955,7 @@
     \end{algorithmic}
   \end{algorithm}
 
-  \subsection{Coolant Cross-Sections}
+  \subsection{Coolant Cross Sections}
     The main effect on coolant cross sections due to temperature is due to the
     change in fluid density. The mass-density of the of liquid sodium 
     is given as a function of temperature $\rho(T)$ by a state relationship 
@@ -973,7 +973,7 @@
     $T_{\infty,i,k}$ which is the bulk coolant temperature in each chunk.
     Therefore, each chunk will have a unique coolant number density.
     
-    %In the temperature dependent cross-section library structure described in
+    %In the temperature dependent cross section library structure described in
     %\sref{sec:cross_section_treatment}, all coolant temperatures are the same. 
     %Then, the macroscopic cross section in the coolant for reaction $x$ is given
     %as
@@ -982,7 +982,7 @@
     %\end{equation}
     %where $N_{Na}$ is calculated according to \eref{eq:number_density_sodium}.
 
-    Using the coolant temperatures for the cross-section library structure
+    Using the coolant temperatures for the cross section library structure
     described in \sref{sec:cross_section_treatment}, coolant cross sections are
     calculated using a linear interpolation. For coolant temperature
     $T_{n}<T_{\infty,i,k}<T_{n+1}$ and library temperatures $\{T_n\}$,
@@ -994,18 +994,18 @@
     \end{equation}
     where $N_{Na}$ is calculated according to \eref{eq:number_density_sodium},
     $\sigma_{x,Na,g,n}$ and $\sigma_{x,Na,g,n+1}$ are the microscopic 
-    cross-sections for reaction $x$ in energy group $g$ that correspond to 
+    cross sections for reaction $x$ in energy group $g$ that correspond to 
     library temperatures $T_n$ and $T_{n+1}$ respectively.
 
   \subsection{Clad Cross Sections}
-    Macroscopic cross-sections are tabulated based 
-    on the cross-section library data at temperatures specified in
+    Macroscopic cross sections are tabulated based 
+    on the cross section library data at temperatures specified in
     \tref{tab:xstemps}. The temperature effect is typically small as cladding
     material has fewer absorption resonances than fuel material and cladding
     material does not change temperature as extremely as other reactor
     materials. For this reason, a simple linear interpolation is used to 
-    interpolate macroscopic cross-sections within this material. For 
-    $T_n < \overline{T_{C,i,k}} < T_{n+1}$, the macroscopic cross-section for 
+    interpolate macroscopic cross sections within this material. For 
+    $T_n < \overline{T_{C,i,k}} < T_{n+1}$, the macroscopic cross section for 
     reaction $x$ and energy group $g$ according to the linear interpolation 
     method is given as
     \begin{equation}
@@ -1015,28 +1015,28 @@
         (\Sigma_{x,g,n+1} - \Sigma_{x,g,n})  + \Sigma_{x,g,n}
     \end{equation}
     where $\Sigma_{x,g,n}$ and $\Sigma_{x,g,n+1}$ are the macroscopic
-    cross-sections that correspond to library temperatures $T_n$ and $T_{n+1}$
+    cross sections that correspond to library temperatures $T_n$ and $T_{n+1}$
     respectively. 
 
   \subsection{Bond Cross Sections}
     While the average bond temperature is computed, the temperature and density
     dependence of bond cross sections is neglected. This is because the bond 
-    represents a small volume of the reactor and the sodium cross-sections 
+    represents a small volume of the reactor and the sodium cross sections 
     do no change significantly with temperature. Therefore, it is assumed that,
-    for purposes of calculating cross-sections, the temperature in the coolant
+    for purposes of calculating cross sections, the temperature in the coolant
     is the same as the temperature in the bond and cross sections in the bond
     are calculated as \eref{eq:xs_cool}.
 
   \subsection{Fuel Cross Sections}
-    Temperature dependence of cross-sections in the fuel region is dominated
+    Temperature dependence of cross sections in the fuel region is dominated
     by the Doppler effect. This effect is large for high fuel temperatures.
-    Macroscopic cross-sections are tabulated based on library data as generated 
+    Macroscopic cross sections are tabulated based on library data as generated 
     in the procedure from \sref{sec:cross_section_treatment}. A square-root 
     interpolation method is used. The square-root interpolation is commonly 
-    selected for cross-section interpolation because the Doppler effect is 
+    selected for cross section interpolation because the Doppler effect is 
     proportional to the square-root of absolute temperature. For 
     ${T_n < \overline{T_{F,i,k}} < T_{n+1}}$ and library temperatures $\{T_n\}$,
-    the macroscopic cross-section for reaction $x$ in energy group $g$ within 
+    the macroscopic cross section for reaction $x$ in energy group $g$ within 
     the fuel is calculated as
     \begin{equation}
       \Sigma_{x,i,k,g} = 
@@ -1045,7 +1045,7 @@
         (\Sigma_{x,g,n+1} - \Sigma_{x,g,n})  + \Sigma_{x,g,n}
     \end{equation}
     where $\Sigma_{x,g,n}$ and $\Sigma_{x,g,n+1}$ are the macroscopic
-    cross-sections of reaction $x$ corresponding to library temperatures $T_n$
+    cross sections of reaction $x$ corresponding to library temperatures $T_n$
     and $T_{n+1}$ respectively. Note that all temperatures used for this 
     calculation are in units of absolute temperature.
       
