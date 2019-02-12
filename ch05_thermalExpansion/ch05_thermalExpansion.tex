@@ -2,51 +2,51 @@
 \label{ch:thermalExpansion}
 
 \section{Necessity of Modeling}
-  The Fast Reactor as modeled is entirely composed of
-  metals and, as such, experiences significant thermal expansion. While other 
-  designs may employ non-metallic fuel material (e.g. oxides or carbides), these 
-  are not considered in this work. Reactor designs with metal fuel include 
-  \gls{ebr-ii}, as designed and built by \gls{anl}, and PRISM, as designed by 
-  \gls{geh}.
+  The fast reactor as modeled is entirely composed of metals and, as such,
+  experiences significant thermal expansion. While other designs may employ
+  non-metallic fuel material (e.g. oxides or carbides), these are not considered
+  in this work. Reactor designs with metal fuel include \gls{ebr-ii}, as
+  designed and built by \gls{anl}, and PRISM, as designed by \gls{geh}.
 
-  In metal fueled reactors such as \gls{ebr-ii} and PRISM, thermal expansion 
-  represents a significant reactivity feedback effect and requires modeling. 
-  The preliminary safety information document for PRISM presents an 
-  estimate for thermal expansion feedback such that a 1\% change in radial 
-  dimension results in $-0.5 \units{$\Delta k$}$ indicating a significant effect 
-  \cite{GEFR793}. Additionally, thermal expansion has been proven to serve as an 
-  inherent safety feature of fast reactors. In the remarkable \gls{ebr-ii} 
-  demonstrations in April 1986, two major accident events were performed on the 
-  reactor while operating at full power. Operators forced the reactor to undergo 
-  \gls{ulof} and \gls{ulohs} events. \gls{ebr-ii} was safely shutdown due to 
-  nothing other than inherent multiphysics feedback effects. These experiments 
-  demonstrated conclusively the passive safety of fast reactor designs due in 
+  In metal fueled reactors such as \gls{ebr-ii} and PRISM, thermal expansion
+  represents a significant reactivity feedback effect and requires modeling.
+  The preliminary safety information document for PRISM presents an estimate for
+  thermal expansion feedback such that a 1\% increase in radial dimension
+  results in $-0.5 \units{$\Delta k$}$ indicating a significant effect
+  \cite{GEFR793}. Additionally, thermal expansion has been demonstrated to serve
+  as an inherent safety feature of fast reactors. In the remarkable \gls{ebr-ii}
+  demonstrations in April 1986, two major accident events were performed on the
+  reactor while operating at full power. Operators forced the reactor to undergo
+  \gls{ulof} and \gls{ulohs} events. \gls{ebr-ii} was safely shutdown due to
+  nothing other than inherent multiphysics feedback effects. These experiments
+  demonstrated conclusively the passive safety of fast reactor designs due in
   part to the thermal expansion of materials \cite{PlentifulEnergy}.
 
-  \gls{ebr-ii} system response to \gls{ulohs} was demonstrated by bypassing the 
-  normal loss of flow scram (i.e. shutdown) function. The control rod drive 
-  motors were deenergized and the main coolant pumps were tripped and allowed to 
-  coast down. Natural circulation flow follows and after an initial temperature 
-  peak, material temperatures returned to normal operating temperatures 
-  \cite{ebriitests}. The \gls{ulohs}was demonstrated by shutting down coolant 
-  pumps in the secondary coolant system, thereby disabling heat rejection from 
-  the primary coolant system. No subsequent automatic or manual action was 
-  taken. In the \gls{ulohs} demonstration, material temperatures do not peak and 
-  instead quickly reduce below operating temperatures \cite{ebriitests}.
+  \gls{ebr-ii} system response to \gls{ulohs} was demonstrated by bypassing the
+  normal loss of flow scram (i.e. shutdown) function. The control rod drive
+  motors were deenergized and the main coolant pumps were tripped off and
+  allowed to coast down. Natural circulation flow follows and after an initial
+  temperature peak, material temperatures returned to normal operating
+  temperatures \cite{ebriitests}. The \gls{ulohs}was demonstrated by shutting
+  down coolant pumps in the secondary coolant system, thereby disabling heat
+  rejection from the primary coolant system. No subsequent automatic or manual
+  action was taken. In the \gls{ulohs} demonstration, material temperatures do
+  not peak and instead quickly reduce below operating temperatures
+  \cite{ebriitests}.
 
-  The inherent safety demonstration test at \gls{ebr-ii} demonstrated the passive
-  safety of the liquid-metal-cooled reactor design. These tests are simply not 
-  possible with \glspl{lwr} currently operating in the U.S. 
-  Using nothing but natural phenomena, the reactor was demonstrated to shutdown 
-  and subsequent heat removal was achieved \cite{ebriitests}. These tests are 
-  pivotal the strategy to demonstrate the performance of similar reactors in 
-  \gls{atws}. The tests also demonstrate the importance of modeling multiphysics 
+  The inherent safety demonstration test at \gls{ebr-ii} demonstrated the
+  passive safety of the liquid metal cooled reactor design. These tests are
+  simply not possible with currently operating \glspl{lwr} designs. Using
+  nothing but natural phenomena, the reactor was demonstrated to shutdown and
+  subsequent heat removal was achieved \cite{ebriitests}. These tests are
+  pivotal the strategy to demonstrate the performance of similar reactors in
+  \gls{atws}. The tests also demonstrate the importance of modeling multiphysics
   effects in fast reactor applications.
 
 \section{Model Details}
   \label{sec:model_details}
-  Highly detailed thermal expansion modeling can be performed using the finite
-  element method to calculate local stresses and strains on all reactor
+  Highly detailed thermal expansion modeling can be performed using the
+  \gls{fem} to calculate local stresses and strains on all reactor
   structural components such as fuel pins, wire wraps, and assembly boxes. 
   However, the model developed here for the simulation of
   fast reactors does not estimate temperature and heat generation at all 
@@ -59,7 +59,7 @@
   effects of thermal expansion within the sodium are assumed to be described by 
   the change in density as a function of temperature as described by state 
   equations \cite{sodiumProp}. Additionally, the mass of sodium within the 
-  reactor is not conserved. In a liquid-metal-cooled reactor, sodium in the 
+  reactor is not conserved. In a liquid metal cooled reactor, sodium in the 
   coolant is allowed to flow into and out of an expansion vessel external to the 
   reactor. The sodium in the bond region flows upward from the fuel region into 
   a gas plenum at the top of the fuel rod as the fuel expands. However, this is 
@@ -68,12 +68,11 @@
 
   \subsection{Material Properties}
     \label{sec:model_details__material_properties}
-    All structural materials in the reactor are thermally expanded as HT9 
-    stainless steel.
-    Fuel material is thermally expanded as metallic uranium with 10\% Zr by 
-    weight included (i.e. U10Zr). Thermal expansion properties for HT9 
-    \cite{ht9Prop} and for U10Zr \cite{thexpU10Zr} are obtained. The 
-    equations for the \gls{lef} as functions of temperature and used in this 
+    All structural materials in the reactor are thermally expanded as HT9
+    stainless steel. Fuel material is thermally expanded as metallic uranium
+    with 10\% Zr by weight included (i.e. U10Zr). Thermal expansion properties
+    for HT9 \cite{ht9Prop} and for U10Zr \cite{thexpU10Zr} are obtained. The
+    equations for the \gls{lef} as functions of temperature and used in this
     implementation are given
     \begin{equation}
       \label{eq:lef_ht9}
@@ -114,7 +113,7 @@
   \label{sec:model_details__assumptions_and_formulae}
     To simplify the modeling of thermal expansion, material dimensions are
     uniformly expanded in radial and axial directions. It is assumed that 
-    material expansion in the radial direction (both $x$ and $y$ directions) 
+    material expansion in the radial directions (both $x$ and $y$ directions) 
     expands as HT9 because the dominating effect on reactivity due to thermal 
     expansion in this direction is due to the expansion of the hexagonal 
     assemblies themselves and the grid plate at the base of the reactor. The 
@@ -125,18 +124,18 @@
     direction (the $z$ direction) expands as U10Zr because the dominating 
     expansion in this direction is the elongation of the metallic fuel.
     
-    All dimensions in the reactor are expanded assuming the user-input 
+    All dimensions in the reactor are expanded assuming the user-input
     dimensions are at room-temperature conditions. Dimensions are expanded
     according to two user-input temperatures, $\texpfuel$ and $\texpstruct$.
     $\texpfuel$ corresponds to the average temperature of reactor fuel and
     $\texpstruct$ corresponds to the average temperature of steel in the
     reactor. Typically, these values come from a previous coupled diffusion and
-    thermal hydraulics simulation and must be known before the simulation 
-    begins. It is expected thermal expansion effects will be significant. 
-    However, thermal expansion factors are typically on the order $10^{-2}$ so 
-    small, local changes in temperature are not expected to affect the 
-    macroscopic simulation. The effect of thermal expansion from
-    room-temperature to reactor conditions is much more important than thermal
+    thermal hydraulics simulation and must be known before the simulation
+    begins. It is expected thermal expansion effects will be significant.
+    However, thermal expansion factors are typically on the order $10^{-2}$ so
+    small, local changes in temperature are not expected to affect the
+    macroscopic simulation. The effect of expanding dimensions from
+    room-temperature to reactor conditions is more important than thermal
     expansion due to local temperatures.
 
     Given the assumptions of this model, a radial \gls{lef}can be defined using 
@@ -209,28 +208,28 @@
     reactor.
 
     Consider the thermal expansion of fractional areas within a hexagonal
-    assembly. The hexagonal assembly has total cross-sectional area $A$ and 
-    contains component cross sections with areas $A_i$. For example, the total 
-    area occupied by the fuel material could be considered $A_i$ and the total 
-    area of the hexagon described by the flat-to-flat dimension could be 
-    considered $A$. Define $A_i$ such that $\sum_{i} A_i = A$. Let the 
-    fractional area $a_i = A_i/A$ and $\sum_{i} a_i = 1$.
+    assembly. The hexagonal assembly has total cross-sectional area $A$ and
+    contains component cross sections with areas $A_i$. For example, the total
+    area occupied by the fuel material could be considered $A_i$ and the total
+    area of the hexagon described by the assembly pitch could be considered $A$.
+    Define $A_i$ such that $\sum_{i} A_i = A$. Let the fractional area $a_i =
+    A_i/A$ and $\sum_{i} a_i = 1$.
 
-    Using a method similar to the derivation of the volume ratio, a ratio can be
-    derived for thermally expanded areas and area fractions. However, this would
-    not be useful to the model because within an assembly, not all dimensions
-    expand uniformly within the radial direction.
-    The fuel radius and fuel area are expanded according to 
-    $\left(\frac{\Delta L}{L_0}\right)_{\text{U10Zr}}$ whereas all other 
-    materials are expanded according to 
-    $\left(\frac{\Delta L}{L_0}\right)_{\text{HT9}}$. This does imply that,
-    numerically, the radius of the fuel could exceed the inner radius of the 
-    clad which is a non-physical result. This will only happen for small sodium 
-    bond gaps and high thermal expansion temperatures. In these cases, the 
-    radius of the fuel is confined to the expanded inner radius of the cladding.
-    Though a more complex relationship describes the true value of these radii, 
-    the error due to this assumption is small compared to the assumption of 
-    uniform thermal expansion.
+    Using a method similar to the derivation of the volume ratio, a ratio could
+    be derived for thermally expanded areas and area fractions. However, this is
+    not possible for the model here because within an assembly, not all
+    dimensions within a hexagonal assembly expand uniformly within the radial
+    direction. The fuel radius, $R_F$, is expanded according to
+    $\left(\frac{\Delta L}{L_0}\right)_{\text{U10Zr}}$ whereas all other
+    materials are expanded according to $\left(\frac{\Delta
+    L}{L_0}\right)_{\text{HT9}}$. This does imply that, numerically, the radius
+    of the fuel could exceed the inner radius of the clad which is a
+    non-physical result. This will only happen for small sodium bond gaps and
+    high thermal expansion temperatures. In these cases, the radius of the fuel
+    is confined to the expanded inner radius of the cladding. Though a more
+    complex relationship describes the true value of these radii, the error due
+    to this assumption is small compared to the assumption of uniform thermal
+    expansion.
     
     Due to the different thermal expansion rates of fuel and structural material 
     within the cross-sectional area of the hexagonal assembly, the thermal 
@@ -239,27 +238,27 @@
     using expanded and unexpanded dimensions respectively. 
 
 \section{Implementation}
-  Thermal expansion affects the reactor in two major ways. First, thermal 
-  expansion causes the physical dimensions of the reactor to increase. This is 
-  modeled by the expansion of individual elements in the solution of the neutron 
-  diffusion equation via the \gls{fem}
-  (see \chref{ch:neutronDiffusion}) as well as the expansion of area fractions
-  within the hexagons. Second, as a result in the increase in physical 
-  dimensions, the density of reactor materials decreases. This decrease in 
-  density is necessary to preserve the quantity of material within the reactor.
-  In this derivation, the number of atoms in the reactor are conserved. The 
-  density change due to thermal expansion is observed as a decrease in 
-  cross sections.
+  Thermal expansion affects the reactor in two major ways. First, thermal
+  expansion causes the physical dimensions of the reactor to increase. This is
+  modeled by the expansion of individual elements in the solution of the neutron
+  diffusion equation via the \gls{fem} (see \chref{ch:neutronDiffusion}) as well
+  as the expansion of area fractions within the hexagons. Second, as a result in
+  the increase in physical dimensions, the density of reactor materials
+  decreases. This decrease in density is necessary to preserve the quantity of
+  material within the reactor.  In this derivation, the number of atoms in the
+  reactor are conserved. The density change due to thermal expansion is observed
+  as a decrease in cross sections.
 
   \subsection{Expansion of Elements and Area Fractions}
     Given the assumption of constant thermal expansion in radial and axial
-    directions, thermal expansion follows immediately. Each node coordinate in
-    the unstructured mesh is expanded according to \eref{eq:expand_x}, 
-    \eref{eq:expand_y}, and \eref{eq:expand_z}. By expanding in axial and radial
-    directions uniformly throughout the reactor, it is certain that there will 
-    be no intersection or overlap of elements. As previously discussed in
-    \sref{sec:model_details__assumptions_and_formulae}, the thermal expansion of
-    area fractions is calculated directly.
+    directions, linear thermal expansion of dimensions is straightforward. Each
+    node coordinate in the unstructured mesh is expanded according to
+    \eref{eq:expand_x}, \eref{eq:expand_y}, and \eref{eq:expand_z}. By expanding
+    in axial and radial directions uniformly throughout the reactor, it is
+    certain that there will be no intersection or overlap of elements. As
+    previously discussed in \sref{sec:model_details__assumptions_and_formulae},
+    the thermal expansion of area fractions within a hexagonal assembly is 
+    calculated directly using hot and cold dimensions.
 
   \subsection{Cross Section Effects}
     \label{sec:cross_section_effects}
@@ -314,36 +313,36 @@
     Therefore, to preserve the number of atoms in the reactor, number densities
     in the reactor must be updated according to \eref{eq:nden_thexp_update} in
     addition to expanding reactor dimensions. Notice that
-    \eref{eq:nden_thexp_update} can also be used to update neutron reaction 
+    \eref{eq:nden_thexp_update} can also be used to update neutron reaction
     cross sections directly as they are proportional to number density according
     to $\Sigma = \sigma N$.
 
 \section{Results}
   The effect of thermal expansion on reactor criticality is observed. As
-  previously mentioned in \sref{sec:model_details__assumptions_and_formulae}, 
-  the user must input an effective temperature to which the reactor is thermally 
-  expanded. This user-input values of $\texpstruct$ and $\texpfuel$ are varied 
+  previously mentioned in \sref{sec:model_details__assumptions_and_formulae},
+  the user must input effective temperatures to which the reactor is thermally
+  expanded. This user-input values of $\texpstruct$ and $\texpfuel$ are varied
   and all other thermal feedback effects are disabled in the simulation. For
-  this simplified demonstration, $\texpstruct=\texpfuel$. It is 
-  expected that thermal expansion will cause a significant decrease in $\keff$ 
-  and represent negative reactivity insertion. Effective neutron multiplication 
-  factor as a function of thermal expansion is plotted in \fref{fig:thexp_study} 
-  and the associated reactivity, calculated as
+  this simplified demonstration, $\texpstruct=\texpfuel$. It is expected that
+  thermal expansion will cause a significant decrease in $\keff$ and represent
+  negative reactivity insertion. Effective neutron multiplication factor as a
+  function of thermal expansion is plotted in \fref{fig:thexp_study} and the
+  associated reactivity, calculated as
   \begin{equation}
     \label{eq:reactivity_formula}
     \Delta \rho \units{\glsentryshort{pcm}} = \frac{\keff - \kref}{\keff \, \kref} \times 10^5
   \end{equation}
   is plotted in \fref{fig:thexp_study_reactivity}. In
-  \eref{eq:reactivity_formula}, $\keff$ is the calculated effective neutron 
-  multiplication factor after thermal expansion and $\kref$ is the neutron 
+  \eref{eq:reactivity_formula}, $\keff$ is the calculated effective neutron
+  multiplication factor after thermal expansion and $\kref$ is the neutron
   multiplication factor without thermal expansion. 
 
   Given the assumptions in this model, \fref{fig:thexp_study}  and
-  \fref{fig:thexp_study_reactivity} show that thermal 
-  expansion represents a significant reactivity effect and contributes as much 
-  as $-1,000 \units{\glsentryshort{pcm}}$ at extreme temperatures. Additionally, in this model 
-  the thermal expansion factor of the fuel given in \eref{eq:lef_u10zr} 
-  dominates and the phase change given by the formula can be seen at the 
+  \fref{fig:thexp_study_reactivity} show that thermal expansion represents a
+  significant reactivity effect and contributes as much as $-1,000
+  \units{\glsentryshort{pcm}}$ at extreme temperatures. Additionally, in this
+  model the thermal expansion factor of the fuel given in \eref{eq:lef_u10zr}
+  dominates and the phase change given by the formula can be seen at the
   expected $923 \units{K}$.
 
   \begin{figure}
