@@ -292,7 +292,7 @@
   $T_{\infty,i,k}$, is known within the chunk as calculated in
   \sref{sec:axial_convection_model}. Then, the model begins by calculating
   temperatures at key locations. Material temperature is calculated at the fuel
-  center-line, fuel surface, bond surface, and clad surface. The derivation of
+  centerline, fuel surface, bond surface, and clad surface. The derivation of
   these quantities are presented in \sref{sec:surface_temps}.  Similar results
   have been obtained by others \cite{FastSpectrumReactors}.  With the
   temperatures at these locations calculated, the average temperature within
@@ -307,7 +307,7 @@
     $r=0$ where $r$ is the radial coordinate. The fuel pellet has radius $R_F$
     and fuel is located in $r \in (0,R_F)$. Then, bond is located in 
     $r \in (R_F,R_B)$ and clad is located in $r \in (R_B,R_C)$. The fuel 
-    center-line temperature is $T_0$ and fuel surface temperature is $T_F$. Bond
+    centerline temperature is $T_0$ and fuel surface temperature is $T_F$. Bond
     surface temperature is $T_B$ and clad surface temperature is 
     $T_C$. $T_{\infty}$ represents the bulk coolant temperature. In this model,
     heat is generated exclusively in the fuel with volumetric heat generation 
@@ -321,14 +321,14 @@
       \label{fig:radial_model}
     \end{figure}
 
-  \subsection{Surface Temperature and Center-Line Temperatures}
+  \subsection{Surface Temperature and Centerline Temperatures}
     \label{sec:surface_temps}
     Temperatures at selected locations are calculated using the steady-state
     heat conduction equation with material properties described in
     \sref{sec:material_properties}. The process of the derivation moves outward
-    from the fuel center-line toward the coolant flow, always assuming that the
+    from the fuel centerline toward the coolant flow, always assuming that the
     next surface temperature is known. The derivation begins with the fuel 
-    center-line temperature, assuming the fuel surface temperature is known. 
+    centerline temperature, assuming the fuel surface temperature is known. 
     Then, derivation moves to the fuel surface temperature assuming the bond 
     surface temperature is known. This pattern is terminated and the 
     relationship is closed at the cladding surface where, for a given 
@@ -339,14 +339,14 @@
     \cite{subbotinUshakov}.
 
     With the derivation complete, the temperatures of interest are calculated.
-    While the derivation moved from fuel center-line outward to clad surface,
-    the calculation moves from clad surface inward to fuel center-line. This is
+    While the derivation moved from fuel centerline outward to clad surface,
+    the calculation moves from clad surface inward to fuel centerline. This is
     necessary because the quantities are all unknown with the exception of
     $T_{\infty}$ so the calculation begins there. Surface temperatures are all
     described explicitly due to the assumption of constant thermal conductivity
-    within bond and clad regions. Fuel center-line temperature must be solved
+    within bond and clad regions. Fuel centerline temperature must be solved
     implicitly due to the treatment of variable thermal conductivity. A
-    numerical solution method is used to solve for the fuel center-line
+    numerical solution method is used to solve for the fuel centerline
     temperature.
     
     \subsubsection{Temperature in Fuel}
@@ -354,12 +354,13 @@
       generation. In this region, $q'''_{i,k}$ as specified by
       \eref{eq:chunkqppp_fuel} is assumed constant within the fuel.
       Additionally, the thermal conductivity in the fuel is assumed to have the
-      general form $k_F(T)$ \cite{fuelProp}.  For the assumed fuel composition,
-      the thermal conductivity is plotted in \fref{fig:kfuel_plot}.
+      general, functional form form $k_F(T)$ \cite{fuelProp}.  For the assumed
+      fuel composition, the thermal conductivity is plotted in
+      \fref{fig:kfuel_plot}.
 
-      The steady-state heat conduction equation with constant volumetric heat
-      generation rate $q'''_{i,k}$ and variable thermal conductivity $k_F(T)$ 
-      can be written.
+      The steady-state heat conduction equation for the fuel temperature
+      $T_F(r)$, with constant volumetric heat generation rate $q'''_{i,k}$, and
+      variable thermal conductivity $k_F(T)$ can be written.
       \begin{equation}
         \label{eq:conduction_fuel}
         \grad \cdot (k_F(T_F(r)) \grad T_F(r)) + q'''_{i,k} = 0
@@ -371,8 +372,6 @@
         \frac{1}{r} \frac{d}{dr} \left( r \, k_F(T_F(r)) \, 
           \frac{d \, T_F}{dr} \right) + q'''_{i,k} = 0
       \end{equation}
-      Note the inner derivative is an ordinary derivative because the only
-      function to which it applies, $T_F(r)$, is a function of one variable. 
 
       Begin solving \eref{eq:conduction_fuel_cylindrical} by multiplying the
       equation by radial coordinate $r$.
@@ -442,10 +441,10 @@
         \label{eq:tcl_conductivity_integral}
         K_F(T_F(0)) = K_F(T_F) + \frac{q'''_{i,k}}{4} R_F^2
       \end{gather}
-      The fuel center-line temperature can be calculated using
+      The fuel centerline temperature can be calculated using
       \eref{eq:tcl_conductivity_integral} given a functional form of the
       conductivity integral $K_F(T)$ by performing a search on the conductivity
-      integral where $T_F(0)$ is the fuel center-line temperature, 
+      integral where $T_F(0)$ is the fuel centerline temperature, 
       $T_F=T_F(R_F)$ is the fuel surface temperature, and $R_F$ is the radius of 
       the fuel. If, instead, $k_F(T)$ were constant such that $k_F(T) =
       \overline{k_F}$, then \eref{eq:tcl_conductivity_integral} would be 
@@ -476,9 +475,6 @@
         \label{eq:tc_grad}
         \grad \cdot (k_B \grad T_B(r)) = 0
       \end{equation}
-      where $k_B$ is a constant representing the thermal conductivity of the
-      sodium in the bond. $k_B = 64.33 \units{$\frac{\text{W}}{\text{m K}}$}$ as
-      specified in \tref{tab:constant_k}.
       $T_B(r)$ is the temperature within the bond region.
       In this region, good thermal contact between the fuel and bond is
       assumed such that
@@ -528,7 +524,7 @@
         \left. R_F k_F(T_F(R_F)) \frac{d\,T_F}{dr} \right|_{r=R_F} &= 
           - \frac{q'''_{i,k}}{2} R_F^2
       \end{align}
-      Recall from the earlier derivation of the fuel center-line temperature 
+      Recall from the earlier derivation of the fuel centerline temperature 
       that the quantity $q'''_{i,k}$ is the average volumetric heat generation 
       rate within chunk $j$ specified in \eref{eq:chunkqppp_fuel}.
       \eref{eq:surface_relation} is substituted into
@@ -615,13 +611,13 @@
       \begin{equation}
         q''_{clad} = H_c (T_C - T_{\infty})
       \end{equation}
-      where $q''_{clad}$ is the heat flux at the clad surface $R_C$, $H$ is
+      where $q''_{clad}$ is the heat flux at the clad surface $R_C$, $H_c$ is
       the convective heat transfer coefficient, $T_C$ is the clad surface
       temperature, and $T_{\infty}$ is the bulk coolant temperature. Using the
-      relationships in \sref{sec:axial_convection_model}, $T_{\infty}$ is given
-      by the state relationship $T_{\infty} = T(h_c)$ \cite{sodiumProp}.
-      The heat flux at the clad surface is related to the volumetric heat 
-      generation rate in the fuel according to 
+      axial heat convection model in \sref{sec:axial_convection_model},
+      $T_{\infty,i,k}$ is given by the state relationship $T_{\infty,i,k} =
+      T(h_{i,k})$ \cite{sodiumProp}. The heat flux at the clad surface is
+      related to the volumetric heat generation rate in the fuel according to 
       \begin{equation}
         q''_{clad} = q'''_{i,k} \frac{R_F^2}{2 R_C}
       \end{equation}
@@ -629,14 +625,13 @@
       in the fuel according to \eref{eq:chunkqppp_fuel}.
 
       The coefficient $H_c$ must be calculated via an applicable correlation.
-      The Subbotin-Ushakov correlation is selected because it is valid for 
-      coolant in heavy liquid metal cooled reactor designs with triangular 
-      pitch assemblies. 
-      This correlation is selected because it is validated by experimental data
-      and is valid for a wide range of operating conditions common to metal 
-      cooled fast reactors. The correlation relates the P\'eclet number, $Pe$,
-      to the Nusselt number, $Nu$. The P\'eclet number is the product of the 
-      Prandlt number, $Pr$, and the Reynolds number, $Re$.
+      The Subbotin-Ushakov correlation is valid for coolant in heavy liquid
+      metal cooled reactor designs with triangular pitch assemblies.  This
+      correlation is selected because it is validated by experimental data and
+      is valid for a wide range of operating conditions common to metal cooled
+      fast reactors \cite{subbotinUshakov}. The correlation relates the P\'eclet 
+      number, $Pe$, to the Nusselt number, $Nu$. The P\'eclet number is the 
+      product of the Prandlt number, $Pr$, and the Reynolds number, $Re$.
       \begin{equation}
         \label{eq:peclet}
         Pe = Re \, Pr
@@ -650,7 +645,7 @@
       \end{equation}
       where $S$ is the rod-pitch within the assembly and $D$ is the outer 
       diameter of the cladding. The Subbotin-Ushankov correlation is valid for
-      ${ 1 < Pe < 4,000 }$ and ${1.2 \le S/D \le 2.0}$.
+      ${ 1 < Pe < 4,000 }$ and ${1.2 \le S/D \le 2.0}$ \cite{subbotinUshakov}.
 
       Calculating the nondimensional numbers begins with the calculation of 
       cross-sectional flow area and wetted perimeter. As all properties 
@@ -662,8 +657,9 @@
         A_x = \left(\frac{\sqrt{3}}{4} S^2 - \frac{\pi R_C^2}{2} - 
           \frac{\pi \, D_{wrap}^2}{8} \right) N_{rod}
       \end{equation}
-      where $S$ is the rod-pitch and $N_{rod}$ is the number of rods in the 
-      assembly. The wetted perimeter is
+      where $S$ is the rod-pitch, $N_{rod}$ is the number of rods in the 
+      assembly, and $D_{wrap}$ is the diameter of the wire wrap around the
+      cylindrical rod. The wetted perimeter is
       \begin{equation}
         \label{eq:correlation_pw}
         P_w = \left(\pi R_C + \frac{\pi\,D_{wrap}}{2}\right) N_{rod}.
@@ -711,34 +707,37 @@
       \eref{eq:correlation_de}. Finally, the clad surface temperature is 
       expressed.
       \begin{align}
-        T_C &= \frac{q''_{clad}}{H_c} + T_{\infty} \\
+        T_C &= \frac{q''_{clad}}{H_c} + T_{\infty,i,k} \\
         \label{eq:tc}
-        T_C &= q'''_{i,k} \frac{R_F^2}{2\,R_c\,H_c} + T_{\infty}
+        T_C &= q'''_{i,k} \frac{R_F^2}{2\,R_c\,H_c} + T_{\infty,i,k}
       \end{align}
-      With \eref{eq:tc}, all surface temperatures and the fuel center-line
-      temperature have been related to $T_{\infty}$ and the calculation of these
-      quantities may begin, moving from the coolant toward the fuel center-line.
+      With \eref{eq:tc}, all surface temperatures and the fuel centerline
+      temperature have been related to $T_{\infty,i,k}$ and the calculation of 
+      these quantities may begin, moving from the coolant toward the fuel 
+      centerline.
 
   \subsection{Average Temperatures}
     \label{sec:average_temps}
     Average material temperatures are used to evaluate material properties such
-    as densities, cross sections, and thermal expansion within the different 
-    material regions. The
-    derivations in this section require the fuel center-line and surface
-    temperatures from \sref{sec:surface_temps}. To calculate the average
-    temperature in a region, an expression $T(r)$ is required. For the bond and
-    clad regions, this is given in \eref{eq:tbr} and \eref{eq:tcr} respectively.
-    No such expression exists for the fuel region due to the variable thermal
-    conductivity. In the fuel region, an effective constant thermal conductivity
-    is calculated using fuel surface and fuel center-line temperatures
-    calculated assuming variable thermal conductivity. Then, $T_F(r)$ can be 
-    expressed by holding the fuel thermal conductivity constant at the effective
-    value and using \eref{eq:tcl_constant_kfuel}. In a test case at reactor 
-    conditions, this method of effective 
-    constant thermal conductivity resulted in a $10 \units{K}$ error in the 
-    average fuel temperature compared to a numerical integration with 1,000
-    points. For the purposes of calculating average values, this approximation
-    is acceptable.
+    as densities, cross sections, and thermal expansion within the different
+    material regions. The derivations in this section require the fuel
+    centerline and surface temperatures from \sref{sec:surface_temps}. To
+    calculate the average temperature in a region, an temperature function
+    $T(r)$ is required. For the bond and clad regions, this is given in
+    \eref{eq:tbr} and \eref{eq:tcr} respectively.
+
+    No such temperature function exists for the fuel region due to the variable
+    thermal conductivity. In the fuel region, an effective constant thermal
+    conductivity is calculated. First, the fuel centerline temperature is
+    calculated assuming variable thermal conductivity. Then, the fuel surface
+    and fuel centerline temperatures are used to calculate the effective
+    constant thermal conductivity.  Finally, $T_F(r)$ can be expressed by
+    holding the fuel thermal conductivity constant at the effective value and
+    using \eref{eq:tcl_constant_kfuel}. In a test case at reactor conditions,
+    this method of effective constant thermal conductivity resulted in a $10
+    \units{K}$ error in the average fuel temperature compared to a numerical
+    integration with 1,000 points. For the purposes of calculating average
+    values, this approximation is acceptable.
 
     \subsubsection{Average Fuel Temperature}
       In the fuel region, an effective constant thermal conductivity
@@ -748,7 +747,7 @@
         \label{eq:kfuel_constant}
         \overline{k_F} = \frac{q'''_{i,k} \, R_F^2}{4(T_0-T_F)}
       \end{equation}
-      where $T_0 = T_F(0)$ is the fuel center-line temperature and
+      where $T_0 = T_F(0)$ is the fuel centerline temperature and
       $T_F=T_F(R_F)$ is the fuel surface temperature.
       $T_F(0)$ and $T_F(R_F)$ have been calculated with variable thermal
       conductivity. Then, the temperature in the region, $T_F(r)$ for $r \in 
@@ -762,9 +761,9 @@
           \frac{q'''_{i,k}}{4 \overline{k_F}}
           r^2\right) \, r \; dr}{\int_0^{R_F} r \; dr}
       \end{align}
-      noting the added $r$ multiplication term due to cylindrical coordinates
-      and a factor $2 \pi$ has been canceled.
-      Begin with evaluating the integral in the denominator of
+      noting the additional $r$ multiplication term due to cylindrical
+      coordinates and a factor $2 \pi$ has been canceled. Begin with evaluating
+      the integral in the denominator of
       \eref{eq:tfbar_integral}.
       \begin{align}
         \int_0^{R_F} r \; dr &= \left. \frac{r^2}{2} \right|_{r=0}^{r=R_F} \\
@@ -796,13 +795,14 @@
       $k_F$. $\overline{T_F}$ will be used to calculate fuel cross sections. 
 
       To calculate more accurate fuel cross sections, an effective fuel 
-      temperature should be used which weights the fuel surface temperature 
+      temperature could be used which weights the fuel surface temperature 
       higher than the average value. Due to self-shielding in the fuel, the 
       temperature corresponding to the average neutron flux is nearer to the 
       surface of the fuel as neutron flux decreases significantly within the 
       fuel material itself. For the purposes of this model, the use of volume 
       averaged fuel temperatures is acceptably accurate as rod-powers cannot be 
-      resolved in this simplified geometry. In addition, metal fuel has a lower 
+      resolved in this simplified geometry due to the smearing of cross sections
+      within a hexagonal fuel assembly. In addition, metal fuel has a lower 
       change in temperature between surface and centerline temperatures when 
       compared to oxide fuels and rod dimensions are smaller than typical 
       \glspl{lwr}.
@@ -882,38 +882,40 @@
       calculated and used for calculating cross sections.
 
 \section{Cross Section Treatment}
-  The purpose of calculating average material temperatures is to calculate
-  cross sections for use in the neutron diffusion equation. Cross sections are
-  calculated by interpolating between temperatures in cross section libraries
-  generated according to \sref{sec:cross_section_treatment} in order to simulate
-  the Doppler effect as it relates to neutron cross sections.
+  The purpose of calculating average material temperatures is to calculate cross
+  sections for use in the multigroup neutron diffusion equation. Cross sections
+  are calculated by interpolating between temperatures in cross section
+  libraries generated according to \sref{sec:cross_section_treatment} in order
+  to simulate the temperature feedback effects as they relate to neutron cross 
+  sections.
 
-  Linear interpolation is valid for materials minimally effected by Doppler 
-  broadening. Such materials include cladding and sodium as these materials do 
-  not change temperature significantly over the operating range of fast reactors
-  and have relatively few neutron absorption resonances. The fuel material is 
-  interpolated according to a square-root interpolation because the Doppler 
-  effect obeys square-root behavior. Square-root interpolation is necessary
-  due to relatively high fuel temperatures and the many neutron absorption 
-  resonances in fuel material, specifically uranium.
+  The main form of temperature feedback affecting microscopic neutron cross
+  sections is the Doppler broadening of neutron absorption resonance peaks in
+  heavy nuclei.  Linear interpolation is valid for materials minimally effected
+  by Doppler broadening. Such materials include cladding and sodium as these
+  materials do not change temperature significantly over the operating range of
+  fast reactors and have relatively few neutron absorption resonances. The fuel
+  material is interpolated according to a square-root interpolation because the
+  Doppler effect obeys square-root behavior. Square-root interpolation is
+  necessary due to relatively high fuel temperatures and the many neutron
+  absorption resonances in fuel material, specifically uranium.
 
-  Reactor material temperatures are updated periodically throughout the 
-  neutron diffusion calculation. The user may specify a fixed number of power
-  iterations for which the diffusion calculation will run before updating the
-  temperatures. Currently, 10 power iterations are run per temperature update
-  and this provides efficient and convergent behavior.
-  For a discussion of power iterations, see \sref{sec:power_iterations}.
+  Reactor material temperatures are updated periodically throughout the neutron
+  diffusion calculation. The user may specify a fixed number of power iterations
+  for which the diffusion calculation will run before updating the temperatures.
+  Currently, 10 power iterations are run per temperature update and this
+  provides efficient and convergent behavior.  For a discussion of power
+  iterations, see \sref{sec:power_iterations}.
   
-  When
-  the temperatures are updated, the cross sections are also updated. Updating
-  the material-cross sections requires recomputing the finite element matrix
-  (see \eref{eq:matrix_population})
-  which proves to be the most computationally expensive part of the update. 
-  Note that the update of cross sections during a power iteration makes the
-  iterative method non-linear and the convergence of the method is no longer
-  guaranteed. However, this procedure is commonly used in practice and no 
-  convergence problems have been observed. The general procedure to update
-  cross sections is given in \algorithmref{algorithm:temperature_update}.
+  When the temperatures are updated, the cross sections are also updated.
+  Updating the material cross sections requires recomputing the finite element
+  matrix (see \eref{eq:matrix_population}) which proves to be the most
+  computationally expensive part of the update. Note that the update of cross
+  sections during a power iteration makes the iterative method non-linear and
+  the convergence of the method is no longer guaranteed. However, this procedure
+  is commonly used in practice and no convergence problems have been observed.
+  The general procedure to update cross sections is given in
+  \algorithmref{algorithm:temperature_update}.
 
   In \algorithmref{algorithm:temperature_update}, the cross sections are
   updated using the average material temperatures. Average material
@@ -926,27 +928,28 @@
     \label{algorithm:temperature_update}
     \begin{algorithmic}[1]
       \State Complete $N_{iter}$ power iterations to calculate
-        $\widetilde{\phi_{e,g}}$.
+        $\widetilde{\phi_{e,g}}$. Currently $N_{iter}=10$.
       \State Calculate flux normalization constant $c$ from
         \eref{eq:normalization_c}.
       \State Calculate power for each element as in \eref{eq:elementpwr} and
         \eref{eq:elementqppp_fuel}.
-      \ForAll{chunks}
+      \ForAll{Chunks}
         \State Calculate power $q_{i,k}$ and $q'''_{i,k}$ in \eref{eq:chunkpwr}
           and \eref{eq:chunkqppp_fuel}.
         \State Calculate bulk coolant temperature using the 
           procedure outlined in \sref{sec:axial_convection_model}.
-        \State Calculate surface temperatures and fuel center-line temperature
+        \State Calculate surface temperatures and fuel centerline temperature
           using the procedure in \sref{sec:surface_temps}.
         \State Calculate material average temperatures using the procedure 
           outlined in \sref{sec:average_temps}.
         \State Update cross sections using average material temperatures.
       \EndFor
+      \State Reconstruct the finite element matrix $\ma_g$.
     \end{algorithmic}
   \end{algorithm}
 
   \subsection{Coolant Cross Sections}
-    The main effect on coolant cross sections due to temperature is due to the
+    The main temperature effect on coolant cross sections is due to the
     change in fluid density. The mass-density of the of liquid sodium 
     is given as a function of temperature $\rho(T)$ by a state relationship 
     \cite{sodiumProp}. Natural sodium is entirely composed of \isotope[23]{Na} 
@@ -973,9 +976,10 @@
     %where $N_{Na}$ is calculated according to \eref{eq:number_density_sodium}.
 
     Using the coolant temperatures for the cross section library structure
-    described in \sref{sec:cross_section_treatment}, coolant cross sections are
-    calculated using a linear interpolation. For coolant temperature
-    $T_{n}<T_{\infty,i,k}<T_{n+1}$ and library temperatures $\{T_n\}$,
+    described in \sref{sec:cross_section_treatment}, microscopic coolant cross 
+    sections are calculated using a linear interpolation. For coolant
+    temperature $T_{n}<T_{\infty,i,k}<T_{n+1}$ and library temperatures
+    $\{T_n\}$,
     \begin{equation}
       \label{eq:xs_cool}
       \Sigma_{x,i,k,g} = N_{Na}(T_{\infty,i,k}) 
@@ -988,15 +992,13 @@
     library temperatures $T_n$ and $T_{n+1}$ respectively.
 
   \subsection{Clad Cross Sections}
-    Macroscopic cross sections are tabulated based 
-    on the cross section library data at temperatures specified in
-    \tref{tab:xstemps}. The temperature effect is typically small as cladding
-    material has fewer absorption resonances than fuel material and cladding
-    material does not change temperature as extremely as other reactor
-    materials. For this reason, a simple linear interpolation is used to 
-    interpolate macroscopic cross sections within this material. For 
-    $T_n < \overline{T_{C,i,k}} < T_{n+1}$, the macroscopic cross section for 
-    reaction $x$ and energy group $g$ according to the linear interpolation 
+    The temperature dependence of cross sections within cladding material is
+    typically small as cladding material has fewer absorption resonances than
+    fuel material and cladding material does not change temperature as extremely
+    as other reactor materials. For this reason, a simple linear interpolation
+    is used to interpolate macroscopic cross sections within this material. For
+    $T_n < \overline{T_{C,i,k}} < T_{n+1}$, the macroscopic cross section for
+    reaction $x$ and energy group $g$ according to the linear interpolation
     method is given as
     \begin{equation}
       \label{eq:xs_linear_interpolation}
@@ -1015,7 +1017,8 @@
     do no change significantly with temperature. Therefore, it is assumed that,
     for purposes of calculating cross sections, the temperature in the coolant
     is the same as the temperature in the bond and cross sections in the bond
-    are calculated as \eref{eq:xs_cool}.
+    are calculated as \eref{eq:xs_cool}. This assumption is consistent with the
+    smearing of hexagonal fuel assemblies.
 
   \subsection{Fuel Cross Sections}
     Temperature dependence of cross sections in the fuel region is dominated
@@ -1057,7 +1060,7 @@
     inputs reactor power, $Q_{Rx}$, and the calculated value is compared to the
     input value. For a reactor model operating at full power, the calculated
     reactor power agreed to the user input reactor power to within machine
-    tolerance.
+    precision.
 
   \subsection{Radial Results}
     Radial temperatures for a typical fuel rod model are shown in
@@ -1161,7 +1164,7 @@
     
     The result of the axial discretization is an error in the bulk coolant
     temperature axially, $T_{\infty}(z)$. All subsequent calculations of surface
-    temperatures and average temperatures are analytical and exact to within the
+    temperatures and average temperatures are analytical and exact to the
     approximations made (e.g. constant thermal conductivity). Therefore, the
     error is only computed as it relates to $T_{\infty}(z)$. Analytic and
     modeled results are shown in \fref{fig:axial_difference_plot} as well as the
