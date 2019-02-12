@@ -25,11 +25,12 @@
   rate.
 
   \chref{ch:thermalHydraulics} presents the details of the thermal hydraulic
-  models employed. These models include an axial convection model and a radial
-  conduction model. Temperatures resulting from these thermal hydraulic models
-  are used to interpolate cross section tables and update coolant density to 
-  generate temperature-dependent cross sections. The formulae for the 
-  interpolation of temperature-dependent cross sections are also provided.
+  models employed. These models include an axial heat convection model and a
+  radial heat conduction model. Temperatures resulting from these thermal
+  hydraulic models are used to interpolate cross section tables and update
+  coolant density to generate temperature-dependent cross sections. The formulae
+  for the interpolation of temperature-dependent cross sections are also
+  provided.
 
   In \chref{ch:thermalExpansion}, a simplified thermal expansion model is
   presented. The model expands materials linearly assuming materials thermally
@@ -48,19 +49,19 @@
 
 \section{Conclusions}
   
-  It has been demonstrated that the \gls{fem} can be used to efficiently 
+  It has been demonstrated that the \gls{fem} can be used to efficiently
   simulate the power distribution in a nuclear power reactor. Use of the
-  \gls{fem} has allowed for the local simulation of multiphysics effects within 
-  elements. The \gls{fem} framework allows for intuitive storage coupling of
+  \gls{fem} has allowed for the local simulation of multiphysics effects within
+  elements.  The \gls{fem} framework allows for intuitive coupling of
   multiphysics effects because physics simulations can all share the same mesh.
 
-  By simulating thermal hydraulic feedback and thermal expansion 
-  effects, reactivity effects are estimated. Prior to this work, the 
-  simulation of feedback effects required either manual iteration between 
-  thermal hydraulic calculations and a neutron diffusion solver or the use of 
-  simplified estimates of temperatures. This work has demonstrated a practical
-  implementation of fast reactor multiphysics simulations by utilizing the
-  \gls{fem} and a finite element framework.
+  By simulating thermal hydraulic feedback and thermal expansion effects,
+  reactivity effects are estimated. Prior to this work, the simulation of
+  feedback effects required either manual iteration between thermal hydraulic
+  calculations and a neutron diffusion solver or the use of other simplified
+  estimates. This work has demonstrated a practical implementation of fast
+  reactor multiphysics simulations by utilizing the \gls{fem} and a finite
+  element framework.
   
 \section{Recommendations for Future Research}
 
@@ -81,13 +82,12 @@
     this excess reactivity. 
 
     Depletion calculations require solving the Bateman equations and the
-    associated matrix exponential system of equations. Preliminary 
-    investigations have been conducted for the
-    implementation of the \gls{cram} as the depletion solver \cite{cram}. The 
-    \gls{cram} will be implemented using the \gls{fem} mesh. A subsequent mesh 
-    study will be required to determine if it is possible to use a coarse mesh 
-    for depletion or if the fine mesh must also be used in iosotopic depletion 
-    calculations.
+    associated matrix exponential system of equations. Preliminary
+    investigations have been conducted for the implementation of the \gls{cram}
+    as the depletion solver in this suite \cite{cram}. The \gls{cram} will be 
+    implemented using the \gls{fem} mesh. A subsequent mesh study will be
+    required to determine if it is possible to use a coarse mesh for depletion
+    or if the fine mesh must also be used in isotopic depletion calculations.
 
   \subsection{Higher Order Finite Elements}
     Recall the \gls{fem} as presented in \chref{ch:neutronDiffusion} employs
@@ -103,24 +103,23 @@
     refinement without mesh regeneration.
 
   \subsection{\texorpdfstring{\glsentrylong{spn}}{Simplified PN} Solution}
-    The \gls{spn} equations can provide considerable accuracy compared to the
-    diffusion equation by incorporating angular dependence of flux rather than
-    assuming isotropic scalar flux. The \gls{spn} equations reduce to a system
-    of diffusion-like equations. Work by Ryu and Joo has demonstrated that the
-    \gls{fem} can be used to solve the \gls{spn} equations in general geometry
-    \cite{Ryu2013}.
-    Implementation of the \gls{spn} equations would require the development of a
-    new solver but much of the \gls{fem} framework can be reused. Implementation
-    of the \gls{spn} method could provide enhanced accuracy for full-scale
-    reactor problems.
+    The \gls{spn} equations can provide considerably improved accuracy compared
+    to the diffusion equation by incorporating angular dependence of flux rather
+    than assuming isotropic scalar flux. The \gls{spn} equations reduce to a
+    system of diffusion-like equations. Work by Ryu and Joo has demonstrated
+    that the \gls{fem} can be used to solve the \gls{spn} equations in general
+    geometry \cite{Ryu2013}. Implementation of the \gls{spn} equations would
+    require the development of a new solver but much of the \gls{fem} framework
+    can be reused. Implementation of the \gls{spn} method could provide enhanced
+    accuracy for full-scale reactor problems.
 
   \subsection{Encouraging Code Usage}
     The simulation suite is designed to be used for practical fast nuclear power
-    reactor simulations. An important step in this code becoming practical is 
+    reactor simulations. An important step in this code becoming practical is
     its adoption by users. Encouraging the usage of the simulation package will
     allow for user feedback. Additionally, users employing the code in a variety
     of simulations will encourage the development of future features that may be
-    necessary for unique reactor designs. Future possible reactors to be 
+    necessary for unique reactor designs. Future possible reactors to be
     simulated include the SuperPhenix benchmark and simulation of the
     \gls{ebr-ii} inherent safety demonstrations \cite{ebriitests}.
     

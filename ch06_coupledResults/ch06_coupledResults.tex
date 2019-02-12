@@ -4,18 +4,18 @@
 \section{Power Reactor Modeling}
 \label{sec:power_reactor_modeling}
   The motivation for this work is to model nuclear power reactors with
-  multiphysics feedback. This has been accomplished by modeling the reactor 
-  power distribution with the multigroup neutron diffusion equation solved via 
-  the \gls{fem} (\chref{ch:neutronDiffusion}). Axial heat
-  convection and radial heat conduction models are used to estimate reactor
-  material temperatures (\chref{ch:thermalHydraulics}).
-  Simplified thermal expansion modeling is used to model reactor dimensions 
-  (\chref{ch:thermalExpansion}). Combined, these modeled multiphysics effects 
-  will provide feedback which can be estimated in the model. 
+  multiphysics feedback. This has been accomplished by modeling the reactor
+  power distribution with the multigroup neutron diffusion equation solved via
+  the \gls{fem} (\chref{ch:neutronDiffusion}). Axial heat convection and radial
+  heat conduction models are used to estimate reactor material temperatures
+  (\chref{ch:thermalHydraulics}).  Simplified thermal expansion modeling is used
+  to model reactor dimensions (\chref{ch:thermalExpansion}). Combined, these
+  modeled multiphysics effects will provide feedback which can be estimated in
+  the model. 
   
-  To test the coupling of these models, a realistic reactor benchmark is 
-  provided and modeled \sref{sec:abr}. Reactivity coefficients describing system 
-  feedback are defined in \sref{sec:reactivity_coefficients}. Results are 
+  To test the coupling of these models, a realistic reactor benchmark is
+  provided and modeled \sref{sec:abr}. Reactivity coefficients describing system
+  feedback are defined in \sref{sec:reactivity_coefficients}. Results are
   presented in \sref{sec:results}.
 
 \section{\glsentrylong{abr} -- MET-1000}
@@ -25,34 +25,36 @@
   \units{MWth} rating; hence, MET-1000. This is a medium-sized metallic reactor 
   with a total of 180 hexagonal assemblies and is 4.8 \units{m} tall. The 
   benchmark is fully specified and thirty-one independent results are submitted. 
+  Compared to other reactors modeled, this model is extremely large due to the
+  large structural components included above and below the active fuel region.
   
-  Each submission to the benchmark uses independently generated cross sections 
-  from several different cross section libraries (e.g. ENDFB7.0, JEFF3.1, etc.). 
+  Each submission to the benchmark uses independently generated cross sections
+  from several different cross section libraries (e.g. ENDFB7.0, JEFF3.1, etc.).
   Therefore, using this benchmark as a verification problem is not feasible.
   Instead, cross sections were generated for this model using \mcc and the
-  procedure outlined in \sref{sec:cross_section_treatment}. This procedure 
-  resulted in temperature dependent cross section libraries with 33 energy 
+  procedure outlined in \sref{sec:cross_section_treatment}. This procedure
+  resulted in temperature dependent cross section libraries with 33 energy
   groups. The multigroup neutron diffusion equation is solved using these same
-  cross sections using both \dif and the method from 
-  \chref{ch:neutronDiffusion}. These two methods using the same cross sections 
-  agree to within 700 \units{\glsentryshort{\glsentryshort{pcm}}}. The \dif and \gls{fem} models were minimally 
-  refined. A more formal refinement study would presumably show further error 
-  reduction. 
+  cross sections using both \dif and the method from
+  \chref{ch:neutronDiffusion}. \dif and the \gls{fem}, using the same cross
+  sections, agree to within 700 \units{\glsentryshort{\glsentryshort{pcm}}}. The
+  \dif and \gls{fem} models were minimally refined. A more formal refinement
+  study would presumably show further error reduction. 
   
   Multiphysics results for this benchmark have not been published. Therefore,
   the coupled results are not compared to reference results. Instead, each of
   the multiphysics models has been investigated individually in the preceding
   chapters. 
 
-  The reactor materials in the benchmark are shown in \fref{fig:abr_materials}. 
+  The reactor materials in the benchmark are shown in \fref{fig:abr_materials}.
   To allow for intuitive flux visualization, the 33-group energy structure is
   collapsed to a two-group energy structure. The collapsed fast ($\phi_1$) and
-  collapsed thermal ($\phi_2$) are plotted in \fref{fig:abr_fluxes}.
-  Note, all subsequent results are presented with the full 33-group energy
-  structure. Fast flux is shown to peak in
-  the center of the core in the active fuel region. Thermal flux is shown to
-  peak in core structural material, at the periphery of the active fuel region,
-  as well as in control rod locations within the core.
+  collapsed thermal ($\phi_2$) are plotted in \fref{fig:abr_fluxes}.  Note, all
+  subsequent results are presented with the full 33-group energy structure. Fast
+  flux is shown to peak in the center of the core in the active fuel region.
+  Thermal flux is shown to peak in core structural material, at the periphery of
+  the active fuel region, as well as in control rod locations where the control
+  rods have been withdrawn from the active fuel region.
 
   \begin{figure}
     \centering
@@ -107,11 +109,11 @@
   in the calculation of $\alpha$. Therefore, consider a set of reactor powers
   varying from $0\%$ to $100\%$ as $Q_{Rx,i} = \{0\%,\ldots,100\%\}$.
 
-  Reactivity coefficients useful for fast reactor applications include the power 
+  Reactivity coefficients useful for fast reactor applications include the power
   coefficient, thermal expansion coefficient, fuel temperature (Doppler)
-  coefficient, and \gls{ctc} \cite{textbookknief}.
-  Reactivity coefficients will be estimated with a first-order, forward-Euler,
-  finite-difference approximation such that
+  coefficient, and \gls{ctc} \cite{textbookknief}.  Reactivity coefficients will
+  be estimated with a first-order, forward-Euler, finite-difference
+  approximation such that
   \begin{equation}
     \label{eq:reactivity_coefficient_finite_difference}
     \alpha_x(x_i) \approx \frac{\rho(x_i) - \rho(x_i + \Delta x)}{\Delta x}
@@ -122,17 +124,16 @@
 
   \subsection{Power Reactivity Coefficient}
   \label{sec:power_reactivity_coefficient}
-    The power reactivity coefficient measures the reactivity response due to a 
-    power increase. In a stable reactor, $\alpha_{power} < 0$ to ensure an 
-    increase in reactor power requires a reactivity increase and to prevent a 
+    The power reactivity coefficient measures the reactivity response due to a
+    power increase. In a stable reactor, $\alpha_{power} < 0$ to ensure an
+    increase in reactor power requires a reactivity increase and to prevent a
     runaway power increase. To evaluate $\alpha_{power}$, the reactor is
     simulated at a nominal reactor power, $Q_{Rx,i}$ resulting in
     $\keff(Q_{Rx,i})$. Then, reactor power is increased by $\Delta Q_{Rx}$
-    resulting in $\keff(Q_{Rx,i} + \Delta Q_{Rx})$. These \keff values 
-    correspond to reactivities $\rho(Q_{Rx,i})$ and 
-    ${\rho(Q_{Rx,i} + \Delta Q_{Rx})}$ respectively as defined by 
-    \eref{eq:reactivity}. With these values, the power reactivity coefficient 
-    can be calculate as
+    resulting in $\keff(Q_{Rx,i} + \Delta Q_{Rx})$. These \keff values
+    correspond to reactivities $\rho(Q_{Rx,i})$ and ${\rho(Q_{Rx,i} + \Delta
+    Q_{Rx})}$ respectively as defined by \eref{eq:reactivity}. With these
+    values, the power reactivity coefficient can be calculate as
     \begin{equation}
       \label{eq:power_reactivity_coefficient}
       \alpha_{power}(Q_{Rx,i}) = \frac{\rho(Q_{Rx,i}) - \rho(Q_{Rx,i} + 
@@ -151,22 +152,27 @@
     temperature (see \chref{ch:thermalExpansion}) and the large neutron leakage 
     fraction (\leakage) in fast reactors \cite{PlentifulEnergy}. The leakage 
     fraction is the fraction of neutrons created in the fuel due to fission that 
-    exit the core. \glspl{lwr} typically have low and ultra-low 
-    leakage designs with $\leakage \approx 2 \%$ \cite{textbookknief}. However,
-    fast reactors simulated in this work have $\leakage \approx 20\%$ and 
-    therefore are therefore highly sensitive to decreases in fuel density and 
-    changing reactor dimensions due to thermal expansion.
+    exit the core. The leakage fraction can be expressed as
+    \begin{equation}
+      \label{eq:leakage}
+      \leakage = \frac{k_{\infty}}{\keff}
+    \end{equation}
+    where $k_{\infty}$ is the effective neutron multiplication factor for an
+    infinite medium. \glspl{lwr} typically have low and ultra-low leakage
+    designs with $\leakage \approx 2 \%$ \cite{textbookknief}. However, fast
+    reactors simulated in this work have $\leakage \approx 20\%$ and are
+    therefore highly sensitive to decreases in fuel density and changing reactor
+    dimensions due to thermal expansion.
 
-    Thermal expansion temperatures, \texpfuel and \texpstruct, as implemented in 
+    Thermal expansion temperatures, \texpfuel and \texpstruct, as implemented in
     \chref{ch:thermalExpansion} must be known before the simulation. Note from
     \sref{sec:power_reactivity_coefficient}, a case must be simulated to
     calculate $\keff(Q_{Rx_i} + \Delta Q_{Rx})$ in the calculation of the power
-    reactivity coefficient $\alpha_{power}$ in 
+    reactivity coefficient $\alpha_{power}$ in
     \eref{eq:power_reactivity_coefficient}. Therefore, the temperature
     distribution resulting from this study can be used to calculate the thermal
-    expansion temperatures for the case with increased power, 
-    ${\texp(Q_{Rx,i} + \Delta Q_{Rx})}$.
-    Then, the thermal expansion reactivity coefficient is 
+    expansion temperatures for the case with increased power, ${\texp(Q_{Rx,i} +
+    \Delta Q_{Rx})}$. Then, the thermal expansion reactivity coefficient is 
     \begin{equation}
       \label{eq:thermal_expansion_reactivity_coefficient}
       \alpha_{thexp}(Q_{Rx,i}) = \frac{\rho(\texp(Q_{Rx,i})) - 
@@ -189,7 +195,7 @@
     broadening of resonance absorption peaks in heavy nuclei such as
     \isotope[238]{U} \cite{textbookknief}. Briefly, at high fuel temperatures, 
     neutrons are more likely to be parasitically absorbed by non-fissile nuclei
-    than fissile-nuclei in the fuel material.
+    than fissile nuclei in the fuel material.
 
     To calculate $\alpha_{Doppler}$, fuel temperature is increased directly. A
     simulation is conducted with feedback for reactor power $Q_{Rx,i}$ and the
@@ -204,44 +210,42 @@
       \alpha_{Doppler}(Q_{Rx,i}) = \frac{\rho(Q_{Rx,i}) - \rho_i(T_{fuel} +
         \Delta T_{fuel})} {\Delta T_{fuel}}
     \end{equation}
-    Note that the Doppler reactivity coefficient is always negative.
-    A typical value of $\Delta T_{fuel}$ is $20\units{K}$.
-    The definition in \eref{eq:doppler_reactivity_coefficient} is a
-    \textit{uniform} Doppler coefficient as opposed to a \textit{distributed} 
-    Doppler coefficient as temperatures are increased uniformly throughout the
-    reactor.
+    Note that the Doppler reactivity coefficient is always negative.  A typical
+    value of $\Delta T_{fuel}$ is $20\units{K}$.  The definition in
+    \eref{eq:doppler_reactivity_coefficient} is a \textit{uniform} Doppler
+    coefficient as opposed to a \textit{distributed} Doppler coefficient as
+    temperatures are increased uniformly throughout the reactor.
 
   \subsection{\texorpdfstring{\glsentrylong{ctc}}{Coolant Temperature
     Coefficient (CTC)}}
   \label{sec:coolant_temperature_reactivity_coefficient}
-    The \gls{ctc} describes the
-    reactivity change due to an increase in coolant temperature. In \glspl{lwr}, 
-    this may be called the \gls{mtc} but in fast
-    reactors, the coolant is not designed to moderate neutrons. Feedback in the 
-    coolant is due to two main phenomena: the decrease in absorption 
-    cross sections in the coolant due to Doppler broadening and the decrease of 
-    density due to temperature increase. The dominant effect is the decrease of 
+    The \gls{ctc} describes the reactivity change due to an increase in coolant
+    temperature. In \glspl{lwr}, this may be called the \gls{mtc} but in fast
+    reactors, the coolant is not designed to moderate neutrons. Feedback in the
+    coolant is due to two main phenomena: the decrease in absorption cross
+    sections in the coolant due to Doppler broadening and the decrease of
+    density due to temperature increase. The dominant effect is the decrease of
     sodium density due to the temperature increase \cite{textbookknief}.
 
-    Unlike all other reactivity coefficients presented here, the \gls{ctc} of the 
-    \gls{abr} is positive as is common in fast reactors. This implies increases 
-    in coolant temperature will lead to an increase in reactivity and cause a 
-    subsequent increase in reactor power. In fast reactors, the coolant acts as 
-    a parasitic neutron absorber. Therefore, a decrease in the sodium absorption 
-    cross section encourages neutron absorption in fissile material in the fuel 
-    resulting in a reactivity increase. This does not pose a stability problem 
-    as long as the power reactivity coefficient remains negative.
+    Unlike all other reactivity coefficients presented here, the \gls{ctc} of
+    the \gls{abr} is positive as is common in fast reactors. This implies
+    increases in coolant temperature will lead to an increase in reactivity and
+    cause a subsequent increase in reactor power. In fast reactors, the coolant
+    acts as a parasitic neutron absorber. Therefore, a decrease in the sodium
+    absorption cross section or a decrease in sodium density due to a
+    temperature increase encourages neutron absorption in fissile material in
+    the fuel resulting in a reactivity increase. This does not pose a stability
+    problem as long as the power reactivity coefficient remains negative.
 
     To calculate $\alpha_{CTC}$, coolant temperature is increased directly with
     a procedure similar to that for the Doppler reactivity coefficient in
-    \sref{sec:fuel_temperature_reactivity_coefficient}. A simulation is 
-    conducted with feedback for reactor power $Q_{Rx,i}$ and the temperature 
-    profile is stored. Then, the coolant temperature is uniformly
-    increased by $\Delta T_{cool}$ and the simulation is conducted again. This
-    procedure will result in $\keff(Q_{Rx,i})$ and 
-    ${\keff(T_{cool} + \Delta T_{cool})}$. The reactivity associated with each
-    \keff can be calculated given \eref{eq:reactivity} and the coolant
-    temperature coefficient is
+    \sref{sec:fuel_temperature_reactivity_coefficient}. A simulation is
+    conducted with feedback for reactor power $Q_{Rx,i}$ and the temperature
+    profile is stored. Then, the coolant temperature is uniformly increased by
+    $\Delta T_{cool}$ and the simulation is conducted again. This procedure will
+    result in $\keff(Q_{Rx,i})$ and ${\keff(T_{cool} + \Delta T_{cool})}$. The
+    reactivity associated with each \keff can be calculated given
+    \eref{eq:reactivity} and the coolant temperature coefficient is
     \begin{equation}
       \label{eq:coolant_temperature_reactivity_coefficient}
       \alpha_{CTC}(Q_{Rx,i}) = \frac{\rho(Q_{Rx,i}) - \rho(T_{cool} + 
@@ -251,14 +255,14 @@
 
 \section{Results}
 \label{sec:results}
-  Returning to the \gls{abr} MET-1000 benchmark, reactivity coefficients are 
+  Returning to the \gls{abr} MET-1000 benchmark, reactivity coefficients are
   modeled for this reactor. The methodology and formulae from
   \sref{sec:reactivity_coefficients} are used. The reactor \keff as a function
   of reactor power is plotted in \fref{fig:keff_effects}. Note \keff decreases
   as power increases and the \keff for the case with increased sodium
   temperature is higher than all other \keff.
   
-  The coefficients themselves are plotted in 
+  The reactivity coefficients themselves are plotted in
   \fref{fig:abr_reactivity_coefficients}. The combined power reactivity
   coefficient is plotted in \fref{fig:power_reactivity_coefficient}. Note,
   $\alpha_{power} < 0$ for all powers. At low reactor power, the reactivity
@@ -272,6 +276,8 @@
   continue to increase beyond $100\%$ nominal value, the power reactivity
   coefficient would continue to become more negative as thermal expansion will
   continue to dominate.
+
+  \clearpage
 
   \begin{figure}
     \centering
