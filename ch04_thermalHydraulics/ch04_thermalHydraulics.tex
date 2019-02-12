@@ -2,25 +2,23 @@
 \label{ch:thermalHydraulics}
 
 \section{Introduction}
-  Material temperatures and densities are a pivotal part of the multiphysics 
+  Material temperatures and densities are a pivotal part of the multiphysics
   problem of simulating a fast reactor. Temperatures are necessary for
-  calculating reactor cross sections for an accurate power distribution and can
-  be used as input for a thermal hydraulic simulation. Thermal hydraulic models
-  are developed for standard fast reactor geometry as described in
-  \sref{sec:geometry_description}. Recall, the standard assembly is a hexagonal 
-  can and filled with many cylindrical rods. 
+  calculating temperature-dependent reactor cross sections for an accurate power
+  distribution.  Thermal hydraulic models are developed for standard fast
+  reactor geometry as described in \sref{sec:geometry_description}. Recall, the
+  standard assembly is a hexagonal can and filled with many cylindrical rods. 
 
-  In this simulation, two thermal hydraulic models are employed. The first is a 
+  In this simulation, two thermal hydraulic models are developed. The first is a
   steady-state, one-dimensional, axial heat convection model to calculate bulk
-  coolant temperatures and densities as the coolant flows vertically through a 
-  channel. This model is valid for the assumption of no cross-flow between 
-  channels and perfect fluid mixing within the flow channel. These assumptions 
-  are valid for simulating fast reactors with canned assemblies and assembly 
-  designs which encourage within-assembly mixing. Hexagonal assemblies, as 
-  common to fast reactors and described in \sref{sec:geometry_description}, 
-  satisfy this assumption with canned assemblies to prevent cross-flow between 
-  channels and mixing encouraged by wire wrapping. The second model is a 
-  steady-state, one-dimensional, radial heat conduction model within a 
+  coolant temperatures and densities as the coolant flows vertically through a
+  channel. This model is valid for the assumption of no cross-flow between
+  channels and perfect fluid mixing within the flow channel. These assumptions
+  are valid for simulating typical fast reactors with hexagonal assemblies.
+  Hexagonal assemblies, as described in \sref{sec:geometry_description}, satisfy
+  this assumption with canned assemblies to prevent cross-flow between channels
+  and mixing encouraged by wire wrapping. The second thermal hydraulic model is
+  a steady-state, one-dimensional, radial heat conduction model within a
   cylindrical rod to calculate average cladding, bond, and fuel temperatures.
 
   \begin{figure}
@@ -33,7 +31,7 @@
 \section{Material Properties}
   \label{sec:material_properties}
   Thermodynamic properties of reactor materials are required for these models.
-  The coolant properties are the most extensive with density, enthalpy, 
+  The coolant properties required are the most extensive with density, enthalpy, 
   thermal conductivity, dynamic viscosity, and heat capacity required. In this
   thesis, sodium coolant is considered \cite{sodiumProp}. However, these thermal 
   hydraulic properties can be easily changed to allow for the simulation of 
@@ -44,8 +42,8 @@
   conductivities and their thermal conductivities do not change significantly 
   over the operating temperatures of sodium cooled fast reactors. Therefore, the 
   thermal conductivity of sodium within the bond \cite{sodiumProp} and HT9
-  \cite{ht9Prop} are assumed constant. These constant values are given in 
-  \tref{tab:constant_k}.
+  \cite{ht9Prop} are assumed constant at the average reactor operating value.
+  These constant values are given in \tref{tab:constant_k}.
     
   \begin{table}
     \caption{Constant Thermal Conductivity for Sodium and HT9.}
@@ -62,15 +60,13 @@
     \end{center}
   \end{table}
 
-  Fuel composition is assumed to be of the form U-XZr where
-  X is the weight fraction of Zr in the fuel. A typical value for X is 10\% and
-  this is assumed for this work.
-  Fuel thermal conductivity given in as a function of material
-  temperature and zirconium weight fraction \cite{fuelProp}.
-  A plot of thermal conductivity for U-10Zr as a function of temperature is 
-  given in \fref{fig:kfuel_plot}. The functional form of the thermal
-  conductivity for U-XZr is given in \eref{eq:kfuel_first} through
-  \eref{eq:kfuel_last}.
+  Fuel composition is assumed to be of the form U-XZr where X is the weight
+  fraction of Zr in the fuel. A typical value for X is 10\% and this is assumed
+  for this work. Fuel thermal conductivity is given as a function of material
+  temperature and zirconium weight fraction \cite{fuelProp}. A plot of thermal
+  conductivity for U-10Zr as a function of temperature is given in
+  \fref{fig:kfuel_plot}. The functional form of the thermal conductivity for
+  U-XZr is given in \eref{eq:kfuel_first} through \eref{eq:kfuel_last}.
   \begin{align}
     \label{eq:kfuel_first}
     k_U      &= 21.73 + 1.591 \times 10^{-2} T + 5.907 \times 10^{-6} T^2 \\
@@ -83,16 +79,14 @@
       \sqrt{1 - x_{Zr}} \left( \left( 1 - x_{Zr}\right) k_U + x_{Zr} \, k_{c,Zr}
       \right) 
   \end{align}
-  In the expressions for fuel thermal conductivity, $x_{Zr}$ represents the 
-  zirconium weight fraction ($x_{Zr} = 0.1$), all temperatures are in
-  units \units{K} and thermal conductivities are in units 
-  \units{$\frac{\text{W}}{\text{m K}}$}.
-  For the expression of fuel thermal 
-  conductivity, the integral of thermal conductivity is unbounded as 
-  $T \rightarrow 0$ so thermal conductivity is assumed constant below 300 
-  \units{K} which is below the melting point of most fact reactor coolants,
-  including sodium, so this assumption is valid for sodium-cooled reactor
-  applications.
+  In the expressions for fuel thermal conductivity, $x_{Zr}$ represents the
+  zirconium weight fraction (e.g. $x_{Zr} = 0.1$), all temperatures are in units
+  \units{K} and thermal conductivities are in units
+  \units{$\frac{\text{W}}{\text{m K}}$}.  For the given expression of fuel
+  thermal conductivity, the integral of thermal conductivity is unbounded as $T
+  \rightarrow 0$ so thermal conductivity is assumed constant below 300 \units{K}
+  which is below the melting point of most fact reactor coolants, including
+  sodium, so this assumption is valid for sodium-cooled reactor applications.
 
   \begin{figure}
     \centering
@@ -106,9 +100,9 @@
   iteration method returns the largest eigenvalue $\keff$ and unique positive
   eigenvector $\phi_g$ (see \sref{sec:power_iterations}). The neutron flux
   calculated according to this method is an eigenvector and can be normalized
-  to an arbitrary constant. For a specified total reactor power, $Q_{Rx}$ the
-  normalization constant can be calculated. For un-normalized neutron flux as
-  calculated by the power iteration method, $\widetilde{\phi_{g,e}}$, for  
+  to an arbitrary constant. For a specified total reactor power, $Q_{Rx}$, the
+  normalization constant can be calculated. Given the un-normalized neutron flux 
+  as calculated by the power iteration method, $\widetilde{\phi_{g,e}}$, for  
   energy group $g$ in finite element $e$, the normalization constant is 
   \begin{equation}
     \label{eq:normalization_c}
@@ -121,7 +115,7 @@
   volumetric heat generation rate. 
   %Similar to $\nu\Sigma_{f,g}$, $\kappa\Sigma_{f,g}$ is 
   %calculated as an aggregate quantity and not simply $(\kappa)(\Sigma_{f,g})$.
-  Then the properly scaled neutron flux is given as
+  Then, the properly scaled neutron flux is given as
   \begin{equation}
     \label{eq:normalization_phi}
     \phi_{g,e} = c \, \widetilde{\phi_{g,e}}
@@ -138,10 +132,11 @@
     \label{eq:elementqppp_fuel}
     q'''_{e} = \frac{q_e}{V_{fuel,e}}
   \end{equation}
-  where $V_{fuel,e}$ is the volume of fuel in element $e$ (the volume of fuel
-  is summed over all rods). The quantity $q'''_e$
-  has units \units{$\frac{\text{W}}{\text{cm}^3}$} and will be necessary for the 
-  radial conduction model.
+  where $V_{fuel,e}$ is the volume of fuel in element $e$ (the volume of fuel is
+  summed over all rods). The quantity $q'''_e$ has units
+  \units{$\frac{\text{W}}{\text{cm}^3}$} and will be necessary for the radial
+  conduction model. This assumption that all heat generation occurs in the fuel
+  is discussed further in \sref{sec:radial_conduction_model}.
 
 \section{Axial Convection Model}
   \label{sec:axial_convection_model}
@@ -150,25 +145,23 @@
 
   \subsection{Geometric Model}
     Used in association with an unstructured mesh, the thermal hydraulic model
-    requires mapping mesh elements into physical reactor assemblies. In the 
+    requires mapping mesh elements into physical reactor assemblies. In the
     input geometry file, the user must specify to which hexagonal assembly each
-    element belongs.
-    Only assembly-average thermal properties are used so each hexagonal assembly
-    is equivalent to a one-dimensional flow channel and each assembly is also
-    referred to as a ``channel.''
-    In the following discussion, a channel index is
-    subscripted $i$ for $i = 1,2,\ldots,N_{chan}$ where $N_{chan}$ is the number
-    of hexagonal assemblies in the simulated reactor. 
+    element belongs.  Only assembly-average thermal properties are calculated so
+    each hexagonal assembly is equivalent to a one-dimensional flow channel.
+    Subsequently, each assembly is also referred to as a ``channel.'' In the
+    following discussion, a channel index is subscripted $i$ for $i =
+    1,2,\ldots,N_{chan}$ where $N_{chan}$ is the number of hexagonal assemblies
+    in the simulated reactor. 
 
-    The concept of ``chunks'' is also introduced for use in the discretization 
-    of the thermal hydraulic model. A chunk is the set of all elements in a 
-    channel with a unique axial elevation. For example, in a fast reactor 
-    hexagonal assembly, the assembly has a unique $i$ index and contains a 
-    number of chunks equal to the number of axial elevations in the discretized
-    model. 
-    Additionally, each chunk is required to have unique material composition. 
-    The relationship of elements, chunks, and channels is shown in 
-    \fref{fig:chunk_description}. Allow elevations to be indexed $k =
+    The concept of ``chunks'' is also introduced for use in the discretization
+    of the axial heat convection model. A chunk is the set of all elements in a
+    channel with a unique axial elevation. For example, in a fast reactor
+    hexagonal assembly, the assembly has a unique channel index, $i$, and
+    contains a number of chunks equal to the number of axial elevations in the
+    discretized model.  Additionally, each chunk is required to have unique
+    material composition.  The relationship of elements, chunks, and channels is
+    shown in \fref{fig:chunk_description}. Allow elevations to be indexed $k =
     1,2,\ldots,N_z$ where $N_z$ is the total number of axial elevation. Then,
     each chunk has a unique $\{i,k\}$ combination and the total number of chunks
     is the product $N_{chunk} = N_{chan} \, N_z$.
@@ -194,32 +187,30 @@
   \subsection{Channel Mass Flow}
     The channel mass flow, $\mdot_i$, must be calculated given a user 
     specified total reactor inlet mass flow rate $\mdot_{Rx}$. Mass flow is 
-    partitioned into each channel assuming constant mass flux at the reactor 
+    partitioned into each channel assuming uniform mass flux at each channel
     inlet according to 
     \begin{equation}
       \label{eq:mass_flow_split}
       \mdot_i = \mdot_{Rx} \frac{A_{cool,i}}{A_{cool,Rx}}
     \end{equation}
-    where $A_{cool,i}$ is the coolant flow area for channel $i$ and 
-    $A_{cool,Rx}$ is the total coolant flow area for the reactor. The mass flow 
+    where $A_{cool,i}$ is the coolant flow area for channel $i$ and
+    $A_{cool,Rx}$ is the total coolant flow area for the reactor. The mass flow
     per unit area is assumed constant at the reactor inlet and the mass flow in
-    a channel is the product of the mass flux and the channel flow area. This 
-    partitioning of mass flow rate is chosen to allow for assemblies with 
-    different flow areas or the modeling of partial assemblies in fractional 
+    a channel is the product of the mass flux and the channel flow area. This
+    partitioning of mass flow rate is chosen to allow for assemblies with
+    different flow areas or the modeling of partial assemblies in fractional
     core models.
 
   \subsection{Chunk Powers}
-    For the one-dimensional heat convection model in the axial direction,
+    For the one-dimensional axial heat convection model in the axial direction,
     heat generation quantities are needed for chunks. Heat generation quantities
-    for elements are calculated by \eref{eq:elementpwr} and
-    \eref{eq:elementqppp_fuel}.
-    For the axial heat convection model, the total heat generated in a chunk,
-    $q_{i,k}$, and the average volumetric heat generation rate in the fuel for
-    elements within the chunk, $q'''_{i,k}$. 
-    These relationships are given in \eref{eq:chunkpwr} and
-    \eref{eq:chunkqppp_fuel} respectively. The notation $e \in \{i,k\}$ implies 
-    the summation over all elements $e$ within the chunk in channel $i$ at
-    elevation $k$.
+    for elements are calculated in \eref{eq:elementpwr} and
+    \eref{eq:elementqppp_fuel}.  The total heat generated in a chunk, $q_{i,k}$,
+    and the average volumetric heat generation rate in the fuel for elements
+    within the chunk, $q'''_{i,k}$ are required.  These relationships are given
+    in \eref{eq:chunkpwr} and \eref{eq:chunkqppp_fuel} respectively. The
+    notation $e \in \{i,k\}$ implies the summation over all elements $e$ within
+    the chunk in channel $i$ at elevation $k$.
     \begin{align}
       \label{eq:chunkpwr}
       q_{i,k} &= \sum_{e \in \{i,k\}} q_e \\
@@ -238,16 +229,16 @@
       \label{eq:continuous_heat_balance}
       h_i(z) = h_{in} + \frac{1}{\mdot_i} \int_0^z q'_i(z') \; dz'
     \end{equation}
-    where $h_i(z)$ is the specific enthalpy at axial position $z$ in channel 
+    where $h_i(z)$ is the specific enthalpy at axial position $z$ in channel
     $i$, $h_{in}$ is the inlet enthalpy, $\mdot_i$ is the mass flow rate within
-    the channel given in \eref{eq:mass_flow_split}, and 
-    $q'_i(z)$ is the linear heat generation rate for channel $i$ at elevation 
-    $z$. $h_{in}$ is related to a user specified coolant inlet temperature,
-    $T_{inlet}$, by a state relationship for the coolant 
-    $h_{in} = h(T_{inlet})$. 
+    the channel given in \eref{eq:mass_flow_split}, and $q'_i(z)$ is the linear
+    heat generation rate for channel $i$ at elevation $z$. $h_{in}$ is related
+    to a user specified coolant inlet temperature, $T_{inlet}$, by a state
+    relationship for the coolant $h_{in} = h(T_{inlet})$ \cite{sodiumProp}. 
 
     The integral in \eref{eq:continuous_heat_balance} can be discretized along
-    the channel and converted to a summation. In this discretization, the model
+    the channel and converted to a summation. This is similar to a Riemann
+    summation approximation to the integral. In this discretization, the model
     in \fref{fig:axial_model} is used where $h_{j+1/2}$ is the enthalpy at the
     upper edge of the chunk and $h_j$ is the average enthalpy within the chunk.
     Then, the discretization of the integral \eref{eq:continuous_heat_balance}
@@ -258,11 +249,12 @@
         h_{in} + \frac{1}{\mdot_i} \sum_{k=1}^{N_z} q'_{i,k} \, \Delta z_{k}
     \end{equation}
     where $q'_{i,k}$ is the linear heat generation rate in the chunk in channel
-    $i$ at elevation $k$ and ${\Delta z_{k} = z_{k-1/2} - z_{k+1/2}}$. 
+    $i$ at elevation $k$ and $\Delta z_k$ is the height of the node at elevation
+    $k$ such that ${\Delta z_{k} = z_{k-1/2} - z_{k+1/2}}$. 
     % (Note: by indexing properly, $j = i + (k-1) \, N_{chan}$.)
-    Recognizing the quantity $q_{i,k} = q'_{i,k} \Delta z_{i,k}$
-    is the total heat generated in chunk $\{i,k\}$, then \eref{eq:heat_balance} 
-    can be rewritten.
+    Recognizing the quantity $q_{i,k} = q'_{i,k} \Delta z_{i,k}$ is the total
+    heat generated in chunk $\{i,k\}$, then \eref{eq:heat_balance} can be
+    rewritten.
     \begin{equation}
       h_{i,k+1/2} = h_{in} + \frac{1}{\mdot_i} \sum_{k=1}^{N_z} q_{i,k}
     \end{equation}
@@ -279,8 +271,8 @@
     temperature in the chunk $T_{\infty,i,k} = T(h_{i,k})$ can be calculated 
     using a state relationship \cite{sodiumProp}. Bulk coolant temperature 
     will be an input into the radial conduction model, 
-    \sref{sec:radial_conduction_model}, to calculate temperatures in the fuel 
-    rod.
+    \sref{sec:radial_conduction_model}, to calculate material temperatures in 
+    the fuel rod.
   
 \section{Radial Conduction Model}
   \label{sec:radial_conduction_model}
