@@ -276,29 +276,28 @@
   
 \section{Radial Conduction Model}
   \label{sec:radial_conduction_model}
-  The radial heat conduction model calculates the steady-state heat
-  conduction from its generation in the fuel to the coolant. This model
-  represents an average fuel rod in each fuel bundle. The model explicitly
-  treats fuel, sodium bond, and cladding regions.
-  In the radial heat conduction model, it is assumed that all heat generated in
-  the reactor is due to fission as described by the volumetric heat
-  generation rate ${q'''=\kappa \Sigma_f \phi}$. All deposited energy is
-  described by the coefficient $\kappa$. However, roughly $2\%$ of power
-  transmitted via gamma radiation will be absorbed directly in the coolant and
+  The radial heat conduction model calculates the steady-state heat conduction
+  from its generation in the fuel to the coolant. This model represents an
+  average fuel rod in each fuel bundle. The model explicitly treats fuel, sodium
+  bond, and cladding regions.  In the radial heat conduction model, it is
+  assumed that all heat generated in the reactor is due to fission as described
+  by the volumetric heat generation rate ${q'''=\kappa \Sigma_f \phi}$. This
+  assumption asserts that all deposited energy is described by the coefficient
+  $\kappa$. However, roughly $2\%$ of power in a typical fast reactor is
+  transported via gamma radiation will be absorbed directly in the coolant and
   does not need to be conducted. Effectively, $q'''$ is reduced by this fraction
   in the radial heat conduction model \cite{FastSpectrumReactors}.
   
-  For this model, it is assumed
-  that the bulk coolant temperature, $T_{\infty,i,k}$, is known within the chunk 
-  as calculated in \sref{sec:axial_convection_model}. Then, the model begins by 
-  calculating temperatures at key locations. Material temperature is calculated
-  at the fuel center-line, fuel surface, bond surface, and clad surface. The
-  derivation of these quantities are presented in \sref{sec:surface_temps}. 
-  Similar results have been obtained by others \cite{FastSpectrumReactors}. 
-  With the temperatures at these locations calculated, the average temperature 
-  within each material is calculated. These average temperatures are essential 
-  for the accurate simulation of the reactor as they influence multigroup 
-  constants.
+  For this model, it is assumed that the bulk coolant temperature,
+  $T_{\infty,i,k}$, is known within the chunk as calculated in
+  \sref{sec:axial_convection_model}. Then, the model begins by calculating
+  temperatures at key locations. Material temperature is calculated at the fuel
+  center-line, fuel surface, bond surface, and clad surface. The derivation of
+  these quantities are presented in \sref{sec:surface_temps}.  Similar results
+  have been obtained by others \cite{FastSpectrumReactors}.  With the
+  temperatures at these locations calculated, the average temperature within
+  each material is calculated. These average temperatures are essential for the
+  accurate simulation of the reactor as they influence multigroup constants.
 
   \subsection{Geometric Model}
     For the purposes of the radial model, the geometry is shown in
@@ -306,8 +305,8 @@
     surrounded by sodium bond, enclosed in steel cladding, with sodium coolant
     flowing in the axial direction. The center of the fuel rod is located at
     $r=0$ where $r$ is the radial coordinate. The fuel pellet has radius $R_F$
-    and fuel is located in $r \in [0,R_F)$. Then, bond is located in 
-    $r \in (R_F,R_B)$ and clad is located in $r \in (R_B,R_C]$. The fuel 
+    and fuel is located in $r \in (0,R_F)$. Then, bond is located in 
+    $r \in (R_F,R_B)$ and clad is located in $r \in (R_B,R_C)$. The fuel 
     center-line temperature is $T_0$ and fuel surface temperature is $T_F$. Bond
     surface temperature is $T_B$ and clad surface temperature is 
     $T_C$. $T_{\infty}$ represents the bulk coolant temperature. In this model,
@@ -352,11 +351,10 @@
     
     \subsubsection{Temperature in Fuel}
       The fueled region is the only region modeled with non-zero volumetric heat
-      generation. In this region, $q'''_{i,k}$ as specified by 
-      \eref{eq:chunkqppp_fuel} is assumed constant within the fuel. 
-      Additionally, the thermal conductivity in the fuel will be assumed to have
-      the general form $k_F(T)$. For this work, $k_F(T)$ is specified by a
-      functional form \cite{fuelProp}. For the assumed fuel composition, 
+      generation. In this region, $q'''_{i,k}$ as specified by
+      \eref{eq:chunkqppp_fuel} is assumed constant within the fuel.
+      Additionally, the thermal conductivity in the fuel is assumed to have the
+      general form $k_F(T)$ \cite{fuelProp}.  For the assumed fuel composition,
       the thermal conductivity is plotted in \fref{fig:kfuel_plot}.
 
       The steady-state heat conduction equation with constant volumetric heat
