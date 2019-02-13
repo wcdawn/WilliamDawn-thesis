@@ -4,7 +4,7 @@
 \section{Motivation}
   Recent interest in advanced and next-generation nuclear power reactor designs
   has encouraged further development of modeling and simulation methods for
-  these reactors.  Fast reactors, a class of advanced reactors, operate with
+  these reactors. Fast reactors, a class of advanced reactors, operate with
   predominately high-energy (``fast'') neutrons in the fission reaction. Since
   early development of fast reactors, such as  \gls{ebr-i} in 1951 and Fermi 1
   in 1956, there have been significant innovations in both nuclear modeling and
@@ -25,30 +25,30 @@
   In this thesis, models for simulating fast reactors will be developed and
   demonstrated. Reactor power distribution will be modeled according to the
   multigroup neutron diffusion equation as solved by the \gls{fem} based on
-  unstructured meshes with special attention to hexagonal/triangular geometries.
+  unstructured meshes with special attention to hexagonal geometries.
   The multigroup neutron diffusion solution method is verified through
   comparison to both benchmark and analytic solutions. Multiphysics effects are
   modeled including thermal hydraulics and thermal expansion. Thermal hydraulic
   effects are modeled as axial heat convection and radial heat conduction.
-  Thermal expansion is modeled using simplified linear expansion models.  The
+  Thermal expansion is modeled using simplified linear expansion models. The
   methods developed in this work can easily be used for fast reactors with a
   variety of coolants including sodium, lead, or molten salt.
 
   By employing a modern solution method to the neutron diffusion equation in the
   form of the \gls{fem}, the simulation can take advantage of developments in
-  numerical methods including the solution of linear systems.  Additionally, the
+  numerical methods including the solution of linear systems. Additionally, the
   simulation allows for the incorporation of generalized multiphysics effects
   whereas current state-of-the-art techniques (such as \dif) require data
-  processing and manual iteration to simulate multiphysics effects. The final
-  simulation is designed to simulate an operating fast reactor and estimate
-  feedback coefficients.
+  processing and manual iteration to simulate multiphysics effects. Ultimately, 
+  the simulation is designed to simulate an operating fast reactor and estimate
+  feedback coefficients by coupling multiphysics models.
 
 \section{Geometry Description}
   \label{sec:geometry_description}
   The high-energy neutron spectra inherent to fast reactors results in
-  relatively small neutron cross sections.  To compensate for this fact, fast
+  relatively small neutron cross sections. To compensate for this fact, fast
   reactors are typically designed with hexagonal, triangularly pitched, fuel
-  assemblies to maximize fuel packing.  An example of a fast reactor with
+  assemblies to maximize fuel packing. An example of a fast reactor with
   hexagonal fuel assemblies is shown in \fref{fig:reactor_materials}.
   
   \begin{figure}
@@ -65,29 +65,29 @@
     \label{fig:prism_hex}
   \end{figure}
 
-  A cross-sectional representation of a hexagonal assembly, is shown in
-  \fref{fig:prism_hex}.  This geometry is used to describe material properties
-  such as neutron cross sections and is also used to describe coolant flow
-  geometries.  Dimensions of assemblies are measured at room temperature and
-  will later be expanded according to the thermal expansion model in
+  A cross-sectional representation of a hexagonal fuel assembly, is shown in
+  \fref{fig:prism_hex}. This geometry is used in the homogenization of neutron
+  cross sections and is also used to describe coolant flow geometries.
+  Dimensions of assemblies are measured at room temperature and will later be
+  expanded according to the thermal expansion model in
   \chref{ch:thermalExpansion}.
 
   Note the individual rods in \fref{fig:prism_hex} are cylindrical and are
   arranged into a hexagonal assembly. The basic geometry is a metallic fuel
   material within stainless steel cladding. The gap between the fuel and
   cladding is filled by sodium bond to improve thermal conductivity across the
-  gap. The rod is wrapped by a steel wire to ensure separation between rods that
-  will allow for coolant flow. The wire wrap also serves to encourage the
-  mixture of coolant within the assembly. (Note: wire wrap is omitted from
+  gap. The rod is helically wrapped by a steel wire to ensure separation between
+  rods that will allow for coolant flow. The wire wrap also serves to encourage
+  the mixture of coolant within the assembly. (Note: wire wrap is omitted from
   \fref{fig:prism_hex}.) Many rods are then assembled into an assembly and
   surrounded by a hexagonal can made of steel. This can aids in structural
-  stability and prohibits cross-flow between assemblies. 
+  stability and prohibits cross-flow of coolant between assemblies. 
 
   The dimensions within a single rod are shown in \fref{fig:pin_model} and the
   dimensions within a hexagonal assembly can are shown in \fref{fig:hex_can}. In
   \fref{fig:hex_can}, $T\!h_{can}$ is the thickness of the assembly can,
   $F\!2\!F$ is the flat-to-flat measurement of the outside of the hexagonal can,
-  and \textit{Pitch} is the distance between the center of two rods.  Using the
+  and \textit{Pitch} is the distance between the center of two rods. Using the
   geometry described in these figures, the material cross-sectional areas are
   calculated according to the given formulae where $N_{rod}$ is the number of
   rods in the assembly and $A\!P$ is the assembly pitch. $A\!P > F\!2\!F$ to
@@ -131,42 +131,42 @@
   \label{sec:cross_section_treatment}
   Reactor materials are ``smeared'' into homogeneous regions. This treatment is
   common to fast reactors because of the relatively large neutron
-  mean-free-paths compared to the scale of material dimensions. The natural
+  mean-free-paths compared to the scale of material dimensions. Additionally,
+  the neutron distribution will be modeled using the neutron diffusion equation
+  which cannot accurately resolve small geometric details. The natural
   choice for these homogeneous regions are the hexagonal assemblies themselves.
-  Materials are permitted to be heterogeneous axially.  For this work, four
-  distinct regions are modeled: fuel, bond, coolant, and steel. Steel material
-  includes cladding, wire wrap, and assembly can. These four regions are then
-  homogenized into a hexagonal assembly.
+  Materials are permitted to be heterogeneous axially. For this work, four
+  distinct regions are modeled within a hexagonal assembly: fuel, bond, coolant,
+  and steel. Steel material includes cladding, wire wrap, and assembly can. 
+  These four regions are then homogenized into a hexagonal assembly.
 
-  For realistic reactor simulations cross sections generated consistently with
-  the homogenization assumption. In this work, work, multigroup microscopic
-  cross sections are generated using the computer program \mcc \cite{mcc}.  The
-  cross section generator uses 2,082 fine energy groups to collapse down to an
-  arbitrary number of energy-groups. For this simulation, the recommended and
-  default 33-group energy structure is used. \mcc solves the
-  infinite-homogeneous neutron transport equation for isotopic number densities
-  as input by the user.  Cross sections for each assembly type are generated
-  separately to accurately simulate the neutron energy spectrum within the
-  assembly. This procedure results in a unique material cross sections for each
-  assembly type. For example, each assembly type contains steel; therefore,
-  there will be a separate steel cross section for each assembly type. Within
-  \mcc, the neutron fission  spectrum for fissile media is generated by the
-  media's fission spectrum.  Non-fissile homogenized mixtures, such as control
-  assemblies or reflector assemblies, the default \isotope[238]{U} fission
-  spectrum is assumed.
+  In this work, work, multigroup microscopic cross sections are generated using
+  the computer program \mcc \cite{mcc}. The cross section generator uses 2,082
+  fine energy groups to collapse down to an arbitrary number of coarse energy
+  groups. For this simulation, the recommended and default 33-group energy
+  structure is used. \mcc solves the infinite-homogeneous neutron transport
+  equation for isotopic number densities as input by the user. Cross sections
+  for each assembly type are generated separately to accurately simulate the
+  neutron energy spectrum within the assembly. This procedure results in a
+  unique material cross sections for each assembly type. For example, each
+  assembly type contains steel; therefore, there will be a separate steel cross
+  section for each assembly type in the cross section library. Within \mcc, the 
+  neutron energy spectrum for fissile media is generated by the media's fission 
+  spectrum. Non-fissile homogenized mixtures, such as control assemblies or 
+  reflector assemblies, the default \isotope[238]{U} fission spectrum is assumed.
 
   Cross section libraries are generated for several different temperatures to
   capture temperature-dependent cross section effects. These libraries are then
   used during the simulation to calculate cross sections as a function of
-  material temperatures.  The fuel, clad, and coolant temperatures in a
+  material temperatures. The fuel, clad, and coolant temperatures in a
   simulated reactor can be calculated with a thermal hydraulic model (see
   \chref{ch:thermalHydraulics}), these relationships are functions of reactor
-  power and coolant mass flow rate. These parameters are not known before the
-  simulation for a general reactor. Instead, a simplified one-dimensional,
-  single-channel model is used to estimate temperatures for cross section
-  library generation. This model is based on the axial convection and radial
-  conduction models in \chref{ch:thermalHydraulics}. Temperatures from the model
-  are given in \tref{tab:xstemps}.
+  power and coolant mass flow rate. However, these parameters are not known
+  before the simulation for a general reactor. Instead, a simplified
+  one-dimensional, single-channel model is used to estimate temperatures for
+  cross section library generation. This model is based on the axial convection
+  and radial conduction models in \chref{ch:thermalHydraulics}. Temperatures
+  from the model are given in \tref{tab:xstemps}.
 
   \begin{table}
     \caption{Temperatures Selected for Cross Section Libraries.}
@@ -192,13 +192,13 @@
   power), the peak core temperatures can still be interpolated within the
   libraries.
 
-  For each material region, average macroscopic cross
-  sections are calculated using microscopic cross sections from \mcc and  
-  user-input number densities. Allow $N_{i,j}$ to be the number density for
-  isotope ${j=1,2,\ldots,N_{iso}}$ in region ${i=1,2,\ldots,N_{reg}}$.
-  Then, the macroscopic cross section for the $x$ reaction type in a homogenized
-  hexagonal assembly is defined as
+  For each material region, average macroscopic cross sections are calculated
+  using microscopic cross sections from \mcc and user-input number densities.
+  Allow $N_{i,j}$ to be the number density for isotope ${j=1,2,\ldots,N_{iso}}$
+  in region ${i=1,2,\ldots,N_{reg}}$.  Then, the macroscopic cross section for
+  the $x$ reaction type in a homogenized hexagonal assembly is defined as
   \begin{equation}
+    \label{eq:xs_homog}
     \Sigma_{x,g}^r = \frac{\sum_{i=1}^{N_{reg}} \sum_{j=1}^{N_{iso}} V_i N_{j} 
       \sigma_{x,g,i}} {\sum_{i=1}^{N_{reg}}V_i}
   \end{equation}
@@ -206,8 +206,10 @@
   sectional areas within the assembly are constant within a given axial
   elevation, area fractions can be treated as volume fractions. These area
   fractions are calculated according to the area formulae from
-  \eref{eq:afrac_first} through \eref{eq:afrac_last}. Finally, the homogenized
-  transport cross section is used to calculate the diffusion coefficient.
+  \eref{eq:afrac_first} through \eref{eq:afrac_last}. Using these volume/area
+  fractions, the macroscopic cross sections from \eref{eq:xs_homog} are
+  homogenized as hexagonal assemblies. Finally, the homogenized transport cross
+  section is used to calculate the diffusion coefficient.
   \begin{equation}
     D_g = \frac{1}{3 \Sigma_{tr,g}}
   \end{equation}
@@ -239,4 +241,4 @@
   coefficients are estimated.
  
   Finally, \chref{ch:conclusions} presents a summary and the conclusions of this
-  research. Additionally, recommendations for further research are included.
+  research. Additionally, recommendations for further research are provided.

@@ -24,12 +24,12 @@
 
 \section{Multigroup Neutron Diffusion Equation}
   In the multigroup neutron diffusion equation, an energy structure is 
-  described by the set of energies $\{E_g\}$ for $g = 1,2,\ldots,G$ and arranged 
-  by in order of decreasing energy by convention.
+  described by the set of energies $\{E_g\}$ for $g = 1,2,\ldots,G$.
+  By convention, the energy groups are arranged in order of decreasing energy.
   \begin{equation}
     0 < E_G < E_{G-1} < \ldots < E_2 < E_1
   \end{equation}
-  Multigroup constants can be calculated using this energy group 
+  Multigroup neutron cross sections can be calculated using this energy group 
   structure from energy dependent cross sections, and a representative flux 
   spectrum. Generation of multigroup constants is performed using \mcc and is 
   described in \sref{sec:cross_section_treatment}.
@@ -62,7 +62,7 @@
   \end{conditions}
 
   The total neutron cross section includes the contribution due to within-group
-  scattering. That is, due to $\Sigma_{s,g\rightarrow g}$. This can be
+  scattering; that is, due to $\Sigma_{s,g\rightarrow g}$. This can be
   subtracted from both sides of \eref{eq:multigroup_diffusion} for simplicity
   and numeric efficiency. Rewriting \eref{eq:multigroup_diffusion} with this
   modification yields
@@ -108,7 +108,8 @@
   to scattering from higher energy groups (down-scattering). This form allows
   for operator splitting of the neutron source term. In an iterative scheme, it
   will be necessary for fission and up-scatter sources to use a different flux
-  iterate than down-scatter so this separation of sources will prove useful.
+  iterate than down-scatter so this separation of sources will prove useful (see
+  \sref{sec:calculation_of_source_with_power_iterations}).
 
   The combined source form is useful for solving the multigroup neutron
   diffusion problem for an arbitrary number of groups.
@@ -123,13 +124,13 @@
   and are dimensionally smaller. Finally, fast reactors are also dominated by
   down-scatter as opposed to thermal reactors which experience significant
   up-scatter implying that the term $q_{up,g}(\vr)$ will not have to be updated
-  frequently and the one-at-a-time solution method will benefit.
+  frequently and the one group at-a-time solution method will benefit.
 
-  Typically, reactor materials are described isotopically and 
-  $\chi$ may be specified isotopically. However, for calculating the fission 
-  neutron source $q_{fiss,g}$ as in \eref{eq:qfiss}, an effective 
-  $\widetilde{\chi}$ for each finite
-  element is needed. From an isotopic description, $q_{fiss,g}$ is given as
+  Typically, reactor materials are described isotopically and $\chi$ may be
+  specified isotopically. However, for calculating the fission neutron source
+  $q_{fiss,g}$ as in \eref{eq:qfiss}, an effective $\widetilde{\chi}$ for each
+  finite element is needed. From an isotopic description, $q_{fiss,g}$ is given
+  as
   \begin{equation}
     \label{eq:isotopic_chi}
     q_{fiss,g}(\vr) = \sum_{i=1}^{N_{iso}} \chi_{i,g}(\vr)
@@ -151,8 +152,10 @@
       \nu \Sigma_{f,i,g}(\vr) \phi_g(\vr)}
       {\sum_{i=1}^{N_{iso}} \nu \Sigma_{f,i,g}(\vr) \phi_g(\vr)}
   \end{equation}
-  Noting that \eref{eq:chi_collapse} requires the solution $\phi_g(\vr)$. This
-  means that $\chi_g$ must be calculated for each element for each iteration of
+  Noting that \eref{eq:chi_collapse} requires the solution $\phi_g(\vr)$. In the
+  \gls{fem} discretization, this means that $\chi_g$ must be calculated for each 
+  finite element. Additionally, because \eref{eq:chi_collapse} requires a flux
+  distribution, $\widetilde{\chi_g}$ must also be updated for each iteration of
   the solution (see Step \ref{state:chi_collapse} in
   \algorithmref{algorithm:general}).
 
@@ -187,7 +190,8 @@
     condition precedent in code with the greater the integer, the greater the 
     precedent.)
     
-    Begin by dividing the spatial domain $\Omega$ into a set of finite elements.
+    Begin by partitioning the spatial domain $\Omega$ into a set of finite 
+    elements.
     \begin{equation}
       \label{eq:set_of_elements}
       \Omega = \Omega_1 \cup \Omega_2 \cup \Omega_3 \cup \ldots \cup
@@ -221,7 +225,7 @@
     For the purposes of this work, material cross sections and the neutron
     source $q_{g,e}$ are assumed to be constant within an element. In the
     future, $q_g$ could be considered discrete at each node rather than each
-    element.  To calculate a constant neutron source within an element,
+    element. To calculate a constant neutron source within an element,
     \eref{eq:q} is used to calculate the average neutron source $\phiavg_{g,e}$
     in an element.
     \begin{align}
@@ -246,10 +250,10 @@
     \Omega_e$ is the summation over all nodes in element $\Omega_e$. For 
     example, a triangle has $N_p = 3$ and a wedge has $N_p = 6$.
 
-    Given constant material properties and neutron source over the element, 
-    the integrals in \eref{eq:fem_weak_form} can be partitioned into a sum of 
-    integrals over the elements in the domain assuming the non-overlapping set
-    of elements from \eref{eq:set_of_elements}.
+    Given constant material properties and constant neutron source over the
+    element, the integrals in \eref{eq:fem_weak_form} can be partitioned into a
+    sum of integrals over the elements in the domain assuming the
+    non-overlapping set of elements from \eref{eq:set_of_elements}.
     \begin{equation} 
       \label{eq:element_by_element}
       -\sum_{e=1}^{N_E} D_{g,e} 
@@ -304,8 +308,9 @@
         \; d\vr =
         \sum_{e=1}^{N_E} q_{g,e} \int_{\Omega_e} v(\vr) \; d\vr
     \end{multline}
-    Next, the function of interest $\phi_g(\vr)$ is assumed to be a linear 
-    combination of chosen basis functions $\{\basis_i\}$ as
+    Next, for the Galerkin formulation of the \gls{fem}, the function of
+    interest $\phi_g(\vr)$ is assumed to be a linear combination of chosen basis
+    functions $\{\basis_i\}$ as
     \begin{equation} 
       \label{eq:linear_combination}
       \phi_g(\vr) = \sum_{i=1}^{DOF} \upsilon_{g,i} \, \basis_i(\vr)
@@ -315,18 +320,17 @@
     Typically $DOF$ is the number of nodes minus any nodes for which the flux is 
     fixed (e.g. zero-flux nodes). 
     
-    Typically, these basis functions have unit 
-    magnitude and are centered at the node  points so the coefficients 
-    $\upsilon_i$ are the \gls{fem} solution at the nodes. It is also 
-    convenient for basis functions to have compact support. That is, basis 
-    functions are created such that they are zero almost everywhere except some
-    minimal region. Compact support in this implementation is chosen such that
-    basis functions have unit value on a single mesh node and are zero on all
-    other mesh nodes. Basis functions are typically piecewise continuous 
-    polynomials of arbitrary degree. For selected elements, basis functions will
-    be defined explicitly in \sref{sec:matrix_quantities}. Linear and quadratic
-    polynomials are common but for the work presented here, only linear
-    basis functions are explored.
+    Typically, basis functions have unit magnitude and are centered at the node
+    points so the coefficients $\upsilon_i$ are the \gls{fem} solution at the
+    nodes. It is also convenient for basis functions to have compact support.
+    That is, basis functions are created such that they are zero almost
+    everywhere except some minimal region. Compact support in this
+    implementation is chosen such that basis functions have unit value on a
+    single mesh node and are zero on all other mesh nodes. Basis functions are
+    typically piecewise continuous polynomials of arbitrary degree. For selected
+    elements, basis functions will be defined explicitly in
+    \sref{sec:matrix_quantities}. Linear and quadratic polynomials are common
+    but for the work presented here, only linear basis functions are explored.
 
     The test function $v(\vr)$ is also chosen as a linear combination of the 
     same basis functions.
@@ -417,7 +421,7 @@
     \end{align}
     which leads to the natural population of the matrix $\ma_g$ on an
     element-by-element basis. Matrix $\ma_g$ is assembled by looping through all
-    elements and summing their contribution to the matrix.  Note that the
+    elements and summing their contribution to the matrix. Note that the
     contribution due to the surface integral will be zero in elements not on the
     problem boundary and may also be zero for problems with select boundary
     conditions. See \sref{sec:boundary_conditions} for boundary condition
@@ -977,6 +981,7 @@
     back to the stability of the physical system.
     
   \subsection{Calculation of Source with Power Iterations}
+  \label{sec:calculation_of_source_with_power_iterations}
     The multigroup neutron diffusion equation \eref{eq:multigroup_source} can be
     written with the source term $q_g(\vr)$ expanded into its component parts.
     \begin{equation} \label{eq:multigroup_source_expand}
