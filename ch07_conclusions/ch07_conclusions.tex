@@ -93,7 +93,7 @@
     Recall the \gls{fem} as presented in \chref{ch:neutronDiffusion} employs
     only linear triangular and linear wedge elements. However, the \gls{fem} as 
     derived can be implemented for polynomials of arbitrary order. Work by 
-    Hosseini \cite{Hosseini2013} suggests that for finite element solutions to 
+    \textcite{Hosseini2013} suggests that for finite element solutions to 
     the multigroup neutron diffusion equation, quadratic elements provide a 
     significant reduction of error without the need to reduce the mesh spacing. 
     With linear finite elements, the \gls{fem} is second-order spatially 
@@ -106,9 +106,9 @@
     The \gls{spn} equations can provide considerably improved accuracy compared
     to the diffusion equation by incorporating angular dependence of flux rather
     than assuming isotropic scalar flux. The \gls{spn} equations reduce to a
-    system of diffusion-like equations. Work by Ryu and Joo has demonstrated
-    that the \gls{fem} can be used to solve the \gls{spn} equations in general
-    geometry \cite{Ryu2013}. Implementation of the \gls{spn} equations would
+    system of diffusion-like equations. Work by \textcite{Ryu2013} has
+    demonstrated that the \gls{fem} can be used to solve the \gls{spn} equations 
+    in general geometry. Implementation of the \gls{spn} equations would
     require the development of a new solver but much of the \gls{fem} framework
     can be reused. Implementation of the \gls{spn} method could provide enhanced
     accuracy for full-scale reactor problems.
