@@ -3,26 +3,26 @@ close all
 
 Lx = 1;
 Ly = 1;
-ntest = 75;
+ntest = 100;
 
 qfixed = 1;
 sigma_r = 1;
 nusigma_f = 2;
 
-fun = @(x,y)(sin((pi/Lx)*x)*sin((pi/Ly)*y));
+fun = @(x,y)(sin((pi/Lx)*x).*sin((pi/Ly)*y));
 
-xtest = linspace(0,Lx,ntest);
-ytest = linspace(0,Ly,ntest);
+dx = Lx/ntest;
+dy = Ly/ntest;
 
-val = zeros(length(xtest),length(ytest));
-for i = 1:length(xtest)
-    for j = 1:length(ytest)
-        val(i,j) = fun(xtest(i),ytest(j));
-    end
-end
+x = 0.5*dx:dx:Lx;
+y = 0.5*dy:dy:Ly;
+
+[X,Y]=meshgrid(x,y);
+
+val = fun(X,Y);
 
 figure
-surf(xtest,ytest,val,'EdgeColor','none')
+imagesc(x,y,val);
 view([0,90])
 colormap(viridis)
 colorbar
@@ -32,4 +32,4 @@ title('Two-Dimension, One-Group, Criticality')
 
 set(gca,'FontName','Times New Roman','FontSize',12);
 print('../figs/2d1g.eps','-depsc2');
-close(gcf)
+% close(gcf)
