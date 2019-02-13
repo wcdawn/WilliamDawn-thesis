@@ -1,17 +1,8 @@
 \section{Thermal Hydraulics}
 \label{sec:thermalHydraulics}
 
-\begin{frame}{Enthalpy Rise}
-  \begin{figure}
-    \centering
-    \includegraphics[width=0.8\textwidth]{enthalpy_rise}
-    \caption{Typical \glsentryshort{sfr} Enthalpy Rise.}
-    \label{fig:enthalpy_rise}
-  \end{figure}
-\end{frame}
-
 \begin{frame}{Material Temperatures}
-  \vspace{-0.2in}
+  \vspace{-0.1in}
   \begin{figure}
     \begin{tabular}{cc}
       \subfloat[Cool]{
@@ -30,26 +21,10 @@
 \begin{frame}{Material Properties}
   \begin{itemize}
     \item Functional sodium properties \cite{sodiumProp}.
-    \item Temperature range of structural material small. 
     \item Clad and sodium thermal conductivity assumed constant \cite{ht9Prop}.
     \item Fuel thermal conductivity assumed a function of temperature
       \cite{fuelProp}.
   \end{itemize}
-\end{frame}
-
-\begin{frame}{Thermal Conductivity}
-  %\begin{align}
-  %  \label{eq:kfuel_first}
-  %  k_U      &= 21.73 + 1.591 \times 10^{-2} T + 5.907 \times 10^{-6} T^2 \\
-  %  k_{Zr}   &= 8.853 + 7.082 \times 10^{-3} T + 2.533 \times 10^{-6} T^2 +
-  %    2.992 \times 10^{3} T^{-1} \\
-  %  k_{c,Zr} &= -102.0 + 200.1 x_{Zr} - 109.2 x_{Zr}^2 + 
-  %    9.435 \times 10^{-3} T + 3.459 \times 10^{-5} T^2 - 0.02093 x_{Zr} \, T \\
-  %  \label{eq:kfuel_last}
-  %  k_{U-Zr} &= \left( 1 - \sqrt{1-x_{Zr}}\right) k_{Zr} + 
-  %    \sqrt{1 - x_{Zr}} \left( \left( 1 - x_{Zr}\right) k_U + x_{Zr} \, k_{c,Zr}
-  %    \right) 
-  %\end{align}
   \begin{figure}
     \centering
     \includegraphics[width=0.7\textwidth]{kfuel_plot}
@@ -110,8 +85,8 @@
 \begin{frame}{Clad Surface Temperature -- Subbotin-Ushakov}
   Using Newton's Law of Cooling.
   \begin{align}
-    q''_{clad} &= H_c (T_C - T_{\infty}) \\
-    q''_{clad} &= q'''_{i,k} \frac{R_F^2}{2 R_C}
+    q''_{clad} &= H_c (T_C - T_{\infty}) %\\
+    %q''_{clad} &= q'''_{i,k} \frac{R_F^2}{2 R_C}
   \end{align}
   $H_c$ is given by the Subbotin-Ushakov correlation \cite{subbotinUshakov}
   which relates the Nusselt and P\'eclet numbers for ${1 < Pe < 4,000}$ and 
@@ -125,16 +100,14 @@
   \end{align}
   Then the clad surface temperature, $T_C$ follows.
   \begin{align}
-    H_c &= \frac{N\!u \, k}{D_e} \\
-    T_C &= \frac{q''_{clad}}{H_c} + T_{\infty}
+    H_c &= \frac{N\!u \, k}{D_e} %\\
+    %T_C &= \frac{q''_{clad}}{H_c} + T_{\infty}
   \end{align}
 \end{frame}
 
 \begin{frame}{Rod Surface Temperatures}
   Subsequent surface temperatures are given by radial heat conduction.
   \begin{align}
-    \label{eq:tc_forward}
-    T_C &= q'''_{i,k} \frac{R_F^2}{2\,R_c\,H_c} + T_{\infty} \\
     \label{eq:tb_forward}
     T_B &= T_C + \frac{q'''_{i,k}}{2 k_C} R_F^2
       \ln\left(\frac{R_C}{R_B}\right) \\
@@ -175,21 +148,20 @@
 \end{frame}
 
 \begin{frame}{Average Fuel Temperature}
-  To calculate an average fuel temperature, an effective fuel thermal
-  conductivity is calculated.
+  Calculate an effective thermal conductivity in the fuel.
   \begin{equation}
     \label{eq:kfuel_constant}
     \overline{k_F} = \frac{q'''_{i,k} \, R_F^2}{4(T_0-T_F)}
   \end{equation}
-  Fuel thermal conductivity is assumed constant at $\overline{k_F}$ and an
-  analytic value is calculated for the average fuel temperature.
+  Assume thermal conductivity is constant $\overline{k_F}$.\\
+  Calculate an analytic value for the average fuel temperature.
   \begin{equation}
     \label{eq:tf_bar}
     \overline{T_F} = T_0 - \frac{q'''_{i,k}}{8 \overline{k_F}} R_F^2
   \end{equation}
-  $\overline{T_F}$ is used to calculate fuel cross sections. Due to
-  self-shielding in the fuel, an effective fuel temperature would weight the
-  surface temperature more.
+  $\overline{T_F}$ is used to calculate fuel cross sections. \\
+  Due to self-shielding in the fuel, an effective fuel temperature would weight
+  the surface temperature more.
 \end{frame}
 
 \begin{frame}{Radial Temperatures for Typical Fuel Rod}
@@ -199,34 +171,10 @@
     %\caption{Radial Temperatures for Typical Fuel Rod.}
     \label{fig:radial_temp_plot}
   \end{figure}
-\end{frame}
-
-\begin{frame}{Axial Temperatures for Typical Fuel Channel}
-  %\begin{columns}
-  %  \begin{column}{0.5\textwidth}
-  %    \begin{figure}
-  %      \centering
-  %      \includegraphics[width=\textwidth]{axial_difference_plot}
-  %      %\caption{Difference Between Analytic and Modeled Axial Temperatures for 36
-  %      %  Axial Levels.}
-  %      \label{fig:axial_difference_plot}
-  %    \end{figure}
-  %  \end{column}
-  %  \begin{column}{0.5\textwidth}
-  %    \begin{figure}
-  %      \centering
-  %      \includegraphics[width=\textwidth]{axial_temp_plot}
-  %      %\caption{Average Axial Temperatures for Model Reactor Conditions.}
-  %      \label{fig:axial_temp_plot}
-  %    \end{figure}
-  %  \end{column}
-  %\end{columns}
-      \begin{figure}
-        \centering
-        \includegraphics[width=0.7\textwidth]{axial_temp_plot}
-        %\caption{Average Axial Temperatures for Model Reactor Conditions.}
-        \label{fig:axial_temp_plot}
-      \end{figure}
+  \begin{block}{}
+    \centering
+    Difference less than 15 \units{K}.
+  \end{block}
 \end{frame}
 
 %\begin{frame}{Cross Section Treatment}
@@ -258,11 +206,11 @@
 %  \end{itemize}
 %\end{frame}
 
-\begin{frame}{Cross Section Treatment -- Coolant}
+\begin{frame}{Cross Section Treatment -- Coolant \& Bond}
   \begin{itemize}
     \item Number density and microscopic cross sections are functionalized 
       and updated based on $T_{\infty,i,k}$.
-    \item Linear interpolation for cross sections.
+    \item Linear interpolation for microscopic cross sections.
   \end{itemize}
 
   Number density functionalization.
@@ -280,6 +228,9 @@
       \left( \frac{T_{\infty,i,k} - T_{n}}{T_{n+1}-T_{n}} 
       (\sigma_{x,Na,g,n+1} - \sigma_{x,Na,g,n})  + \sigma_{x,Na,g,n}\right)
   \end{equation}
+
+  Bond is assumed to have the same macroscopic cross section as coolant.\\
+  Consistent with homogenization approximation.
 \end{frame}
 
 \begin{frame}{Cross Section Treatment -- Clad}
@@ -298,15 +249,7 @@
   \end{equation}
 \end{frame}
 
-\begin{frame}{Cross Section Treatment -- Bond}
-  \begin{itemize}
-    \item Assumed to have the same macroscopic cross section as coolant.
-    \item Represents a small volume.
-    \item Consistent with homogenization approximation.
-  \end{itemize}
-\end{frame}
-
-\begin{frame}{Cross-section Treatment -- Fuel}
+\begin{frame}{Cross section Treatment -- Fuel}
   \begin{itemize}
     \item Macroscopic cross section update based on $\overline{T_{F,i,k}}$.
     \item Square-root interpolation due to Doppler effect.

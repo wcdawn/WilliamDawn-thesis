@@ -32,26 +32,6 @@
   \end{conditions}
 \end{frame}
 
-\begin{frame}{Boundary Conditions}
-  Consider a domain $\Omega$ with boundary $\partial \Omega$ and let $\nhat$ be
-  the outward-normal unit vector.
-  \begin{enumerate}
-    \item Mirror.
-      \begin{equation}
-        \grad \phi_g(\vr) \cdot \nhat = 0 \; \forall \; \vr \in \partial \Omega
-      \end{equation}
-    \item Albedo. 
-      \begin{equation}
-        D_g(\vr) \grad \phi_g(\vr) \cdot \nhat + \albedo \phi_g(\vr)
-          = 0 \; \forall \; \vr \in \partial \Omega
-      \end{equation}
-    \item Zero Flux. 
-      \begin{equation}
-        \phi_g(\vr) = 0 \; \forall \; \vr \in \partial \Omega
-      \end{equation}
-  \end{enumerate}
-\end{frame}
-
 \begin{frame}{\gls{fem} Discretization}
   Divide the domain $\Omega$ into a set of unstructured finite elements 
   (e.g. Delaunay triangulation).
@@ -112,7 +92,7 @@
   \end{align}
 \end{frame}
 
-\begin{frame}
+\begin{frame}{Second Green's Theorem}
   Use the Second Green's Theorem to rewrite the first integral
   \cite{textbookli}.
   \begin{multline} 
@@ -126,8 +106,8 @@
   \end{multline}
 \end{frame}
 
-\begin{frame}{Galerkin Finite Element Method}
-  Galerkin Finite Element Method assumes the solution $\phi_g(\vr)$ is a linear
+\begin{frame}{Galerkin \glsentryfull{fem}}
+  Galerkin \gls{fem} assumes the solution $\phi_g(\vr)$ is a linear
   combination of chosen basis functions $\{\basis_i\}$.
   \begin{equation} 
     \label{eq:linear_combination}
@@ -143,8 +123,8 @@
 \end{frame}
 
 \begin{frame}{Linear System of Equations}
-  Including albedo form of boundary condition and assumption of linear
-  combination of basis functions.
+  Including albedo ($\albedo$) form of boundary condition and assumption of 
+  linear combination of basis functions.
   \begin{multline}
     \label{eq:linear_equation}
     \sum_{i=1}^{DOF} \upsilon_{i,g} \sum_{j=1}^{DOF} \left(
@@ -198,10 +178,6 @@
       \; d\Omega_e, \\
     \label{eq:vector_population}
     f_{i,g,e} &= q_{g,e} \int_{\Omega_e} \basis_i(\vr) \;d\Omega_e.
-  \end{align}
-  \begin{align}
-    A_{i,j,g} &= \sum_{e=1}^{N_E} A_{i,j,g,e} \\
-    f_{i,g} &=  \sum_{e=1}^{N_E} f_{i,g,e}
   \end{align}
 \end{frame}
 
@@ -270,8 +246,6 @@
   \begin{itemize}
     \item Matrix is reordered to increase computational efficiency and compute
       the same solution.
-    \item Nodes are re-indexed such that physically proximate nodes have
-      proximate indices.
     \item Improve cache hits.
     \item \gls{rcm} order is chosen \cite{rcm}.
   \end{itemize}

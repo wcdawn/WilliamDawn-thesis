@@ -11,12 +11,6 @@
     \item Benchmark published February 2016 \cite{abr}.
     \item Four designs including MET-1000.
     \item Thirty-one solutions including \dif.
-  \end{itemize}
-  \vspace{0.2in}
-  \begin{itemize}
-    \item Eighteen cross-section regions.
-    \item Forty-Nine material compositions.
-    \item Dimensions and isotopic compositions fully specified.
     \item Cross sections generated independently.
   \end{itemize}
 \end{frame}
@@ -43,18 +37,13 @@
     \label{eq:reactivity}
     \rho_i = \frac{\keffsub{i} - 1}{\keffsub{i}}
   \end{equation}
-  A general reactivity coefficient is a derivative with respect to a variable of
-  interest.
+  Reactivity coefficient is a derivative with respect to a variable of interest.
   \begin{align}
     \label{eq:reactivity_coefficient}
     \alpha_x(x_i) &= \left. \frac{\partial \rho}{\partial x} \right|_{x=x_i} \\
     \Delta \rho &\approx \alpha_x(x_i) \, \Delta x
   \end{align}
-\end{frame}
-
-\begin{frame}
-  Consider a series of reactor powers $Q_{Rx,i} = \{0\%,\ldots,100\%\}$.
-  Define the following reactivity coefficients.
+  For reactor powers $Q_{Rx,i} = \{0\%,\ldots,100\%\}$, define the coefficients.
   \begin{align}
     \label{eq:power_reactivity_coefficient}
     \alpha_{power}(Q_{Rx,i}) &= \frac{\rho(Q_{Rx,i}) - \rho(Q_{Rx,i} + 

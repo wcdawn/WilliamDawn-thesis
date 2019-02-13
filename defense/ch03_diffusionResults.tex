@@ -3,8 +3,6 @@
 
 \begin{frame}{Verification and Validation}
   \begin{itemize}
-    \item Comparison against analytic solutions and benchmark problems.
-    \item Strategy developed by Oberkampf and Trucano \cite{oberkampf}.
     \item ``Code Verification''
       \begin{itemize}
         \item Compare computational results to exact analytic or manufactured
@@ -26,14 +24,14 @@
 \begin{frame}{Error Analysis}
   \gls{fem} with linear elements is second-order convergent in space
   \cite{textbookli}.
-  \begin{equation} 
+  \begin{align} 
     \label{eq:error_bound}
+    \ve &= \phi(\vr) - \phi_{FEM} \\
     \|\ve\|_{\infty} \le c h^2 \| \grad^2 \phi(\vr) \|_{\infty}
-  \end{equation}
+  \end{align}
   It is useful to define the following errors as \gls{rms} error and maximum
   error.
   \begin{align}
-    \ve &= \phi(\vr) - \phi_{FEM} \\
     \label{eq:rms}
     \text{\glsentryshort{rms}}(\ve) &= \sqrt{\frac{1}{N} \sum_{i=1}^{N} e_i^2}\\
     \label{eq:infnorm}
@@ -160,7 +158,7 @@
     \label{fig:circle_meshes}
   \end{figure}
 
-  \vspace{-0.2in}
+  \vspace{-0.4in}
 
   \begin{equation}
     \label{eq:analytic_finite_cyl}
@@ -247,24 +245,11 @@
     %\caption{VVER440 Benchmark Power Comparison for Most Refined Mesh.}
     \label{fig:diffusion_vver440}
   \end{figure}
-  \Put(25,350){\includegraphics[width=0.15\textwidth]{hex_description}}
-\end{frame}
-
-\begin{frame}{Three-Dimensional Problem Analysis}
-  Typically more useful to compare control rod worth measurement.
-  \begin{itemize}
-    \item Case A. Control rods fully removed.
-    \item Case B. Control rods partially inserted.
-    \item Case C. Control rods fully inserted.
-  \end{itemize}
-  \begin{align}
-    \label{eq:rodworth}
-    \text{Rod Worth}_x \units{$\Delta k$} &= \frac{\keffsub{A} - \keffsub{x}}
-      {\keffsub{A} \, \keffsub{x}} &\qquad x=\{B,C\} \\
-    \label{eq:roddifference}
-    \text{Rod Difference}_x \units{$\% \Delta k$} &= (\keffsub{A} - \keffsub{x}) 
-      \times 100 \% &\qquad x=\{B,C\} \\
-  \end{align}
+  %\Put(25,350){\includegraphics[width=0.15\textwidth]{hex_description}}
+  \vspace{-0.5in}
+  \begin{center}
+    {VVER440 Benchmark Power Comparison for Most Refined Mesh.}
+  \end{center}
 \end{frame}
 
 \begin{frame}{MONJU}
@@ -272,8 +257,11 @@
     \item Three-dimensional.
     \item \gls{sfr}.
     \item Three-group.
-    \item Fission spectrum, $\chi$ not provided and instead selected for
-      benchmark agreement.
+    \item Case A. Control rods fully removed.
+    \item Case B. Control rods partially inserted.
+    \item Case C. Control rods fully inserted.
+    %\item Fission spectrum, $\chi$ not provided and instead selected for
+    %  benchmark agreement.
   \end{itemize}
   \begin{table}
     \begin{center}
