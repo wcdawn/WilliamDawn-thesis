@@ -4,11 +4,11 @@ close all
 % pseudo-input
 LW = 1;
 FN = 'Times New Roman';
-FS = 8;
+FS = 7;
 f2f = 1.0;
 
-fname = '../data/snr.csv';
-outname = '../figs/snr.eps';
+fname = '../data/vver440.csv';
+outname = '../figs/vver440.eps';
 
 side = 1.0/sqrt(3.0);
 base = 0.5*side;
@@ -54,40 +54,40 @@ end
 
 % place the key
 % VVER440
-% key_x = 0.0;
-% key_y = 0.6*max(ring)*f2f;
-% plot(key_x+hex(:,1)*f2f,key_y+hex(:,2)*f2f,'k-','LineWidth',LW)
-% key_str = sprintf('Material\nPower');
-% text(key_x,key_y,key_str,'FontName',FN,'FontSize',FS,...
-%     'HorizontalAlignment','center','VerticalAlignment','middle');
-% eigenvalue_str = sprintf('k_{eff}=\n1.00970');
-% text(key_x,key_y*0.8,eigenvalue_str,'FontName',FN,'FontSize',FS+2,...
-%     'HorizontalAlignment','center','VerticalAlignment','middle');
-% arrow([key_x+0.8*f2f,key_y-0.5*f2f],[key_x+0.8*f2f,key_y+0.5*f2f],'Length',8,'Ends','both')
-% dimension_str = '14.7 [cm]';
-% text(key_x+f2f,key_y,dimension_str,'FontName',FN,'FontSize',FS+1);
-% bc_str = '$$\nabla \phi_g \cdot \hat{\mathbf{n}} = 0$$';
-% text(4*f2f,1*f2f,bc_str,'Interpreter','latex');
-% text(0*f2f,4*f2f,bc_str,'Interpreter','latex');
-% text(8*f2f,8*f2f,'$$\alpha=0.5$$','Interpreter','latex');
-
-% SNR
 key_x = 0.0;
 key_y = 0.6*max(ring)*f2f;
 plot(key_x+hex(:,1)*f2f,key_y+hex(:,2)*f2f,'k-','LineWidth',LW)
-key_str = sprintf('Material');
+key_str = sprintf('Material\nPower');
 text(key_x,key_y,key_str,'FontName',FN,'FontSize',FS,...
     'HorizontalAlignment','center','VerticalAlignment','middle');
-eigenvalue_str = sprintf('k_{eff}=\n1.12400');
+eigenvalue_str = sprintf('k_{eff}=\n1.00970');
 text(key_x,key_y*0.8,eigenvalue_str,'FontName',FN,'FontSize',FS+2,...
     'HorizontalAlignment','center','VerticalAlignment','middle');
 arrow([key_x+0.8*f2f,key_y-0.5*f2f],[key_x+0.8*f2f,key_y+0.5*f2f],'Length',8,'Ends','both')
-dimension_str = '11.20 [cm]';
+dimension_str = '14.70 [cm]';
 text(key_x+f2f,key_y,dimension_str,'FontName',FN,'FontSize',FS+1);
 bc_str = '$$\nabla \phi_g \cdot \hat{\mathbf{n}} = 0$$';
-text(4*f2f,-1*f2f,bc_str,'Interpreter','latex');
+text(4*f2f,1*f2f,bc_str,'Interpreter','latex');
 text(0*f2f,4*f2f,bc_str,'Interpreter','latex');
-text(7*f2f,7*f2f,'$$\alpha=0.5$$','Interpreter','latex');
+text(8*f2f,8*f2f,'$$\alpha=0.5$$','Interpreter','latex');
+
+% SNR
+% key_x = 0.0;
+% key_y = 0.6*max(ring)*f2f;
+% plot(key_x+hex(:,1)*f2f,key_y+hex(:,2)*f2f,'k-','LineWidth',LW)
+% key_str = sprintf('Material');
+% text(key_x,key_y,key_str,'FontName',FN,'FontSize',FS,...
+%     'HorizontalAlignment','center','VerticalAlignment','middle');
+% eigenvalue_str = sprintf('k_{eff}=\n1.12400');
+% text(key_x,key_y*0.8,eigenvalue_str,'FontName',FN,'FontSize',FS+2,...
+%     'HorizontalAlignment','center','VerticalAlignment','middle');
+% arrow([key_x+0.8*f2f,key_y-0.5*f2f],[key_x+0.8*f2f,key_y+0.5*f2f],'Length',8,'Ends','both')
+% dimension_str = '11.20 [cm]';
+% text(key_x+f2f,key_y,dimension_str,'FontName',FN,'FontSize',FS+1);
+% bc_str = '$$\nabla \phi_g \cdot \hat{\mathbf{n}} = 0$$';
+% text(4*f2f,-1*f2f,bc_str,'Interpreter','latex');
+% text(0*f2f,4*f2f,bc_str,'Interpreter','latex');
+% text(7*f2f,7*f2f,'$$\alpha=0.5$$','Interpreter','latex');
 
 % HWR
 % key_x = 0.0;
