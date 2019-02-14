@@ -851,7 +851,7 @@
     therefore, $\mr$ is a non-symmetric, non-negative matrix.
 
     In the solution of \eref{eq:multigroup_diffusion}, the largest eigenvalue,
-    $\keff$, is desired with its associated eigenvalue, $\phi_g$.. The solution 
+    $\keff$, is desired with its associated eigenvalue, $\phi_g$. The solution 
     can be found using the method of power iterations which can be written as 
     \begin{align}
       \label{eq:power_iteration_phi}
@@ -1019,7 +1019,9 @@
   \mcc \cite{mcc}. The multigroup neutron diffusion equation is solved according
   to \eref{eq:multigroup_source}. The resulting effective neutron multiplication 
   factor, $\keff$, is written to an output file. The multigroup neutron flux is
-  written to a different results VTK file for easy visualization.
+  written to a different results VTK file for easy visualization. In a
+  multiphysics simulation, material temperatures and thermal expansion
+  dimensions are also written to the results VTK.
 
   \subsection{Algorithm}
     The algorithm for the solution to the diffusion equation is similar to most
@@ -1034,7 +1036,7 @@
     effect on the result as the linear system represented is equivalent. This 
     choice to reorder the system is made to improve computational efficiency. 
     Indexing nodes that are physically proximate with proximate indices causes 
-    rows in the finite element matrix $\ma_g$ to be closely coupled to nearby
+    rows in the finite element matrix, $\ma_g$, to be closely coupled to nearby
     rows. In a general unstructured and unordered mesh, rows may be coupled to 
     other random rows in the matrix. This step of reordering the matrix $\ma_g$ 
     seeks to decrease the bandwidth of the matrix and encourage cache hits when
@@ -1084,36 +1086,39 @@
         \EndFor
         \State Update $\keff$.
         \State Check convergence.
-        \State Perform non-linear update if necessary. \label{state:nonlinear}
+        \State Perform non-linear update if necessary and update $\ma_g$. 
+          \label{state:nonlinear}
       \EndWhile
       \end{algorithmic}
     \end{algorithm}
 
-    Step \ref{state:nonlinear} incorporates the possibility of non-linear
-    updates into the power iteration method. This invalidates the proof of
-    convergence from \sref{sec:power_iterations} but is performed to simulate
-    thermal hydraulic and thermal expansion effects as described in
-    \chref{ch:thermalHydraulics} and \chref{ch:thermalExpansion} respectively.
-    This procedure is commonly used in practice and no convergence problems have
-    been observed. This update also requires recalculating the finite element
-    matrix $\ma_g$ for each group.
+    Step \ref{state:nonlinear} in \algorithmref{algorithm:general} incorporates
+    the possibility of non-linear updates into the power iteration method. This
+    invalidates the proof of convergence from \sref{sec:power_iterations} but is
+    performed to simulate thermal hydraulic and thermal expansion effects as
+    described in \chref{ch:thermalHydraulics} and \chref{ch:thermalExpansion}
+    respectively. This procedure is commonly used in practice and no convergence 
+    problems have been observed. This update also requires recalculating the 
+    finite element matrix $\ma_g$ for each group.
     
     A benefit of this implementation is that the finite element vector $\vf_g$
     must be updated on each power iteration of the solution whereas the matrix
     $\ma_g$ is described entirely by geometry and the material cross sections.
-    For this reason, $\ma_g$ can be generated once at the beginning of the
-    problem and stored for the duration of the calculation (with no non-linear
-    updates). \FloatBarrier % make sure the algorithm is in the correct section
+    For this reason, in problems with no multiphysics simulations, $\ma_g$ can
+    be generated once at the beginning of the problem and stored for the
+    duration of the calculation.
+
+    \FloatBarrier % make sure the algorithm is in the correct section
 
   \subsection{Memory and Storage}
-    The finite element matrix $\ma_g$ is large and sparse so a sparse storage 
+    The finite element matrix, $\ma_g$, is large and sparse so a sparse storage 
     and sparse solution to the linear system are required. Many sparse matrix 
     implementations have been described and implemented in the past including
-    triplet storage, reduced column, and reduced row storage \cite{sparseBLAS}.
-    For this work a \twotable method is chosen which was uniquely 
-    developed. \twotable storage is chosen for its simplicity and implementation
-    with the \gls{fem}. Future work may include a reduced row implementation but 
-    there will be a trade-off between memory minimization and computational 
+    triplet, reduced column, and reduced row storage \cite{sparseBLAS}.  For 
+    this work a \twotable method is chosen which was uniquely developed. 
+    \twotable storage is chosen for its simplicity and implementation with the 
+    \gls{fem}. Future work may include a reduced row implementation but there 
+    will be a trade-off between memory minimization and computational 
     efficiency.
     
     The \twotable method is composed of two separate matrices in memory. An
@@ -1260,20 +1265,20 @@
     $\ml$ is a lower triangular matrix with positive diagonal entries and
     $\ml^*$ is the conjugate transpose of the matrix \cite{textbookipsen}. For
     real valued matrices, the conjugate transpose is equivalent to the
-    conventional transpose. Though this may be useful for debugging or numerical
-    analysis purposes, these operations are computationally expensive. Instead,
-    this is verified here for the general matrix and not tested during
-    simulations.
+    conventional transpose. Though an eigenvalue decompisition or a Cholesky
+    factorization may be useful for debugging or numerical analysis purposes, 
+    these operations are computationally expensive. Instead, this is verified 
+    here for the general matrix and not tested during simulations.
     
     Conventional methods used to solve a linear system described by an \gls{spd}
     matrix include Gauss-Seidel iteration with \gls{sor} and the \gls{cg} Krylov 
     subspace method. \gls{sor} requires \textit{a priori} knowledge of the 
-    optimized over-relaxation factor $\omega_{opt}$ for optimal performance. In 
-    practice, this is performed analytically for contrived solutions or in a 
-    modified guess-and-check method. The \gls{cg} method is chosen because it 
-    requires no \textit{a priori} knowledge and produced a solution to the same 
-    tolerance in a reduced wall-time without the need for guess-and-check 
-    iterations.
+    optimized over-relaxation factor, $\omega_{opt}$, for optimal performance. 
+    In practice, calculation of $\omega_{opt}$ is performed analytically for 
+    contrived solutions or in a modified guess-and-check method. The \gls{cg} 
+    method is chosen because it requires no \textit{a priori} knowledge and
+    produced a solution to the same tolerance in a reduced wall-time without the
+    need for guess-and-check iterations.
     
     A simple recipe for the \gls{cg} method is replicated in
     \algorithmref{algorithm:CG} \cite{Kelley1995IterativeEquations}
@@ -1311,11 +1316,11 @@
       \|\vr\|_2^2 = \vr^{T} \vr
     \end{equation}
     It is noted that this method requires minimal storage with only four vectors 
-    required ($\vx, \vw, \vp,$ and $\vr$). Additionally, two scalar products 
-    are required and a single matrix-vector product which proves to be the most 
-    computationally expensive \cite{Kelley1995IterativeEquations}. As most of 
-    the computational time of the diffusion solutions is spent in the linear 
-    system solution, is is crucial that this process be efficient.
+    required ($\vx, \vw, \vp,$ and $\vr$). Additionally, each iteration requries
+    only two scalar products and a single matrix-vector product which proves to
+    be the most computationally expensive \cite{Kelley1995IterativeEquations}.
+    As most of the computational time of the diffusion solutions is spent in the
+    linear system solution, is is crucial that this process be efficient.
 
     With the solution of the linear system, the implementation of the \gls{fem}
     to solve the multigroup neutron diffusion problem is completed. Results in 
