@@ -15,7 +15,7 @@ defense : $(DEFENSE).pdf
 $(DEFENSE).pdf : $(DEFENSE).tex $(DEFENSE_EXTRA) $(FIGURES) beamerthemeNCSU.sty\
 	../WilliamDawn-thesis.bib
 	pdflatex --draftmode --shell-escape $(DEFENSE)
-	bibtex $(DEFENSE)
+	biber $(DEFENSE)
 	makeglossaries $(DEFENSE)
 	pdflatex --draftmode --shell-escape $(DEFENSE)
 	pdflatex --shell-escape $(DEFENSE)
