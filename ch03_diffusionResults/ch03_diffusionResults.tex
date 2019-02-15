@@ -22,7 +22,7 @@
   intended application of the solver. These benchmarks may have been been
   calculated computationally via another method or may come from experimental
   data. The data of the standard benchmarks is not exact; but, typically the
-  solution has been verified by others previously.
+  benchmark solution has been verified by others previously.
 
   \begin{figure}
     \centering
@@ -54,7 +54,7 @@
   \end{equation}
 
   It has been shown that for a bounded second spatial derivative 
-  within the problem domain, the \gls{fem} derived in 
+  within the problem domain, the \gls{fem} with linear elements as derived in 
   \chref{ch:neutronDiffusion} is second-order convergent in space 
   \cite{textbookli}. This implies the error in the maximal norm defined in 
   \eref{eq:infnorm} is bounded as
@@ -82,7 +82,7 @@
   ratio approaches the expected value. This is especially the case when the 
   second derivative is not bounded in problems with heterogeneous materials.
   
-  For analytic solutions, the error of the function $\phi$ itself can be 
+  For analytic solutions, the error of the function $\phi(\vr)$ itself can be 
   analyzed because the solution is known exactly. The derivations of the exact 
   solutions are presented in \apref{ap:analyticSolutions}. Both RMS errors and
   maximal errors are presented. It is observed that the RMS error refinement
@@ -94,10 +94,11 @@
   between refinements should assume the expected rate. Though the convergence is
   defined in \eref{eq:error_bound} is for the flux itself, $\keff$ is expected
   to  converge at the same rate.  $\keff$ error is calculated with
-  \eref{eq:keff_err} in units of percent-mille \units{\glsentryshort{pcm}}.
+  \eref{eq:keff_err} in units of percent-mille~\units{\glsentryshort{pcm}}.
   \begin{equation}
     \label{eq:keff_err}
-    \keff \; \text{ error } \units{\glsentryshort{pcm}} = (\kref - \keff) \times 10^5
+    \keff \; \text{ error } \units{\glsentryshort{pcm}} = (\kref - \keff) 
+      \times 10^5
   \end{equation}
 
   For benchmark problems, only $\keff$ is analyzed and expected to converge
@@ -113,7 +114,7 @@
 \section{Analytic Solutions}
   As a demonstration of the proper implementation of and solution to the 
   neutron diffusion equation, analytic solutions are derived and then 
-  numerically computed. These are one-dimensional, two-dimensional, and 
+  computed numerically. These are one-dimensional, two-dimensional, and 
   three-dimensional problems. These problems exercise both triangle and wedge 
   elements. For one-dimension problems, a two-dimensional rectangular domain is
   used and the top and bottom edges, $y=0$ and $y=L_x$, are treated as mirror 
@@ -284,14 +285,13 @@
     \end{table}
 
   \subsection{Three-Dimension, One-Group, Finite Cylinder}
-    This problem is a finite cylinder composed of fissile material. The cylinder
-    is three-dimensional but the analytic solution can be reduced to two
-    dimensions (radial and axial directions). The solution with the \gls{fem}
-    uses a fully three-dimensional solution and wedge finite elements. The exact 
-    solution is derived in \sref{sec:deriv_finite_cyl} and the solution is 
-    presented in \eref{eq:analytic_finite_cyl}. Results from the convergence 
-    study are presented in \tref{tab:finite_cyl}. The exact value for the 
-    effective multiplication factor is $\kref = 0.996711$. 
+    This problem is a finite cylinder composed of fissile material.  The
+    solution with the \gls{fem} uses a three-dimensional solution and wedge
+    finite elements. The exact solution is derived in
+    \sref{sec:deriv_finite_cyl} and the solution is presented in
+    \eref{eq:analytic_finite_cyl}. Results from the convergence study are
+    presented in \tref{tab:finite_cyl}. The exact value for the effective
+    multiplication factor is $\kref = 0.996711$. 
     
     It is observed in \tref{tab:finite_cyl} that the convergence rate of the
     flux appears to fluctuate about the expected value of four. This is
@@ -370,8 +370,8 @@
   \subsection{VVER440}
     Proposed by \textcite{chao} and described in
     \sref{sec:vver440}, this benchmark is a two-dimensional hexagonal problem
-    based on a VVER-440 reactor. The VVER-440 is a light-water moderated reactor
-    and operates principally with thermal neutron spectrum. Cross sections are
+    based on a VVER-440 reactor. The VVER-440 is a \gls{lwr} and, as such, 
+    operates principally with thermal neutron spectrum. Cross sections are
     provided for a two-group energy structure.
     
     Power comparison between the most refined mesh and the reference solution
@@ -500,9 +500,9 @@
     \end{table}
 
   \subsection{IAEA}
-    Proposed by \textcite{chao} and described in \sref{sec:iaea},
-    this two-dimensional problem was originally based on a Cartesian grid
-    two-dimensional \gls{pwr} but was converted to hexagonal geometry to
+    Proposed by \textcite{chao} and described in \sref{sec:iaea}, this
+    two-dimensional problem was originally based on a two-dimensional \gls{pwr}
+    with a Cartesian grid. The benchmark was converted to hexagonal geometry to
     represent a VVER reactor \cite{chao}. As it is originally based on a
     \gls{pwr} design, the reactor operates principally with a thermal neutron
     spectrum. Cross sections are provided for a two-group energy structure.
@@ -620,15 +620,14 @@
 
 \section{Three-Dimension Benchmark Solutions}
   \label{sec:three_dimensional_benchmark_solutions}
-  For two-dimensional benchmarks, mesh refinement studies are provided and 
+  For two-dimensional benchmarks, mesh refinement studies are provided and
   convergence is observed relative to the reference $\keff$ value similar to
   analytic problems. For three-dimensional benchmarks, control rod worth
-  measurement is instead used to observe agreement of the diffusion solution 
-  to the benchmark solution. To measure control rod worth, three cases are run
-  $\{A,B,C\}$ with control rods fully removed in case $A$, partially inserted
-  in case $B$, and fully inserted in case $C$. 
-  Rod worth is presented in 
-  units \units{$\Delta k$} and calculated as 
+  measurement is used to observe agreement of the \gls{fem} neutron diffusion
+  solution to the benchmark solution. To measure control rod worth, three cases
+  are run $\{A,B,C\}$ with control rods fully removed in case $A$, partially
+  inserted in case $B$, and fully inserted in case $C$. Rod worth is presented
+  in units \units{$\Delta k$} and calculated as 
   \begin{equation}
     \label{eq:rodworth}
     \text{Rod Worth}_x \units{$\Delta k$} = \frac{\keffsub{A} - \keffsub{x}}
@@ -654,8 +653,8 @@
     assumed fission spectrum is presented in \tref{tab:monjuchi}. The rod worth 
     measurements appear insensitive to the choice of fission spectrum. 
 
-    Reference data can be found in \tref{tab:monjukref}. Results from the finite
-    element method implementation are presented in \tref{tab:monju}.  The error
+    Reference data can be found in \tref{tab:monjukref}. Results from the
+    \gls{fem} implementation are presented in \tref{tab:monju}. The error
     (difference between reference and calculated results) are presented in
     parenthesis next to the quantities. Rod worth is presented as calculated in
     \eref{eq:rodworth}. Rod difference is presented as calculated in
@@ -686,18 +685,18 @@
     \end{table}
   
   \subsection{KNK}
-    Proposed by \textcite{takedaBenchmark} and described in
-    \sref{sec:knk}, this three-dimension, benchmark problem is based on an
-    \gls{sfr} and is a model of the KNK-II core. Cross sections are provided for
-    a four-group energy structure. There are many materials specified in the
-    problem so it also aids in testing material mapping in the code. However,
-    the reference data is for a transport solution. In this work, the
-    cross sections from the transport problem are used to solve the neutron
-    diffusion equation. This explains some of the numerical differences in the
-    results but general trends are reflected. 
+    Proposed by \textcite{takedaBenchmark} and described in \sref{sec:knk}, this
+    three-dimension benchmark problem is based on an \gls{sfr} and is a model of
+    the KNK-II core. Cross sections are provided for a four-group energy
+    structure. There are many materials specified in the problem so it also aids
+    in testing material mapping in the code.  The reference data is for a
+    solution to the neutron \textit{transport} equation. In this work, the cross
+    sections from the transport problem are used to solve the neutron diffusion
+    equation. This explains some of the numerical differences in the results but
+    general trends are reflected. 
 
-    Reference data can be found in \tref{tab:knkkref}. Results from the finite
-    element neutron diffusion solution are presented in \tref{tab:knk}. The
+    Reference data can be found in \tref{tab:knkkref}. Results from the
+    \gls{fem} neutron diffusion solution are presented in \tref{tab:knk}. The
     error (difference between reference and calculated results) are presented in
     parenthesis next to the quantities. Rod worth is presented as calculated in
     \eref{eq:rodworth}. Rod difference is presented as calculated in
