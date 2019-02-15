@@ -4,7 +4,7 @@
 \section{Introduction}
   Material temperatures and densities are a pivotal part of the multiphysics
   problem of simulating a fast reactor. Temperatures are necessary for
-  calculating temperature-dependent reactor cross sections for an accurate power
+  calculating temperature-dependent neutron cross sections for an accurate power
   distribution.  Thermal hydraulic models are developed for standard fast
   reactor geometry as described in \sref{sec:geometry_description}. Recall, the
   standard assembly is a hexagonal can and filled with many cylindrical rods. 
@@ -12,7 +12,7 @@
   In this simulation, two thermal hydraulic models are developed. The first is a
   steady-state, one-dimensional, axial heat convection model to calculate bulk
   coolant temperatures and densities as the coolant flows vertically through a
-  channel. This model is valid for the assumption of no cross-flow between
+  channel. This model requires the assumption of no cross-flow between
   channels and perfect fluid mixing within the flow channel. These assumptions
   are valid for simulating typical fast reactors with hexagonal assemblies.
   Hexagonal assemblies, as described in \sref{sec:geometry_description}, satisfy
@@ -85,7 +85,7 @@
   \units{$\frac{\text{W}}{\text{m K}}$}.  For the given expression of fuel
   thermal conductivity, the integral of thermal conductivity is unbounded as $T
   \rightarrow 0$ so thermal conductivity is assumed constant below 300 \units{K}
-  which is below the melting point of most fact reactor coolants, including
+  which is below the melting point of most fast reactor coolants, including
   sodium, so this assumption is valid for sodium-cooled reactor applications.
 
   \begin{figure}
@@ -98,7 +98,7 @@
 \section{Power Normalization}
   Recall the multigroup neutron diffusion equation solved via the power
   iteration method returns the largest eigenvalue $\keff$ and unique positive
-  eigenvector $\phi_g$ (see \sref{sec:power_iterations}). The neutron flux
+  eigenvector $\phi_{g,e}$ (see \sref{sec:power_iterations}). The neutron flux
   calculated according to this method is an eigenvector and can be normalized
   to an arbitrary constant. For a specified total reactor power, $Q_{Rx}$, the
   normalization constant can be calculated. Given the un-normalized neutron flux 
@@ -195,11 +195,11 @@
     \end{equation}
     where $A_{cool,i}$ is the coolant flow area for channel $i$ and
     $A_{cool,Rx}$ is the total coolant flow area for the reactor. The mass flow
-    per unit area is assumed constant at the reactor inlet and the mass flow in
-    a channel is the product of the mass flux and the channel flow area. This
-    partitioning of mass flow rate is chosen to allow for assemblies with
-    different flow areas or the modeling of partial assemblies in fractional
-    core models.
+    per unit area is assumed to be uniform at the reactor inlet and the mass
+    flow in a channel is the product of the reactor average mass flux and the
+    channel flow area.  This partitioning of mass flow rate is chosen to allow
+    for assemblies with different flow areas or the modeling of partial
+    assemblies in fractional core models.
 
   \subsection{Chunk Powers}
     For the one-dimensional axial heat convection model in the axial direction,
@@ -222,7 +222,7 @@
   \subsection{Channel Enthalpy}
     It is assumed that all heat generated within the chunk is deposited in the
     coolant as it flows through the chunk. This occurs at steady-state with the
-    assumption that axial heat conduction in the solids can be ignored. Then, 
+    assumption that axial heat conduction in the solids can be neglected. Then, 
     the steady-state coolant enthalpy for an axial location $z$ within the 
     channel is expressed by a simple energy balance relation as
     \begin{equation}
@@ -230,11 +230,12 @@
       h_i(z) = h_{in} + \frac{1}{\mdot_i} \int_0^z q'_i(z') \; dz'
     \end{equation}
     where $h_i(z)$ is the specific enthalpy at axial position $z$ in channel
-    $i$, $h_{in}$ is the inlet enthalpy, $\mdot_i$ is the mass flow rate within
-    the channel given in \eref{eq:mass_flow_split}, and $q'_i(z)$ is the linear
-    heat generation rate for channel $i$ at elevation $z$. $h_{in}$ is related
-    to a user specified coolant inlet temperature, $T_{inlet}$, by a state
-    relationship for the coolant $h_{in} = h(T_{inlet})$ \cite{sodiumProp}. 
+    $i$, $h_{in}$ is the channel inlet enthalpy, $\mdot_i$ is the mass flow rate
+    within the channel given in \eref{eq:mass_flow_split}, and $q'_i(z)$ is the
+    linear heat generation rate for channel $i$ at elevation $z$. $h_{in}$ is
+    related to a user specified coolant inlet temperature, $T_{inlet}$, by a
+    state relationship for the coolant $h_{in} = h(T_{inlet})$
+    \cite{sodiumProp}. 
 
     The integral in \eref{eq:continuous_heat_balance} can be discretized along
     the channel and converted to a summation. This is similar to a Riemann
@@ -270,9 +271,7 @@
     coolant enthalpy in each chunk. Given, $h_{i,k}$, the average bulk coolant 
     temperature in the chunk $T_{\infty,i,k} = T(h_{i,k})$ can be calculated 
     using a state relationship \cite{sodiumProp}. Bulk coolant temperature 
-    will be an input into the radial conduction model, 
-    \sref{sec:radial_conduction_model}, to calculate material temperatures in 
-    the fuel rod.
+    will be an input into the radial heat conduction model.
   
 \section{Radial Conduction Model}
   \label{sec:radial_conduction_model}
@@ -297,7 +296,8 @@
   have been obtained by others \cite{FastSpectrumReactors}.  With the
   temperatures at these locations calculated, the average temperature within
   each material is calculated. These average temperatures are essential for the
-  accurate simulation of the reactor as they influence multigroup constants.
+  accurate simulation of the reactor as they influence multigroup neutron cross
+  sections.
 
   \subsection{Geometric Model}
     For the purposes of the radial model, the geometry is shown in
@@ -311,7 +311,7 @@
     surface temperature is $T_B$ and clad surface temperature is 
     $T_C$. $T_{\infty}$ represents the bulk coolant temperature. In this model,
     heat is generated exclusively in the fuel with volumetric heat generation 
-    rate $q'''$. 
+    rate $q'''_{i,k}$. 
 
     \begin{figure}
       \centering
@@ -332,8 +332,8 @@
     Then, derivation moves to the fuel surface temperature assuming the bond 
     surface temperature is known. This pattern is terminated and the 
     relationship is closed at the cladding surface where, for a given 
-    $T_{\infty}$, the clad surface temperature is described by Newton's law of 
-    cooling and a convective heat transfer correlation. For this work, the 
+    $T_{\infty,i,k}$, the clad surface temperature is described by Newton's law 
+    of cooling and a convective heat transfer correlation. For this work, the 
     Subbotin-Ushakov correlation is selected for its applicability to 
     triangular-pitch flow channels in liquid metal cooled reactors 
     \cite{subbotinUshakov}.
@@ -342,11 +342,11 @@
     While the derivation moved from fuel centerline outward to clad surface,
     the calculation moves from clad surface inward to fuel centerline. This is
     necessary because the quantities are all unknown with the exception of
-    $T_{\infty}$ so the calculation begins there. Surface temperatures are all
-    described explicitly due to the assumption of constant thermal conductivity
-    within bond and clad regions. Fuel centerline temperature must be solved
-    implicitly due to the treatment of variable thermal conductivity. A
-    numerical solution method is used to solve for the fuel centerline
+    $T_{\infty,i,k}$ so the calculation begins there. Surface temperatures are
+    all described explicitly due to the assumption of constant thermal
+    conductivity within bond and clad regions. Fuel centerline temperature must
+    be solved implicitly due to the treatment of variable thermal conductivity.
+    A numerical solution method is used to solve for the fuel centerline
     temperature.
     
     \subsubsection{Temperature in Fuel}
@@ -355,7 +355,7 @@
       \eref{eq:chunkqppp_fuel} is assumed constant within the fuel.
       Additionally, the thermal conductivity in the fuel is assumed to have the
       general, functional form form $k_F(T)$ \cite{fuelProp}.  For the assumed
-      fuel composition, the thermal conductivity is plotted in
+      fuel composition of U-10Zr, the thermal conductivity is plotted in
       \fref{fig:kfuel_plot}.
 
       The steady-state heat conduction equation for the fuel temperature
@@ -433,22 +433,21 @@
         K_F(T) = \int_0^T k_F(T') \; dT'
       \end{equation}
       where $k_F(T)$ is the thermal conductivity of the fuel material as shown
-      in \fref{fig:kfuel_plot}. Then, \eref{eq:tcl_integral} can be rewritten.
+      in \fref{fig:kfuel_plot}. Then, \eref{eq:tcl_integral} can be rewritten
       \begin{gather}
-        K_F(T_F(r)) - K_F(T_F(0)) + \frac{q'''_{i,k}}{4} r^2 = 0 \\
+        K_F(T_F(r)) - K_F(T_F(0)) + \frac{q'''_{i,k}}{4} r^2 = 0, \\
         \label{eq:tfuel_r}
-        K_F(T_F(0)) = K_F(T_F(r)) + \frac{q'''_{i,k}}{4} r^2 \\
+        K_F(T_F(0)) = K_F(T_F(r)) + \frac{q'''_{i,k}}{4} r^2, \\
         \label{eq:tcl_conductivity_integral}
-        K_F(T_F(0)) = K_F(T_F) + \frac{q'''_{i,k}}{4} R_F^2
+        K_F(T_F(0)) = K_F(T_F) + \frac{q'''_{i,k}}{4} R_F^2,
       \end{gather}
-      The fuel centerline temperature can be calculated using
+      where $T_F(0)$ is the fuel centerline temperature, $T_F=T_F(R_F)$ is the
+      fuel surface temperature, and $R_F$ is the radius of the fuel.  The fuel
+      centerline temperature can be calculated using
       \eref{eq:tcl_conductivity_integral} given a functional form of the
-      conductivity integral $K_F(T)$ by performing a search on the conductivity
-      integral where $T_F(0)$ is the fuel centerline temperature, 
-      $T_F=T_F(R_F)$ is the fuel surface temperature, and $R_F$ is the radius of 
-      the fuel. If, instead, $k_F(T)$ were constant such that $k_F(T) =
-      \overline{k_F}$, then \eref{eq:tcl_conductivity_integral} would be 
-      equivalent to 
+      conductivity integral $K_F(T)$ and by employing a nonlinear search.  If,
+      instead, $k_F(T)$ were constant such that $k_F(T) = \overline{k_F}$, then
+      \eref{eq:tcl_conductivity_integral} would be equivalent to 
       \begin{align}
         \label{eq:tfr}
         T_F(r) &= T_F(0) - \frac{q'''_g}{4 \overline{k_F}} r^2 \\
@@ -465,7 +464,7 @@
     \subsubsection{Temperature in Sodium Bond}
       The fuel surface temperature is calculated by considering the heat
       conduction equation in the sodium bond region. There is no heat generation
-      in this region so $q'''=0$. 
+      in this region so.
       The thermal conductivity in the bond is assumed constant such that 
       ${k_B(T) = k_B = 64.33 \units{$\frac{\text{W}}{\text{m K}}$}}$ as 
       specified in \tref{tab:constant_k}.
@@ -526,7 +525,7 @@
       \end{align}
       Recall from the earlier derivation of the fuel centerline temperature 
       that the quantity $q'''_{i,k}$ is the average volumetric heat generation 
-      rate within chunk $j$ specified in \eref{eq:chunkqppp_fuel}.
+      rate within the fuel in chunk $j$ specified in \eref{eq:chunkqppp_fuel}.
       \eref{eq:surface_relation} is substituted into
       \eref{eq:tf_first_integral}.
       \begin{equation}
@@ -657,8 +656,8 @@
         A_x = \left(\frac{\sqrt{3}}{4} S^2 - \frac{\pi R_C^2}{2} - 
           \frac{\pi \, D_{wrap}^2}{8} \right) N_{rod}
       \end{equation}
-      where $S$ is the rod-pitch, $N_{rod}$ is the number of rods in the 
-      assembly, and $D_{wrap}$ is the diameter of the wire wrap around the
+      where $N_{rod}$ is the number of rods in the 
+      assembly and $D_{wrap}$ is the diameter of the wire wrap around the
       cylindrical rod. The wetted perimeter is
       \begin{equation}
         \label{eq:correlation_pw}
@@ -719,12 +718,12 @@
   \subsection{Average Temperatures}
     \label{sec:average_temps}
     Average material temperatures are used to evaluate material properties such
-    as densities, cross sections, and thermal expansion within the different
-    material regions. The derivations in this section require the fuel
-    centerline and surface temperatures from \sref{sec:surface_temps}. To
-    calculate the average temperature in a region, an temperature function
-    $T(r)$ is required. For the bond and clad regions, this is given in
-    \eref{eq:tbr} and \eref{eq:tcr} respectively.
+    as densities, temperature-dependent neutron cross sections, and thermal 
+    expansion within the different material regions. The derivations in this
+    section require the fuel centerline and the various surface temperatures
+    from \sref{sec:surface_temps}. To calculate the average temperature in a
+    region, an temperature function $T(r)$ is required. For the bond and clad
+    regions, this is given in \eref{eq:tbr} and \eref{eq:tcr} respectively.
 
     No such temperature function exists for the fuel region due to the variable
     thermal conductivity. In the fuel region, an effective constant thermal
@@ -737,7 +736,7 @@
     this method of effective constant thermal conductivity resulted in a $10
     \units{K}$ error in the average fuel temperature compared to a numerical
     integration with 1,000 points. For the purposes of calculating average
-    values, this approximation is acceptable.
+    values to be used in interpolation, this approximation is acceptable.
 
     \subsubsection{Average Fuel Temperature}
       In the fuel region, an effective constant thermal conductivity
@@ -797,15 +796,15 @@
       To calculate more accurate fuel cross sections, an effective fuel 
       temperature could be used which weights the fuel surface temperature 
       higher than the average value. Due to self-shielding in the fuel, the 
-      temperature corresponding to the average neutron flux is nearer to the 
-      surface of the fuel as neutron flux decreases significantly within the 
-      fuel material itself. For the purposes of this model, the use of volume 
-      averaged fuel temperatures is acceptably accurate as rod-powers cannot be 
-      resolved in this simplified geometry due to the smearing of cross sections
-      within a hexagonal fuel assembly. In addition, metal fuel has a lower 
-      change in temperature between surface and centerline temperatures when 
-      compared to oxide fuels and rod dimensions are smaller than typical 
-      \glspl{lwr}.
+      temperature corresponding to the average neutron flux within the fuel rod 
+      is nearer to the surface of the fuel as neutron flux decreases
+      significantly within the fuel material itself. For the purposes of this
+      model, the use of volume averaged fuel temperatures is acceptably accurate
+      as rod powers cannot be resolved in this simplified geometry due to the
+      smearing of cross sections within a hexagonal fuel assembly. In addition,
+      metal fuel has a lower change in temperature between surface and
+      centerline temperatures when compared to oxide fuels and rod dimensions
+      are smaller than typical \glspl{lwr}.
 
     \subsubsection{Average Bond Temperature}
       \label{sec:average_bond_temp}
@@ -898,14 +897,15 @@
   material is interpolated according to a square-root interpolation because the
   Doppler effect obeys square-root behavior. Square-root interpolation is
   necessary due to relatively high fuel temperatures and the many neutron
-  absorption resonances in fuel material, specifically uranium.
+  absorption resonances in fuel material, specifically uranium isotopes such as
+  \isotope[238]{U}.
 
   Reactor material temperatures are updated periodically throughout the neutron
   diffusion calculation. The user may specify a fixed number of power iterations
-  for which the diffusion calculation will run before updating the temperatures.
-  Currently, 10 power iterations are run per temperature update and this
-  provides efficient and convergent behavior.  For a discussion of power
-  iterations, see \sref{sec:power_iterations}.
+  for which the diffusion calculation will be computed before updating the
+  temperatures.  Currently, ten power iterations are executed per temperature
+  update and this provides efficient and convergent behavior. For a discussion
+  of power iterations, see \sref{sec:power_iterations}.
   
   When the temperatures are updated, the cross sections are also updated.
   Updating the material cross sections requires recomputing the finite element
@@ -950,10 +950,10 @@
 
   \subsection{Coolant Cross Sections}
     The main temperature effect on coolant cross sections is due to the
-    change in fluid density. The mass-density of the of liquid sodium 
+    change in fluid density. The mass density of the of liquid sodium 
     is given as a function of temperature $\rho(T)$ by a state relationship 
     \cite{sodiumProp}. Natural sodium is entirely composed of \isotope[23]{Na} 
-    and has atomic weight ${M_{Na} = 22.989769
+    and has atomic mass ${M_{Na} = 22.989769
     \units{$\frac{\text{gram}}{\text{mol}}$}}$ \cite{nuclides}.
     Then, the number density of the coolant is given as
     \begin{equation}
@@ -978,8 +978,7 @@
     Using the coolant temperatures for the cross section library structure
     described in \sref{sec:cross_section_treatment}, microscopic coolant cross 
     sections are calculated using a linear interpolation. For coolant
-    temperature $T_{n}<T_{\infty,i,k}<T_{n+1}$ and library temperatures
-    $\{T_n\}$,
+    temperature ${T_{n}<T_{\infty,i,k}<T_{n+1}}$ 
     \begin{equation}
       \label{eq:xs_cool}
       \Sigma_{x,i,k,g} = N_{Na}(T_{\infty,i,k}) 
