@@ -3,25 +3,26 @@
 
 \section{Introduction}
   The implementation of the \gls{fem} in this work has been compared
-  against standard benchmark problems as well as analytic solutions. Comparison 
-  against benchmark problems demonstrates an ability to solve problems for which 
-  this work was intended. Comparison against analytic solutions allows for more 
-  detailed error and convergence analysis as not only the system $\keff$ but 
-  also the flux solution are known exactly. 
+  against standard benchmark problems as well as analytic solutions to the
+  multigroup neutron diffusion equation. Comparison against benchmark problems
+  demonstrates an ability to solve problems for which this work was intended.
+  Comparison against analytic solutions allows for more detailed error and
+  convergence analysis as not only the system $\keff$ but also the flux solution
+  are known exactly. 
 
-  Running these comparisons serves as a verification of this implementation of 
-  the \gls{fem}. The strategy employed in this work is developed by 
-  \textcite{oberkampf}. The first step is 
-  ``code verification.'' Code verification compares computational results to 
-  exact analytic or manufactured results. Code verification serves to 
-  demonstrate that the code itself is solving the equations correctly as 
-  designed and with quantified numerical errors. This will be demonstrated with 
-  convergence to the analytic answer at the expected rate. The second step is 
-  ``solution verification.'' Solution verification compares computational 
-  results to benchmark results for the intended application of the solver. These 
-  benchmarks may have been been calculated computationally via another method or 
-  may come from experimental data. The data of the standard benchmarks is not 
-  exact, but typically the solution has been verified by others previously.
+  These comparisons serve as a verification of this implementation of the
+  \gls{fem}. The verificaiton strategy employed in this work is developed by
+  \textcite{oberkampf}. The first step is ``code verification.'' Code
+  verification compares computational results to exact analytic or manufactured
+  results. Code verification serves to demonstrate that the code itself is
+  solving the equations correctly as designed and with quantified numerical
+  errors. This will be demonstrated with convergence to the analytic answer at
+  the expected rate. The second step is ``solution verification.'' Solution
+  verification compares computational results to benchmark results for the
+  intended application of the solver. These benchmarks may have been been
+  calculated computationally via another method or may come from experimental
+  data. The data of the standard benchmarks is not exact; but, typically the
+  solution has been verified by others previously.
 
   \begin{figure}
     \centering
