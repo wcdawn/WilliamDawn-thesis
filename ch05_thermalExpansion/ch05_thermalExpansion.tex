@@ -22,49 +22,49 @@
   demonstrated conclusively the passive safety of fast reactor designs due in
   part to the thermal expansion of materials \cite{PlentifulEnergy}.
 
-  \gls{ebr-ii} system response to \gls{ulohs} was demonstrated by bypassing the
+  \gls{ebr-ii} system response to \gls{ulof} was demonstrated by bypassing the
   normal loss of flow scram (i.e. shutdown) function. The control rod drive
   motors were deenergized and the main coolant pumps were tripped off and
-  allowed to coast down. Natural circulation flow follows and after an initial
+  allowed to coast down. Natural circulation flow followed and, after an initial
   temperature peak, material temperatures returned to normal operating
-  temperatures \cite{ebriitests}. The \gls{ulohs}was demonstrated by shutting
-  down coolant pumps in the secondary coolant system, thereby disabling heat
-  rejection from the primary coolant system. No subsequent automatic or manual
-  action was taken. In the \gls{ulohs} demonstration, material temperatures do
-  not peak and instead quickly reduce below operating temperatures
-  \cite{ebriitests}.
+  temperatures \cite{ebriitests}. The \gls{ulohs} response was demonstrated by
+  shutting down coolant pumps in the secondary coolant system, thereby disabling
+  heat rejection from the primary coolant system. No subsequent automatic or
+  manual action was taken. In the \gls{ulohs} demonstration, material
+  temperatures do not peak and instead quickly reduce below operating
+  temperatures \cite{ebriitests}.
 
   The inherent safety demonstration test at \gls{ebr-ii} demonstrated the
-  passive safety of the liquid metal cooled reactor design. These tests are
-  simply not possible with currently operating \glspl{lwr} designs. Using
-  nothing but natural phenomena, the reactor was demonstrated to shutdown and
-  subsequent heat removal was achieved \cite{ebriitests}. These tests are
-  pivotal the strategy to demonstrate the performance of similar reactors in
-  \gls{atws}. The tests also demonstrate the importance of modeling multiphysics
-  effects in fast reactor applications.
+  passive safety of the liquid metal cooled and metal fueled reactor design.
+  These tests are simply not possible with currently operating \glspl{lwr}
+  designs. Using nothing but natural phenomena, the reactor was demonstrated to
+  shutdown and subsequent heat removal was achieved \cite{ebriitests}. These
+  tests are pivotal the strategy to demonstrate the performance of similar
+  reactors in \gls{atws} events. The tests also demonstrate the importance of 
+  modeling multiphysics effects in fast reactor applications.
 
 \section{Model Details}
   \label{sec:model_details}
   Highly detailed thermal expansion modeling can be performed using the
   \gls{fem} to calculate local stresses and strains on all reactor
-  structural components such as fuel pins, wire wraps, and assembly boxes. 
+  structural components such as fuel pins, wire wraps, and assembly cans. 
   However, the model developed here for the simulation of
   fast reactors does not estimate temperature and heat generation at all 
   positions due to the smearing of hexagonal assemblies. Therefore, a simplified 
   thermal expansion model is developed to simulate the effect of thermal 
   expansion on reactivity.
 
-  In the model presented in this work, linear dimensions are expanded based on 
-  material properties. All sodium in the reactor is assumed to be liquid so 
-  effects of thermal expansion within the sodium are assumed to be described by 
-  the change in density as a function of temperature as described by state 
-  equations \cite{sodiumProp}. Additionally, the mass of sodium within the 
-  reactor is not conserved. In a liquid metal cooled reactor, sodium in the 
-  coolant is allowed to flow into and out of an expansion vessel external to the 
-  reactor. The sodium in the bond region flows upward from the fuel region into 
-  a gas plenum at the top of the fuel rod as the fuel expands. However, this is 
-  not modeled as the sodium level in the bond is not tracked. Instead, the mass 
-  of sodium in the bond region is allowed to vary during the simulation.
+  In the model presented in this work, linear dimensions are expanded based on
+  material properties. All sodium in the reactor is assumed to be liquid.
+  Therefore, effects of thermal expansion within sodium are assumed to be
+  described by the change in density as a function of temperature
+  \cite{sodiumProp}. Additionally, the mass of sodium within the reactor is not
+  conserved. In a liquid metal cooled reactor, sodium in the coolant is allowed
+  to flow into and out of an expansion vessel external to the reactor. The
+  sodium in the bond region flows upward from the fuel region into a gas plenum
+  at the top of the fuel rod as the fuel expands. This is not modeled as the
+  sodium level in the bond is not tracked. Instead, the mass of sodium in the
+  bond region is allowed to vary during the simulation.
 
   \subsection{Material Properties}
     \label{sec:model_details__material_properties}
@@ -72,14 +72,14 @@
     stainless steel. Fuel material is thermally expanded as metallic uranium
     with 10\% Zr by weight included (i.e. U10Zr). Thermal expansion properties
     for HT9 \cite{ht9Prop} and for U10Zr \cite{thexpU10Zr} are obtained. The
-    equations for the \gls{lef} as functions of temperature and used in this
-    implementation are given
+    equations for the \gls{lef} used in this work are given as functions of
+    temperature
     \begin{equation}
       \label{eq:lef_ht9}
       \left( \frac{\Delta L}{L} \right)_{\text{HT9}} = 
         -2.191 \times 10^{-3} + 5.678 \times 10^{-6} \, T + 
         8.111 \times 10^{-9} \, T^2 - 2.576 \times 10^{-12} \, T^3 ,
-        % zero at 282.26 [K]
+        % zero at 282.26 [K], 48.398 [degF]
     \end{equation}
     \begin{multline}
       \label{eq:lef_u10zr}
@@ -91,7 +91,7 @@
           -0.25252 + 6.669 \times 10^{-4} \, T - 5.441 \times 10^{-7} \, T^2 
             + 1.518 \times 10^{-10} \, T^3 & \text{otherwise}
         \end{cases}
-        % zero at 318.34 [K]
+        % zero at 318.34 [K], 113.34 [degF]
     \end{multline}
     for $T$ in \units{K}. Note that U10Zr undergoes a phase change at 
     $923 \units{K}$ that increases the \gls{lef} at this point. Both 
@@ -113,16 +113,16 @@
   \label{sec:model_details__assumptions_and_formulae}
     To simplify the modeling of thermal expansion, material dimensions are
     uniformly expanded in radial and axial directions. It is assumed that 
-    material expansion in the radial directions (both $x$ and $y$ directions) 
-    expands as HT9 because the dominating effect on reactivity due to thermal 
-    expansion in this direction is due to the expansion of the hexagonal 
+    thermal expansion in the radial directions (both $x$ and $y$ directions) 
+    expands as HT9. The dominating effect on reactivity due to thermal 
+    expansion in the radial directions is due to the expansion of the hexagonal 
     assemblies themselves and the grid plate at the base of the reactor. The 
     exception to radial thermal expansion is that the radius of the fuel, 
     $R_F$, expands as U10Zr. Within a hexagonal assembly, the coolant flow area 
     and the sodium bond area are allowed to vary because of the assumption that 
-    the sodium is liquid. It is assumed that material expansion in the axial 
-    direction (the $z$ direction) expands as U10Zr because the dominating 
-    expansion in this direction is the elongation of the metallic fuel.
+    the sodium is liquid. It is assumed that thermal expansion in the axial 
+    direction (the $z$ direction) expands as U10Zr. The dominating expansion 
+    in the axial direction is the due to  the elongation of the metallic fuel.
     
     All dimensions in the reactor are expanded assuming the user-input
     dimensions are at room-temperature conditions. Dimensions are expanded
@@ -135,10 +135,10 @@
     However, thermal expansion factors are typically on the order $10^{-2}$ so
     small, local changes in temperature are not expected to affect the
     macroscopic simulation. The effect of expanding dimensions from
-    room-temperature to reactor conditions is more important than thermal
+    room-temperature to reactor temperatures is more important than thermal
     expansion due to local temperatures.
 
-    Given the assumptions of this model, a radial \gls{lef}can be defined using 
+    Given the assumptions of this model, a radial \gls{lef} can be defined using 
     \eref{eq:lef_ht9} as
     \begin{equation}
       \label{eq:lef_r}
@@ -167,14 +167,13 @@
     expansion. These formulae expand the distance from each coordinate to the
     origin, $(0,0,0)$.
 
-    Using the coordinate transforms in \eref{eq:expand_x}, \eref{eq:expand_y}, 
-    and \eref{eq:expand_z}, consider the thermal expansion of a cold volume 
-    $V^C$. The volume is thermally expanded in the radial ($x$ and $y$) 
-    directions using \eref{eq:lef_r} and the axial ($z$) direction using 
-    \eref{eq:lef_a}. The volume $V^C$ has coordinate components $L_x^C$, 
-    $L_y^C$, and $L_z^C$ such that ${V^C = L_x^C \, L_y^C \, L_z^C}$. This 
-    volume is shown with thermal expansion coefficients in 
-    \fref{fig:thexp_figure}.
+    Using the coordinate transforms in \eref{eq:expand_x}, \eref{eq:expand_y},
+    and \eref{eq:expand_z}, consider the thermal expansion of a cold volume
+    $V^C$. The volume is thermally expanded in the radial directions using
+    \eref{eq:lef_r} and the axial direction using \eref{eq:lef_a}. The volume
+    $V^C$ has coordinate components $L_x^C$, $L_y^C$, and $L_z^C$ such that
+    ${V^C = L_x^C \, L_y^C \, L_z^C}$. This volume is shown with thermal
+    expansion coefficients in \fref{fig:thexp_figure}.
 
     \begin{figure}
       \centering
@@ -191,8 +190,8 @@
     \end{align}
     Then, recognizing the coordinate expansions,
     \begin{align}
-      V^H &= (L_x^C \, F_r(\texpstruct)) + 
-        (L_y^C \, F_r(\texpstruct)) + 
+      V^H &= (L_x^C \, F_r(\texpstruct)) \,
+        (L_y^C \, F_r(\texpstruct)) \,
         (L_z^C \, F_a(\texpfuel)), \\
       V^H &= L_x^C \, L_y^C \, L_z^C \, (F_r(\texpstruct))^2
         (F_a(\texpfuel)), \\
@@ -218,13 +217,13 @@
     Using a method similar to the derivation of the volume ratio, a ratio could
     be derived for thermally expanded areas and area fractions. However, this is
     not possible for the model here because within an assembly, not all
-    dimensions within a hexagonal assembly expand uniformly within the radial
+    dimensions within a hexagonal assembly expand uniformly in the radial
     direction. The fuel radius, $R_F$, is expanded according to
     $\left(\frac{\Delta L}{L_0}\right)_{\text{U10Zr}}$ whereas all other
     materials are expanded according to $\left(\frac{\Delta
     L}{L_0}\right)_{\text{HT9}}$. This does imply that, numerically, the radius
     of the fuel could exceed the inner radius of the clad which is a
-    non-physical result. This will only happen for small sodium bond gaps and
+    non-physical result. This will only occur for small sodium bond gaps and
     high thermal expansion temperatures. In these cases, the radius of the fuel
     is confined to the expanded inner radius of the cladding. Though a more
     complex relationship describes the true value of these radii, the error due
@@ -269,7 +268,8 @@
       \label{eq:conservation}
       n_i^H = n_i^C 
     \end{equation}
-    where $n_i^H$ is the number of atoms of species $i$ after thermal expansion.
+    where $n_i^H$ is the number of atoms of species $i$ after thermal expansion
+    and $n_i^C$ is the number of atoms of species $i$ before thermal expansion.
     The number of atoms $n_i$ can be written as 
     \begin{equation}
       \label{eq:nden_definition}
@@ -296,7 +296,7 @@
     \eref{eq:nden_volume_ratio}.
     \begin{equation}
       \label{eq:nden_expansion_expanded}
-      N_i^H = N_i^C \frac{a_j^C}{a_j^H} \frac{V_e^C}{V_e^H}
+      N_i^H = N_i^C \frac{a_j^C \, V_e^C}{a_j^H \, V_e^H}
     \end{equation}
     Recall from \sref{sec:model_details__assumptions_and_formulae} that the
     ratio $\frac{a_j^C}{a_j^C}$ is dictated by the relative expansion of the
@@ -318,16 +318,17 @@
     to $\Sigma = \sigma N$.
 
 \section{Results}
-  The effect of thermal expansion on reactor criticality is observed. As
-  previously mentioned in \sref{sec:model_details__assumptions_and_formulae},
-  the user must input effective temperatures to which the reactor is thermally
-  expanded. This user-input values of $\texpstruct$ and $\texpfuel$ are varied
-  and all other thermal feedback effects are disabled in the simulation. For
-  this simplified demonstration, $\texpstruct=\texpfuel$. It is expected that
-  thermal expansion will cause a significant decrease in $\keff$ and represent
-  negative reactivity insertion. Effective neutron multiplication factor as a
-  function of thermal expansion is plotted in \fref{fig:thexp_study} and the
-  associated reactivity, calculated as
+  The effect of thermal expansion on the effective neutron multiplication
+  factor, $\keff$, is observed. As previously mentioned in
+  \sref{sec:model_details__assumptions_and_formulae}, the user must input
+  effective temperatures to which the reactor is thermally expanded. These
+  user-input values, $\texpstruct$ and $\texpfuel$, are varied and all other
+  thermal feedback effects are disabled in the simulation. For this simplified
+  demonstration, $\texpstruct=\texpfuel$. It is expected that thermal expansion
+  will cause a significant decrease in $\keff$ and represent negative reactivity
+  insertion. Effective neutron multiplication factor as a function of thermal
+  expansion is plotted in \fref{fig:thexp_study} and the associated reactivity,
+  calculated as
   \begin{equation}
     \label{eq:reactivity_formula}
     \Delta \rho \units{\glsentryshort{pcm}} = \frac{\keff - \kref}{\keff \, \kref} \times 10^5
@@ -337,7 +338,7 @@
   multiplication factor after thermal expansion and $\kref$ is the neutron
   multiplication factor without thermal expansion. 
 
-  Given the assumptions in this model, \fref{fig:thexp_study}  and
+  Given the assumptions in this model, \fref{fig:thexp_study} and
   \fref{fig:thexp_study_reactivity} show that thermal expansion represents a
   significant reactivity effect and contributes as much as $-1,000
   \units{\glsentryshort{pcm}}$ at extreme temperatures. Additionally, in this
