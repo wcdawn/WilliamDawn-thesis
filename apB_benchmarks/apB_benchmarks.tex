@@ -2,7 +2,7 @@
 \label{ap:benchmarks}
 
 \section{Introduction}
-  Two-dimension and three-dimension reactor type benchmark problems are 
+  Two-dimensional and three-dimensional reactor type benchmark problems are 
   presented here. These are not original works but replications of data from 
   elsewhere. The intent is to make the data more easily accessible for others 
   solving similar problems.
@@ -31,8 +31,8 @@
   A reference $\kref$ is presented for each benchmark to the precision of the
   solution. When available, reference power distributions are presented. 
 
-\section{Two-Dimension Benchmark Problems}
-  The two-dimension benchmarks presented represent various energy group
+\section{Two-Dimensional Benchmark Problems}
+  The two-dimensional benchmarks presented represent various energy group
   structures, geometries, assembly sizes, and boundary conditions. By varying
   these parameters, the combination of these benchmarks constitutes a rigorous
   testing suite that can be used for solution verification of general multigroup
@@ -253,8 +253,8 @@
     unreflected case, there are seven 15 assemblies across the core diameter. In
     the reflected case, there are 16 assemblies across the core diameter. To the
     precision of the benchmark, the effective neutron multiplication factors for
-    each of the four cases is summarized in \tref{tab:iaeakref}.  Assembly
-    geometry and powers is provided for without and with reflector in
+    each of the four cases are summarized in \tref{tab:iaeakref}. Assembly
+    geometry and powers are provided geometries with and without reflector in
     \fref{fig:iaea_geom}. All cross sections are provided in \tref{tab:iaeaxs}.
     Fission spectrum is provided in \tref{tab:iaeachi}.
 
@@ -321,11 +321,11 @@
       \end{center}
     \end{table}
 
-\section{Three-Dimension Benchmark Problems}
+\section{Three-Dimensional Benchmark Problems}
   For three-dimensional benchmarks, control rod worth
-  measurement is instead used to observe agreement of the diffusion solution 
-  to the benchmark solution. To measure control rod worth, three cases are run
-  $\{A,B,C\}$ with control rods fully removed in case $A$, partially inserted
+  measurement is used to observe agreement of the diffusion solution 
+  to the benchmark solution. To measure control rod worth, three cases are run,
+  $\{A,B,C\}$, with control rods fully removed in case $A$, partially inserted
   in case $B$, and fully inserted in case $C$. 
   Rod worth is presented in 
   units \units{$\Delta k$} and calculated as 
@@ -353,11 +353,11 @@
     \fref{fig:monju_geom}. Fuel assemblies are shown axially in
     \fref{fig:monju_assy_geom}. Each assembly has a flat-to-flat measurement of
     ${11.56 \units{cm}}$. Vacuum boundary condition ($\albedo = 0.5$) is applied
-    on the core periphery. Cross sections are provided in \tref{tab:monjuxs}. No
-    fission spectrum is specified in the benchmark but the one used in these
-    simulations is provided in \tref{tab:monjuchi}. In determining this fission
-    spectrum, it was observed that the benchmark results are not highly
-    sensitive to the fission spectrum.
+    on the core periphery and above and below the reactor. Cross sections are
+    provided in \tref{tab:monjuxs}. No fission spectrum is specified in the
+    benchmark but the one used in these simulations is provided in
+    \tref{tab:monjuchi}. In determining this fission spectrum, it was observed
+    that the benchmark results are not highly sensitive to the fission spectrum.
 
     The reactor is simulated with three different control rod configurations;
     patterns A, B, and C. In pattern A, all control rods are withdrawn and
@@ -459,9 +459,9 @@
     reflectors and steel as shown in \fref{fig:knk_geom}. Fuel assemblies are
     shown axially in \fref{fig:knk_assembly_geom}. Each assembly has a
     flat-to-flat measurement of ${12.99 \units{cm}}$. Vacuum boundary condition
-    ($\albedo = 0.5$) is applied on the core periphery. Cross sections are
-    provided in \tref{tab:knkxs_a} and \tref{tab:knkxs_b}. The fission spectrum
-    is provided in \tref{tab:knkchi}.
+    ($\albedo = 0.5$) is applied on the core periphery and above and below the
+    reactor. Cross sections are provided in \tref{tab:knkxs_a} and
+    \tref{tab:knkxs_b}. The fission spectrum is provided in \tref{tab:knkchi}.
 
     The reactor is simulated with three different control rod configurations;
     patterns A, B, and C. In pattern A, all control rods are withdrawn. In
@@ -473,7 +473,7 @@
     Reference effective neutron multiplication factors and control rod worths 
     are provided in \tref{tab:knkkref}.
 
-    Results for the KNK problem are presented for the solution to the
+    The KNK benchmark problem results are presented for the solution to the
     neutron transport equation. The reference presents Monte Carlo solutions and
     other solutions to the neutron transport equation and these converge to
     the same solution. For diffusion solutions to these simulations, agreement

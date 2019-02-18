@@ -2,10 +2,10 @@
 \label{ap:analyticSolutions}
 
 \section{Introduction}
-  The following are analytic solutions designed for verification of
+  The following are analytic solutions designed for code verification of
   one-dimensional, two-dimensional, and three-dimensional numerical solvers for
   the multigroup neutron diffusion equation. One-group and two-group problems
-  are also addressed.
+  are addressed.
   
   For the one-group reference problems, the neutron diffusion problem is written
   \begin{equation} 
@@ -15,30 +15,30 @@
   \end{equation}
   where
   \begin{conditions}
-    D & diffusion coefficient \units{cm} \\
-    \phi & scalar neutron flux \units{$\frac{1}{\text{cm}^2 \; \text{s}}$}\\
-    \Sigma_r & macroscopic removal cross section \units{$\frac{1}{\text{cm}}$}\\
-    \keff & effective neutron multiplication factor \\
+    D & diffusion coefficient \units{cm}, \\
+    \phi & scalar neutron flux \units{$\frac{1}{\text{cm}^2 \; \text{s}}$}, \\
+    \Sigma_r & macroscopic removal cross section \units{$\frac{1}{\text{cm}}$},\\
+    \keff & effective neutron multiplication factor,\\
     \nu\Sigma_f & number of fission neutrons per unit neutron flux
-      \units{$\frac{1}{\text{cm}}$} \\
+      \units{$\frac{1}{\text{cm}}$}, \\
     q_{fixed} & fixed volumetric neutron source 
-      \units{$\frac{1}{\text{cm}^3 s}$}
+      \units{$\frac{1}{\text{cm}^3 s}$},
   \end{conditions}
-   and $\grad^2 \phi = \grad \cdot (\grad \phi)$ and is used to
-  simplify notation. \eref{eq:onegroup} is valid for problems with constant $D$
-  as the constant can be removed from the derivative. For problems considered
-  here, material constants such as $D$ are constant in some region, either the
-  entire problem or a finite subdomain.
+   and $\grad^2 \phi = \grad \cdot (\grad \phi)$ is used to simplify notation.
+   \eref{eq:onegroup} is valid for problems with constant coefficients
+   (homogeneous materials). For problems considered here, material constants
+   such as $D$ are constant in some region, either the entire problem or a
+   finite subdomain.
   
-  For two-group neutron diffusion problems, the two-group neutron 
-  diffusion problem is written 
+  For two-group neutron diffusion problems, the two-group neutron diffusion 
+  equation is written 
   \begin{align} 
     \label{eq:twogroup1}
     -D_1 \grad^2 \phi_1 + \Sigma_{r1} \phi_1 &= \frac{1}{\keff} \left(
-      \nu \Sigma_{f1} \phi_1 + \nu \Sigma_{f2} \phi_2 \right) \\
+      \nu \Sigma_{f1} \phi_1 + \nu \Sigma_{f2} \phi_2 \right), \\
     \label{eq:twogroup2}
     -D_2 \grad^2 \phi_2 + \Sigma_{r2} \phi_2 &= 
-      \Sigma_{s 1 \rightarrow 2} \phi_1
+      \Sigma_{s 1 \rightarrow 2} \phi_1,
   \end{align}
   where notation is the same as \eref{eq:onegroup} with the addition of
   subscripts indicating the energy groups and $\phi_1$ is the higher energy 
@@ -104,7 +104,7 @@
   The particular solution is given for a constant value $q_{fixed}$.
   \begin{equation}
     \label{eq:1dfixed_particular}
-    \phi_P(x) = \frac{q_{fixed}}{D\,\kappa^2}
+    \phi_P(x) = \frac{q_{fixed}}{D\,\kappa^2}.
   \end{equation}
   Combining the homogeneous and particular solutions.
   \begin{equation}
@@ -232,8 +232,8 @@
     \label{eq:1d1g_buckle_geom}
     B_g = \frac{\pi}{L_x}.
   \end{equation}
-  Substitute \eref{eq:1d1g_buckle_geom} into \eref{eq:1d1g_sin} for the final
-  solution to the fundamental eigenmode.
+  Substitute \eref{eq:1d1g_buckle_geom} into \eref{eq:1d1g_sin} for the solution
+  to the fundamental eigenmode.
   \begin{equation}
     \label{eq:analytic_1d1g}
     \phi(x) = \phi_0 \, \sin\left(\frac{\pi}{L_x} x \right)
@@ -307,8 +307,8 @@
     \label{eq:2d1g_b2}
     B^2 = \frac{\frac{1}{\keff} \nu \Sigma_f - \Sigma_r}{D}.
   \end{equation}
-  The Laplacian $\grad^2$ in \eref{eq:2d1g_buckle} for two-dimensional Cartesian
-  geometry is then expanded into partial derivatives as
+  The Laplacian, $\grad^2$, in \eref{eq:2d1g_buckle} for two-dimensional 
+  Cartesian geometry is then expanded into partial derivatives as
   \begin{equation}
     \label{eq:2d1g_partial}
     \frac{\partial^2}{\partial x^2} \phi(x,y) + \frac{\partial^2}{\partial y^2}
@@ -337,7 +337,7 @@
     \label{eq:2d1g_divide_sum}
     \frac{1}{X(x)} \, \frac{d^2}{d x^2} X(x) + 
       \frac{1}{Y(y)} \, \frac{d^2}{d y^2} Y(y) + 
-      B^2 = 0
+      B^2 = 0.
   \end{equation}
 
   The first two terms of \eref{eq:2d1g_divide_sum} are functions of only $x$ and
@@ -357,10 +357,10 @@
   \end{equation}
   Consider \eref{eq:2d1g_x} and boundary conditions specified in
   \eref{eq:2d1g_bc1} and \eref{eq:2d1g_bc2}. Then, \eref{eq:2d1g_x} can be
-  rewritten
+  rewritten.
   \begin{equation}
     \label{eq:2d1g_xeqn}
-    \frac{d^2}{dx^2} X(x) + \alpha^2 X(x) = 0.
+    \frac{d^2}{dx^2} X(x) + \alpha^2 X(x) = 0
   \end{equation}
   The form of \eref{eq:2d1g_xeqn} is similar to the previous problem in 
   \eref{eq:1d1g_buckle} which has general solution of the form
@@ -368,9 +368,10 @@
     \label{eq:2d1g_x_general}
     X(x) = c_1 \, \cos(\alpha \, x) + c_2 \, \sin(\alpha \, x).
   \end{equation}
-  $X(x)$ has solution similar to the form of the solution from
-  \sref{sec:deriv_1d1g} as the boundary conditions are similar. Using the method 
-  from \sref{sec:deriv_1d1g}, the fundamental mode is given as
+  $X(x)$ has solution similar to the form of the one-dimension, one-group,
+  criticality problem from \sref{sec:deriv_1d1g} as the boundary conditions are
+  similar. Using the method from \sref{sec:deriv_1d1g}, the fundamental mode is
+  given as
   \begin{align}
     \label{eq:2d1g_x_alpha}
     \alpha &= \frac{\pi}{L_x}, \\
@@ -485,7 +486,8 @@
     \phi_g(L_x) &= 0 ,\\
     &= k_g \, \sin(B \, L_x).
   \end{align}
-  The buckling $B$ is then specified by the zeros of the sine function.
+  The buckling $B$ is then specified by the zeros of the sine function. The
+  fundamental mode is given.
   \begin{equation}
     \label{eq:1d2g_buckle_geom}
     B = \frac{\pi}{L_x}
@@ -552,8 +554,8 @@
       \right),
   \end{align}
   recalling $\phi_0$ is an arbitrary constant.
-  An example solution is plotted in \fref{fig:1d2g}. The coefficient $k_1$ is
-  arbitrary and the ratio $\frac{k_2}{k_1}$ is given in \eref{eq:1d2g_ratio}.
+  An example solution is plotted in \fref{fig:1d2g}. The ratio
+  $\frac{k_2}{k_1}$ is given in \eref{eq:1d2g_ratio}.
   Finally, $\keff$ is given in \eref{eq:1d2g_keff}. The cross sections from 
   VVER440 benchmark, material MAT1, described in \sref{sec:vver440} are used for
   this problem. For ease of reference, the cross sections are also presented in 
@@ -630,8 +632,8 @@
     \label{fig:2reg_geom}
   \end{figure}
 
-  Beginning in the fueled region, the diffusion equation \eref{eq:2regF} can be
-  rewritten with a fuel buckling term $B_F$ as
+  Beginning in the fueled region, the diffusion equation in \eref{eq:2regF} can 
+  be rewritten with a fuel buckling term $B_F$ as
   \begin{equation}
     \label{eq:2regF_buckle}
     \frac{d^2}{dx^2} \phi_F(x) + B_F^2 \phi_F(x) = 0 
@@ -657,12 +659,12 @@
   Using \eref{eq:2regF_general_derivative}, the boundary condition is evaluated
   at $x=0$ as specified in \eref{eq:2reg_bc0}.
   \begin{align}
-    \left. \frac{d}{dx} \phi_F(x) \right|_{x=0} &= 0 \\
-    &= c_{2F} \, B_F \\
+    \left. \frac{d}{dx} \phi_F(x) \right|_{x=0} &= 0, \\
+    &= c_{2F} \, B_F, \\
     \label{eq:2reg_c2f}
-    \therefore \; c_{2F} &= 0
+    \therefore \; c_{2F} &= 0.
   \end{align}
-  \eref{eq:2reg_c2f} is inserted into \eref{eq:2regF_general}
+  \eref{eq:2reg_c2f} is inserted into \eref{eq:2regF_general} yielding
   \begin{equation}
     \label{eq:2regF_cos}
     \phi_F(x) = c_{1F} \, \cos(B_F\, x)
@@ -807,7 +809,9 @@
 %  \end{equation}
 %
   For $L_F = 50 \units{cm}$ and $L_F = 100 \units{cm}$ and material constants
-  given in \tref{tab:2reg_constants}, the following are solutions. Additionally,
+  given in \tref{tab:2reg_constants}, the following are solutions. Note $B_F$ is
+  given to approximately machine precision (16 significant digits) as the
+  solution is particularly sensitive to this value. Additionally,
   a flux shape is shown in \fref{fig:2reg}.
   \begin{align}
     B_F &= 0.0255922048213879 \units{$\frac{1}{\text{cm}}$} \\
@@ -861,13 +865,12 @@
     \label{eq:finite_cyl_bcr0}
     \phi(0,z) & \text{ is Finite}.
   \end{align}
-  \eref{eq:finite_cyl} can be rewritten. 
+  \eref{eq:finite_cyl} can be rewritten
   \begin{equation}
     \label{eq:finite_cyl_buckle}
     \grad^2 \phi(r,z) + B^2 \phi(r,z) = 0
   \end{equation}
-  Where $B$ is the buckling term and is given for this problem in
-  \eref{eq:finite_cyl_b2} as
+  where $B$ is the buckling term and is given for this problem as
   \begin{equation}
     \label{eq:finite_cyl_b2}
     B^2 = \frac{\frac{1}{\keff} \nu \Sigma_f - \Sigma_r }{D}.
@@ -910,17 +913,19 @@
   terms must also be equal to a constant \cite{lamarsh1966}. Splitting
   \eref{eq:finite_cyl_sum} into two equations yields
   \begin{align}
+    \label{eq:finite_cyl_radial_direction}
     \frac{1}{R(r)} \frac{1}{r} \frac{d}{dr} \left( r \frac{d}{dr} R(r) \right) +
-      \beta^2 &= 0 \\
+      \beta^2 &= 0, \\
     \label{eq:finite_cyl_zeq}
-    \frac{1}{Z(z)} \frac{d^2}{dz^2} Z(z) + \gamma^2 &= 0
+    \frac{1}{Z(z)} \frac{d^2}{dz^2} Z(z) + \gamma^2 &= 0,
   \end{align}
   where
   \begin{equation}
     \label{eq:finite_cyl_b2_sum}
-    B^2 = \beta^2 + \gamma^2
+    B^2 = \beta^2 + \gamma^2.
   \end{equation}
-  Beginning with the radial direction.
+  Beginning with the radial direction from
+  \eref{eq:finite_cyl_radial_direction}.
   \begin{equation}
     \frac{1}{r} \frac{d}{dr} \left( r \frac{d}{dr} R(r) \right) + \beta^2 R(r) =
     0
@@ -959,8 +964,8 @@
   Evaluating the boundary condition at $r=T$ using \eref{eq:finite_cyl_j0} as
   specified in \eref{eq:finite_cyl_bcrT}.
   \begin{align}
-    R(T) &= 0 \\
-    &= c_1 J_0(\beta T)
+    R(T) &= 0, \\
+    &= c_1 J_0(\beta T).
   \end{align}
   For non-trivial $R(r)$, this is an eigenvalue problem. Then, $c_1$ is an
   arbitrary constant and the eigenmode is specified as
@@ -975,17 +980,17 @@
     \beta = \frac{\alpha_0}{T}
   \end{equation}
   where $\alpha_0$ is the first zero ($\alpha_0 \approx 2.4048$). Coefficient
-  $c_1$ is arbitrary so allow $c_1 = R_0$. Then the final solution for the
-  function $R(r)$ is
+  $c_1$ is arbitrary so allow $c_1 = R_0$. Then the solution for the function 
+  $R(r)$ is
   \begin{equation}
     \label{eq:finite_cyl_R}
-    R(r) = R_0 \, J_0\left(\frac{\alpha_0}{T} r\right)
+    R(r) = R_0 \, J_0\left(\frac{\alpha_0}{T} r\right).
   \end{equation}
 
   A similar process is repeated for $Z(z)$. The solution to $Z(z)$ is similar to
-  the one-dimensional criticality problem presented in \sref{sec:1d1g}. This
-  derivation is briefly repeated here. Recall \eref{eq:finite_cyl_zeq} which may
-  be rewritten.
+  the one-dimension, one-group, criticality problem presented in
+  \sref{sec:deriv_1d1g}. This derivation is briefly repeated here. Recall
+  \eref{eq:finite_cyl_zeq} which may be rewritten.
   \begin{equation}
     \frac{d^2}{dz^2} Z(z) + \gamma^2 Z(z) = 0
   \end{equation}
@@ -997,10 +1002,10 @@
   Evaluating \eref{eq:finite_cyl_z_general} at $z=0$ considering the boundary
   condition specified in \eref{eq:finite_cyl_bcz0}.
   \begin{align}
-    Z(0) &= 0 \\
-    &= c_3 \\
+    Z(0) &= 0, \\
+    &= c_3, \\
     \label{eq:finite_cyl_c3}
-    \therefore \; c_3 &= 0
+    \therefore \; c_3 &= 0.
   \end{align}
   Substituting \eref{eq:finite_cyl_c3} into \eref{eq:finite_cyl_z_general}.
   \begin{equation}
@@ -1010,19 +1015,19 @@
   Evaluating \eref{eq:finite_cyl_z_sin} at $z=H$ and considering boundary
   condition from \eref{eq:finite_cyl_bczH}.
   \begin{align}
-    Z(H) &= 0 \\
-    &= c_4 \sin(\gamma H)
+    Z(H) &= 0, \\
+    &= c_4 \sin(\gamma H).
   \end{align}
   For non-trivial $Z(z)$, the term $\sin(\gamma H)=0$ is required and $c_4$ is
   trivial and $\gamma$ specified by geometry as
   \begin{align}
-    \gamma H &= n \pi \\
-    \gamma &= \frac{n \pi}{H} \\
+    \gamma H &= n \pi, \\
+    \gamma &= \frac{n \pi}{H}, \\
   \end{align}
   where $n$ is an integer. For the fundamental mode, $n=1$,
   \begin{equation}
     \label{eq:finite_cyl_gamma}
-    \gamma = \frac{\pi}{H}
+    \gamma = \frac{\pi}{H}.
   \end{equation}
   Coefficient $c_4$ is arbitrary so allow $c_4 = Z_0$. Then
   \begin{equation}
@@ -1057,7 +1062,7 @@
   The shape of the boundary as described by the discrete mesh is extremely 
   important for a circular (or curved) boundary. A simple example of this is 
   shown in \fref{fig:circle_meshes}. In a mesh refinement study, the mesh must 
-  be regenerated with a halved mesh parameter $h$ for each refinement, rather 
+  be regenerated with a halved mesh parameter, $h$, for each refinement, rather 
   than simply splitting nodes as splitting nodes would not improve the 
   description of the boundary.
 
