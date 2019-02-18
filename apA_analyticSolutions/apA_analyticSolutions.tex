@@ -49,11 +49,11 @@
   ($\Sigma_{s 2 \rightarrow 1} = 0$). These are realistic assumptions for 
   typical diffusive neutron systems.
 
-  Analytic solutions are provided herein. One-dimension problems can be 
-  replicated in a two-dimension solver using a square geometry and select 
-  boundary conditions. To reduce the dimension of a quadrilateral, two of the 
+  Analytic solutions are provided herein. One-dimensional problems can be 
+  replicated in a two-dimensional solver using a square geometry and select 
+  boundary conditions. To reduce the dimensional of a quadrilateral, two of the 
   boundary conditions are set to mirror flux conditions and two are set to 
-  zero-flux $(\phi = 0)$ conditions. For true two-dimension and three-dimension 
+  zero-flux $(\phi = 0)$ conditions. For true two-dimensional and three-dimensional 
   problems, all of the boundary conditions are set to zero-flux conditions.
   
   These formulae are common to second order partial differential equations, but
@@ -61,7 +61,7 @@
 
 \section{One-Dimension, One-Group, Fixed Source}
   \label{sec:deriv_1dfixedsrc}
-  This one-dimension problem is in the domain $x \in [0,L_x]$. The material is
+  This one-dimensional problem is in the domain $x \in [0,L_x]$. The material is
   homogeneous within the problem and has fixed coefficient properties.
   The diffusion equation for this problem is 
   \begin{equation}
@@ -163,7 +163,7 @@
   
 \section{One-Dimension, One-Group, Criticality} 
   \label{sec:deriv_1d1g}
-  This one-dimension problem is in the domain $x \in [0,L_x]$. The material
+  This one-dimensional problem is in the domain $x \in [0,L_x]$. The material
   is homogeneous within the problem and has fixed coefficient properties. The
   diffusion equation for this problem is
   \begin{equation}
@@ -277,7 +277,7 @@
 
 \section{Two-Dimension, One-Group, Criticality}
   \label{sec:deriv_2d1g}
-  This two-dimension problem is in the rectangular domain $[0,L_x] \times
+  This two-dimensional problem is in the rectangular domain $[0,L_x] \times
   [0,L_y]$. That is, $x \in [0,L_x]$ and $y \in [0,L_y]$. The material is
   homogeneous within the problem and has fixed coefficient properties. The
   diffusion equation for this problem is 
@@ -429,7 +429,7 @@
   
 \section{One-Dimension, Two-Group, Criticality}
   \label{sec:deriv_1d2g}
-  This one-dimension problem is meant to test the multigroup solution method of
+  This one-dimensional problem is meant to test the multigroup solution method of
   the solver. The problem is in the domain $x \in [0,L_x]$ and has two energy
   groups. The material is homogeneous within the problem and has fixed
   coefficient properties. With this geometry, \eref{eq:twogroup1} and
@@ -594,7 +594,7 @@
 
 \section{One-Dimension, One-Group, Two Region, Criticality}
   \label{sec:deriv_2reg}
-  This one-dimension problem is meant to simulate a reactor with non-fissile,
+  This one-dimensional problem is meant to simulate a reactor with non-fissile,
   reflective material at the edge of the reactor. The purpose of this problem is
   to test the materials mapping of a multigroup neutron diffusion solver. The
   problem is in the domain $x \in [0,L_R]$. Geometry is shown in
@@ -839,7 +839,7 @@
 
 \section{Finite-Cylinder, One-Group, Criticality}
   \label{sec:deriv_finite_cyl}
-  This three-dimension problem can be simulated in three Cartesian dimensions 
+  This three-dimensional problem can be simulated in three Cartesian dimensions 
   and, using symmetry, reduced to two cylindrical dimensions for simplified 
   analytic solution. This problem is located in $r \in [0,T]$ and $z \in [0,H]$
   where $r$ and $z$ are the radial and axial coordinates respectively. The
@@ -983,7 +983,7 @@
   \end{equation}
 
   A similar process is repeated for $Z(z)$. The solution to $Z(z)$ is similar to
-  the one-dimension criticality problem presented in \sref{sec:1d1g}. This
+  the one-dimensional criticality problem presented in \sref{sec:1d1g}. This
   derivation is briefly repeated here. Recall \eref{eq:finite_cyl_zeq} which may
   be rewritten.
   \begin{equation}
