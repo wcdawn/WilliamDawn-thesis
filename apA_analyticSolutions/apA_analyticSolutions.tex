@@ -26,7 +26,7 @@
   \end{conditions}
    and $\grad^2 \phi = \grad \cdot (\grad \phi)$ is used to simplify notation.
    \eref{eq:onegroup} is valid for problems with constant coefficients
-   (homogeneous materials). For problems considered here, material constants
+   (homogeneous materials). For problems considered here, material properties
    such as $D$ are constant in some region, either the entire problem or a
    finite subdomain.
   
@@ -808,11 +808,11 @@
 %    \end{cases}
 %  \end{equation}
 %
-  For $L_F = 50 \units{cm}$ and $L_F = 100 \units{cm}$ and material constants
-  given in \tref{tab:2reg_constants}, the following are solutions. Note $B_F$ is
-  given to approximately machine precision (16 significant digits) as the
-  solution is particularly sensitive to this value. Additionally,
-  a flux shape is shown in \fref{fig:2reg}.
+  For $L_F = 50 \units{cm}$ and $L_F = 100 \units{cm}$ and material cross
+  sections given in \tref{tab:2reg_constants}, the following are solutions. Note
+  $B_F$ is given to approximately machine precision (16 significant digits) as
+  the solution is particularly sensitive to this value. Additionally, a flux
+  shape is shown in \fref{fig:2reg}.
   \begin{align}
     B_F &= 0.0255922048213879 \units{$\frac{1}{\text{cm}}$} \\
     \keff &= 0.962188
@@ -1053,7 +1053,7 @@
     \keff = \frac{\nu \Sigma_f}{D \left( \left(\frac{\alpha_0}{T}\right)^2 +
     \left( \frac{\pi}{H}\right)^2 \right) + \Sigma_r}
   \end{equation}
-  For $T = 50 \units{cm}$, $H = 100 \units{cm}$, and material constants
+  For $T = 50 \units{cm}$, $H = 100 \units{cm}$, and material cross sections
   specified in \tref{tab:finite_cyl_constants}
   \begin{equation}
     \keff = 0.996711
