@@ -8,7 +8,7 @@
   demonstrates an ability to solve problems for which this work was intended.
   Comparison against analytic solutions allows for more detailed error and
   convergence analysis as not only the system $\keff$ but also the flux solution
-  are known exactly. 
+  is known exactly. 
 
   These comparisons serve as a verification of this implementation of the
   \gls{fem}. The verificaiton strategy employed in this work is developed by
@@ -21,7 +21,7 @@
   verification compares computational results to benchmark results for the
   intended application of the solver. These benchmarks may have been been
   calculated computationally via another method or may come from experimental
-  data. The data of the standard benchmarks is not exact; but, typically the
+  data. The data of the standard benchmarks is not exact; but, typically, the
   benchmark solution has been verified by others previously.
 
   \begin{figure}
@@ -85,10 +85,10 @@
   For analytic solutions, the error of the function $\phi(\vr)$ itself can be 
   analyzed because the solution is known exactly. The derivations of the exact 
   solutions are presented in \apref{ap:analyticSolutions}. Both RMS errors and
-  maximal errors are presented. It is observed that the RMS error refinement
-  ratio approaches the expected value of four before the maximal error
-  refinement ratio because the RMS error is an integral quantity over the
-  problem domain whereas the maximal error is a point-wise quantity.
+  maximal norm errors are presented. It is observed that the RMS error
+  refinement ratio approaches the expected value of four before the maximal
+  error refinement ratio because the RMS error is an integral quantity over the
+  problem domain whereas the maximal norm error is a point-wise quantity.
 
   For analytic criticality  problems, $\keff$ is also presented and the ratio
   between refinements should assume the expected rate. Though the convergence is
@@ -101,13 +101,15 @@
       \times 10^5
   \end{equation}
 
-  For benchmark problems, only $\keff$ is analyzed and expected to converge
-  at approximately the appropriate rate because the neutron flux solution is not 
-  known exactly. However, the magnitude of the error and the convergence rate
-  will both be influenced by the quality of the benchmark. For example, a
-  benchmark that specifies $\keff$ to only a few significant figures cannot be 
-  expected to converge to an error smaller than the least significant digit. 
-  When assembly powers were available, these are also presented graphically. 
+  A summary of benchmark problems used in this chapter is presented in
+  \chref{ap:benchmarks}.  For benchmark problems, only $\keff$ is analyzed and
+  expected to converge at approximately the appropriate rate because the neutron
+  flux solution is not known exactly. However, the magnitude of the error and
+  the convergence rate will both be influenced by the quality of the benchmark.
+  For example, a benchmark that specifies $\keff$ to only a few significant
+  figures cannot be expected to converge to an error smaller than the least
+  significant digit.  When assembly powers were available, these are also
+  presented graphically. 
   % this is used to put the key over top of figures. really hacky.
   \def\Put(#1,#2)#3{\leavevmode\makebox(0,0){\put(#1,#2){#3}}}
 
@@ -254,12 +256,12 @@
     \tref{tab:2reg}. The exact value for the effective multiplication factor is
     $\kref = 0.962188$. The results in \tref{tab:2reg} show that the convergence
     of $\keff$ quickly achieves the expected convergence ratio of four. However,
-    the RMS error and maximal errors do not appear to be approaching four
+    the RMS error and maximal norm errors do not appear to be approaching four
     quickly. This is attributed to the nature of the problem. Recall the
     statement of the convergence order required a bounded second 
     derivative of the flux as in \eref{eq:error_bound}. The second derivative of
     the flux in this problem is unbounded due to the material discontinuity. It
-    is observed that the maximal error occurs at the change of material
+    is observed that the maximum error occurs at the change of material
     properties.
 
     \begin{table}
@@ -297,14 +299,15 @@
     flux appears to fluctuate about the expected value of four. This is
     attributed to the process of refining circular meshes. Previously, the mesh
     was refined by simply introducing additional nodes at the midpoint between
-    existing nodes. With a circular (or curved) mesh, this is not acceptable. It
-    is necessary to totally regenerate the mesh for each refinement so that the
-    problem boundary may be better approximated. For example, if only six nodes
-    were on the problem boundary in the zeroth refinement, the cylinder would be
-    approximated as a hexagon throughout the mesh refinement study. This mesh
-    regeneration necessity means that the nodes are moving throughout the domain
-    during refinement process. For an illustration of the nodes moving, see
-    \fref{fig:ch03_circle_meshes}.
+    existing nodes. With a circular (or curved) boundary, this is not
+    acceptable. It is necessary to totally regenerate the mesh for each
+    refinement so that the problem boundary may be better approximated. For
+    example, if only six nodes were on the problem boundary in the zeroth
+    refinement and the traditional refinement procedure were used, the cylinder 
+    would be approximated as a hexagon throughout the mesh refinement study.
+    This mesh regeneration necessity means that the nodes are moving throughout
+    the domain during refinement process. For an illustration of the nodes
+    moving, see \fref{fig:ch03_circle_meshes}.
 
     \begin{figure}
       % figures and matlab script located in apA
@@ -364,7 +367,7 @@
   is concisely presented in \apref{ap:benchmarks}. Mesh refinement studies are
   provided and convergence is observed relative to the reference \keff value
   similar to analytic problems. Recall that the convergence rate and the error
-  of the converged $\keff$ value will both be effected by the quality of the
+  of the converged $\keff$ value will both be affected by the quality of the
   benchmark.
   
   \subsection{VVER440}
@@ -508,11 +511,11 @@
     spectrum. Cross sections are provided for a two-group energy structure.
 
     The reactor is presented in four scenarios; both with and without
-    reflective assemblies as well as with $\albedo = 0.125$ and $\albedo =
-    0.5$. Numerical mesh convergence studies are presented for the quantity
-    $\keff$ for each case in each of \tref{tab:iaea_nore0125},
-    \tref{tab:iaea_nore0500}, \tref{tab:iaea_refl0125}, and
-    \tref{tab:iaea_refl0500}.
+    reflective assemblies as well as with albedo boundary condition 
+    $\albedo = 0.125$ and $\albedo = 0.5$. Numerical mesh convergence studies
+    are presented for the quantity $\keff$ for each case in each of
+    \tref{tab:iaea_nore0125}, \tref{tab:iaea_nore0500},
+    \tref{tab:iaea_refl0125}, and \tref{tab:iaea_refl0500}.
 
     % nore0125
     \begin{table}
