@@ -884,11 +884,11 @@
 
 \section{Cross Section Treatment}
   The purpose of calculating average material temperatures is to calculate cross
-  sections for use in the multigroup neutron diffusion equation. Cross sections
-  are calculated by interpolating between temperatures in cross section
-  libraries generated according to \sref{sec:cross_section_treatment} in order
-  to simulate the temperature feedback effects as they relate to neutron cross 
-  sections.
+  sections for use in the multigroup neutron diffusion equation.
+  Temperature-dependent cross sections are calculated by interpolating between
+  cross section libraries generated according to
+  \sref{sec:cross_section_treatment} in order to simulate the temperature
+  feedback effects as they relate to neutron cross sections.
 
   The main form of temperature feedback affecting microscopic neutron cross
   sections is the Doppler broadening of neutron absorption resonance peaks in
@@ -915,7 +915,7 @@
   computationally expensive part of the update. Note that the update of cross
   sections during a power iteration makes the iterative method non-linear and
   the convergence of the method is no longer guaranteed. However, this procedure
-  is commonly used in practice and no convergence problems have been observed.
+  is commonly used and, in practice, no convergence problems have been observed.
   The general procedure to update cross sections is given in
   \algorithmref{algorithm:temperature_update}.
 
@@ -952,7 +952,7 @@
 
   \subsection{Coolant Cross Sections}
     The main temperature effect on coolant cross sections is due to the
-    change in fluid density. The mass density of the of liquid sodium 
+    change in fluid density. The mass density of liquid sodium 
     is given as a function of temperature $\rho(T)$ by a state relationship 
     \cite{sodiumProp}. Natural sodium is entirely composed of \isotope[23]{Na} 
     and has atomic mass ${M_{Na} = 22.989769
@@ -995,12 +995,12 @@
   \subsection{Clad Cross Sections}
     The temperature dependence of cross sections within cladding material is
     typically small as cladding material has fewer absorption resonances than
-    fuel material and cladding material does not change temperature as extremely
-    as other reactor materials. For this reason, a simple linear interpolation
-    is used to interpolate macroscopic cross sections within this material. For
-    $T_n < \overline{T_{C,i,k}} < T_{n+1}$, the macroscopic cross section for
-    reaction $x$ and energy group $g$ according to the linear interpolation
-    method is given as
+    fuel material. Compared to the fuel, cladding material does not change
+    temperature as extremely as other reactor materials. For this reason, a
+    simple linear interpolation is used to interpolate macroscopic cross
+    sections within this material. For $T_n < \overline{T_{C,i,k}} < T_{n+1}$,
+    the macroscopic cross section for reaction $x$ and energy group $g$
+    according to the linear interpolation method is given as
     \begin{equation}
       \label{eq:xs_linear_interpolation}
       \Sigma_{x,i,k,g} = 
@@ -1022,16 +1022,14 @@
     smearing of hexagonal fuel assemblies.
 
   \subsection{Fuel Cross Sections}
-    Temperature dependence of cross sections in the fuel region is dominated
-    by the Doppler effect. This effect is large for high fuel temperatures.
-    Macroscopic cross sections are tabulated based on library data as generated 
-    in the procedure from \sref{sec:cross_section_treatment}. A square-root 
-    interpolation method is used. The square-root interpolation is commonly 
-    selected for cross section interpolation because the Doppler effect is 
-    proportional to the square-root of absolute temperature. For 
-    ${T_n < \overline{T_{F,i,k}} < T_{n+1}}$ and library temperatures $\{T_n\}$,
-    the macroscopic cross section for reaction $x$ in energy group $g$ within 
-    the fuel is calculated as
+    Temperature dependence of cross sections in the fuel region is dominated by
+    the Doppler effect. This effect is large for high fuel temperatures;
+    therefore, a square-root interpolation method is used. The square-root
+    interpolation is commonly selected for fuel cross section interpolation 
+    because the Doppler effect is proportional to the square-root of absolute
+    temperature. For ${T_n < \overline{T_{F,i,k}} < T_{n+1}}$, the macroscopic 
+    cross section for reaction $x$ in energy group $g$ within the fuel is
+    calculated as 
     \begin{equation}
       \Sigma_{x,i,k,g} = 
         \frac{\sqrt{\overline{T_{F,i,k}}} - \sqrt{T_{n}}}
@@ -1045,7 +1043,8 @@
       
 \section{Thermal Hydraulic Results}
   To demonstrate the expected behavior of these models, axial and radial
-  temperature plots are generated for a typical case. 
+  temperature plots are generated for a typical case and compared to analytic
+  results.
   
   \subsection{Total Reactor Power}
     To verify the calculation of enthalpy according to the axial heat convection
