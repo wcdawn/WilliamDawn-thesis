@@ -12,14 +12,14 @@
   In this simulation, two thermal hydraulic models are developed. The first is a
   steady-state, one-dimensional, axial heat convection model to calculate bulk
   coolant temperatures and densities as the coolant flows vertically through a
-  channel. This model requires the assumption of no cross-flow between
-  channels and perfect fluid mixing within the flow channel. These assumptions
-  are valid for simulating typical fast reactors with hexagonal assemblies.
-  Hexagonal assemblies, as described in \sref{sec:geometry_description}, satisfy
-  this assumption with canned assemblies to prevent cross-flow between channels
-  and mixing encouraged by wire wrapping. The second thermal hydraulic model is
-  a steady-state, one-dimensional, radial heat conduction model within a
-  cylindrical rod to calculate average cladding, bond, and fuel temperatures.
+  channel. This model assumes no cross-flow between channels and perfect fluid
+  mixing within the flow channel. These assumptions are valid for simulating
+  typical fast reactors with hexagonal assemblies.  Hexagonal assemblies, as
+  described in \sref{sec:geometry_description}, satisfy these assumptions with
+  canned assemblies to prevent cross-flow between channels and mixing encouraged
+  by wire wrapping. The second thermal hydraulic model is a steady-state,
+  one-dimensional, radial heat conduction model within a cylindrical rod to
+  calculate average cladding, bond, and fuel temperatures.
 
   \begin{figure}
     \centering
@@ -98,12 +98,13 @@
 \section{Power Normalization}
   Recall the multigroup neutron diffusion equation solved via the power
   iteration method returns the largest eigenvalue $\keff$ and unique positive
-  eigenvector $\phi_{g,e}$ (see \sref{sec:power_iterations}). The neutron flux
-  calculated according to this method is an eigenvector and can be normalized
-  to an arbitrary constant. For a specified total reactor power, $Q_{Rx}$, the
-  normalization constant can be calculated. Given the un-normalized neutron flux 
-  as calculated by the power iteration method, $\widetilde{\phi_{g,e}}$, for  
-  energy group $g$ in finite element $e$, the normalization constant is 
+  eigenvector $\widetilde{\phi_{g,e}}$ (see \sref{sec:power_iterations}). The
+  neutron flux calculated according to this method is an eigenvector and can be
+  normalized to an arbitrary constant. For a specified total reactor power,
+  $Q_{Rx}$, the normalization constant can be calculated. Given the
+  un-normalized neutron flux as calculated by the power iteration method,
+  $\widetilde{\phi_{g,e}}$, for  energy group $g$ in finite element $e$, the
+  normalization constant is 
   \begin{equation}
     \label{eq:normalization_c}
     c = \frac{Q_{Rx}}{\sum_{g}^{G} \sum_{e}^{N_E} \kappa \Sigma_{f,g,e} \,
@@ -160,11 +161,11 @@
     hexagonal assembly, the assembly has a unique channel index, $i$, and
     contains a number of chunks equal to the number of axial elevations in the
     discretized model.  Additionally, each chunk is required to have unique
-    material composition.  The relationship of elements, chunks, and channels is
-    shown in \fref{fig:chunk_description}. Allow elevations to be indexed $k =
-    1,2,\ldots,N_z$ where $N_z$ is the total number of axial elevation. Then,
-    each chunk has a unique $\{i,k\}$ combination and the total number of chunks
-    is the product $N_{chunk} = N_{chan} \, N_z$.
+    material composition.  The relationship between elements, chunks, and
+    channels is shown in \fref{fig:chunk_description}. Allow elevations to be
+    indexed $k = 1,2,\ldots,N_z$ where $N_z$ is the total number of axial
+    elevation. Then, each chunk has a unique $\{i,k\}$ combination and the total
+    number of chunks is the product $N_{chunk} = N_{chan} \, N_z$.
     %The indexing of chunks is chosen such that $j+N_{chan}$ is the chunk one 
     %axial elevation above chunk $j$. 
     The alignment of chunks in a one-dimensional flow channel is shown in
@@ -198,7 +199,7 @@
     per unit area is assumed to be uniform at the reactor inlet and the mass
     flow in a channel is the product of the reactor average mass flux and the
     channel flow area.  This partitioning of mass flow rate is chosen to allow
-    for assemblies with different flow areas or the modeling of partial
+    for assemblies with different flow areas or the modeling of fractional
     assemblies in fractional core models.
 
   \subsection{Chunk Powers}
@@ -206,7 +207,7 @@
     heat generation quantities are needed for chunks. Heat generation quantities
     for elements are calculated in \eref{eq:elementpwr} and
     \eref{eq:elementqppp_fuel}.  The total heat generated in a chunk, $q_{i,k}$,
-    and the average volumetric heat generation rate in the fuel for elements
+    and the average volumetric heat generation rate in the fuel 
     within the chunk, $q'''_{i,k}$ are required.  These relationships are given
     in \eref{eq:chunkpwr} and \eref{eq:chunkqppp_fuel} respectively. The
     notation $e \in \{i,k\}$ implies the summation over all elements $e$ within
@@ -283,9 +284,9 @@
   by the volumetric heat generation rate ${q'''=\kappa \Sigma_f \phi}$. This
   assumption asserts that all deposited energy is described by the coefficient
   $\kappa$. However, roughly $2\%$ of power in a typical fast reactor is
-  transported via gamma radiation will be absorbed directly in the coolant and
-  does not need to be conducted. Effectively, $q'''$ is reduced by this fraction
-  in the radial heat conduction model \cite{FastSpectrumReactors}.
+  transported via gamma radiation and will be deposited directly in the coolant
+  and does not need to be conducted. Effectively, $q'''$ is reduced by this
+  fraction in the radial heat conduction model \cite{FastSpectrumReactors}.
   
   For this model, it is assumed that the bulk coolant temperature,
   $T_{\infty,i,k}$, is known within the chunk as calculated in
@@ -350,6 +351,7 @@
     temperature.
     
     \subsubsection{Temperature in Fuel}
+      \label{sec:temperature_in_fuel}
       The fueled region is the only region modeled with non-zero volumetric heat
       generation. In this region, $q'''_{i,k}$ as specified by
       \eref{eq:chunkqppp_fuel} is assumed constant within the fuel.
@@ -395,7 +397,7 @@
       \begin{equation}
         \left. \frac{d \, T_F}{dr} \right|_{r=0} \text{ is Finite}.
       \end{equation}
-      and \eref{eq:need_bc} can be evaluated.
+      Now, \eref{eq:need_bc} can be evaluated.
       \begin{equation}
         \label{eq:dtdr_fuel}
         \left. r' k_F(T_F(r')) \frac{d\,T_F}{dr} \right|_{r=r'} + 
@@ -425,14 +427,14 @@
       \end{equation}
       In this derivation, $k_F(T)$ is allowed to be a generic function. 
       Therefore, \eref{eq:tcl_integral} does not have a simple forward 
-      expression. Solving for $T_F(0)$ will require a non-linear search such as
+      expression. Solving for $T_F(0)$ will require a non-linear search, such as
       the bisection method. Define the conductivity integral of the fuel
       conductivity in the form as
       \begin{equation}
         \label{eq:conductivity_integral}
         K_F(T) = \int_0^T k_F(T') \; dT'
       \end{equation}
-      where $k_F(T)$ is the thermal conductivity of the fuel material as shown
+      where $k_F(T)$ is the thermal conductivity of the fuel material as plotted
       in \fref{fig:kfuel_plot}. Then, \eref{eq:tcl_integral} can be rewritten
       \begin{gather}
         K_F(T_F(r)) - K_F(T_F(0)) + \frac{q'''_{i,k}}{4} r^2 = 0, \\
@@ -450,9 +452,9 @@
       \eref{eq:tcl_conductivity_integral} would be equivalent to 
       \begin{align}
         \label{eq:tfr}
-        T_F(r) &= T_F(0) - \frac{q'''_g}{4 \overline{k_F}} r^2 \\
+        T_F(r) &= T_F(0) - \frac{q'''_g}{4 \overline{k_F}} r^2, \\
         \label{eq:tcl_constant_kfuel}
-        T_F(0) &= T_F + \frac{q'''_{i,k}}{4 \overline{k_F}} R_F^2
+        T_F(0) &= T_F + \frac{q'''_{i,k}}{4 \overline{k_F}} R_F^2,
       \end{align}
       where $\overline{k_F}$ is the assumed constant thermal conductivity in the 
       fuel region.
@@ -474,7 +476,7 @@
         \label{eq:tc_grad}
         \grad \cdot (k_B \grad T_B(r)) = 0
       \end{equation}
-      $T_B(r)$ is the temperature within the bond region.
+      where $T_B(r)$ is the temperature within the bond region.
       In this region, good thermal contact between the fuel and bond is
       assumed such that
       \begin{equation}
@@ -513,9 +515,10 @@
       \end{align}
       The assumption of constant heat flux at the material boundary given in 
       \eref{eq:rf_flux_continuity} allows for the treatment of the spatial 
-      derivative at $R_F$. Recall from the derivation within the fuel region, 
-      the expression \eref{eq:dtdr_fuel} is exploited. The expression is valid 
-      for any $r' \in [0,R_F]$ so allow $r'=R_F$.
+      derivative at $R_F$. Recall from the derivation within the fuel region in
+      \sref{sec:temperature_in_fuel}, the expression \eref{eq:dtdr_fuel} is
+      exploited. The expression is valid for any $r' \in [0,R_F]$ so allow
+      $r'=R_F$.
       \begin{align}
         \left. R_F k_F(T_F(R_F)) \frac{d\,T_F}{dr} \right|_{r=R_F} + 
           \frac{q'''_{i,k}}{2} R_F^2 &= 0 \\
@@ -523,9 +526,8 @@
         \left. R_F k_F(T_F(R_F)) \frac{d\,T_F}{dr} \right|_{r=R_F} &= 
           - \frac{q'''_{i,k}}{2} R_F^2
       \end{align}
-      Recall from the earlier derivation of the fuel centerline temperature 
-      that the quantity $q'''_{i,k}$ is the average volumetric heat generation 
-      rate within the fuel in chunk $j$ specified in \eref{eq:chunkqppp_fuel}.
+      The quantity $q'''_{i,k}$ is the average volumetric heat generation rate
+      within the fuel in chunk $\{i,k\}$ specified in \eref{eq:chunkqppp_fuel}.
       \eref{eq:surface_relation} is substituted into
       \eref{eq:tf_first_integral}.
       \begin{equation}
@@ -627,10 +629,10 @@
       The Subbotin-Ushakov correlation is valid for coolant in heavy liquid
       metal cooled reactor designs with triangular pitch assemblies.  This
       correlation is selected because it is validated by experimental data and
-      is valid for a wide range of operating conditions common to metal cooled
-      fast reactors \cite{subbotinUshakov}. The correlation relates the P\'eclet 
-      number, $Pe$, to the Nusselt number, $Nu$. The P\'eclet number is the 
-      product of the Prandlt number, $Pr$, and the Reynolds number, $Re$.
+      is applicable for a wide range of operating conditions common to metal
+      cooled fast reactors \cite{subbotinUshakov}. The correlation relates the
+      P\'eclet number, $Pe$, to the Nusselt number, $Nu$. The P\'eclet number is
+      the product of the Prandlt number, $Pr$, and the Reynolds number, $Re$.
       \begin{equation}
         \label{eq:peclet}
         Pe = Re \, Pr
@@ -671,7 +673,7 @@
       and the mass-flux in the flow channel is 
       \begin{equation}
         \label{eq:correlation_g}
-        G_i = \frac{\mdot_i}{A_x}
+        G_i = \frac{\mdot_i}{A_x}.
       \end{equation}
       The Reynolds number is defined as
       \begin{equation}
@@ -813,11 +815,11 @@
       $\overline{T_B}$, is 
       \begin{align}
         \overline{T_B} &= \frac{\int_{R_F}^{R_B} T_B(r) \, r \; dr}
-          {\int_{R_F}^{R_B} r \; dr} \\
+          {\int_{R_F}^{R_B} r \; dr}, \\
         \label{eq:tbbar_integral}
         \overline{T_B} &= \frac{\int_{R_F}^{R_B} \left( T_F -
           \frac{q'''_{i,k}}{2 k_B} R_F^2 \ln\left(\frac{r}{R_F}\right) \right)
-          \, r \; dr} {\int_{R_F}^{R_B} r \; dr}
+          \, r \; dr} {\int_{R_F}^{R_B} r \; dr},
       \end{align}
       with the weighting due to radial coordinates included.
       In \eref{eq:tbbar_integral}, $T_F = T_F(R_F)$ is the fuel surface
