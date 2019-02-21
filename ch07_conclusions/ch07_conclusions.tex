@@ -15,7 +15,7 @@
   In \chref{ch:neutronDiffusion}, a rigorous and general framework is developed
   for solving the multigroup neutron diffusion equation via the \gls{fem} for
   unstructured mesh. Insights are provided into the use of both
-  two-dimension triangular elements and three-dimensional wedge (pentahedral)
+  two-dimensional triangular elements and three-dimensional wedge (pentahedral)
   elements. Both of these geometries are natural choices for fast reactors which 
   typically employ hexagonal geometries. Using the methods developed,
   \chref{ch:diffusionResults} then demonstrates code verification and solution
@@ -74,7 +74,7 @@
   \subsection{Depletion Capabilities}
     To serve as a useful reactor simulator, this suite must be expanded to 
     include depletion capabilities. The code as presented in this work can be 
-    used to design and optimize a clean (i.e. cycle-zero) fast reactor. However,
+    used to design and optimize a clean (i.e. cycle zero) fast reactor. However,
     any practical reactor design must be capable of extended and continuous 
     operation during an operating cycle. Depletion calculations inform the 
     reactor design by establishing the required excess reactivity at the 
@@ -87,7 +87,8 @@
     as the depletion solver in this suite \cite{cram}. The \gls{cram} will be 
     implemented using the \gls{fem} mesh. A subsequent mesh study will be
     required to determine if it is possible to use a coarse mesh for depletion
-    or if the fine mesh must also be used in isotopic depletion calculations.
+    or if the same fine mesh used for the multigroup neutron diffusion solution
+    must also be used in depletion calculations.
 
   \subsection{Higher Order Finite Elements}
     Recall the \gls{fem} as presented in \chref{ch:neutronDiffusion} employs
@@ -118,7 +119,7 @@
     reactor simulations. An important step in this code becoming practical is
     its adoption by users. Encouraging the usage of the simulation package will
     allow for user feedback. Additionally, users employing the code in a variety
-    of simulations will encourage the development of future features that may be
+    of simulations will encourage the development of new features that may be
     necessary for unique reactor designs. Future possible reactors to be
     simulated include the SuperPhenix benchmark and simulation of the
     \gls{ebr-ii} inherent safety demonstrations \cite{ebriitests}.
