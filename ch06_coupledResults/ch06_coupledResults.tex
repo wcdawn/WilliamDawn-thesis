@@ -20,14 +20,14 @@
 
 \section{\glsentrylong{abr} -- MET-1000}
 \label{sec:abr}
-  This reactor design is proposed by \gls{oecd} \gls{nea} \cite{abr}. The 
-  \gls{abr} is fueled with a ternary alloy metallic fuel and has a 1,000
-  \units{MWth} rating; hence, MET-1000. This is a medium-sized, metallic-fueled
-  reactor with a total of 180 hexagonal assemblies and is 4.8 \units{m} tall.
-  The benchmark is fully specified and thirty-one independent results are
-  submitted. Compared to other reactors modeled, this model is extremely large
-  due to the large structural components included above and below the active
-  fuel region.
+  The \gls{abr} is a benchmark reactor design is proposed by \gls{oecd}
+  \gls{nea} \cite{abr}. The \gls{abr} is fueled with a ternary alloy metallic
+  fuel and has a 1,000 \units{MWth} rating; hence, MET-1000. This is a
+  medium-sized, metallic-fueled reactor with a total of 180 hexagonal assemblies
+  and is 4.8 \units{m} tall.  The benchmark is fully specified and thirty-one
+  independent results are submitted. Compared to other reactors modeled, this
+  model is extremely large due to the large structural components included above
+  and below the active fuel region.
   
   Each submission to the benchmark uses independently generated cross sections
   from several different cross section libraries (e.g. ENDFB7.0, JEFF3.1, etc.).
@@ -36,7 +36,7 @@
   procedure outlined in \sref{sec:cross_section_treatment}. This procedure
   resulted in temperature-dependent cross section libraries with 33 energy
   groups. The multigroup neutron diffusion equation is solved using these same
-  cross sections using both \dif and the method from
+  cross sections using both \dif and the \gls{fem} solution from
   \chref{ch:neutronDiffusion}. \dif and the \gls{fem}, using the same cross
   sections, agree to within 700 \units{\glsentryshort{\glsentryshort{pcm}}}. The
   \dif and \gls{fem} models were minimally refined. A more formal refinement
@@ -139,7 +139,7 @@
       \alpha_{power}(Q_{Rx,i}) = \frac{\rho(Q_{Rx,i}) - \rho(Q_{Rx,i} + 
         \Delta Q_{Rx})} {\Delta Q_{Rx}}.
     \end{equation}
-    A typical value of $\Delta Q_{Rx}$ is $10\% \cdot Q_{Rx,i}$.
+    A typical value of $\Delta Q_{Rx}$ is $10\% Q_{Rx,i}$.
     % $10\% \, Q_{Rx,i}$.
 
   \subsection{Thermal Expansion Reactivity Coefficient}
@@ -148,11 +148,11 @@
     response due solely to thermal expansion for a given increase in reactor 
     power. It is expected that thermal expansion will be the dominant 
     contribution to the power reactivity coefficient in fast reactors. This is 
-    due to two main reasons: metal fuels expand significantly at high 
-    temperature (see \chref{ch:thermalExpansion}) and the large neutron leakage 
-    fraction (\leakage) in fast reactors \cite{PlentifulEnergy}. The leakage 
-    fraction is the fraction of neutrons created in the fuel due to fission that 
-    exit the core. The leakage fraction can be expressed as
+    due to two main reasons: the significant thermal expansion of metal fuels at
+    high temperature (see \chref{ch:thermalExpansion}) and the large neutron
+    leakage fraction (\leakage) in fast reactors \cite{PlentifulEnergy}. The
+    leakage fraction is the fraction of neutrons created in the fuel due to
+    fission that exit the core. The leakage fraction can be expressed as
     \begin{equation}
       \label{eq:leakage}
       \leakage = \frac{k_{\infty}}{\keff}
@@ -184,7 +184,7 @@
     thermal expansion temperatures for power $Q_{Rx,i} + \Delta Q_{Rx}$. Note
     that in \eref{eq:thermal_expansion_reactivity_coefficient}, only thermal
     expansion temperatures are changed, not the true reactor power $Q_{Rx}$.
-    A typical value of $\Delta Q_{Rx}$ is $10\% \cdot Q_{Rx,i}$.
+    A typical value of $\Delta Q_{Rx}$ is $10\% Q_{Rx,i}$.
     %$10\% \, Q_{Rx,i}$.
 
   \subsection{Fuel Temperature Reactivity Coefficient}
@@ -258,7 +258,7 @@
   modeled for this reactor. The methodology and formulae from
   \sref{sec:reactivity_coefficients} are used. The reactor $\keff$ as a function
   of reactor power is plotted in \fref{fig:keff_effects}. Note $\keff$ decreases
-  as power increases and the $\keff$ for the case with increased sodium
+  as power increases and the $\keff$ for the case with increased coolant
   temperature is higher than all other $\keff$.
   
   The reactivity coefficients themselves are plotted in
