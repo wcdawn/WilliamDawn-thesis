@@ -30,6 +30,12 @@
 \usepackage[acronym]{glossaries}
 \usepackage{acronym}
 \input{acronym}
+% this width could potentially allow text to flow off the page... 
+% but just don't do that...
+\setlength{\glsdescwidth}{\textwidth}
+\setglossarystyle{long}
+\renewcommand{\glsnamefont}[1]{\textbf{#1}}
+\renewcommand{\glsgroupskip}{}
 
 \usepackage[all]{nowidow}
 
