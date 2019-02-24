@@ -144,6 +144,12 @@
 \end{frame}
 
 \begin{frame}[allowframebreaks]{Acronyms}
+  % this width could potentially allow text to flow off the page... 
+  % but just don't do that...
+  \setlength{\glsdescwidth}{0.8\textwidth}
+  \setglossarystyle{long}
+  \renewcommand{\glsnamefont}[1]{\textbf{#1}}
+  \renewcommand{\glsgroupskip}{}
   \printglossary[type=\acronymtype,nonumberlist]
 \end{frame}
 

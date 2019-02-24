@@ -99,6 +99,12 @@
 \thesislistoffigures
 
 \clearpage
+% this width could potentially allow text to flow off the page... 
+% but just don't do that...
+\setlength{\glsdescwidth}{\textwidth}
+\setglossarystyle{long}
+\renewcommand{\glsnamefont}[1]{\textbf{#1}}
+\renewcommand{\glsgroupskip}{}
 \printglossary[type=\acronymtype,title={LIST OF ACRONYMS},nonumberlist]
 \addcontentsline{toc}{chapter}{LIST OF ACRONYMS}
 \glsresetall
