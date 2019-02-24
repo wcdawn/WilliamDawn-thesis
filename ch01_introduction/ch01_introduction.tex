@@ -209,10 +209,11 @@
   second, volumetric homogenization. Isotopic homogenization is performed by
   summing microscopic cross sections and associated number densities. Let
   $\sigma_{i,j,x,g}$ represent the microscopic cross section for isotope $i$, in
-  region $j$, for reaction type $x$, and energy group $g$.  $\sigma_{i,j,x,g}$
-  has units of area. Then, let $N_{i,j}$ represent the atom number density for
-  isotope $i$ in region $j$. $N_{i,j}$ has units of inverse volume.  The
-  macroscopic cross section can then be defined
+  region $j$, for reaction type $x$, and energy group $g$ as output by \mcc.
+  $\sigma_{i,j,x,g}$ has units of area. Then, let $N_{i,j}$ represent the atom
+  number density for isotope $i$ in region $j$ as input by the user. $N_{i,j}$
+  has units of inverse volume. The macroscopic cross section can then be
+  defined
   \begin{equation}
     \label{eq:isotopic_homogenization}
     \Sigma_{j,x,g} = \sum_{i=1}^{N_{iso}} N_{i,j} \, \sigma_{i,j,x,g}
