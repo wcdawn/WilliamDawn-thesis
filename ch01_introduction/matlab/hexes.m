@@ -35,7 +35,9 @@ hold on
 % hex can
 plot(hex(:,1)*f2f,hex(:,2)*f2f,'k','LineWidth',LW)
 plot(hex(:,1)*(f2f+2*th),hex(:,2)*(f2f+2*th),'k','LineWidth',LW)
-plot(hex(:,1)*(f2f+2*th+2*gap),hex(:,2)*(f2f+2*th+2*gap),'k','LineWidth',LW)
+plot(hex(:,1)*(f2f+2*th+2*gap),hex(:,2)*(f2f+2*th+2*gap),'--k','LineWidth',LW)
+geom_can = [hex*f2f;hex*(f2f+2*th)];
+fill(geom_can(:,1),geom_can(:,2),ones(1,3)*0.5,'EdgeColor','none');
 % center circle
 plot(circle(:,1)*radius,circle(:,2)*radius,'k','LineWidth',LW)
 plot(circle(:,1)*wrap+offset(1),circle(:,2)*wrap+offset(2),'k','LineWidth',LW)
