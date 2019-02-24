@@ -71,13 +71,13 @@
 \newcommand{\nicesub}[2]{\ensuremath{{#1}_{\!\mbox{\scriptsize \em {#2}}}}}
 
 % reference macros
-\newcommand{\eref}[1]{Eq.~(\ref{#1})}
-\newcommand{\fref}[1]{Fig.~\ref{#1}}
-\newcommand{\tref}[1]{Table~\ref{#1}}
-\newcommand{\sref}[1]{\S\ref{#1}}
-\newcommand{\chref}[1]{Chapter~\ref{#1}}
-\newcommand{\apref}[1]{Appendix~\ref{#1}}
-\newcommand{\algorithmref}[1]{Algorithm~\ref{#1}}
+\newcommand{\eref}[1]{\hyperref[#1]{Eq.~}(\ref{#1})}
+\newcommand{\fref}[1]{\hyperref[#1]{Fig.~}\ref{#1}}
+\newcommand{\tref}[1]{\hyperref[#1]{Table~}\ref{#1}}
+\newcommand{\sref}[1]{\hyperref[#1]{\S}\ref{#1}}
+\newcommand{\chref}[1]{\hyperref[#1]{Chapter~}\ref{#1}}
+\newcommand{\apref}[1]{\hyperref[#1]{Appendix~}\ref{#1}}
+\newcommand{\algorithmref}[1]{\hyperref[#1]{Algorithm~}\ref{#1}}
 
 \usepackage{array}
 \newcolumntype{L}{>{$}l<{$}}
