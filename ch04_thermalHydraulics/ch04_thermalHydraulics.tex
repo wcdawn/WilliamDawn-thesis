@@ -30,17 +30,17 @@
 
 \section{Material Properties}
   \label{sec:material_properties}
-  Thermodynamic properties of reactor materials are required for these models.
-  The coolant properties required are the most extensive with density, enthalpy, 
+  Thermodynamic properties of reactor materials are required for thermal
+  hydraulic models.  The coolant properties required are density, enthalpy,
   thermal conductivity, dynamic viscosity, and heat capacity required. In this
-  thesis, sodium coolant is considered \cite{sodiumProp}. However, these thermal 
-  hydraulic properties can be easily changed to allow for the simulation of 
-  fast reactors with other coolants such as lead or molten salt. 
-  Thermal conductivity values are also required for the cladding and fuel
-  material. Typical cladding for fast reactor designs is HT9 stainless-steel
-  \cite{ht9Prop}. Both sodium and steel have relatively high thermal 
-  conductivities and their thermal conductivities do not change significantly 
-  over the operating temperatures of sodium cooled fast reactors. Therefore, the 
+  thesis, only sodium coolant is considered \cite{sodiumProp}. However, these
+  thermal hydraulic properties can be easily changed to allow for the simulation
+  of fast reactors with other coolants such as lead or molten salt.  Thermal
+  conductivity values are also required for the cladding and fuel material.
+  Typical cladding for fast reactor designs is HT9 stainless-steel
+  \cite{ht9Prop}. Both sodium and steel have relatively high thermal
+  conductivities and their thermal conductivities do not change significantly
+  over the operating temperatures of sodium cooled fast reactors. Therefore, the
   thermal conductivity of sodium within the bond \cite{sodiumProp} and HT9
   \cite{ht9Prop} are assumed constant at the average reactor operating value.
   These constant values are given in \tref{tab:constant_k}.
@@ -60,13 +60,14 @@
     \end{center}
   \end{table}
 
-  Fuel composition is assumed to be of the form U-XZr where X is the weight
-  fraction of Zr in the fuel. A typical value for X is 10\% and this is assumed
-  for this work. Fuel thermal conductivity is given as a function of material
-  temperature and zirconium weight fraction \cite{fuelProp}. A plot of thermal
+  Fuel composition is assumed to be metallic fuel of the form U-XZr where X is
+  the weight fraction of Zr in the fuel. A typical value for X is 10\% and this
+  is assumed for this work. Fuel thermal conductivity is given as a function of
+  material temperature and zirconium weight fraction. A plot of thermal
   conductivity for U-10Zr as a function of temperature is given in
   \fref{fig:kfuel_plot}. The functional form of the thermal conductivity for
-  U-XZr is given in \eref{eq:kfuel_first} through \eref{eq:kfuel_last}.
+  U-XZr is given in \eref{eq:kfuel_first} through \eref{eq:kfuel_last}
+  \cite{fuelProp}.
   \begin{align}
     \label{eq:kfuel_first}
     k_U      &= 21.73 + 1.591 \times 10^{-2} T + 5.907 \times 10^{-6} T^2 \\
@@ -98,33 +99,26 @@
 \section{Power Normalization}
   Recall the multigroup neutron diffusion equation solved via the power
   iteration method returns the largest eigenvalue $\keff$ and unique positive
-  eigenvector $\widetilde{\phi_{g,e}}$ (see \sref{sec:power_iterations}). The
-  neutron flux calculated according to this method is an eigenvector and can be
-  normalized to an arbitrary constant. For a specified total reactor power,
-  $Q_{Rx}$, the normalization constant can be calculated. Given the
-  un-normalized neutron flux as calculated by the power iteration method,
-  $\widetilde{\phi_{g,e}}$, for  energy group $g$ in finite element $e$, the
-  normalization constant is 
-  \begin{equation}
-    \label{eq:normalization_c}
-    c = \frac{Q_{Rx}}{\sum_{g}^{G} \sum_{e}^{N_E} \kappa \Sigma_{f,g,e} \,
-      \widetilde{\phi_{g,e}} \, V_e}
-  \end{equation}
-  where $c$ is the normalization constant and $V_e$ is the volume of element
-  $e$. $\kappa$ represents the reclaimable (non-neutrino) energy produced per
-  fission such that the quantity $\kappa \Sigma_f \phi$ represents the
-  volumetric heat generation rate. 
-  %Similar to $\nu\Sigma_{f,g}$, $\kappa\Sigma_{f,g}$ is 
-  %calculated as an aggregate quantity and not simply $(\kappa)(\Sigma_{f,g})$.
-  Then, the properly scaled neutron flux is given as
+  eigenvector (see \sref{sec:power_iterations}). The neutron flux calculated
+  according to this method is an eigenvector and can be normalized to an
+  arbitrary constant. The flux is normalized to a given, user-input reactor
+  power $Q_{Rx}$. The flux is normalized such that
   \begin{equation}
     \label{eq:normalization_phi}
-    \phi_{g,e} = c \, \widetilde{\phi_{g,e}}
+    Q_{Rx} = \sum_{e=1}^{N_E} \sum_{g=1}^G \kappa \nu \Sigma_{f,g,e} \, 
+      \phiavg_{g,e} \, V_e
   \end{equation}
-  and the total power generated in each element is 
+  where $N_E$ is the number of elements in the reactor and $V_e$ is the volume
+  of element $e$. In \eref{eq:normalization_phi}, the quantity $\kappa$
+  represents the reclaimable (non-neutrino) energy produced per fission such
+  that the quantity $\kappa \Sigma_f \phiavg$ represents the volumetric heat
+  generation rate.
+  %Similar to $\nu\Sigma_{f,g}$, $\kappa\Sigma_{f,g}$ is 
+  %calculated as an aggregate quantity and not simply $(\kappa)(\Sigma_{f,g})$.
+  The total power generated in each element is 
   \begin{equation}
     \label{eq:elementpwr}
-    q_{e} = \sum_g^G \kappa \Sigma_{f,e,g} \, \phi_{g,e} \, V_e .
+    q_{e} = \sum_g^G \kappa \Sigma_{f,e,g} \, \phiavg_{g,e} \, V_e .
   \end{equation}
   The quantity $q_e$ has units \units{W}. Assuming all heat generated in the
   element is generated within the fuel, the volumetric heat generation rate 
@@ -142,7 +136,8 @@
 \section{Axial Convection Model}
   \label{sec:axial_convection_model}
   In this model, the temperature and density of the coolant is calculated as
-  it flows upward through a single hexagonal assembly.
+  it flows upward through a single hexagonal assembly. The axial thermal
+  hydraulic model assumes one-dimensional, steady-state flow in each channel.
 
   \subsection{Geometric Model}
     Used in association with an unstructured mesh, the thermal hydraulic model
@@ -186,21 +181,22 @@
     \end{figure}
 
   \subsection{Channel Mass Flow}
-    The channel mass flow, $\mdot_i$, must be calculated given a user 
-    specified total reactor inlet mass flow rate $\mdot_{Rx}$. Mass flow is 
-    partitioned into each channel assuming uniform mass flux at each channel
-    inlet according to 
+    The channel mass flow, $\mdot_i$, is calculated given a user specified total 
+    reactor inlet mass flow rate $\mdot_{Rx}$. Mass flow is partitioned into
+    each channel assuming uniform mass flux at each channel inlet according to 
     \begin{equation}
       \label{eq:mass_flow_split}
       \mdot_i = \mdot_{Rx} \frac{A_{cool,i}}{A_{cool,Rx}}
     \end{equation}
     where $A_{cool,i}$ is the coolant flow area for channel $i$ and
-    $A_{cool,Rx}$ is the total coolant flow area for the reactor. The mass flow
-    per unit area is assumed to be uniform at the reactor inlet and the mass
-    flow in a channel is the product of the reactor average mass flux and the
-    channel flow area.  This partitioning of mass flow rate is chosen to allow
-    for assemblies with different flow areas or the modeling of fractional
-    assemblies in fractional core models.
+    $A_{cool,Rx}$ is the total coolant flow area for the reactor. $A_{cool,i}$
+    includes the area between flow channels and \eref{eq:mass_flow_split}
+    accounts for bypass flow. The mass flow per unit area is assumed to be
+    uniform at the reactor inlet and the mass flow in a channel is the product
+    of the reactor average mass flux and the channel flow area. This
+    partitioning of mass flow rate is chosen to allow for assemblies with
+    different flow areas or the modeling of fractional assemblies in fractional
+    core models.
 
   \subsection{Chunk Powers}
     For the one-dimensional axial heat convection model in the axial direction,
@@ -241,29 +237,30 @@
     The integral in \eref{eq:continuous_heat_balance} can be discretized along
     the channel and converted to a summation. This is similar to a Riemann
     summation approximation to the integral. In this discretization, the model
-    in \fref{fig:axial_model} is used where $h_{j+1/2}$ is the enthalpy at the
-    upper edge of the chunk and $h_j$ is the average enthalpy within the chunk.
-    Then, the discretization of the integral \eref{eq:continuous_heat_balance}
-    is 
+    in \fref{fig:axial_model} is used where $h_{i,k+1/2}$ is the enthalpy at the
+    upper edge of the chunk and $h_{i,k}$ is the average enthalpy within the
+    chunk.  Then, the discretization of the integral
+    \eref{eq:continuous_heat_balance} is 
     \begin{equation}
       \label{eq:heat_balance}
       h_{i,k+1/2} = 
-        h_{in} + \frac{1}{\mdot_i} \sum_{k=1}^{N_z} q'_{i,k} \, \Delta z_{k}
+        h_{in} + \frac{1}{\mdot_i} \sum_{k'=1}^{k} q'_{i,k'} \, \Delta z_{k'}
     \end{equation}
     where $q'_{i,k}$ is the linear heat generation rate in the chunk in channel
     $i$ at elevation $k$ and $\Delta z_k$ is the height of the node at elevation
-    $k$ such that ${\Delta z_{k} = z_{k-1/2} - z_{k+1/2}}$. 
+    $k$ such that ${\Delta z_{k} = z_{k+1/2} - z_{k-1/2}}$. 
     % (Note: by indexing properly, $j = i + (k-1) \, N_{chan}$.)
     Recognizing the quantity $q_{i,k} = q'_{i,k} \Delta z_{i,k}$ is the total
     heat generated in chunk $\{i,k\}$, then \eref{eq:heat_balance} can be
     rewritten.
     \begin{equation}
-      h_{i,k+1/2} = h_{in} + \frac{1}{\mdot_i} \sum_{k=1}^{N_z} q_{i,k}
+      h_{i,k+1/2} = h_{in} + \frac{1}{\mdot_i} \sum_{k'=1}^{k} q_{i,k'}
     \end{equation}
     The quantity $h_{i,k+1/2}$ represents the enthalpy in channel $i$ at the 
     upper coordinate of the one-dimensional heat convection chunk (see
-    \fref{fig:axial_model}). The node-average enthalpy is instead desired. To 
-    first-order approximation, then
+    \fref{fig:axial_model}). The node-average enthalpy is desired instead of the
+    enthalpy at the upper elevation of the node. To first-order approximation, 
+    then
     \begin{equation}
       h_{i,k} = \half (h_{i,k-1/2}+h_{i,k+1/2})
     \end{equation}
@@ -272,7 +269,8 @@
     coolant enthalpy in each chunk. Given, $h_{i,k}$, the average bulk coolant 
     temperature in the chunk $T_{\infty,i,k} = T(h_{i,k})$ can be calculated 
     using a state relationship \cite{sodiumProp}. Bulk coolant temperature 
-    will be an input into the radial heat conduction model.
+    will be used in the radial heat conduction model and to update coolant
+    density and cross sections.
   
 \section{Radial Conduction Model}
   \label{sec:radial_conduction_model}
@@ -929,10 +927,9 @@
     \caption{Temperature and Cross Section Update Procedure.}
     \label{algorithm:temperature_update}
     \begin{algorithmic}[1]
-      \State Complete $N_{iter}$ power iterations to calculate
-        $\widetilde{\phi_{e,g}}$. Currently $N_{iter}=10$.
-      \State Calculate flux normalization constant $c$ from
-        \eref{eq:normalization_c}.
+      \State Complete $N_{iter}$ power iterations to calculate unnormalized
+        ${\phiavg_{e,g}}$. Currently $N_{iter}=10$.
+      \State Normalize flux according to \eref{eq:normalization_phi}.
       \State Calculate power for each element as in \eref{eq:elementpwr} and
         \eref{eq:elementqppp_fuel}.
       \ForAll{Chunks}
