@@ -54,7 +54,7 @@
       \units{$\frac{1}{\text{cm}}$}, \\
     \widetilde{\chi_g}(\vr) & effective fission spectrum for energy group $g$,\\
     \keff & effective neutron multiplication factor, \\
-    \nu \Sigma_{f,g}(\vr) & number of fission neutrons times microscopic fission
+    \nu \Sigma_{f,g}(\vr) & number of fission neutrons times macroscopic fission
       cross section in energy group $g$ \units{$\frac{1}{\text{cm}}$}, \\
     \Sigma_{s,g' \rightarrow g} (\vr) & macroscopic scatter cross section from
       energy group $g'$ to energy group $g$ \units{$\frac{1}{\text{cm}}$}, \\
@@ -123,8 +123,9 @@
   computationally efficient as such linear systems have favorable conditioning
   and are dimensionally smaller. Finally, fast reactors are also dominated by
   down-scatter as opposed to thermal reactors which experience significant
-  up-scatter implying that the term $q_{up,g}(\vr)$ will not have to be updated
-  frequently and the one group at-a-time solution method will benefit.
+  up-scatter at thermal energies. This fact implies that the term $q_{up,g}(\vr)$ 
+  will not have to be updated frequently in fast reactor simulations and the one
+  group at-a-time solution method will benefit.
 
   Typically, reactor materials are described isotopically and $\chi$ may be
   specified isotopically. However, for calculating the fission neutron source
@@ -132,8 +133,8 @@
   needed. From an isotopic description, $q_{fiss,g}(\vr)$ is given as
   \begin{equation}
     \label{eq:isotopic_chi}
-    q_{fiss,g}(\vr) = \sum_{i=1}^{N_{iso}} \chi_{i,g}(\vr)
-      \nu \Sigma_{f,i,g}(\vr) \phi_g(\vr)
+    q_{fiss,g}(\vr) = \sum_{i=1}^{N_{iso}} \chi_{i,g}(\vr )\left( \sum_{g'=1}^G
+      \nu \Sigma_{f,i,g'}(\vr) \phi_{g'}(\vr) \right)
   \end{equation}
   where $\chi_{i,g}(\vr)$ is the isotopic fission spectrum and $N_{iso}$ is the 
   number of isotopes at position $\vr$. Next, require $q_{fiss,g}(\vr)$ to have 
@@ -141,15 +142,16 @@
   \begin{equation}
     \label{eq:element_chi}
     q_{fiss,g}(\vr) = \widetilde{\chi_g}(\vr) \, 
-      \sum_{i=1}^{N_{iso}} \nu \Sigma_{f,i,g}(\vr) \phi_g(\vr)
+      \sum_{i=1}^{N_{iso}} \sum_{g'=1}^G \nu \Sigma_{f,i,g'}(\vr) \phi_{g'}(\vr)
   \end{equation}
   Setting \eref{eq:isotopic_chi} equal to \eref{eq:element_chi} yields the
   expression for $\widetilde{\chi_g}(\vr)$ based on isotopic data.
   \begin{equation}
     \label{eq:chi_collapse}
     \widetilde{\chi_g}(\vr) = \frac{\sum_{i=1}^{N_{iso}} \chi_{i,g}(\vr)
-      \nu \Sigma_{f,i,g}(\vr) \phi_g(\vr)}
-      {\sum_{i=1}^{N_{iso}} \nu \Sigma_{f,i,g}(\vr) \phi_g(\vr)}
+      \left( \sum_{g'=1}^G
+      \nu \Sigma_{f,i,g'}(\vr) \phi_{g'}(\vr) \right)}
+      {\sum_{i=1}^{N_{iso}} \sum_{g'=1}^G \nu \Sigma_{f,i,g'}(\vr) \phi_{g'}(\vr)}
   \end{equation}
   Note that \eref{eq:chi_collapse} requires the solution $\phi_g(\vr)$.
   Ultimately, the flux is unknown but will be solved in an iterative manner.
@@ -240,11 +242,14 @@
     \eref{eq:q} is used to calculate the average neutron source, $q_{g,e}$,
     in an element.
     \begin{align}
+      \label{eq:qelement_combined}
       q_{g,e} &= q_{fiss,g,e} + q_{up,g,e} + q_{down,g,e} \\
       \label{eq:chielement}
       \widetilde{\chi_{g,e}} &= \frac{\sum_{i=1}^{N_{iso}} \chi_{i,g,e}
-        \nu \Sigma_{f,i,g,e} \phiavg_{g,e}}
-        {\sum_{i=1}^{N_{iso}} \nu \Sigma_{f,i,g,e} \phiavg_{g,e}} \\
+        \left( \sum_{g'=1}^G
+        \nu \Sigma_{f,i,g',e} \phiavg_{g',e}\right)} 
+        {\sum_{g'=1}^G 
+        \sum{i=1}^{N_{iso}} \nu \Sigma_{f,i,g',e} \phiavg_{g',e}} \\
       \label{eq:qelement_fiss}
       q_{fiss,g,e} &= \frac{\widetilde{\chi_{g,e}}}{\keff} \sum_{g'=1}^G \nu
         \Sigma_{f,g',e} \phiavg_{g',e} \\
@@ -298,15 +303,14 @@
     Specifically, the albedo boundary condition which has the form 
     \begin{align}
       D_g(\vr) \grad \phi_g(\vr) \cdot \nhat + \albedo \phi_g(\vr) &= 0 \\
+      \label{eq:albedo_form2}
       D_g(\vr) \grad \phi_g(\vr) \cdot \nhat &= -\albedo \phi_g(\vr)
     \end{align}
     for $\vr \in \partial \Omega$. Note that all allowed boundary conditions
     (mirror, albedo, and zero-flux) can be specified as an albedo condition. For
     mirror boundaries, $\albedo = 0$ and for zero-flux boundaries, $\albedo
-    \rightarrow \infty$.  Substituting \eref{eq:greens} into
-    \eref{eq:element_by_element} and assuming the outward normal derivative is
-    specified in the form of an albedo boundary condition with $\albedo$
-    constant throughout the problem boundary.
+    \rightarrow \infty$. Substituting \eref{eq:greens} into
+    \eref{eq:element_by_element}.
     \begin{multline} 
       -\sum_{e=1}^{N_E} D_{g,e} \int_{\partial \Omega_e} v(\vr) \grad
       \phi_g(\vr) \cdot \nhat \;ds + \sum_{e=1}^{N_E} 
@@ -316,6 +320,9 @@
         \; d\vr =
         \sum_{e=1}^{N_E} q_{g,e} \int_{\Omega_e} v(\vr) \; d\vr
     \end{multline}
+    Assuming the outward normal derivative is
+    specified in the form of an albedo boundary condition with $\albedo$
+    constant throughout the problem boundary as in \eref{eq:albedo_form2}.
     \begin{multline}
       \label{eq:element_boundary}
       \sum_{e=1}^{N_E} \albedo \int_{\partial \Omega_e} v(\vr) 
@@ -419,8 +426,8 @@
     In the matrix notation of \eref{eq:matrix_notation}, matrix $\ma_g$ is 
     described by integral quantities, vector $\vu_g$ is the unknown magnitudes 
     of the basis functions $\{\upsilon_{i,g}\}$, and vector $\vf_g$ is described
-    by source integral quantities. Inspecting the elements matrix $\ma_g$ and
-    the vector $\vf_g$ reveals 
+    by source integral quantities. Inspecting the finite elements matrix $\ma_g$ 
+    and the vector $\vf_g$ for element $e$ reveals 
     \begin{align}
       \label{eq:matrix_population}
       A_{i,j,g,e} &= \albedo \int_{\partial \Omega_e} \basis_i(\vr) 
@@ -489,8 +496,8 @@
       triangle $T_{ref}$ is located in $\xi \in [0,1]$ and $\eta \in [0,1-\xi]$.
       General and reference triangles are shown in \fref{fig:triangle_elements}.
       The basis functions are zero outside of the reference triangle. Within
-      the reference triangle, basis functions for the are provided in the
-      natural coordinates of $T_{ref}$.
+      the reference triangle, basis functions for the triangle are provided in 
+      the natural coordinates of $T_{ref}$.
       \begin{align}
         \basis_i(\xi,\eta) &= 0 \quad \forall \; (\xi,\eta) \notin T_{ref} \\
         \basis_1(\xi,\eta) &= \xi \\
@@ -620,8 +627,12 @@
       \end{align}
       where $V_e$ is the volume of the element, $A_{\triangle}$ is the area of 
       the triangular surface, and $A_{\Box}$ is the area of the quadrilateral
-      surface.  The matrix in \eref{eq:bigmat} is indexed $\mathbf{M}_{ij}$ and
-      is presented as a matrix because of its irregular form. Notice the
+      surface. The matrix in \eref{eq:bigmat} is indexed $\mm_{ij}$ where
+      ${i,j} = 1, 2, \ldots, 6$. The indices, $ij$, are the indices of the six 
+      basis functions corresponding to $\basis_i(\vr)$ and $\basis_j(\vr)$ 
+      respectively.
+
+      Notice the
       integral containing the gradient operator has been omitted because it is
       computed using a quadrature. If it could be computed analytically, it
       would be less computationally efficient than using a quadrature.
@@ -650,10 +661,11 @@
     the number of quadrature points, $N$, will equal the order of the polynomial
     exactly integrated, $n$. Generally, $n \ne N$.
     
-    For one-dimensional integrals, the Gaussian quadrature is common and the most compact quadrature. The Gaussian quadrature exactly integrates a 
-    polynomial of order $n$ using exactly $N=n$ points. For this quadrature, the
-    number of points in the quadrature is the same as the order of the
-    quadrature and $n=N$.
+    For one-dimensional integrals, the Gaussian quadrature is common and the
+    most compact quadrature. The Gaussian quadrature exactly integrates a
+    polynomial of order $n$ using exactly $N=n$ points. For the one-dimensional
+    Gaussian quadrature, the number of points in the quadrature is the same as 
+    the order of the quadrature and $n=N$.
     
     Two-dimensional and three-dimensional quadratures are necessary for the 
     \gls{fem}. Triangular quadratures are not as simple to derive
@@ -842,7 +854,7 @@
   \subsection{Convergence of Power Iteration Method}
     Noting the \gls{fem} equations can be written as matrix form
     \eref{eq:matrix_notation}, the discretized multigroup neutron diffusion 
-    equation can be rewritten as shown by \textcite{gehinThesis} as
+    equation can be rewritten as 
     \begin{equation}
       \label{eq:gehin_notation}
       \mb(\vPhi,\keff) \vPhi = \frac{1}{\keff} \mm \vPhi
@@ -873,17 +885,17 @@
       \label{eq:power_iteration_phi}
       \vPhi^{(s+1)} &= \frac{1}{\keff^{(s)}} \mr \vPhi^{(s)}, \\
       \label{eq:power_iteration_eigenvalue}
-      \keff^{(s+1)} &= \keff^{(s)} \frac{\vw^{T} \vPhi^{(s+1)}}
-        {\vw^{T} \vPhi^{(s)}}, \qquad s = 1,2,\ldots,\infty,
+      \keff^{(s+1)} &= \keff^{(s)} \frac{\langle \vw, \vPhi^{(s+1)} \rangle}
+        {\langle \vw, \vPhi^{(s)}\rangle}, \qquad s = 1,2,\ldots,\infty,
     \end{align}
     where $s$ is the iteration counter, $\vw$ is a weighting vector and 
-    $\vw^{T} \vPhi$ is the vector inner-product. According to the 
+    $\langle\vw, \vPhi\rangle$ is an inner-product. According to the 
     Perron-Frobenius theorem, a matrix with the properties of $\mr$ has a 
     unique, positive eigenvalue, greater in magnitude than the modulus of all 
-    other eigenvalues of the matrix. The weighting vector $\vw$ is arbitrary 
-    but does affect convergence rate. For this work,
-    $\vw = \{\nu \Sigma_f\}$ such that the inner product 
-    $\{\nu \Sigma_f\}^T \vPhi$ represents the summation of the fission neutron
+    other eigenvalues of the matrix \cite{gehinThesis,nakamura}. The weighting 
+    vector $\vw$ is arbitrary but does affect convergence rate. For this work,
+    $\vw = \{\nu \Sigma_f\}$ such that the inner product $\langle\{\nu
+    \Sigma_f\}, \vPhi\rangle$ represents the summation of the fission neutron
     production rate throughout all energy groups and all elements. 
     
     It can then be shown in that the method of power iterations described in 
@@ -967,18 +979,28 @@
     requires $\mu_0 / \mu_n < 1$ and the problem is convergent. The 
     convergence rate is determined by the dominance ratio, $d$, where
     \begin{equation}
-      \label{eq:dominance_ratio}
+      \label{eq:old_dominance_ratio}
       d \equiv \max_{n=1,2,\ldots,N} \frac{\mu_0}{\mu_n} =
         \frac{\mu_0}{\mu_1}
     \end{equation}
     and it can be seen that for problems with small dominance ratio, the power
-    iteration method will converge more quickly. As the dominance ratio
-    approaches unity, $d \rightarrow 1$, the power iteration method will be
-    slower to converge. Convergence criteria are then specified as an absolute 
+    iteration method will converge more quickly \cite{nakamura}.
+    \eref{eq:old_dominance_ratio} can be rewritten in terms of the eigenvalues
+    of the multigroup neutron diffusion equation $\keff=\keffsub{0}$ and
+    $\keffsub{1}$.
+    \begin{equation}
+      \label{eq:dominance_ratio}
+      d \equiv \frac{\keffsub{1}}{\keffsub{0}}
+    \end{equation}
+    As the 
+    dominance ratio approaches unity, $d \rightarrow 1$, the power iteration
+    method will be slower to converge. 
+    
+    Convergence criteria are then specified as an absolute 
     tolerance in the sense of the eigenvalue
     \begin{equation}
       \label{eq:eigenvalue_tol}
-      \epsilon_{\mu} > | \mu^{(s+1)} - \mu^{(s)} |
+      \epsilon_{\keff} > | \keff^{(s+1)} - \keff^{(s)} |
     \end{equation}
     and as a relative tolerance in the sense of the eigenvector
     \begin{equation}
@@ -997,12 +1019,29 @@
     iteration updates, convergence is no longer guaranteed. The argument for
     convergence with nonlinear power iterations in this implementation falls
     back to the stability of the physical system.
+
+    The proof of the power iteration as presented is valid for general solution
+    methods to the multigroup neutron diffusion equation. However, the exact
+    procedure of this proof is computationally inefficient and not used in
+    practice. The matrix $\mm$ is not inverted to construct $\mr$ as in
+    \eref{eq:gehin_r}. Instead, \eref{eq:gehin_notation} is solved using an
+    iterative solution method. In this work, the \gls{fem} is used to solve
+    \eref{eq:gehin_notation} as described in \sref{sec:formulation}. In the
+    \gls{fem} representation, the quantity $\frac{1}{\keff} \mm \vPhi$ in
+    \eref{eq:gehin_notation} is equivalent to the combined source
+    representation, $q_{g,e}$, as described in \eref{eq:qelement_combined}.
+    While the notation from the \gls{fem} could be rewritten for this proof, the
+    notation from \eref{eq:gehin_notation} is more intuitive and compact.
     
   \subsection{Calculation of Source with Power Iterations}
   \label{sec:calculation_of_source_with_power_iterations}
-    The multigroup neutron diffusion equation \eref{eq:multigroup_source} can be
-    written with the source term $q_g(\vr)$ expanded into its component parts.
-    \begin{equation} \label{eq:multigroup_source_expand}
+    The source term in \eref{eq:gehin_notation}, $\frac{1}{\keff} \mm \vPhi$, is
+    representative of the combined multigroup neutron source $q_g(\vr)$.  The
+    multigroup neutron diffusion equation from \eref{eq:multigroup_source} can
+    be written with the source term, $q_g(\vr)$, expanded into its component
+    parts.
+    \begin{equation} 
+      \label{eq:multigroup_source_expand}
       -\grad \cdot (D_g(\vr) \grad \phi_g^{(s)}(\vr)) + \Sigma_{r,g}(\vr)
       \phi_g^{(s)}(\vr) = q_{fiss,g}(\vr) + q_{up,g}(\vr) + q_{down,g}(\vr)
     \end{equation}
@@ -1022,6 +1061,9 @@
       \phi_g^{(s+1)}(\vr) = q_{fiss,g}^{(s)}(\vr) + q_{up,g}^{(s)}(\vr) +
       q_{down,g}^{(s+1)}(\vr)
     \end{equation}
+    Therefore, the matrix $\mm$ is not computed but instead, the combined
+    multigroup neutron source $q_g(\vr)$ is updated using an appropriate scalar
+    flux iterate.
 
 \section{Implementation}
   A \gls{fem} neutron diffusion solution has been developed using 
@@ -1167,7 +1209,8 @@
 
     \eref{eq:idx_example} is only an example because the order of the nodes in 
     row 5 is arbitrary. Similarly, a numeric example is provided in 
-    \eref{eq:idx_number} (note that the value ``3'' is arbitrary).
+    \eref{eq:idx_number} (note that the value ``3'' is an arbitrary node 
+    number).
     \begin{equation}
       \label{eq:idx_number}
       \left.
@@ -1237,11 +1280,12 @@
     not have this especially useful property if all the groups were instead
     solved simultaneously. The symmetry condition is straight-forward and is
     observed in the elemental matrix description \eref{eq:matrix_population}.
-    Briefly, $\ma_g^T = \ma_g$ because the elements ${A_{i,j,g,e}=A_{j,i,g,e}}$.
+    Briefly, $\ma_g^T = \ma_g$ because the matrix elements 
+    ${A_{i,j,g,e}=A_{j,i,g,e}}$.
     Positive definiteness is a particularly useful condition but is often
-    difficult to prove. $\ma_g$ is sometimes diagonally dominant for
-    conveniently ordered meshes composed certain elements but generally, the
-    matrix is not diagonally dominant. 
+    difficult to prove. 
+    $\ma_g$ is typically diagonally dominant for structured meshes 
+    but, generally, the matrix is not diagonally dominant. 
     
     A matrix $\ma_h \in \realnn$ is positive definite if
     \begin{equation} \label{eq:positive_definite}
@@ -1296,13 +1340,33 @@
     contrived solutions or in a modified guess-and-check method. The \gls{cg} 
     method is chosen because it requires no \textit{a priori} knowledge and
     produced a solution to the same tolerance in a reduced wall-time without the
-    need for guess-and-check iterations.
-    
+    need for guess-and-check iterations.  
+
     A simple recipe for the \gls{cg} method is replicated in
-    \algorithmref{algorithm:CG} \cite{Kelley1995IterativeEquations}.
+    \algorithmref{algorithm:CG} \cite{Kelley1995IterativeEquations}. 
+    In the $k^{th}$ iteration of the \gls{cg} method, the residual
+    \begin{equation}
+      \label{eq:cg_residual}
+      \vr_k = \vx^* - \vx_k
+    \end{equation}
+    is minimized where $\vx^*$ is the exact solution $x^* = \ma^{-1}b$.
+    The $k^{th}$ Krylov subspace, $\krylov_k$, is 
+    \begin{equation}
+      \label{eq:cg_subspace}
+      \krylov_k = \linspan \left( \vr_0, \ma \, \vr_0, \ldots , 
+        \ma^{k-1} \vr_0\right)
+    \end{equation}
+    for $k \ge 1$.
+    Eventually, the Krylov subspace from \eref{eq:cg_subspace} can be guaranteed
+    to contain the exact solution $\vx^*$ and the \gls{cg} method will converge
+    to the exact solution. It can be shown that, for a rank $N$ linear system, a
+    maximum of $N$ \gls{cg} iterations are required to converge to the exact
+    solution \cite{Kelley1995IterativeEquations}. In practice, \gls{cg} is
+    terminated after some small relative residual, $\epsilon$, is obtained.
+    This termination condition occurs well before the exact solution is obtained.
     
     \begin{algorithm}
-      \caption{\glsentrylong{cg} Method.}
+      \caption{\glsentrylong{cg} Method \cite{Kelley1995IterativeEquations}.}
       \label{algorithm:CG}
       \begin{algorithmic}[1]
         \State $k = 0$
@@ -1328,17 +1392,18 @@
     
     In \algorithmref{algorithm:CG}, $\epsilon$ is a tolerance set by the user 
     and the square of the two-norm is most efficiently replaced by the vector
-    inner-product as in \eref{eq:two_norm_inner}. 
+    inner-product as 
     \begin{equation}
       \label{eq:two_norm_inner}
-      \|\vr\|_2^2 = \vr^{T} \vr
+      \|\vr\|_2^2 = \vr^{T} \vr.
     \end{equation}
-    It is noted that this method requires minimal storage with only four vectors 
-    required ($\vx, \vw, \vp,$ and $\vr$). Additionally, each iteration requries
-    only two scalar products and a single matrix-vector product which proves to
-    be the most computationally expensive \cite{Kelley1995IterativeEquations}.
-    As most of the computational time of the diffusion solutions is spent in the
-    linear system solution, is is crucial that this process be efficient.
+    It is noted that this method requires little storage with only four vectors
+    required ($\vx, \vw, \vp,$ and $\vr$). Additionally, each iteration requires
+    only two scalar products and a single matrix-vector product. The
+    matrix-vector product proves to be the most computationally expensive
+    \cite{Kelley1995IterativeEquations}. As most of the computational time of
+    the diffusion solutions is spent in the linear system solution, is is
+    crucial that this process be efficient.
 
     With the solution of the linear system, the implementation of the \gls{fem}
     to solve the multigroup neutron diffusion problem is completed. Results in 
