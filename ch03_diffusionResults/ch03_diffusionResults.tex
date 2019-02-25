@@ -11,7 +11,7 @@
   is known exactly. 
 
   These comparisons serve as a verification of this implementation of the
-  \gls{fem}. The verificaiton strategy employed in this work is developed by
+  \gls{fem}. The verification strategy employed in this work is developed by
   \textcite{oberkampf}. The first step is ``code verification.'' Code
   verification compares computational results to exact analytic or manufactured
   results. Code verification serves to demonstrate that the code itself is
@@ -21,8 +21,9 @@
   verification compares computational results to benchmark results for the
   intended application of the solver. These benchmarks may have been been
   calculated computationally via another method or may come from experimental
-  data. The data of the standard benchmarks is not exact; but, typically, the
-  benchmark solution has been verified by others previously.
+  data. Whereas analytic solutions are known exactly, the data of benchmarks is 
+  not exact. Typically, the benchmark solution has been verified by others 
+  previously.
 
   \begin{figure}
     \centering
@@ -40,9 +41,9 @@
 
 \section{Error Analysis}
   For all benchmark and analytic problems solved, a convergence study is 
-  presented. Define an error vector $\ve = \phi(\vr) - \phi_{FEM}$ where
-  $\phi_{FEM}$ is the solution to the \gls{fem} system of equations. Then, 
-  error is considered in terms of both \gls{rms} error calculated as 
+  presented. An error vector is defined as $\ve = \phi(\vr) - \phi_{FEM}$ where
+  $\phi_{FEM}$ is the solution to the \gls{fem} system of equations. 
+  The error is then considered in terms of both \gls{rms} error calculated as 
   \begin{equation} 
     \label{eq:rms}
     \text{\gls{rms}}(\ve) = \sqrt{\frac{1}{N} \sum_{i=1}^{N} e_i^2},
@@ -73,13 +74,13 @@
   between existing nodes. Let $i$ be the refinement index and the refinement 
   ratio for a second-order convergent method is 
   \begin{equation}
-    4 = \frac{x^{(i-1)}}{x^{(i)}}
+    4 = \frac{e^{(i-1)}}{e^{(i)}}
   \end{equation}
-  such that for some quantity $x$, the error should theoretically decrease by a
-  factor of four for each refinement. As these are numerical solutions, the 
-  ratio rarely equals exactly four. It is observed that a few refinements are 
-  often necessary before the convergence reaches the asymptotic regime and the 
-  ratio approaches the expected value. This is especially the case when the 
+  such that for some error quantity $e$, the error should theoretically decrease 
+  by a factor of four for each refinement. As these are numerical solutions, the
+  ratio rarely equals exactly four. It is observed that a few refinements are
+  often necessary before the convergence reaches the asymptotic regime and the
+  ratio approaches the expected value. This is especially the case when the
   second derivative is not bounded in problems with heterogeneous materials.
   
   For analytic solutions, the error of the function $\phi(\vr)$ itself can be 
@@ -93,8 +94,9 @@
   For analytic criticality  problems, $\keff$ is also presented and the ratio
   between refinements should assume the expected rate. Though the convergence is
   defined in \eref{eq:error_bound} is for the flux itself, $\keff$ is expected
-  to  converge at the same rate.  $\keff$ error is calculated with
-  \eref{eq:keff_err} in units of percent-mille~\units{\glsentryshort{pcm}}.
+  to  converge at the same rate because $\keff$ is an integral quantity of the
+  flux. $\keff$ error is calculated with \eref{eq:keff_err} in units of
+  percent-mille~\units{\glsentryshort{pcm}}.
   \begin{equation}
     \label{eq:keff_err}
     \keff \; \text{ error } \units{\glsentryshort{pcm}} = (\kref - \keff) 
@@ -102,14 +104,11 @@
   \end{equation}
 
   A summary of benchmark problems used in this chapter is presented in
-  \chref{ap:benchmarks}.  For benchmark problems, only $\keff$ is analyzed and
-  expected to converge at approximately the appropriate rate because the neutron
-  flux solution is not known exactly. However, the magnitude of the error and
-  the convergence rate will both be influenced by the quality of the benchmark.
-  For example, a benchmark that specifies $\keff$ to only a few significant
-  figures cannot be expected to converge to an error smaller than the least
-  significant digit.  When assembly powers were available, these are also
-  presented graphically. 
+  \apref{ap:benchmarks}.  For benchmark problems, only $\keff$ is analyzed and
+  expected to converge to the reference solution. The convergence rate of
+  benchmark problems is not analyzed because the convergence rate is sensitive
+  to the precision of the benchmark and can vary greatly between benchmarks.
+  When assembly powers were available, these are also presented graphically. 
   % this is used to put the key over top of figures. really hacky.
   \def\Put(#1,#2)#3{\leavevmode\makebox(0,0){\put(#1,#2){#3}}}
 
@@ -257,7 +256,9 @@
     $\kref = 0.962188$. The results in \tref{tab:2reg} show that the convergence
     of $\keff$ quickly achieves the expected convergence ratio of four. However,
     the RMS error and maximal norm errors do not appear to be approaching four
-    quickly. This is attributed to the nature of the problem. Recall the
+    quickly. 
+    %  TODO  Palmtag doesn't like this explanation
+    This is attributed to the nature of the problem. Recall the
     statement of the convergence order required a bounded second 
     derivative of the flux as in \eref{eq:error_bound}. The second derivative of
     the flux in this problem is unbounded due to the material discontinuity. It
@@ -301,13 +302,14 @@
     was refined by simply introducing additional nodes at the midpoint between
     existing nodes. With a circular (or curved) boundary, this is not
     acceptable. It is necessary to totally regenerate the mesh for each
-    refinement so that the problem boundary may be better approximated. For
+    refinement so that the problem boundary may be better approximated.  For
     example, if only six nodes were on the problem boundary in the zeroth
-    refinement and the traditional refinement procedure were used, the cylinder 
+    refinement and the traditional refinement procedure were used, the cylinder
     would be approximated as a hexagon throughout the mesh refinement study.
-    This mesh regeneration necessity means that the nodes are moving throughout
-    the domain during refinement process. For an illustration of the nodes
-    moving, see \fref{fig:ch03_circle_meshes}.
+    Therefore, each mesh for the refinement study in \tref{tab:finite_cyl} is
+    independently generated. This mesh regeneration necessity means that the
+    nodes are moving throughout the domain during refinement process. For an
+    illustration of the nodes moving, see \fref{fig:ch03_circle_meshes}.
 
     \begin{figure}
       % figures and matlab script located in apA
@@ -355,20 +357,22 @@
 
 \section{Two-Dimensional Benchmark Solutions}
   \label{sec:two_dimensional_benchmark_solutions}
-  The work presented here was designed simulate nuclear power reactors with
-  special attention to fast reactor applications. However, the solution to the
-  multigroup neutron diffusion equation remains general for all power reactors.
-  In this section, two-dimension nuclear reactor benchmark problems have been
-  examined.  These problems come from existing benchmarks based on hexagonal
-  geometry. Initial refinement is based on six triangles per hexagon and these
-  triangles are split with each refinement. This collection of benchmarks
-  represents various energy group structures, geometries, assembly sizes,
-  boundary conditions, as well as other properties. Data used in these problems
-  is concisely presented in \apref{ap:benchmarks}. Mesh refinement studies are
-  provided and convergence is observed relative to the reference \keff value
-  similar to analytic problems. Recall that the convergence rate and the error
-  of the converged $\keff$ value will both be affected by the quality of the
-  benchmark.
+  The work presented in this section was designed simulate nuclear power
+  reactors with special attention to fast reactor applications.  Though the
+  target application is fast reactors, the general solution of the diffusion
+  equation is applicable to any reactor type to which the diffusion
+  approximation applies. For example, VVER reactors are thermal reactors but
+  have a hexagonal geometry.
+  
+  In this section, two-dimension nuclear reactor benchmark
+  problems have been examined.  These problems come from existing benchmarks
+  based on hexagonal geometry. Initial refinement is based on six triangles per
+  hexagon and these triangles are split with each refinement. This collection of
+  benchmarks represents various energy group structures, geometries, assembly
+  sizes, boundary conditions, as well as other properties. Data used in these
+  problems is concisely presented in \apref{ap:benchmarks}. Mesh refinement
+  studies are provided and convergence is observed relative to the reference
+  \keff value similar to analytic problems. 
   
   \subsection{VVER440}
     Proposed by \textcite{chao} and described in
@@ -397,13 +401,19 @@
         \begin{threeparttable}
           \begin{tabular}{cccc}
             \toprule
-            Refine & $\keff$ & $\keff$ error \units{\glsentryshort{pcm}} & $\keff$ ratio \\
+            %Refine & $\keff$ & $\keff$ error \units{\glsentryshort{pcm}} & $\keff$ ratio \\
+            Refine & $\keff$ & $\keff$ error \units{\glsentryshort{pcm}}\\
             \midrule
+            %\csvreader[
+            %  late after line=\\,
+            %  late after last line=\\,]
+            %  {ch03_diffusionResults/data/vver440.csv}{}
+            %  {\csvcoli & \csvcolvi & \csvcolvii & \csvcolviii}
             \csvreader[
               late after line=\\,
               late after last line=\\,]
               {ch03_diffusionResults/data/vver440.csv}{}
-              {\csvcoli & \csvcolvi & \csvcolvii & \csvcolviii}
+              {\csvcoli & \csvcolvi & \csvcolvii}
             Ref.\tnote{$\dagger$}  & 1.009700 \\
             \bottomrule
           \end{tabular}
@@ -441,13 +451,19 @@
         \begin{threeparttable}
           \begin{tabular}{cccc}
             \toprule
-            Refine & $\keff$ & $\keff$ error \units{\glsentryshort{pcm}} & $\keff$ ratio \\
+            %Refine & $\keff$ & $\keff$ error \units{\glsentryshort{pcm}} & $\keff$ ratio \\
+            Refine & $\keff$ & $\keff$ error \units{\glsentryshort{pcm}}\\
             \midrule
+            %\csvreader[
+            %  late after line=\\,
+            %  late after last line=\\,]
+            %  {ch03_diffusionResults/data/snr.csv}{}
+            %  {\csvcoli & \csvcolvi & \csvcolvii & \csvcolviii}
             \csvreader[
               late after line=\\,
               late after last line=\\,]
               {ch03_diffusionResults/data/snr.csv}{}
-              {\csvcoli & \csvcolvi & \csvcolvii & \csvcolviii}
+              {\csvcoli & \csvcolvi & \csvcolvii}
             Ref. \tnote{$\dagger$} & 1.124 \\
             \bottomrule
           \end{tabular}
@@ -465,7 +481,7 @@
     neutrons. Cross sections are provided for a two-group energy structure.
 
     Power comparison between the most refined mesh and the reference solution
-    are presented graphically in \fref{fig:diffusion_hwr} according to the. A
+    are presented graphically in \fref{fig:diffusion_hwr}. A
     numerical mesh convergence study for the quantity $\keff$ is presented in
     \tref{tab:hwr}.
 
@@ -485,13 +501,19 @@
         \begin{threeparttable}
           \begin{tabular}{cccc}
             \toprule
-            Refine & $\keff$ & $\keff$ error \units{\glsentryshort{pcm}} & $\keff$ ratio \\
+            %Refine & $\keff$ & $\keff$ error \units{\glsentryshort{pcm}} & $\keff$ ratio \\
+            Refine & $\keff$ & $\keff$ error \units{\glsentryshort{pcm}}\\
             \midrule
+            %\csvreader[
+            %  late after line=\\,
+            %  late after last line=\\,]
+            %  {ch03_diffusionResults/data/hwr.csv}{}
+            %  {\csvcoli & \csvcolvi & \csvcolvii & \csvcolviii}
             \csvreader[
               late after line=\\,
               late after last line=\\,]
               {ch03_diffusionResults/data/hwr.csv}{}
-              {\csvcoli & \csvcolvi & \csvcolvii & \csvcolviii}
+              {\csvcoli & \csvcolvi & \csvcolvii}
             Ref.\tnote{$\dagger$} & 0.991965  \\
             \bottomrule
           \end{tabular}
@@ -502,7 +524,7 @@
       \end{center}
     \end{table}
 
-  \subsection{IAEA}
+  \subsection{IAEA Hex}
     Proposed by \textcite{chao} and described in \sref{sec:iaea}, this
     two-dimensional problem was originally based on a two-dimensional \gls{pwr}
     with a Cartesian grid. The benchmark was converted to hexagonal geometry to
@@ -510,7 +532,7 @@
     \gls{pwr} design, the reactor operates principally with a thermal neutron
     spectrum. Cross sections are provided for a two-group energy structure.
 
-    The reactor is presented in four scenarios; both with and without
+    The IAEA Hex reactor is presented in four scenarios; both with and without
     reflective assemblies as well as with albedo boundary condition 
     $\albedo = 0.125$ and $\albedo = 0.5$. Numerical mesh convergence studies
     are presented for the quantity $\keff$ for each case in each of
@@ -520,19 +542,25 @@
     % nore0125
     \begin{table}
       \begin{center}
-        \caption{IAEA Benchmark Convergence Study. No Reflector. $\albedo = 
+        \caption{IAEA Hex Benchmark Convergence Study. No Reflector. $\albedo = 
           0.125$.}
         \label{tab:iaea_nore0125}
         \begin{threeparttable}
           \begin{tabular}{cccc}
             \toprule
+            %Refine & $\keff$ & $\keff$ error \units{\glsentryshort{pcm}} & $\keff$ ratio \\
             Refine & $\keff$ & $\keff$ error \units{\glsentryshort{pcm}} & $\keff$ ratio \\
             \midrule
+            %\csvreader[
+            %  late after line=\\,
+            %  late after last line=\\,]
+            %  {ch03_diffusionResults/data/iaea_nore0125.csv}{}
+            %  {\csvcoli & \csvcolvi & \csvcolvii & \csvcolviii}
             \csvreader[
               late after line=\\,
               late after last line=\\,]
               {ch03_diffusionResults/data/iaea_nore0125.csv}{}
-              {\csvcoli & \csvcolvi & \csvcolvii & \csvcolviii}
+              {\csvcoli & \csvcolvi & \csvcolvii}
             Ref. \tnote{$\dagger$} & 0.991378 \\
             \bottomrule
           \end{tabular}
@@ -546,19 +574,25 @@
     % nore0500
     \begin{table}
       \begin{center}
-        \caption{IAEA Benchmark Convergence Study. No Reflector. $\albedo = 
+        \caption{IAEA Hex Benchmark Convergence Study. No Reflector. $\albedo = 
           0.500$.}
         \label{tab:iaea_nore0500}
         \begin{threeparttable}
           \begin{tabular}{cccc}
             \toprule
-            Refine & $\keff$ & $\keff$ error \units{\glsentryshort{pcm}} & $\keff$ ratio \\
+            %Refine & $\keff$ & $\keff$ error \units{\glsentryshort{pcm}} & $\keff$ ratio \\
+            Refine & $\keff$ & $\keff$ error \units{\glsentryshort{pcm}}\\
             \midrule
+            %\csvreader[
+            %  late after line=\\,
+            %  late after last line=\\,]
+            %  {ch03_diffusionResults/data/iaea_nore0500.csv}{}
+            %  {\csvcoli & \csvcolvi & \csvcolvii & \csvcolviii}
             \csvreader[
               late after line=\\,
               late after last line=\\,]
               {ch03_diffusionResults/data/iaea_nore0500.csv}{}
-              {\csvcoli & \csvcolvi & \csvcolvii & \csvcolviii}
+              {\csvcoli & \csvcolvi & \csvcolvii}
             Ref. \tnote{$\dagger$} & 0.978077 \\
             \bottomrule
           \end{tabular}
@@ -572,19 +606,25 @@
     % refl0125
     \begin{table}
       \begin{center}
-        \caption{IAEA Benchmark Convergence Study. With Reflector. $\albedo = 
+        \caption{IAEA Hex Benchmark Convergence Study. With Reflector. $\albedo = 
           0.125$.}
         \label{tab:iaea_refl0125}
         \begin{threeparttable}
           \begin{tabular}{cccc}
             \toprule
-            Refine & $\keff$ & $\keff$ error \units{\glsentryshort{pcm}} & $\keff$ ratio \\
+            %Refine & $\keff$ & $\keff$ error \units{\glsentryshort{pcm}} & $\keff$ ratio \\
+            Refine & $\keff$ & $\keff$ error \units{\glsentryshort{pcm}}\\
             \midrule
+            %\csvreader[
+            %  late after line=\\,
+            %  late after last line=\\,]
+            %  {ch03_diffusionResults/data/iaea_refl0125.csv}{}
+            %  {\csvcoli & \csvcolvi & \csvcolvii & \csvcolviii}
             \csvreader[
               late after line=\\,
               late after last line=\\,]
               {ch03_diffusionResults/data/iaea_refl0125.csv}{}
-              {\csvcoli & \csvcolvi & \csvcolvii & \csvcolviii}
+              {\csvcoli & \csvcolvi & \csvcolvii}
             Ref. \tnote{$\dagger$} & 1.006630 \\
             \bottomrule
           \end{tabular}
@@ -598,19 +638,25 @@
     % refl0500
     \begin{table}
       \begin{center}
-      \caption{IAEA Benchmark Convergence Study. With Reflector. $\albedo = 
+      \caption{IAEA Hex Benchmark Convergence Study. With Reflector. $\albedo = 
         0.500$.}
       \label{tab:iaea_refl0500}
         \begin{threeparttable}
           \begin{tabular}{cccc}
             \toprule
+            %Refine & $\keff$ & $\keff$ error \units{\glsentryshort{pcm}} & $\keff$ ratio \\
             Refine & $\keff$ & $\keff$ error \units{\glsentryshort{pcm}} & $\keff$ ratio \\
             \midrule
+            %\csvreader[
+            %  late after line=\\,
+            %  late after last line=\\,]
+            %  {ch03_diffusionResults/data/iaea_refl0500.csv}{}
+            %  {\csvcoli & \csvcolvi & \csvcolvii & \csvcolviii}
             \csvreader[
               late after line=\\,
               late after last line=\\,]
               {ch03_diffusionResults/data/iaea_refl0500.csv}{}
-              {\csvcoli & \csvcolvi & \csvcolvii & \csvcolviii}
+              {\csvcoli & \csvcolvi & \csvcolvii}
             Ref. \tnote{$\dagger$} & 1.005507 \\
             \bottomrule
           \end{tabular}
@@ -690,7 +736,7 @@
   \subsection{KNK}
     Proposed by \textcite{takedaBenchmark} and described in \sref{sec:knk}, this
     three-dimension benchmark problem is based on an \gls{sfr} and is a model of
-    the KNK-II core. Cross sections are provided for a four-group energy
+    the KNK-II core. Cross sections are provided in a four-group energy
     structure. There are many materials specified in the problem so it also aids
     in testing material mapping in the code.  The reference data is for a
     solution to the neutron \textit{transport} equation. In this work, the cross
