@@ -786,9 +786,9 @@
   coefficients \eref{eq:2reg_c1r} and \eref{eq:2reg_c2r_b}.
   \begin{align}
     \phi_F(x) &= \phi_0 \, \cos(B_F \, x) \\
-    \phi_R(x) &= \phi_0 \, \cos(B_F \, L_F) \, \cosh(\kappa_R \, (x-L_F)) - 
-      \frac{\phi_0 \, D_F \, B_F \, \sin(B_F\,L_F)}{D_R \, \kappa_R} \, 
-      \sinh(\kappa_R\,(x-L_F)) \\
+    \phi_R(x) &= \phi_0 \, \cos(B_F \, L_F) \, \left(
+      \cosh(\kappa_R \, (x-L_F)) - \frac{\sinh(\kappa_R
+      (x-L_F))}{\tanh(\kappa_R(L_R-L_F))} \right) \\
     \label{eq:analytic_2reg}
     %\phi(x) &= H(x-L_F) \, \phi_R(x) + H(L_F-x) \, \phi_F(x)
     \phi(x) &=
