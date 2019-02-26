@@ -10,8 +10,8 @@
   heat conduction models are used to estimate reactor material temperatures
   (\chref{ch:thermalHydraulics}).  Simplified thermal expansion modeling is used
   to model reactor dimensions (\chref{ch:thermalExpansion}). Combined, these
-  modeled multiphysics effects will provide feedback which can be estimated in
-  the model. 
+  multiphysics effects will provide feedback which can be estimated in a
+  realistic core model.
   
   To test the coupling of these models, a realistic reactor benchmark is
   provided and modeled in \sref{sec:abr}. Reactivity coefficients describing 
@@ -25,37 +25,60 @@
   fuel and has a 1,000 \units{MWth} rating; hence, MET-1000. This is a
   medium-sized, metallic-fueled reactor with a total of 180 hexagonal assemblies
   and is 4.8 \units{m} tall.  The benchmark is fully specified and thirty-one
-  independent results are submitted. Compared to other reactors modeled, this
-  model is extremely large due to the large structural components included above
-  and below the active fuel region.
+  independent results have been submitted so far. Compared to other benchmark
+  problems modeled in this thesis, this model is extremely large due to the
+  large structural components included above and below the active fuel region.
   
   Each submission to the benchmark uses independently generated cross sections
-  from several different cross section libraries (e.g. ENDFB7.0, JEFF3.1, etc.).
-  Therefore, using this benchmark as a verification problem is not feasible.
-  Instead, cross sections were generated for this model using \mcc and the
+  from several different cross section libraries (e.g. ENDF/B-VII.0, JEFF3.1,
+  etc.). Therefore, using this benchmark as a verification problem is not
+  feasible. Cross sections were generated for this model using \mcc and the 
   procedure outlined in \sref{sec:cross_section_treatment}. This procedure
   resulted in temperature-dependent cross section libraries with 33 energy
-  groups. The multigroup neutron diffusion equation is solved using these same
-  cross sections using both \dif and the \gls{fem} solution from
-  \chref{ch:neutronDiffusion}. \dif and the \gls{fem}, using the same cross
-  sections, agree to within 700 \units{\glsentryshort{\glsentryshort{pcm}}}. The
-  \dif and \gls{fem} models were minimally refined. A more formal refinement
-  study would presumably show further error reduction. 
+  groups. 
+  
+  To verify the \gls{fem} model, the multigroup neutron diffusion equation is
+  solved with the same cross sections using\dif and the \gls{fem}
+  solution from \chref{ch:neutronDiffusion}. In this verification, cross
+  sections are fixed at the value associated with nominal reactor temperatures
+  and multiphysics feedback is disabled, as \dif has no multiphysics
+  capabilities. \dif and the \gls{fem}, using the same cross sections, agree to
+  692 \units{\glsentryshort{\glsentryshort{pcm}}}. The \dif and \gls{fem}
+  models were minimally refined. An unrefined case was run with six triangles
+  per hexagon and 80 axial elevations, implying a wedge height of
+  $6~\units{cm}$. This unrefined model had a total of 30,320 elements. The
+  model was then spatially refined with 24 triangles per hexagon and 160 axial
+  elevations, implying a wedge height of $3~\units{cm}$. The once refined model
+  had a total of 242,560 elements. Results from this brief verification study
+  are presented in \tref{tab:abr_benchmark}. A more formal mesh refinement study 
+  would presumably show further error reduction. 
+
+  \begin{table}
+    \begin{center}
+      \caption{\glsentrylong{abr} Refinement Results.}
+      \label{tab:abr_benchmark}
+      \begin{tabular}{cccc}
+        \toprule
+        Refinement & \dif $\keff$ & \gls{fem} $\keff$ & Difference
+          \units{\glsentryshort{pcm}}\\
+        \midrule
+        0 & 1.017906 & 0.999339 & 1856.7 \\
+        1 & 1.013614 & 1.006694 & 692.0 \\
+        \bottomrule
+      \end{tabular}
+    \end{center}
+  \end{table}
   
   Reactor materials in the benchmark are shown in \fref{fig:abr_materials}.
-  To allow for intuitive flux visualization, the 33-group energy structure is
-  collapsed to a two-group energy structure. The collapsed fast ($\phi_1$) and
-  collapsed thermal ($\phi_2$) are plotted in \fref{fig:abr_fluxes}.  Note, all
-  subsequent results are presented with the full 33-group energy structure. Fast
-  flux is shown to peak in the center of the core in the active fuel region.
-  Thermal flux is shown to peak in core structural material, at the periphery of
-  the active fuel region, as well as in control rod locations where the control
-  rods have been withdrawn from the active fuel region.
-
-  Multiphysics results for this benchmark have not been published. Therefore,
-  the coupled results are not compared to reference results. Instead, each of
-  the multiphysics models has been investigated individually in the preceding
-  chapters. 
+  For the sole purpose of intuitive flux visualization, the 33-group energy
+  structure is collapsed to a two-group energy structure. The collapsed fast
+  ($\phi_1$) and collapsed thermal ($\phi_2$) are plotted in
+  \fref{fig:abr_fluxes}. Note, all subsequent results presented are generated
+  with the full 33-group energy structure. Fast flux is shown to peak in the
+  center of the core in the active fuel region. Thermal flux is shown to peak
+  in core structural material, at the periphery of the active fuel region, as
+  well as in control rod locations where the control rods have been withdrawn
+  from the active fuel region.
 
   \begin{figure}
     \centering
@@ -74,6 +97,11 @@
     \caption{Fast and Thermal Neutron Flux in \glsentryshort{abr}.}
     \label{fig:abr_fluxes}
   \end{figure}
+
+  Multiphysics results for this benchmark have not been published. Therefore,
+  the coupled results are not compared to reference results. Instead, each of
+  the multiphysics models has been investigated individually in the preceding
+  chapters. 
 
 \section{Reactivity Coefficients}
 \label{sec:reactivity_coefficients}
@@ -139,8 +167,7 @@
       \alpha_{power}(Q_{Rx,i}) = \frac{\rho(Q_{Rx,i}) - \rho(Q_{Rx,i} + 
         \Delta Q_{Rx})} {\Delta Q_{Rx}}.
     \end{equation}
-    A typical value of $\Delta Q_{Rx}$ is $10\% Q_{Rx,i}$.
-    % $10\% \, Q_{Rx,i}$.
+    A typical value of $\Delta Q_{Rx}$ is $5\% Q_{Rx}$.
 
   \subsection{Thermal Expansion Reactivity Coefficient}
   \label{sec:thermal_expansion_reactivity_coefficent}
@@ -149,20 +176,8 @@
     power. It is expected that thermal expansion will be the dominant 
     contribution to the power reactivity coefficient in fast reactors. This is 
     due to two main reasons: the significant thermal expansion of metal fuels at
-    high temperature (see \chref{ch:thermalExpansion}) and the large neutron
-    leakage fraction (\leakage) in fast reactors \cite{PlentifulEnergy}. The
-    leakage fraction is the fraction of neutrons created in the fuel due to
-    fission that exit the core. The leakage fraction can be expressed as
-    \begin{equation}
-      \label{eq:leakage}
-      \leakage = \frac{k_{\infty}}{\keff}
-    \end{equation}
-    where $k_{\infty}$ is the effective neutron multiplication factor for an
-    infinite medium. \glspl{lwr} typically have low and ultra-low leakage
-    designs with $\leakage \approx 2 \%$ \cite{textbookknief}. However, fast
-    reactors simulated in this work have $\leakage \approx 20\%$ and are
-    therefore highly sensitive to decreases in fuel density and changing reactor
-    dimensions due to thermal expansion.
+    high temperature  and the large neutron leakage fraction ($\leakage \approx
+    20\%$) in fast reactors (see \chref{ch:thermalExpansion}).
 
     Thermal expansion temperatures, \texpfuel and \texpstruct, as implemented in
     \chref{ch:thermalExpansion} must be known before the simulation. Note from
@@ -184,8 +199,7 @@
     thermal expansion temperatures for power $Q_{Rx,i} + \Delta Q_{Rx}$. Note
     that in \eref{eq:thermal_expansion_reactivity_coefficient}, only thermal
     expansion temperatures are changed, not the true reactor power $Q_{Rx}$.
-    A typical value of $\Delta Q_{Rx}$ is $10\% Q_{Rx,i}$.
-    %$10\% \, Q_{Rx,i}$.
+    A typical value of $\Delta Q_{Rx}$ is $5\% Q_{Rx}$.
 
   \subsection{Fuel Temperature Reactivity Coefficient}
   \label{sec:fuel_temperature_reactivity_coefficient}
@@ -210,7 +224,7 @@
         \Delta T_{fuel})} {\Delta T_{fuel}}
     \end{equation}
     Note that the Doppler reactivity coefficient is always negative. A typical
-    value of $\Delta T_{fuel}$ is $20\units{K}$. The definition in
+    value of $\Delta T_{fuel}$ is $5~\units{K}$. The definition in
     \eref{eq:doppler_reactivity_coefficient} is a \textit{uniform} Doppler
     coefficient as opposed to a \textit{distributed} Doppler coefficient because
     temperatures are increased uniformly throughout the reactor.
@@ -250,7 +264,7 @@
       \alpha_{CTC}(Q_{Rx,i}) = \frac{\rho(Q_{Rx,i}) - \rho(T_{cool} + 
         \Delta T_{cool})} {\Delta T_{cool}}
     \end{equation}
-    A typical value for $\Delta T_{cool}$ is $50 \units{K}$.
+    A typical value for $\Delta T_{cool}$ is $5~\units{K}$.
 
 \section{Results}
 \label{sec:results}
@@ -258,8 +272,7 @@
   modeled for this reactor. The methodology and formulae from
   \sref{sec:reactivity_coefficients} are used. The reactor $\keff$ as a function
   of reactor power is plotted in \fref{fig:keff_effects}. Note $\keff$ decreases
-  as power increases and the $\keff$ for the case with increased coolant
-  temperature is higher than all other $\keff$.
+  as power increases implying a negative power coefficient.
   
   The reactivity coefficients themselves are plotted in
   \fref{fig:abr_reactivity_coefficients}. The combined power reactivity
@@ -302,4 +315,49 @@
       \label{fig:coolant_temperature_reactivity_coefficient}}
     \caption{\gls{abr} Reactivity Coefficients.}
     \label{fig:abr_reactivity_coefficients}
+  \end{figure}
+
+  While the data presented in \fref{fig:abr_reactivity_coefficients} shows the
+  trends of multiphysics feedback, quantitative results can also be obtained.
+  The \gls{abr} benchmark presents an estimate for a Doppler coefficient $K_D$.
+  The Doppler coefficient is defined as 
+  \begin{equation}
+    \label{eq:doppler_coefficient}
+    K_D (Q_{Rx,i}) = \frac{\rho(T_{fuel} + \Delta T_{fuel}) - \rho(Q_{Rx,i})}
+      {\ln\left(1 + \frac{\Delta T_{fuel}}{T_{fuel}}\right)}.
+  \end{equation}
+  Note that \eref{eq:doppler_coefficient} can be calculated from data already
+  plotted in \fref{fig:abr_reactivity_coefficients}. Using the previously
+  calculated values, it is estimated that the full power Doppler coefficient,
+  $K_D(100\%)$, is $-306.86~\units{\glsentryshort{pcm}}$. The Doppler
+  Coefficient is plotted as a function of reactor power in
+  \fref{fig:doppler_coefficient}. In the \gls{abr} benchmark, a simplified
+  method is used to calculate the Doppler coefficient because the solutions
+  submitted lacked the ability to simulate thermal feedback.  The \gls{abr}
+  benchmark submissions estimate $K_D(100\%) =
+  -347\pm44~\units{\glsentryshort{pcm}}$ \cite{abr}.  These estimates agree to
+  within the tolerance of the models and indicate that basic multiphysics
+  effects are modeled appropriately.
+
+  \begin{table}
+    \begin{center}
+      \caption{Doppler Coefficient Results.}
+      \label{tab:doppler_coefficient}
+      \begin{tabular}{cl}
+        \toprule
+        Reactor and Method & $K_D(100\%)$ \units{\glsentryshort{pcm}}\\
+        \midrule
+        \gls{abr} with \gls{fem} & -306.86 \\
+        \gls{abr} Benchmark & -347 $\pm$ 44\\
+        PRISM &  -412.4 \\
+        \bottomrule
+      \end{tabular}
+    \end{center}
+  \end{table}
+
+  \begin{figure}
+    \centering
+    \includegraphics[width=0.7\textwidth]{doppler_coefficient}
+    \caption{\gls{abr} Doppler Coefficient for Benchmark Comparison.}
+    \label{fig:doppler_coefficient}
   \end{figure}

@@ -141,6 +141,7 @@ set(gca,'FontName',FN,'FontSize',FS)
 print(gcf,'../figs/alpha_cool.eps','-depsc2')
 close(gcf)
 
+%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % DOLLAR CALCULATION
 % These calculations have no reference.... :(
@@ -164,3 +165,19 @@ fprintf('all_worth   = $%.2f\n',all_worth);
 fprintf('thexp_worth = $%.2f\n',thexp_worth);
 fprintf('fuel_worth  = $%.2f\n',fuel_worth);
 fprintf('cool_worth  = $%.2f\n',cool_worth);
+
+tfuel_avg = temperature_avg(:,1);
+KDoppler = (keff(:,3)-keff(:,1))./log((tfuel_avg(:)+50)./tfuel_avg(:))*1e5;
+
+figure
+h = plot(power,KDoppler,'-o','LineWidth',LW);
+set(h,'MarkerFaceColor',get(h,'Color'));
+xlabel('% Power');
+ylabel('Doppler Coefficient  K_D');
+title('Doppler Coefficient for ABR');
+set(gca,'FontName',FN,'FontSize',FS);
+print(gcf,'../figs/doppler_coefficient.eps','-depsc2');
+close(gcf)
+
+
+fprintf('KDoppler(end) = %.2f\n',KDoppler(end));
