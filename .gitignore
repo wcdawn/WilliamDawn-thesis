@@ -16,6 +16,10 @@
 # vim tmp files
 **.swp
 
+# matlab tmp files
+**.m~
+**.asv
+
 # glossaries files
 *.acn
 *.acr
