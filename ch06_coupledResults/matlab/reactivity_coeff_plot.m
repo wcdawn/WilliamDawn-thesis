@@ -47,13 +47,21 @@ end
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
+MS = 10;
+LWs = 1;
 % plot keff figure
 figure
 hold on
-for i = 1:nCondition
-    h = plot(power,keff(:,i),'-o','LineWidth',LW);
-    set(h, 'MarkerFaceColor', get(h, 'Color'));
-end
+hfirst = plot(power,keff(:,1),'-o','LineWidth',LW);
+set(hfirst, 'MarkerFaceColor', get(hfirst, 'Color'));
+h = plot(power,keff(:,2),'s','LineWidth',LWs,'MarkerSize',MS);
+set(h, 'MarkerFaceColor', get(h, 'Color'));
+h = plot(power,keff(:,3),'^','LineWidth',LWs,'MarkerSize',8);
+set(h, 'MarkerFaceColor', get(h, 'Color'));
+h = plot(power,keff(:,4),'p','LineWidth',LWs,'MarkerSize',MS);
+set(h, 'MarkerFaceColor', get(h, 'Color'));
+h = plot(power,keff(:,5),'x','LineWidth',2,'MarkerSize',MS);
+set(h, 'MarkerFaceColor', get(h, 'Color'));
 hold off
 xlim([0,100])
 xlabel('% Power')
@@ -132,3 +140,27 @@ title('Coolant Temperature Reactivity Coefficient')
 set(gca,'FontName',FN,'FontSize',FS)
 print(gcf,'../figs/alpha_cool.eps','-depsc2')
 close(gcf)
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% DOLLAR CALCULATION
+% These calculations have no reference.... :(
+
+all_worth   = (keff(1,1)-keff(nPower,1))/(keff(1,1)*keff(nPower,1))*1e5;
+thexp_worth = (keff(1,3)-keff(nPower,1))/(keff(1,3)*keff(nPower,1))*1e5;
+fuel_worth  = (keff(1,4)-keff(nPower,1))/(keff(1,4)*keff(nPower,1))*1e5;
+cool_worth  = (keff(1,5)-keff(nPower,1))/(keff(1,5)*keff(nPower,1))*1e5;
+fprintf('all_worth   = %.2f [pcm] \n',all_worth);
+fprintf('thexp_worth = %.2f [pcm] \n',thexp_worth);
+fprintf('fuel_worth  = %.2f [pcm] \n',fuel_worth);
+fprintf('cool_worth  = %.2f [pcm] \n',cool_worth);
+
+beta_eff = 0.00330*1d5; % 330 [pcm] % from MET-1000 benchmark
+all_worth   = all_worth   / beta_eff;
+thexp_worth = thexp_worth / beta_eff;
+fuel_worth  = fuel_worth  / beta_eff;
+cool_worth  = cool_worth  / beta_eff;
+
+fprintf('all_worth   = $%.2f\n',all_worth);
+fprintf('thexp_worth = $%.2f\n',thexp_worth);
+fprintf('fuel_worth  = $%.2f\n',fuel_worth);
+fprintf('cool_worth  = $%.2f\n',cool_worth);
