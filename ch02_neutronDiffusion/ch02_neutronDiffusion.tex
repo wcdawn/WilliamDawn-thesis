@@ -1079,7 +1079,18 @@
   factor, $\keff$, is written to an output file. The multigroup neutron flux is
   written to a different results VTK file for easy visualization. In a
   multiphysics simulation, material temperatures and thermal expansion
-  dimensions are also written to the results VTK.
+  dimensions are also written to the results VTK. Examples of fast neutron flux
+  visualized in the results VTK are shown in \fref{fig:flux_visualization} for
+  two-dimensional and three-dimensional reactor simulations.
+
+  \begin{figure}
+    \centering
+    \subfloat[Two-Dimensional, Sixth-Core Simulation.]{\includegraphics[width=0.40\textwidth]{snr_paraview}}
+    \subfloat[Three-Dimensional, Full-Core Simulation.]{\includegraphics[width=0.40\textwidth]{monju3da_paraview}}
+    \caption{Typical Fast Flux Visualization for Two-Dimensional and
+      Three-Dimensional Simulations.}
+    \label{fig:flux_visualization}
+  \end{figure}
 
   \subsection{Algorithm}
     The algorithm for the solution to the diffusion equation is similar to most
