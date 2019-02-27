@@ -317,47 +317,46 @@
     \label{fig:abr_reactivity_coefficients}
   \end{figure}
 
-  While the data presented in \fref{fig:abr_reactivity_coefficients} shows the
-  trends of multiphysics feedback, quantitative results can also be obtained.
-  The \gls{abr} benchmark presents an estimate for a Doppler coefficient $K_D$.
-  The Doppler coefficient is defined as 
-  \begin{equation}
-    \label{eq:doppler_coefficient}
-    K_D (Q_{Rx,i}) = \frac{\rho(T_{fuel} + \Delta T_{fuel}) - \rho(Q_{Rx,i})}
-      {\ln\left(1 + \frac{\Delta T_{fuel}}{T_{fuel}}\right)}.
-  \end{equation}
-  Note that \eref{eq:doppler_coefficient} can be calculated from data already
-  plotted in \fref{fig:abr_reactivity_coefficients}. Using the previously
-  calculated values, it is estimated that the full power Doppler coefficient,
-  $K_D(100\%)$, is $-306.86~\units{\glsentryshort{pcm}}$. The Doppler
-  Coefficient is plotted as a function of reactor power in
-  \fref{fig:doppler_coefficient}. In the \gls{abr} benchmark, a simplified
-  method is used to calculate the Doppler coefficient because the solutions
-  submitted lacked the ability to simulate thermal feedback.  The \gls{abr}
-  benchmark submissions estimate $K_D(100\%) =
-  -347\pm44~\units{\glsentryshort{pcm}}$ \cite{abr}.  These estimates agree to
-  within the tolerance of the models and indicate that basic multiphysics
-  effects are modeled appropriately.
+  %While the data presented in \fref{fig:abr_reactivity_coefficients} shows the
+  %trends of multiphysics feedback, quantitative results can also be obtained.
+  %The \gls{abr} benchmark presents an estimate for a Doppler coefficient $K_D$.
+  %The Doppler coefficient is defined as 
+  %\begin{equation}
+  %  \label{eq:doppler_coefficient}
+  %  K_D (Q_{Rx,i}) = \frac{\rho(T_{fuel} + \Delta T_{fuel}) - \rho(Q_{Rx,i})}
+  %    {\ln\left(1 + \frac{\Delta T_{fuel}}{T_{fuel}}\right)}.
+  %\end{equation}
+  %Note that \eref{eq:doppler_coefficient} can be calculated from data already
+  %plotted in \fref{fig:abr_reactivity_coefficients}. Using the previously
+  %calculated values, it is estimated that the full power Doppler coefficient,
+  %$K_D(100\%)$, is $-306.86~\units{\glsentryshort{pcm}}$. The Doppler
+  %Coefficient is plotted as a function of reactor power in
+  %\fref{fig:doppler_coefficient}. In the \gls{abr} benchmark, a simplified
+  %method is used to calculate the Doppler coefficient because the solutions
+  %submitted lacked the ability to simulate thermal feedback.  The \gls{abr}
+  %benchmark submissions estimate $K_D(100\%) =
+  %-347\pm44~\units{\glsentryshort{pcm}}$ \cite{abr}.  These estimates agree to
+  %within the tolerance of the models and indicate that basic multiphysics
+  %effects are modeled appropriately.
 
-  \begin{table}
-    \begin{center}
-      \caption{Doppler Coefficient Results.}
-      \label{tab:doppler_coefficient}
-      \begin{tabular}{cl}
-        \toprule
-        Reactor and Method & $K_D(100\%)$ \units{\glsentryshort{pcm}}\\
-        \midrule
-        \gls{abr} with \gls{fem} & -306.86 \\
-        \gls{abr} Benchmark & -347 $\pm$ 44\\
-        PRISM &  -412.4 \\
-        \bottomrule
-      \end{tabular}
-    \end{center}
-  \end{table}
+  %\begin{table}
+  %  \begin{center}
+  %    \caption{Doppler Coefficient Results.}
+  %    \label{tab:doppler_coefficient}
+  %    \begin{tabular}{cl}
+  %      \toprule
+  %      Reactor and Method & $K_D(100\%)$ \units{\glsentryshort{pcm}}\\
+  %      \midrule
+  %      \gls{abr} with \gls{fem} & -306.86 \\
+  %      \gls{abr} Benchmark & -347 $\pm$ 44\\
+  %      \bottomrule
+  %    \end{tabular}
+  %  \end{center}
+  %\end{table}
 
-  \begin{figure}
-    \centering
-    \includegraphics[width=0.7\textwidth]{doppler_coefficient}
-    \caption{\gls{abr} Doppler Coefficient for Benchmark Comparison.}
-    \label{fig:doppler_coefficient}
-  \end{figure}
+  %\begin{figure}
+  %  \centering
+  %  \includegraphics[width=0.7\textwidth]{doppler_coefficient}
+  %  \caption{\gls{abr} Doppler Coefficient for Benchmark Comparison.}
+  %  \label{fig:doppler_coefficient}
+  %\end{figure}

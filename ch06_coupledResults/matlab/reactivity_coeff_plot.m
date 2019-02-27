@@ -1,18 +1,18 @@
 clear
 close all
 
-fname = '../data/reactivity_study.csv';
+fname = '../data/reactivity_study_smallDelta.csv';
 LW = 2;
 FN = 'Times New Roman';
 FS = 12;
-fuelfudge = 20.; % [K]
-coolfudge = 50.; % [K]
-powerfudge = 10.; % [%]
+fuelfudge = 5.; % [K]
+coolfudge = 5.; % [K]
+powerfudge = 5.; % [%]
 
 % [power, tfuel_avg, tclad_avg, tcool_avg, k_ref, k_perturb_power,
 %    k_perturb_thexp, fuelfudge, coolfudge]
 data = csvread(fname);
-data(size(data,1),:) = [];
+% data(size(data,1),:) = [];
 
 % parse data
 nPower = size(data,1);
@@ -167,7 +167,7 @@ fprintf('fuel_worth  = $%.2f\n',fuel_worth);
 fprintf('cool_worth  = $%.2f\n',cool_worth);
 
 tfuel_avg = temperature_avg(:,1);
-KDoppler = (keff(:,3)-keff(:,1))./log((tfuel_avg(:)+50)./tfuel_avg(:))*1e5;
+KDoppler = (keff(:,3)-keff(:,1))./log(1+20./tfuel_avg)*1e5;
 
 figure
 h = plot(power,KDoppler,'-o','LineWidth',LW);
