@@ -44,7 +44,9 @@ c2r = -(D_F*c1f*B_F*sin(B_F*LF))/(D_R*B_R); % dictated current continuity
 
 % generic form of flux solutions
 fuel = @(x)(c1f*cos(B_F*x)+c2f*sin(B_F*x));
-refl = @(x)(c1r*cosh(B_R*(x-LF))+c2r*sinh(B_R*(x-LF)));
+% refl = @(x)(c1r*cosh(B_R*(x-LF))+c2r*sinh(B_R*(x-LF)));
+refl = @(x)(c1f*cos(B_F*LF)*(cosh(B_R*(x-LF)) - ...
+    sinh(B_R*(x-LF))/tanh(B_R*(LR-LF))))j;
 % use the Heaviside function to switch materials
 fun = @(x)(fuel(x)*heaviside(LF-x)+refl(x)*heaviside(x-LF));
 
