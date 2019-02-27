@@ -46,7 +46,7 @@ c2r = -(D_F*c1f*B_F*sin(B_F*LF))/(D_R*B_R); % dictated current continuity
 fuel = @(x)(c1f*cos(B_F*x)+c2f*sin(B_F*x));
 % refl = @(x)(c1r*cosh(B_R*(x-LF))+c2r*sinh(B_R*(x-LF)));
 refl = @(x)(c1f*cos(B_F*LF)*(cosh(B_R*(x-LF)) - ...
-    sinh(B_R*(x-LF))/tanh(B_R*(LR-LF))))j;
+    sinh(B_R*(x-LF))/tanh(B_R*(LR-LF))));
 % use the Heaviside function to switch materials
 fun = @(x)(fuel(x)*heaviside(LF-x)+refl(x)*heaviside(x-LF));
 
@@ -57,17 +57,16 @@ for i = 1:ntest
 end
 
 figure
-hold on
-title('One-Dimension, One-Group, Two Region, Criticality');
 plot(xtest,ytest,'LineWidth',LW);
-ylim([0,1])
+hold on
 plot([LF LF],ylim(),'k','LineWidth',1)
 text(0.5*LF,0.5,'Fuel','FontSize',FZ,'FontName','Times New Roman');
 text(0.5*(LF+LR),0.5,'Reflector','FontSize',FZ,'FontName','Times New Roman');
+hold off
+title('One-Dimension, One-Group, Two Region, Criticality');
+ylim([0,1])
 xlabel('x [cm]');
 ylabel('\phi(x)');
-hold off
-
 set(gca,'FontName','Times New Roman','FontSize',12);
 print('../figs/2reg.eps','-depsc2');
 close(gcf)
