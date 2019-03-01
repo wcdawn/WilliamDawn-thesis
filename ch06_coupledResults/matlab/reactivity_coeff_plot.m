@@ -167,7 +167,7 @@ fprintf('fuel_worth  = $%.2f\n',fuel_worth);
 fprintf('cool_worth  = $%.2f\n',cool_worth);
 
 tfuel_avg = temperature_avg(:,1);
-KDoppler = (keff(:,3)-keff(:,1))./log(1+fuelfudge/tfuel_avg)*1e5;
+KDoppler = (keff(:,3)-keff(:,1))./log(1+fuelfudge./tfuel_avg)*1e5;
 
 figure
 h = plot(power,KDoppler,'-o','LineWidth',LW);
