@@ -594,7 +594,7 @@
     \end{center}
   \end{table}
 
-\section{One-Dimension, One-Group, Two Region, Criticality}
+\section{One-Dimension, One-Group, Two-Region, Criticality}
   \label{sec:deriv_2reg}
   This one-dimensional problem is meant to simulate a reactor with non-fissile,
   reflective material at the edge of the reactor. The purpose of this problem is
@@ -628,7 +628,7 @@
   \begin{figure}
     \centering
     \includegraphics[width=0.5\textwidth]{2reg_geom}
-    \caption{Geometry for Two Region Problem.}
+    \caption{Geometry for Two-Region Problem.}
     \label{fig:2reg_geom}
   \end{figure}
 
@@ -808,18 +808,18 @@
 %    \end{cases}
 %  \end{equation}
 %
-  For $L_F = 50 \units{cm}$ and $L_F = 100 \units{cm}$ and material cross
+  For $L_F = 80 \units{cm}$ and $L_R = 100 \units{cm}$ and material cross
   sections given in \tref{tab:2reg_constants}, the following are solutions. Note
   $B_F$ is given to approximately machine precision (16 significant digits) as
   the solution is particularly sensitive to this value. Additionally, a flux
   shape is shown in \fref{fig:2reg}.
   \begin{align}
-    B_F &= 0.0255922048213879 \units{$\frac{1}{\text{cm}}$} \\
-    \keff &= 0.962188
+    B_F &= 0.0171685973659098101 \units{$\frac{1}{\text{cm}}$} \\
+    \keff &= 0.982622
   \end{align}
 
   \begin{table}
-    \caption{Two Region Material Constants.}
+    \caption{Two-Region Material Constants.}
     \label{tab:2reg_constants}
     \begin{center}
       \begin{tabular}{crr}
@@ -837,7 +837,7 @@
   \begin{figure}
     \centering
     \includegraphics[width=0.7\textwidth]{2reg}
-    \caption{Two Region Flux Shape.}
+    \caption{Two-Region Flux Shape.}
     \label{fig:2reg}
   \end{figure}
 

@@ -8,7 +8,7 @@ close all
 
 % pseudo input
 % geometry
-LF = 50; % switch material
+LF = 80; % switch material
 LR = 100; % end of problem
 ntest = 200;
 LW = 2;
@@ -31,10 +31,9 @@ rhs = (D_R*B_R)/(tanh(B_R*(LR-LF)));
 B_F = vpasolve(lhs==rhs,x,[0,0.03]);
 B_F = double(B_F);
 
-% B_F = binarySearch(lhs,rhs,lo,hi,1e-17);
 keff = nuS_fF/(B_F^2*D_F+S_rF);
-fprintf('B_F  = %.16f\n',B_F);
-fprintf('keff = %.16f\n',keff);
+fprintf('B_F  = %.19f\n',B_F);
+fprintf('keff = %.6f\n',keff);
 
 % begin at 0
 c1f = 1; % arbitrary
@@ -61,7 +60,7 @@ plot(xtest,ytest,'LineWidth',LW);
 hold on
 plot([LF LF],ylim(),'k','LineWidth',1)
 text(0.5*LF,0.5,'Fuel','FontSize',FZ,'FontName','Times New Roman');
-text(0.5*(LF+LR),0.5,'Reflector','FontSize',FZ,'FontName','Times New Roman');
+text(LF+0.1*(LR-LF),0.5,'Reflector','FontSize',FZ,'FontName','Times New Roman');
 hold off
 title('One-Dimension, One-Group, Two Region, Criticality');
 ylim([0,1])

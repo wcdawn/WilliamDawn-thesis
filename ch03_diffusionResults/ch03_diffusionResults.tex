@@ -239,17 +239,7 @@
     The exact solution is derived in \sref{sec:deriv_2reg} and presented in
     \eref{eq:analytic_2reg}. Results from the convergence study are presented in
     \tref{tab:2reg}. The exact value for the effective multiplication factor is
-    $\kref = 0.962188$. The results in \tref{tab:2reg} show that the convergence
-    of $\keff$ quickly achieves the expected convergence ratio of four. However,
-    the RMS error and maximal norm errors do not appear to be approaching four
-    quickly. 
-    %  TODO  Palmtag doesn't like this explanation
-    This is attributed to the nature of the problem. Recall the
-    statement of the convergence order required a bounded second 
-    derivative of the flux as in \eref{eq:error_bound}. The second derivative of
-    the flux in this problem is unbounded due to the material discontinuity. It
-    is observed that the maximum error occurs at the change of material
-    properties.
+    $\kref = 0.982622$.
 
     \begin{table}
       \caption{One-Dimension, One-Group, Two-Region, Criticality Convergence
@@ -267,7 +257,7 @@
             {ch03_diffusionResults/data/2reg.csv}{}
             {\csvcoli & \csvcolii & \csvcoliii & \csvcoliv & \csvcolv & 
             \csvcolvi & \csvcolxi & \csvcolxii}
-          Ref. & 0.962188 \\
+          Ref. & 0.982622 \\
           \bottomrule
         \end{tabular}
       \end{center}

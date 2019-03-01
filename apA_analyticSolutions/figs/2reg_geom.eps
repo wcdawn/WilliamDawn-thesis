@@ -1,9 +1,9 @@
 %!PS-Adobe-3.0 EPSF-3.0
-%%Creator: (MATLAB, The Mathworks, Inc. Version 9.2.0.556344 \(R2017a\). Operating System: Windows 8)
+%%Creator: (MATLAB, The Mathworks, Inc. Version 9.4.0.813654 \(R2018a\). Operating System: Linux)
 %%Title: ../figs/2reg_geom.eps
-%%CreationDate: 2018-11-20T21:26:11
+%%CreationDate: 2019-03-01T16:48:46
 %%Pages: (atend)
-%%BoundingBox:    50    52   393   246
+%%BoundingBox:    51   103   386   196
 %%LanguageLevel: 2
 %%EndComments
 %%BeginProlog
@@ -13,24 +13,24 @@
 /bd{bind def}bind def
 /ld{load def}bd
 /GR/grestore ld
-/M/moveto ld
-/LJ/setlinejoin ld
+/GS/gsave ld
+/RM/rmoveto ld
 /C/curveto ld
-/f/fill ld
-/LW/setlinewidth ld
-/GC/setgray ld
 /t/show ld
-/N/newpath ld
-/CT/concat ld
-/cp/closepath ld
-/S/stroke ld
 /L/lineto ld
+/ML/setmiterlimit ld
+/CT/concat ld
+/f/fill ld
+/N/newpath ld
+/S/stroke ld
 /CC/setcmykcolor ld
 /A/ashow ld
-/GS/gsave ld
+/cp/closepath ld
 /RC/setrgbcolor ld
-/RM/rmoveto ld
-/ML/setmiterlimit ld
+/LJ/setlinejoin ld
+/GC/setgray ld
+/LW/setlinewidth ld
+/M/moveto ld
 /re {4 2 roll M
 1 index 0 rlineto
 0 exch rlineto
@@ -197,20 +197,20 @@ b4_Inc_state restore
 } bd
 %%EndResource
 %FOPBeginFontDict
-%%IncludeResource: font Courier-Bold
-%%IncludeResource: font Helvetica
-%%IncludeResource: font Courier-BoldOblique
 %%IncludeResource: font Courier-Oblique
-%%IncludeResource: font Times-Roman
-%%IncludeResource: font Helvetica-BoldOblique
-%%IncludeResource: font Helvetica-Bold
+%%IncludeResource: font Courier-BoldOblique
+%%IncludeResource: font Courier-Bold
+%%IncludeResource: font ZapfDingbats
+%%IncludeResource: font Symbol
+%%IncludeResource: font Helvetica
 %%IncludeResource: font Helvetica-Oblique
-%%IncludeResource: font Times-BoldItalic
-%%IncludeResource: font Courier
+%%IncludeResource: font Helvetica-Bold
+%%IncludeResource: font Helvetica-BoldOblique
+%%IncludeResource: font Times-Roman
 %%IncludeResource: font Times-Italic
 %%IncludeResource: font Times-Bold
-%%IncludeResource: font Symbol
-%%IncludeResource: font ZapfDingbats
+%%IncludeResource: font Times-BoldItalic
+%%IncludeResource: font Courier
 %FOPEndFontDict
 %%BeginResource: encoding WinAnsiEncoding
 /WinAnsiEncoding [
@@ -269,6 +269,20 @@ b4_Inc_state restore
 ] def
 %%EndResource
 %FOPBeginFontReencode
+/Courier-Oblique findfont
+dup length dict begin
+  {1 index /FID ne {def} {pop pop} ifelse} forall
+  /Encoding WinAnsiEncoding def
+  currentdict
+end
+/Courier-Oblique exch definefont pop
+/Courier-BoldOblique findfont
+dup length dict begin
+  {1 index /FID ne {def} {pop pop} ifelse} forall
+  /Encoding WinAnsiEncoding def
+  currentdict
+end
+/Courier-BoldOblique exch definefont pop
 /Courier-Bold findfont
 dup length dict begin
   {1 index /FID ne {def} {pop pop} ifelse} forall
@@ -283,41 +297,6 @@ dup length dict begin
   currentdict
 end
 /Helvetica exch definefont pop
-/Courier-BoldOblique findfont
-dup length dict begin
-  {1 index /FID ne {def} {pop pop} ifelse} forall
-  /Encoding WinAnsiEncoding def
-  currentdict
-end
-/Courier-BoldOblique exch definefont pop
-/Courier-Oblique findfont
-dup length dict begin
-  {1 index /FID ne {def} {pop pop} ifelse} forall
-  /Encoding WinAnsiEncoding def
-  currentdict
-end
-/Courier-Oblique exch definefont pop
-/Times-Roman findfont
-dup length dict begin
-  {1 index /FID ne {def} {pop pop} ifelse} forall
-  /Encoding WinAnsiEncoding def
-  currentdict
-end
-/Times-Roman exch definefont pop
-/Helvetica-BoldOblique findfont
-dup length dict begin
-  {1 index /FID ne {def} {pop pop} ifelse} forall
-  /Encoding WinAnsiEncoding def
-  currentdict
-end
-/Helvetica-BoldOblique exch definefont pop
-/Helvetica-Bold findfont
-dup length dict begin
-  {1 index /FID ne {def} {pop pop} ifelse} forall
-  /Encoding WinAnsiEncoding def
-  currentdict
-end
-/Helvetica-Bold exch definefont pop
 /Helvetica-Oblique findfont
 dup length dict begin
   {1 index /FID ne {def} {pop pop} ifelse} forall
@@ -325,20 +304,27 @@ dup length dict begin
   currentdict
 end
 /Helvetica-Oblique exch definefont pop
-/Times-BoldItalic findfont
+/Helvetica-Bold findfont
 dup length dict begin
   {1 index /FID ne {def} {pop pop} ifelse} forall
   /Encoding WinAnsiEncoding def
   currentdict
 end
-/Times-BoldItalic exch definefont pop
-/Courier findfont
+/Helvetica-Bold exch definefont pop
+/Helvetica-BoldOblique findfont
 dup length dict begin
   {1 index /FID ne {def} {pop pop} ifelse} forall
   /Encoding WinAnsiEncoding def
   currentdict
 end
-/Courier exch definefont pop
+/Helvetica-BoldOblique exch definefont pop
+/Times-Roman findfont
+dup length dict begin
+  {1 index /FID ne {def} {pop pop} ifelse} forall
+  /Encoding WinAnsiEncoding def
+  currentdict
+end
+/Times-Roman exch definefont pop
 /Times-Italic findfont
 dup length dict begin
   {1 index /FID ne {def} {pop pop} ifelse} forall
@@ -353,81 +339,95 @@ dup length dict begin
   currentdict
 end
 /Times-Bold exch definefont pop
+/Times-BoldItalic findfont
+dup length dict begin
+  {1 index /FID ne {def} {pop pop} ifelse} forall
+  /Encoding WinAnsiEncoding def
+  currentdict
+end
+/Times-BoldItalic exch definefont pop
+/Courier findfont
+dup length dict begin
+  {1 index /FID ne {def} {pop pop} ifelse} forall
+  /Encoding WinAnsiEncoding def
+  currentdict
+end
+/Courier exch definefont pop
 %FOPEndFontReencode
 %%EndProlog
 %%Page: 1 1
-%%PageBoundingBox: 0 0 420 315
+%%PageBoundingBox: 0 0 417 313
 %%BeginPageSetup
-[1 0 0 -1 0 315] CT
+[1 0 0 -1 0 313] CT
 %%EndPageSetup
 GS
-[0.375 0 0 0.375 0 0] CT
+[0.75 0 0 0.75 0 0.25] CT
 1 GC
 N
-0 0 1120 840 re
+0 0 556 417 re
 f
 GR
 GS
-[0.375 0 0 0.375 0 0] CT
+[0.75 0 0 0.75 0 0.25] CT
 1 GC
 N
-0 0 1120 840 re
+0 0 556 417 re
 f
 GR
 GS
-[0.375 0 0 0.375 0 0] CT
+[0.75 0 0 0.75 0 0.25] CT
 1 LJ
-5.333 LW
+2.667 LW
 N
-146 622.5 M
-1014 622.5 L
-1014 188.5 L
-146 188.5 L
-146 622.5 L
+72 244.1 M
+503 244.1 L
+503 157.9 L
+72 157.9 L
+72 244.1 L
 S
 GR
 GS
-[0.375 0 0 0.375 0 0] CT
+[0.75 0 0 0.75 0 0.25] CT
 1 LJ
-5.333 LW
+2.667 LW
 N
-580 622.5 M
-580 188.5 L
+416.8 244.1 M
+416.8 157.9 L
 S
 GR
 GS
-[0.375 0 0 0.375 136.125 152.0625] CT
-/Times-Roman 53.333 F
+[0.75 0 0 0.75 183.30001 151] CT
+/Times-Roman 20 F
 GS
 [1 0 0 1 0 0] CT
--47.5 19 moveto 
+-18 7.5 moveto 
 1 -1 scale
 (Fuel) t 
 GR
 GR
 GS
-[0.375 0 0 0.375 298.875 152.0625] CT
-/Times-Roman 53.333 F
+[0.75 0 0 0.75 344.925 151] CT
+/Times-Roman 20 F
 GS
 [1 0 0 1 0 0] CT
--99 19 moveto 
+-37.5 7.5 moveto 
 1 -1 scale
 (Reflector) t 
 GR
 GR
 GS
-[0.375 0 0 0.375 54.75 249.71251] CT
-/Times-Roman 53.333 F
+[0.75 0 0 0.75 54 199.4875] CT
+/Times-Roman 20 F
 GS
 [1 0 0 1 0 0] CT
--13.5 19 moveto 
+-5 7.5 moveto 
 1 -1 scale
 (0) t 
 GR
 GR
 GS
-[0.375 0 0 0.375 206.625 252.375] CT
-/Times-Roman 53.333 F
+[0.75 0 0 0.75 304.5 202] CT
+/Times-Roman 20 F
 GS
 [1 0 0 1 0 0] CT
 0 0 moveto 
@@ -436,8 +436,8 @@ GS
 GR
 GR
 GS
-[0.375 0 0 0.375 219 262.125] CT
-/Times-Roman 42.667 F
+[0.75 0 0 0.75 314.25 209.5] CT
+/Times-Roman 16 F
 GS
 [1 0 0 1 0 0] CT
 0 0 moveto 
@@ -446,8 +446,8 @@ GS
 GR
 GR
 GS
-[0.375 0 0 0.375 368.625 252.375] CT
-/Times-Roman 53.333 F
+[0.75 0 0 0.75 368.25 202] CT
+/Times-Roman 20 F
 GS
 [1 0 0 1 0 0] CT
 0 0 moveto 
@@ -456,8 +456,8 @@ GS
 GR
 GR
 GS
-[0.375 0 0 0.375 381 262.125] CT
-/Times-Roman 42.667 F
+[0.75 0 0 0.75 378 209.5] CT
+/Times-Roman 16 F
 GS
 [1 0 0 1 0 0] CT
 0 0 moveto 

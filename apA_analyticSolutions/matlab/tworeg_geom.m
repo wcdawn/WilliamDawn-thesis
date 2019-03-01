@@ -1,21 +1,25 @@
 clear
 close all
 
-L = 1.;
+LF = 0.8;
+LR = 1.0;
+H = 0.2;
+L = 1.0;
 LW = 2;
-FS = 20;
+FS = 15;
 FN = 'Times New Roman';
-lo = -0.1;
+lo = -0.05;
 
 figure
 hold on
-plot([0,2*L,2*L,0,0],[0,0,L,L,0],'k','LineWidth',LW)
-plot([L,L],[0,1],'k','LineWidth',LW)
-text(0.5*L,0.5*L,'Fuel','FontSize',FS,'FontName',FN,'HorizontalAlignment','center')
-text(1.5*L,0.5*L,'Reflector','FontSize',FS,'FontName',FN,'HorizontalAlignment','center')
+plot([0,LR,LR,0,0],[0,0,H,H,0],'k','LineWidth',LW)
+plot([LF,LF],[0,H],'k','LineWidth',LW)
+
+text(0.5*LF,0.5*H,'Fuel','FontSize',FS,'FontName',FN,'HorizontalAlignment','center')
+text(0.5*(LF+LR),0.5*H,'Reflector','FontSize',FS,'FontName',FN,'HorizontalAlignment','center')
 text(0,lo,'0','FontSize',FS,'FontName',FN,'HorizontalAlignment','center')
-text(L,lo,'L_F','FontSize',FS,'FontName',FN,'HorizontalAlignment','center')
-text(2*L,lo,'L_R','FontSize',FS,'FontName',FN,'HorizontalAlignment','center')
+text(LF,lo,'L_F','FontSize',FS,'FontName',FN,'HorizontalAlignment','center')
+text(LR,lo,'L_R','FontSize',FS,'FontName',FN,'HorizontalAlignment','center')
 hold off
 axis equal
 set(gca,'Visible','off')
