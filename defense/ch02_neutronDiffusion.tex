@@ -66,8 +66,8 @@
   \end{align}
 
   \begin{itemize}
-    \item Neutron source $q_g(\vr)$ is constant over an element $\Omega_e$.
-    \item Cross sections constant within an element.
+    \item Neutron source $q_{g,q}$ is constant over an element $\Omega_e$.
+    \item Cross sections are constant within an element.
   \end{itemize}
 \end{frame}
 
@@ -78,18 +78,21 @@
   
   \vspace{0.25in}
   This yields the \textbf{Weak Form} of the problem.
-  \begin{align}
+  \begin{equation}
     \label{eq:fem_weak_form}
     - \int_{\Omega} \grad \cdot (D_g(\vr) \grad \phi_g(\vr)) v(\vr) \; d\vr
-      + \int_{\Omega} \Sigma_{r,g}(\vr) \phi_g(\vr) v(\vr) \;d\vr &=
-      \int_{\Omega} q_g(\vr) v(\vr) \;d\vr \\
+      + \int_{\Omega} \Sigma_{r,g}(\vr) \phi_g(\vr) v(\vr) \;d\vr =
+      \int_{\Omega} q_g(\vr) v(\vr) \;d\vr
+  \end{equation}
+  Partition integral into a summation of integrals over elements.
+  \begin{equation}
     \label{eq:element_by_element}
     -\sum_{e=1}^{N_E} D_{g,e} 
       \int_{\Omega_e} \grad \cdot \grad \phi_g(\vr) v(\vr) \; d\vr +
       \sum_{e=1}^{N_E} \Sigma_{r,g,e} \int_{\Omega_e} \phi_g(\vr) v(\vr) 
-      \;d\vr &= \sum_{e=1}^{N_E} q_{g,e} \int_{\Omega_e} v(\vr) 
+      \;d\vr = \sum_{e=1}^{N_E} q_{g,e} \int_{\Omega_e} v(\vr) 
       \; d\vr
-  \end{align}
+  \end{equation}
 \end{frame}
 
 \begin{frame}{Second Green's Theorem}
@@ -114,7 +117,7 @@
     \phi_g(\vr) = \sum_{i=1}^{DOF} \upsilon_{g,i} \, \basis_i(\vr)
   \end{equation}
   Coefficients $\{\upsilon_{g,i}\}$ will be solved in a linear system.
-  $v(\vr)$ is arbitrary such that $v(\vr) \in H_1(\Omega)$ and is chosen to be a
+  $v(\vr) \in H_1(\Omega)$ is arbitrary and is chosen to be a
   linear combination of the basis functions with unit magnitude.
   \begin{equation} 
     \label{eq:linear_superposition}
@@ -123,7 +126,7 @@
 \end{frame}
 
 \begin{frame}{Linear System of Equations}
-  Including albedo ($\albedo$) form of boundary condition and assumption of 
+  Including albedo form of boundary condition and assumption of 
   linear combination of basis functions.
   \begin{multline}
     \label{eq:linear_equation}
@@ -142,7 +145,7 @@
       \int_{\Omega_e} \basis_i(\vr) \; d\vr \right)
   \end{multline}
 
-  Rewriting in the form common to \gls{fem}.
+  Rewriting in the form common to the \gls{fem}.
   \begin{equation}
     \label{eq:fem_notation}
     a_g(\basis_i,\basis_j) = f_g(\basis_i)
@@ -218,16 +221,6 @@
 \begin{frame}{Wedge Elements}
   \begin{columns}
     \begin{column}{0.5\textwidth}
-      \vspace*{\fill}
-      \begin{figure}
-        \centering
-        \includegraphics[width=0.8\textwidth]{Wref}
-        \caption{Description of Reference Wedge.}
-        \label{fig:Wref}
-      \end{figure}
-      \vspace*{\fill}
-    \end{column}
-    \begin{column}{0.5\textwidth}
       \begin{figure}
         \centering
         \subfloat[General Wedge Element.]
@@ -238,6 +231,16 @@
         %\caption{Description of Wedge Elements.}
         \label{fig:sketch_wedge}
       \end{figure}
+    \end{column}
+    \begin{column}{0.5\textwidth}
+      \vspace*{\fill}
+      \begin{figure}
+        \centering
+        \includegraphics[width=0.8\textwidth]{Wref}
+        \caption{Description of Reference Wedge.}
+        \label{fig:Wref}
+      \end{figure}
+      \vspace*{\fill}
     \end{column}
   \end{columns}
 \end{frame}
