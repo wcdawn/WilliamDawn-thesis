@@ -38,20 +38,20 @@
   groups. 
   
   To verify the \gls{fem} model, the multigroup neutron diffusion equation is
-  solved with the same cross sections using\dif and the \gls{fem}
+  solved with the same cross sections using \dif and the \gls{fem}
   solution from \chref{ch:neutronDiffusion}. In this verification, cross
   sections are fixed at the value associated with nominal reactor temperatures
   and multiphysics feedback is disabled, as \dif has no multiphysics
   capabilities. \dif and the \gls{fem}, using the same cross sections, agree to
   692 \units{\glsentryshort{\glsentryshort{pcm}}}. The \dif and \gls{fem}
-  models were minimally refined. An unrefined case was run with six triangles
-  per hexagon and 80 axial elevations, implying a wedge height of
-  $6~\units{cm}$. This unrefined model had a total of 30,320 elements. The
-  model was then spatially refined with 24 triangles per hexagon and 160 axial
-  elevations, implying a wedge height of $3~\units{cm}$. The once refined model
-  had a total of 242,560 elements. Results from this brief verification study
-  are presented in \tref{tab:abr_benchmark}. A more formal mesh refinement study 
-  would presumably show further error reduction. 
+  models were minimally refined. Initially, an unrefined geometry was modeled
+  with six triangles per hexagon and 80 axial elevations, implying a wedge
+  height of $6~\units{cm}$. This unrefined model had a total of 30,320 elements.
+  The model was then spatially refined with 24 triangles per hexagon and 160
+  axial elevations, implying a wedge height of $3~\units{cm}$. The once refined
+  model had a total of 242,560 elements. Results from this brief verification
+  study are presented in \tref{tab:abr_benchmark}. A more formal mesh refinement
+  study would presumably show further error reduction. 
 
   \begin{table}
     \begin{center}
@@ -73,7 +73,7 @@
   For the sole purpose of intuitive flux visualization, the 33-group energy
   structure is collapsed to a two-group energy structure. The collapsed fast
   ($\phi_1$) and collapsed thermal ($\phi_2$) are plotted in
-  \fref{fig:abr_fluxes}. Note, all subsequent results presented are generated
+  \fref{fig:abr_fluxes}. Note: all subsequent results presented are generated
   with the full 33-group energy structure. Fast flux is shown to peak in the
   center of the core in the active fuel region. Thermal flux is shown to peak
   in core structural material, at the periphery of the active fuel region, as
@@ -320,47 +320,3 @@
     \caption{\gls{abr} Reactivity Coefficients.}
     \label{fig:abr_reactivity_coefficients}
   \end{figure}
-
-  %While the data presented in \fref{fig:abr_reactivity_coefficients} shows the
-  %trends of multiphysics feedback, quantitative results can also be obtained.
-  %The \gls{abr} benchmark presents an estimate for a Doppler coefficient $K_D$.
-  %The Doppler coefficient is defined as 
-  %\begin{equation}
-  %  \label{eq:doppler_coefficient}
-  %  K_D (Q_{Rx,i}) = \frac{\rho(T_{fuel} + \Delta T_{fuel}) - \rho(Q_{Rx,i})}
-  %    {\ln\left(1 + \frac{\Delta T_{fuel}}{T_{fuel}}\right)}.
-  %\end{equation}
-  %Note that \eref{eq:doppler_coefficient} can be calculated from data already
-  %plotted in \fref{fig:abr_reactivity_coefficients}. Using the previously
-  %calculated values, it is estimated that the full power Doppler coefficient,
-  %$K_D(100\%)$, is $-306.86~\units{\glsentryshort{pcm}}$. The Doppler
-  %Coefficient is plotted as a function of reactor power in
-  %\fref{fig:doppler_coefficient}. In the \gls{abr} benchmark, a simplified
-  %method is used to calculate the Doppler coefficient because the solutions
-  %submitted lacked the ability to simulate thermal feedback.  The \gls{abr}
-  %benchmark submissions estimate $K_D(100\%) =
-  %-347\pm44~\units{\glsentryshort{pcm}}$ \cite{abr}.  These estimates agree to
-  %within the tolerance of the models and indicate that basic multiphysics
-  %effects are modeled appropriately.
-
-  %\begin{table}
-  %  \begin{center}
-  %    \caption{Doppler Coefficient Results.}
-  %    \label{tab:doppler_coefficient}
-  %    \begin{tabular}{cl}
-  %      \toprule
-  %      Reactor and Method & $K_D(100\%)$ \units{\glsentryshort{pcm}}\\
-  %      \midrule
-  %      \gls{abr} with \gls{fem} & -306.86 \\
-  %      \gls{abr} Benchmark & -347 $\pm$ 44\\
-  %      \bottomrule
-  %    \end{tabular}
-  %  \end{center}
-  %\end{table}
-
-  %\begin{figure}
-  %  \centering
-  %  \includegraphics[width=0.7\textwidth]{doppler_coefficient}
-  %  \caption{\gls{abr} Doppler Coefficient for Benchmark Comparison.}
-  %  \label{fig:doppler_coefficient}
-  %\end{figure}
