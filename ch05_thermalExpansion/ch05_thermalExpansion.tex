@@ -105,7 +105,7 @@
   exit the core. The leakage fraction can be expressed as
   \begin{equation}
     \label{eq:leakage}
-    \leakage = \frac{k_{\infty}}{\keff}
+    \leakage = \frac{\keff}{k_{\infty}}
   \end{equation}
   where $k_{\infty}$ is the effective neutron multiplication factor for an
   infinite medium. \glspl{lwr} typically have low and ultra-low leakage
@@ -150,16 +150,17 @@
     \label{sec:expansion_of_fe_coordinates}
     In the simplified thermal expansion model developed for this work, the
     coordinates of finite elements are expanded uniformly in the axial and
-    radial directions. In the radial directions (both $x$ and $y$ directions),
+    radial directions. In the radial (both $x$ and $y$) directions,
     it is assumed that elements expand as structural material. Specifically,
     $x$ and $y$ coordinates are expanded using HT9 material properties from
     \eref{eq:lef_ht9}. The dominant effect on $\keff$ due to thermal expansion
     in the radial directions is the expansion of the hexagonal assemblies
-    themselves and the expansion of the grid plate at the base of the reactor.
-    In the axial direction (the $z$ direction), it is assumed that elements
-    expand as fuel material, U-10Zr, using the \gls{lef} from
-    \eref{eq:lef_u10zr}. The dominant effect on $\keff$ due to thermal expansion
-    in the axial direction is the elongation of the metallic fuel.
+    themselves and the expansion of the grid plate at the base of the reactor,
+    all of which are composed of HT9 stainless steel. In the axial direction
+    (the $z$ direction), it is assumed that elements expand as fuel material,
+    U10Zr, using the \gls{lef} from \eref{eq:lef_u10zr}. The dominant effect on
+    $\keff$ due to thermal expansion in the axial direction is the elongation of
+    the metallic fuel.
 
     Assuming the uniform radial expansion of elements specified by
     \eref{eq:lef_ht9} and \texpstruct, a radial \gls{lef} can be defined as
@@ -199,9 +200,9 @@
       z^H &= z^C \, F_a(\texpfuel),
     \end{align}
     \eref{eq:expand_x}, \eref{eq:expand_y} and \eref{eq:expand_z} uniformly
-    expand the distance from each coordinates to the origin. Thus,
-    the coordinate thermal expansion equations are applied to each coordinate in 
-    the finite element mesh to uniformly expand all elements.
+    expand the distance from each coordinate to the origin. Thus, the coordinate
+    thermal expansion equations are applied to each coordinate in the finite
+    element mesh to uniformly expand all elements.
 
   \subsection{Expansion of Area Fractions}
     \label{sec:expansion_of_area_fractions}
@@ -213,7 +214,7 @@
     sections within an assembly as in \sref{sec:cross_section_treatment}.
 
     The radius of the fuel rod, $R_F$, is expanded using the \gls{lef} for
-    U-10Zr from \eref{eq:lef_u10zr}. All other dimensions within the hexagonal
+    U10Zr from \eref{eq:lef_u10zr}. All other dimensions within the hexagonal
     assembly (wire wrap diameter, can thickness, flat-to-flat measurement, etc.)
     are expanded using the \gls{lef} for HT9 from \eref{eq:lef_ht9}. Note that
     due to the magnitudes of these \glspl{lef}, it is possible for $R_F$ to
@@ -231,7 +232,9 @@
     and sodium coolant area fractions will be allowed to ``float.'' That is, the
     sodium area fraction will decrease appropriately to allow for the expansion
     of other materials within the assembly. Recall, the mass of sodium in the
-    reactor is not conserved.
+    reactor is not conserved. Finally, the calculated areas are used to
+    calculate area fractions and homogenize cross sections within a hexagonal
+    assembly.
   
   \subsection{Conservation of Material and Cross Section Effects}
     \label{sec:cross_section_effects}
@@ -302,7 +305,6 @@
       \label{eq:volume_ratio}
       \frac{V^C}{V^H} = \frac{1}{(F_r(\texpstruct))^2 F_a(\texpfuel)}.
     \end{equation}
-
     \eref{eq:volume_ratio} can now be substituted into
     \eref{eq:nden_expansion_expanded}.
     \begin{equation}
@@ -320,10 +322,10 @@
   The effect of thermal expansion on the effective neutron multiplication
   factor, $\keff$, is shown in this section. As stated previously in
   \sref{sec:model_details}, the user must input effective temperatures to which
-  the reactor is thermally expanded. These user-input values, $\texpstruct$ and
-  $\texpfuel$, are varied and all other thermal feedback effects are disabled in
-  the simulation. For this simplified demonstration, $\texpstruct=\texpfuel$. It
-  is expected that thermal expansion will cause a significant decrease in
+  the reactor is thermally expanded. These user-input values, $\texpfuel$ and
+  $\texpstruct$, are varied and all other thermal feedback effects are disabled
+  in the simulation. For this simplified demonstration, $\texpfuel=\texpstruct$.
+  It is expected that thermal expansion will cause a significant decrease in
   $\keff$ and represent negative reactivity insertion. Effective neutron
   multiplication factor as a function of thermal expansion is plotted in
   \fref{fig:thexp_study} and the associated reactivity, calculated as
