@@ -1,7 +1,7 @@
 clear
 close all
 
-fname = '../data/reactivity_study_smallDelta.csv';
+fname = '../data/reactivity_study_smallDelta_bigThexp_fixed.csv';
 LW = 2;
 FN = 'Times New Roman';
 FS = 12;
