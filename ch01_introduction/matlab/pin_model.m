@@ -30,15 +30,16 @@ h = patch(circle(:,1)*rwrap+(rclad+rwrap)*cos(pi/4),circle(:,2)*rwrap+(rclad+rwr
 hatchfill(h,'fill');
 
 
-arrow([0,0],[cos(2*pi/3),sin(2*pi/3)]*rclad)
-arrow([0,0],[cos(pi/2),sin(pi/2)]*rbond)
-arrow([0,0],[cos(pi/5),sin(pi/5)]*rfuel)
+arrowWidth=3;
+arrow([0,0],[cos(2*pi/3),sin(2*pi/3)]*rclad,'Width',arrowWidth)
+arrow([0,0],[cos(pi/2),sin(pi/2)]*rbond,'Width',arrowWidth)
+arrow([0,0],[cos(pi/5),sin(pi/5)]*rfuel,'Width',arrowWidth)
 wrap_center = [cos(pi/4),sin(pi/4)]*(rclad+rwrap);
-arrow(wrap_center,wrap_center+[cos(3*pi/4),sin(3*pi/4)]*rwrap)
-arrow(wrap_center,wrap_center-[cos(3*pi/4),sin(3*pi/4)]*rwrap)
+arrow(wrap_center,wrap_center+[cos(3*pi/4),sin(3*pi/4)]*rwrap,'Width',arrowWidth)
+arrow(wrap_center,wrap_center-[cos(3*pi/4),sin(3*pi/4)]*rwrap,'Width',arrowWidth)
 
-text(0.5*rfuel*cos(pi/5)+0.05,0.5*rfuel*sin(pi/5),'R_{Fuel}','FontSize',FS,'FontName',FN)
-text(0.5*rbond*cos(pi/2),0.5*rbond*sin(pi/2),'R_{Bond}','FontSize',FS,'FontName',FN)
+text(0.5*rfuel*cos(pi/5)+0.03,0.5*rfuel*sin(pi/5)-0.01,'R_{Fuel}','FontSize',FS,'FontName',FN)
+text(0.01,0.5*rbond*sin(pi/2),'R_{Bond}','FontSize',FS,'FontName',FN)
 text(0.5*rclad*cos(2*pi/3)-0.07,0.5*rclad*sin(2*pi/3)-0.05,'R_{Clad}','FontSize',FS,'FontName',FN)
 text(wrap_center(1)-0.02,wrap_center(2)+0.03,'D_{Wrap}','FontSize',FS,'FontName',FN)
 
