@@ -28,17 +28,11 @@ for i = 1:length(xtest)
 end
 ytestc = ytestc * norm(ytestf,inf);
 
-delta_selected = (1/num_dots)*ntest;
-selected = floor(1:delta_selected:ntest);
-
-matlab_blue = [0.00 0.447 0.741];
-matlab_orange = [0.91 0.41 0.17];
-
 figure
 hold on
 title('One-Dimension, One-Group, Fixed and Critical')
-plot(xtest,ytestc,'-o','Color',matlab_blue,'LineWidth',LW,'MarkerIndices',selected,'MarkerFaceColor',matlab_blue)
-plot(xtest,ytestf,'-^','Color',matlab_orange,'LineWidth',LW,'MarkerIndices',selected,'MarkerFaceColor',matlab_orange)
+plot(xtest,ytestc,'-','LineWidth',LW)
+plot(xtest,ytestf,'--','LineWidth',LW)
 xlabel('x [cm]')
 ylabel('\phi(x)')
 legend({'Criticality', 'Fixed Source'})
