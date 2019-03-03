@@ -666,7 +666,7 @@
     {}
 
     \chapter*{\ncsu@appendixheader} %% insert 'Appendix' titlepage
-    \addcontentsline{toc}{chapter}{\ncsu@appendixheader}
+    \addcontentsline{toc}{chapter}{Appendices}
     %% Adding "Appendix" before letter in TOC
     %%  We must change the width of the box which the appendix letter is set in
     %%  and add the "Appendix " before the letter.  See tocloft documentation.
