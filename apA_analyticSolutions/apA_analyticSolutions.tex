@@ -2,10 +2,12 @@
 \label{ap:analyticSolutions}
 
 \section{Introduction}
-  The following are analytic solutions designed for code verification of
-  one-dimensional, two-dimensional, and three-dimensional numerical solvers for
-  the multigroup neutron diffusion equation. One-group and two-group problems
-  are addressed.
+  This appendix contains analytic solutions  to the neutron diffusion equations
+  that are used for code verification of one-dimensional, two-dimensional, and
+  three-dimensional numerical solvers. One-group and two-group problems are
+  addressed. Analytic solutions are important because they provide an exact
+  solution that allows for analysis of convergence properties for a numerical
+  method.
   
   For the one-group reference problems, the neutron diffusion problem is written
   \begin{equation} 
@@ -22,13 +24,12 @@
     \nu\Sigma_f & number of fission neutrons per unit neutron flux
       \units{$\frac{1}{\text{cm}}$}, \\
     q_{fixed} & fixed volumetric neutron source 
-      \units{$\frac{1}{\text{cm}^3 s}$},
+      \units{$\frac{1}{\text{cm}^3 s}$}.
   \end{conditions}
-   and $\grad^2 \phi = \grad \cdot (\grad \phi)$ is used to simplify notation.
-   \eref{eq:onegroup} is valid for problems with constant coefficients
-   (homogeneous materials). For problems considered here, material properties
-   such as $D$ are constant in some region, either the entire problem or a
-   finite subdomain.
+  \eref{eq:onegroup} is valid for problems with constant coefficients
+  (homogeneous materials). For problems considered here, material properties
+  such as $D$ are constant in some region, either the entire problem or a
+  finite subdomain.
   
   For two-group neutron diffusion problems, the two-group neutron diffusion 
   equation is written 
@@ -139,7 +140,7 @@
       \left(\cosh(\kappa \, L_x) - 1 \right)} {\sinh(\kappa \, L_x)}
   \end{align}
   All constants of the problem are now specified in \eref{eq:1dfixed_c1} and 
-  \eref{eq:1dfixed_c2} and can be substitued into \eref{eq:1dfixed_constants}.
+  \eref{eq:1dfixed_c2} and can be substituted into \eref{eq:1dfixed_constants}.
   \begin{equation}
     \label{eq:analytic_1dfixedsrc}
     \phi(x) = \left( \frac{q_{fixed}}{D} \right) 
@@ -253,7 +254,7 @@
     \keff &= \frac{\nu \Sigma_f}{D \left(\frac{\pi}{L_x}\right)^2 + \Sigma_r}
   \end{align}
   For a problem with material cross sections given in \tref{tab:1group_simple}
-  and $L_x = 100 \units{cm}$, then the resulting effective multiplication factor
+  and $L_x = 100 \units{cm}$, the resulting effective multiplication factor
   is
   \begin{equation}
     \keff = 1.998028.
@@ -768,7 +769,8 @@
   Leading to the transcendental relation
   \begin{equation}
     \label{eq:2reg_bf}
-    B_F \, \tan(B_F \, L_F) = \frac{D_R \, \kappa_R}{D_F \, \tanh(\kappa_R \, (L_R-L_F))}
+    D_F \, B_F \, \tan(B_F \, L_F) = 
+      \frac{D_R \, \kappa_R}{\tanh(\kappa_R \, (L_R-L_F))}
   \end{equation}
   where $\kappa_R$ is defined according to \eref{eq:2regR_b2}. 
   \eref{eq:2reg_bf} is the most simplified solution for $B_F$. Unfortunately,
@@ -979,12 +981,11 @@
     \label{eq:finite_cyl_beta}
     \beta = \frac{\alpha_0}{T}
   \end{equation}
-  where $\alpha_0$ is the first zero ($\alpha_0 \approx 2.4048$). Coefficient
-  $c_1$ is arbitrary so allow $c_1 = R_0$. Then the solution for the function 
-  $R(r)$ is
+  where $\alpha_0$ is the first zero ($\alpha_0 \approx 2.4048$).  Then the
+  solution for the function $R(r)$ is
   \begin{equation}
     \label{eq:finite_cyl_R}
-    R(r) = R_0 \, J_0\left(\frac{\alpha_0}{T} r\right).
+    R(r) = c_1 \, J_0\left(\frac{\alpha_0}{T} r\right).
   \end{equation}
 
   A similar process is repeated for $Z(z)$. The solution to $Z(z)$ is similar to
@@ -1029,10 +1030,10 @@
     \label{eq:finite_cyl_gamma}
     \gamma = \frac{\pi}{H}.
   \end{equation}
-  Coefficient $c_4$ is arbitrary so allow $c_4 = Z_0$. Then
+  Coefficient $c_4$ is arbitrary. Then
   \begin{equation}
     \label{eq:finite_cyl_Z}
-    Z(z) = Z_0 \sin\left(\frac{\pi}{H} z\right)
+    Z(z) = c_4 \, \sin\left(\frac{\pi}{H} z\right)
   \end{equation}
 
   \eref{eq:finite_cyl_R} and \eref{eq:finite_cyl_Z} are combined according to
@@ -1042,7 +1043,7 @@
     \phi(r,z) = \phi_0 \, 
       J_0\left(\frac{\alpha_0}{T} r\right) \sin\left(\frac{\pi}{H} z \right)
   \end{equation}
-  where $\phi_0$ is arbitrary and $\phi_0 = R_0 Z_0$.
+  where $\phi_0$ is arbitrary and $\phi_0 = c_1 \, c_4$.
   An example flux plot for a slice of the cylinder is shown in 
   \fref{fig:finite_cyl}. Recall \eref{eq:finite_cyl_b2} and the form 
   \eref{eq:finite_cyl_b2_sum}. Coefficients $\beta$ and $\gamma$ are given in 
