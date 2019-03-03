@@ -27,7 +27,7 @@
     \item You're right.
     \pause
     \item Computers are different now.
-    \item Mathematical methods are more efficient now.
+    \item Numerical methods are more efficient now.
     \item \textbf{FORTRAN} has \textit{a few} new standards.
   \end{itemize}
 \end{frame}
@@ -36,15 +36,15 @@
   \begin{itemize}
     \item Heuristically estimate material temperatures.
     \item Manually calculate thermally expanded dimensions.
-    \item Manually calculate area fractions and number densities.
+    \item Manually homogenization/smearing fractions and number densities.
     \item Run \dif and collect \keff and power distribution.
     \pause
-    %\item \dif was last updated 1993. \textbf{FORTRAN} last updated 2008.
   \end{itemize}
   \vspace{0.3in}
   \begin{block}{}
-    No thermal feedback or multiphysics simulation capability. Modern numerical 
-    methods can be implemented.
+    \centering
+    No thermal feedback or multiphysics simulation capability.\\
+    Modern numerical methods can be implemented.
   \end{block}
 \end{frame}
 
@@ -52,20 +52,21 @@
   \begin{itemize}
     \item User input.
       \begin{itemize}
-        \item Easy to use.
-        \item Reactor geometry via \texttt{VTK} mesh.
-        \item Temperature dependent cross sections either plain-text or 
-          \texttt{ISOTXS}.
-        \item Pin dimensions and material compositions.
+        \item Easy to use with intuitive keywords.
+        \item Reactor geometry via VTK mesh.
+        \item Temperature dependent cross sections either plain-text or ISOTXS
+          format.
+        \item Pin and assembly dimensions.
+        \item Material compositions.
       \end{itemize}
     \item Simulate thermal expansion and thermal hydraulics internally.
     \item Collect \keff, reactor power, and average material temperatures.
   \end{itemize}
-  \vspace{0.25in}
+  \vspace{0.2in}
   \begin{itemize}
     \item Thermal expansion and thermal hydraulic simulations have been moved
-      internally and are now inherent to the simulation.
-    \item Thermal hydraulic simulation also improves the accuracy of neutronics
-      simulation by leading to more accurate cross sections.
+      internally.
+    \item Thermal hydraulic simulation improves the accuracy of neutronics
+      simulation in the form of more accurate cross sections.
   \end{itemize}
 \end{frame}

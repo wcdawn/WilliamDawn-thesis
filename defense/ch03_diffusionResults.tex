@@ -27,10 +27,9 @@
   \begin{align} 
     \label{eq:error_bound}
     \ve &= \phi(\vr) - \phi_{FEM} \\
-    \|\ve\|_{\infty} \le c h^2 \| \grad^2 \phi(\vr) \|_{\infty}
+    \|\ve\|_{\infty} &\le c h^2 \| \grad^2 \phi(\vr) \|_{\infty}
   \end{align}
-  It is useful to define the following errors as \gls{rms} error and maximum
-  error.
+  Define \gls{rms}, maximum, and $\keff$ errors.
   \begin{align}
     \label{eq:rms}
     \text{\glsentryshort{rms}}(\ve) &= \sqrt{\frac{1}{N} \sum_{i=1}^{N} e_i^2}\\
@@ -48,7 +47,8 @@
 \begin{frame}{Analytic Solutions}
   \begin{itemize}
     \item 6 analytic multigroup neutron diffusion problems.
-    \item Varied number of dimensions, energy groups, and number of materials.
+    \item Varied number of spatial dimensions, energy groups, and number of 
+      materials.
   \end{itemize}
   \begin{table}
     %\caption{}
@@ -181,7 +181,7 @@
 \begin{frame}{Benchmark Solutions}
   \begin{itemize}
     \item 9 benchmark problems.
-    \item Two and three dimensions.
+    \item Two and three dimensional geometry.
     \item Varied energy group structure and neutron spectrum.
   \end{itemize}
   \begin{table}

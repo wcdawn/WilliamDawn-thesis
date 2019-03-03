@@ -2,7 +2,7 @@
 \label{sec:thermalHydraulics}
 
 \begin{frame}{Material Temperatures}
-  \vspace{-0.1in}
+  \vspace{-0.05in}
   \begin{figure}
     \begin{tabular}{cc}
       \subfloat[Cool]{
@@ -21,7 +21,7 @@
 \begin{frame}{Material Properties}
   \begin{itemize}
     \item Functional sodium properties \cite{sodiumProp}.
-    \item Clad and sodium thermal conductivity assumed constant \cite{ht9Prop}.
+    \item Clad and bond thermal conductivity assumed constant \cite{ht9Prop}.
     \item Fuel thermal conductivity assumed a function of temperature
       \cite{fuelProp}.
   \end{itemize}
@@ -96,7 +96,7 @@
     \label{eq:subbotinUshakov}
     Nu &= 7.55 \frac{S}{D} - 20 \left(\frac{S}{D}\right)^{-13} + 
       \frac{3.67}{90\left(\frac{S}{D}\right)^{2}}
-      Pe^{\left(0.56 + 0.19 \frac{S}{D}\right)}
+      Pe^{\left(0.56 + 0.19 \frac{S}{D}\right)} \\
     H_c &= \frac{N\!u \, k}{D_e} %\\
   \end{align}
   Then, the clad surface temperature, $T_C$ follows.
@@ -174,106 +174,106 @@
   \end{block}
 \end{frame}
 
-\begin{frame}{Cross Section Treatment}
+%\begin{frame}{Cross Section Treatment}
+%  \begin{itemize}
+%    \item Coolant. 
+%      \begin{itemize}
+%        \item Number density and microscopic cross sections are functionalized.
+%        \item Linear interpolation for microscopic cross sections.
+%      \end{itemize}
+%      \begin{align}
+%        N_{Na}(T) &= \frac{\rho_{Na}(T) \, N_A}{M_{Na}}\\
+%        \label{eq:xs_cool}
+%        \Sigma_{x,i,k,g} &= N_{Na}(T_{\infty,i,k}) 
+%          \left( \frac{T_{\infty,i,k} - T_{n}}{T_{n+1}-T_{n}} 
+%          (\sigma_{x,Na,g,n+1} - \sigma_{x,Na,g,n})  + \sigma_{x,Na,g,n}\right)
+%      \end{align}
+%    \vspace{-\baselineskip}
+%    \item Clad. 
+%      \begin{itemize}
+%        \item Linear interpolation for macroscopic cross sections.
+%      \end{itemize}
+%      \begin{equation}
+%        \label{eq:xs_linear_interpolation}
+%        \Sigma_{x,i,k,g} = 
+%          \frac{\overline{T_{C,i,k}} - T_{n}}{T_{n+1}-T_{n}} 
+%          (\Sigma_{x,g,n+1} - \Sigma_{x,g,n})  + \Sigma_{x,g,n}
+%      \end{equation}
+%    \vspace{-2\baselineskip}
+%    \item Bond.
+%      \begin{itemize}
+%        \item Assumed to have the same macroscopic cross section as coolant.
+%        \item Consistent with homogenization approximation.
+%      \end{itemize}
+%    \item Fuel.
+%      \begin{itemize}
+%        \item Square-root interpolation for macrscopic cross sections due to 
+%          Doppler effect. 
+%      \end{itemize}
+%      \begin{equation}
+%        \Sigma_{x,i,k,g} = 
+%          \frac{\sqrt{\overline{T_{F,i,k}}} - \sqrt{T_{n}}}
+%          {\sqrt{T_{n+1}}-\sqrt{T_{n}}}
+%          (\Sigma_{x,g,n+1} - \Sigma_{x,g,n})  + \Sigma_{x,g,n}
+%      \end{equation}
+%  \end{itemize}
+%\end{frame}
+
+\begin{frame}{Cross Section Treatment -- Coolant \& Bond}
   \begin{itemize}
-    \item Coolant. 
-      \begin{itemize}
-        \item Number density and microscopic cross sections are functionalized.
-        \item Linear interpolation for microscopic cross sections.
-      \end{itemize}
-      \begin{align}
-        N_{Na}(T) &= \frac{\rho_{Na}(T) \, N_A}{M_{Na}}\\
-        \label{eq:xs_cool}
-        \Sigma_{x,i,k,g} &= N_{Na}(T_{\infty,i,k}) 
-          \left( \frac{T_{\infty,i,k} - T_{n}}{T_{n+1}-T_{n}} 
-          (\sigma_{x,Na,g,n+1} - \sigma_{x,Na,g,n})  + \sigma_{x,Na,g,n}\right)
-      \end{align}
-    \vspace{-\baselineskip}
-    \item Clad. 
-      \begin{itemize}
-        \item Linear interpolation for macroscopic cross sections.
-      \end{itemize}
-      \begin{equation}
-        \label{eq:xs_linear_interpolation}
-        \Sigma_{x,i,k,g} = 
-          \frac{\overline{T_{C,i,k}} - T_{n}}{T_{n+1}-T_{n}} 
-          (\Sigma_{x,g,n+1} - \Sigma_{x,g,n})  + \Sigma_{x,g,n}
-      \end{equation}
-    \vspace{-2\baselineskip}
-    \item Bond.
-      \begin{itemize}
-        \item Assumed to have the same macroscopic cross section as coolant.
-        \item Consistent with homogenization approximation.
-      \end{itemize}
-    \item Fuel.
-      \begin{itemize}
-        \item Square-root interpolation for macrscopic cross sections due to 
-          Doppler effect. 
-      \end{itemize}
-      \begin{equation}
-        \Sigma_{x,i,k,g} = 
-          \frac{\sqrt{\overline{T_{F,i,k}}} - \sqrt{T_{n}}}
-          {\sqrt{T_{n+1}}-\sqrt{T_{n}}}
-          (\Sigma_{x,g,n+1} - \Sigma_{x,g,n})  + \Sigma_{x,g,n}
-      \end{equation}
+    \item Number density and microscopic cross sections are functionalized 
+      and updated based on $T_{\infty,i,k}$.
+    \item Linear interpolation for microscopic cross sections.
   \end{itemize}
+
+  Number density functionalization.
+  \begin{align}
+    \label{eq:number_density_sodium}
+    M_{Na} &= 22.989769 \units{$\frac{\text{gram}}{\text{mol}}$} \\
+    N_{Na}(T) &= \frac{\rho_{Na}(T) \, N_A}{M_{Na}}
+  \end{align}
+
+  Microscopic cross section functionalization for ${T_{n} < T_{\infty,i,k} <
+  T_{n+1}}$.
+  \begin{equation}
+    \label{eq:xs_cool}
+    \Sigma_{x,i,k,g} = N_{Na}(T_{\infty,i,k}) 
+      \left( \frac{T_{\infty,i,k} - T_{n}}{T_{n+1}-T_{n}} 
+      (\sigma_{x,Na,g,n+1} - \sigma_{x,Na,g,n})  + \sigma_{x,Na,g,n}\right)
+  \end{equation}
+
+  Bond is assumed to have the same macroscopic cross section as coolant.\\
+  Consistent with homogenization approximation.
 \end{frame}
 
-%\begin{frame}{Cross Section Treatment -- Coolant \& Bond}
-%  \begin{itemize}
-%    \item Number density and microscopic cross sections are functionalized 
-%      and updated based on $T_{\infty,i,k}$.
-%    \item Linear interpolation for microscopic cross sections.
-%  \end{itemize}
-%
-%  Number density functionalization.
-%  \begin{align}
-%    \label{eq:number_density_sodium}
-%    M_{Na} &= 22.989769 \units{$\frac{\text{gram}}{\text{mol}}$} \\
-%    N_{Na}(T) &= \frac{\rho_{Na}(T) \, N_A}{M_{Na}}
-%  \end{align}
-%
-%  Microscopic cross section functionalization for ${T_{n} < T_{\infty,i,k} <
-%  T_{n+1}}$.
-%  \begin{equation}
-%    \label{eq:xs_cool}
-%    \Sigma_{x,i,k,g} = N_{Na}(T_{\infty,i,k}) 
-%      \left( \frac{T_{\infty,i,k} - T_{n}}{T_{n+1}-T_{n}} 
-%      (\sigma_{x,Na,g,n+1} - \sigma_{x,Na,g,n})  + \sigma_{x,Na,g,n}\right)
-%  \end{equation}
-%
-%  Bond is assumed to have the same macroscopic cross section as coolant.\\
-%  Consistent with homogenization approximation.
-%\end{frame}
-%
-%\begin{frame}{Cross Section Treatment -- Clad}
-%  \begin{itemize}
-%    \item Macroscopic cross section updated based on $\overline{T_{C,i,k}}$.
-%    \item Linear interpolation.
-%  \end{itemize}
-%
-%  Macroscopic cross section functionalization for ${T_n < \overline{T_{C,i,k}} <
-%  T_{n+1}}$.
-%  \begin{equation}
-%    \label{eq:xs_linear_interpolation}
-%    \Sigma_{x,i,k,g} = 
-%      \frac{\overline{T_{C,i,k}} - T_{n}}{T_{n+1}-T_{n}} 
-%      (\Sigma_{x,g,n+1} - \Sigma_{x,g,n})  + \Sigma_{x,g,n}
-%  \end{equation}
-%\end{frame}
-%
-%\begin{frame}{Cross section Treatment -- Fuel}
-%  \begin{itemize}
-%    \item Macroscopic cross section update based on $\overline{T_{F,i,k}}$.
-%    \item Square-root interpolation due to Doppler effect.
-%  \end{itemize}
-%
-%  Macroscopic cross section functionalization for ${T_n < \overline{T_{F,i,k}} <
-%  T_{n+1}}$.
-%  \begin{equation}
-%    \Sigma_{x,i,k,g} = 
-%      \frac{\sqrt{\overline{T_{F,i,k}}} - \sqrt{T_{n}}}
-%      {\sqrt{T_{n+1}}-\sqrt{T_{n}}}
-%      (\Sigma_{x,g,n+1} - \Sigma_{x,g,n})  + \Sigma_{x,g,n}
-%  \end{equation}
-%\end{frame}
+\begin{frame}{Cross Section Treatment -- Clad}
+  \begin{itemize}
+    \item Macroscopic cross section updated based on $\overline{T_{C,i,k}}$.
+    \item Linear interpolation.
+  \end{itemize}
+
+  Macroscopic cross section functionalization for ${T_n < \overline{T_{C,i,k}} <
+  T_{n+1}}$.
+  \begin{equation}
+    \label{eq:xs_linear_interpolation}
+    \Sigma_{x,i,k,g} = 
+      \frac{\overline{T_{C,i,k}} - T_{n}}{T_{n+1}-T_{n}} 
+      (\Sigma_{x,g,n+1} - \Sigma_{x,g,n})  + \Sigma_{x,g,n}
+  \end{equation}
+\end{frame}
+
+\begin{frame}{Cross section Treatment -- Fuel}
+  \begin{itemize}
+    \item Macroscopic cross section update based on $\overline{T_{F,i,k}}$.
+    \item Square-root interpolation due to Doppler effect.
+  \end{itemize}
+
+  Macroscopic cross section functionalization for ${T_n < \overline{T_{F,i,k}} <
+  T_{n+1}}$.
+  \begin{equation}
+    \Sigma_{x,i,k,g} = 
+      \frac{\sqrt{\overline{T_{F,i,k}}} - \sqrt{T_{n}}}
+      {\sqrt{T_{n+1}}-\sqrt{T_{n}}}
+      (\Sigma_{x,g,n+1} - \Sigma_{x,g,n})  + \Sigma_{x,g,n}
+  \end{equation}
+\end{frame}

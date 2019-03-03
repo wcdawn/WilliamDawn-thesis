@@ -2,16 +2,16 @@
 \label{sec:neutronDiffusion}
 
 \begin{frame}{Multigroup Neutron Diffusion Equation}
-  In conventional notation, the multigroup neutron diffusion equation can be
-  written.
-  \begin{equation}
+  \begin{multline}
     \label{eq:multigroup_diffusion}
     - \grad \cdot ( D_g(\vr) \grad \phi_g(\vr)) + \Sigma_{r,g}(\vr) \phi_g(\vr)= 
+    \\
       \frac{\widetilde{\chi_g}(\vr)}{\keff} 
       \sum_{g'=1}^{G} \nu\Sigma_{f,g'}(\vr) 
       \phi_{g'}(\vr) + \sum_{\substack{g'=1 \\ g' \ne g}}^{G} 
       \Sigma_{s,g' \rightarrow g}(\vr) \phi_{g'}(\vr)
-  \end{equation}
+  \end{multline}
+  \vspace{-\baselineskip}
   \begin{conditions} % custom environment designed for this purpose
     D_g(\vr)    & diffusion coefficient for energy group $g$ \units{cm}, \\
     \phi_g(\vr) & scalar neutron flux for energy group $g$
@@ -28,13 +28,36 @@
       \parbox[t]{\columnwidth}{macroscopic scatter cross section from
       energy group $g'$ to\\
       energy group $g$ \units{$\frac{1}{\text{cm}}$},} \\
-    G & total number of energy groups (typically $G=33$)%.
+    G & total number of energy groups (typically $G=33$).
   \end{conditions}
 \end{frame}
 
+\begin{frame}{Boundary Conditions}
+  For problem domain $\Omega$ and boundary $\partial \Omega$. \\
+  $\nhat$ is the outward normal direction on the boundary.
+  \begin{enumerate}
+    \item Mirror. 
+      \begin{equation}
+        \grad \phi_g(\vr) \cdot \nhat = 0 \;  \text{for } 
+          \vr \in \partial \Omega
+      \end{equation}
+    \item Albedo. 
+      \begin{equation}
+        D_g(\vr) \grad \phi_g(\vr) \cdot \nhat + 
+          \albedo \phi_g(\vr)=0 \; \text{for } \vr \in \partial \Omega
+      \end{equation}
+      $\albedo \in \real$ is a scalar constant specified by the user. \\
+      For non-reentrant (vacuum) boundary condition, $\albedo = \half$.
+    \item Zero Flux. 
+      \begin{equation}
+        \phi_g(\vr) = 0 \; \text{for } \vr \in \partial \Omega
+      \end{equation}
+  \end{enumerate}
+\end{frame}
+
 \begin{frame}{\gls{fem} Discretization}
-  Divide the domain $\Omega$ into a set of unstructured finite elements 
-  (e.g. Delaunay triangulation).
+  Divide the domain $\Omega$ into a set of unstructured, non-overlapping, finite 
+  elements (e.g. Delaunay triangulation).
   \begin{gather}
     \label{eq:set_of_elements}
     \Omega = \Omega_1 \cup \Omega_2 \cup \Omega_3 \cup \ldots \cup
@@ -54,6 +77,7 @@
   \begin{itemize}
     \item Neutron sources are combined into a single term.
     \item This will resemble the \gls{fem} formulation.
+    \item Rewrite the multigroup neutron diffusion equation.
   \end{itemize}
   \begin{equation}
     \label{eq:multigroup_source}
@@ -66,7 +90,7 @@
   \end{align}
 
   \begin{itemize}
-    \item Neutron source $q_{g,q}$ is constant over an element $\Omega_e$.
+    \item Neutron source $q_{g,e}$ is constant over an element $\Omega_e$.
     \item Cross sections are constant within an element.
   \end{itemize}
 \end{frame}
@@ -85,14 +109,16 @@
       \int_{\Omega} q_g(\vr) v(\vr) \;d\vr
   \end{equation}
   Partition integral into a summation of integrals over elements.
-  \begin{equation}
+  \begin{multline}
     \label{eq:element_by_element}
     -\sum_{e=1}^{N_E} D_{g,e} 
       \int_{\Omega_e} \grad \cdot \grad \phi_g(\vr) v(\vr) \; d\vr +
       \sum_{e=1}^{N_E} \Sigma_{r,g,e} \int_{\Omega_e} \phi_g(\vr) v(\vr) 
-      \;d\vr = \sum_{e=1}^{N_E} q_{g,e} \int_{\Omega_e} v(\vr) 
-      \; d\vr
-  \end{equation}
+      \;d\vr = 
+    \\
+      \sum_{e=1}^{N_E} q_{g,e} \int_{\Omega_e} v(\vr) 
+      \; d\vr \hspace{0.5in}
+  \end{multline}
 \end{frame}
 
 \begin{frame}{Second Green's Theorem}
@@ -130,16 +156,18 @@
   linear combination of basis functions.
   \begin{multline}
     \label{eq:linear_equation}
-    \sum_{i=1}^{DOF} \upsilon_{i,g} \sum_{j=1}^{DOF} \left(
-      \sum_{e=1}^{N_E} \albedo \int_{\partial \Omega_e}
-      \basis_i(\vr)  \basis_j(\vr) \;ds +
+    \sum_{i=1}^{DOF} \upsilon_{i,g} \! \sum_{j=1}^{DOF} \left(
+      \sum_{e=1}^{N_E} \albedo \int_{\partial \Omega_e} \! \!
+      \basis_i(\vr)  \basis_j(\vr) ds +
       \sum_{e=1}^{N_E} D_{g,e} 
-      \int_{\Omega_e} \grad \basis_i(\vr) \cdot \grad \basis_j(\vr)\;d\vr
-      \right.
-      + \\
-      \left.
+      \int_{\Omega_e} \! \grad \basis_i(\vr) \cdot \grad \basis_j(\vr) d\vr
+    \right.
+    \\
+    \left.
+      +
       \sum_{e=1}^{N_E} \Sigma_{r,g,e}
-      \int_{\Omega_e} \basis_i(\vr) \basis_j(\vr) \; d\vr \right) =
+      \int_{\Omega_e} \basis_i(\vr) \basis_j(\vr) \; d\vr \right) 
+      =
       \sum_{i=1}^{DOF} \left(
       \sum_{e=1}^{N_E} q_{g,e} 
       \int_{\Omega_e} \basis_i(\vr) \; d\vr \right)
@@ -159,29 +187,29 @@
 \end{frame}
 
 \begin{frame}{Properties of $\ma_g \, \vu_g = \vf_g$}
-  Properties of the linear system include:
   \begin{itemize}
-    \item Sparse.
-    \item Matrix, $\ma_g$, is \gls{spd} \cite{textbookhughes}.
-    \item Solution, $\vu_g$, is unique and bounded by Lax-Milgram Lemma 
-      \cite{textbookli}.
+    \item Properties of the linear system include:
+      \begin{itemize}
+        \item Sparse.
+        \item Matrix, $\ma_g$, is \gls{spd} \cite{textbookhughes}.
+        \item Solution, $\vu_g$, is unique and bounded by Lax-Milgram Lemma 
+          \cite{textbookli}.
+      \end{itemize}
+    \item Solution via \gls{cg} method \cite{Kelley1995IterativeEquations}.
+    \item It is natural to populate the matrix $\ma_g$ in an element-by-element 
+      procedure.
+      \begin{align}
+        \label{eq:matrix_population}
+        A_{i,j,g,e} &= \albedo \int_{\partial \Omega_e} \basis_i(\vr) 
+          \basis_j(\vr) \; ds + D_{g,e} 
+          \int_{\Omega_e} \grad \basis_i(\vr) \cdot \grad \basis_j(\vr) \;
+          d\Omega_e + \\
+        &\qquad \Sigma_{r,g,e} \int_{\Omega_e} \basis_i(\vr) \basis_j(\vr)
+          \; d\Omega_e, \\
+        \label{eq:vector_population}
+        f_{i,g,e} &= q_{g,e} \int_{\Omega_e} \basis_i(\vr) \;d\Omega_e.
+      \end{align}
   \end{itemize}
-  Solution via \gls{cg} method 
-  \cite{Kelley1995IterativeEquations}.
-
-  It is natural to populate the matrix $\ma_g$ in an element-by-element 
-  procedure.
-  \begin{align}
-    \label{eq:matrix_population}
-    A_{i,j,g,e} &= \albedo \int_{\partial \Omega_e} \basis_i(\vr) 
-      \basis_j(\vr) \; ds + D_{g,e} 
-      \int_{\Omega_e} \grad \basis_i(\vr) \cdot \grad \basis_j(\vr) \;
-      d\Omega_e \\
-    &\qquad + \Sigma_{r,g,e} \int_{\Omega_e} \basis_i(\vr) \basis_j(\vr)
-      \; d\Omega_e, \\
-    \label{eq:vector_population}
-    f_{i,g,e} &= q_{g,e} \int_{\Omega_e} \basis_i(\vr) \;d\Omega_e.
-  \end{align}
 \end{frame}
 
 \begin{frame}{Integration}
