@@ -33,4 +33,4 @@ title('Thermal Conductivity of Reactor Materials')
 legend({'k_{U10Zr}','k_{HT9}','k_{Na}'})
 set(gca,'FontName','Times New Roman','FontSize',12);
 print('../figs/kfuel_plot.eps','-depsc2');
-close(gcf)
+% close(gcf)

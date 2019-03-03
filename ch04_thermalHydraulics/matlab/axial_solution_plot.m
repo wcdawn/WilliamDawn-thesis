@@ -66,10 +66,10 @@ T0_tester = data(:,7);
 
 figure
 hold on
-plot(Tcool_tester,z_tester,'LineWidth',LW);
-plot(Tclad_tester,z_tester,'LineWidth',LW);
-plot(Tbond_tester,z_tester,'LineWidth',LW);
-plot(Tfuel_tester,z_tester,'LineWidth',LW);
+plot(Tcool_tester,z_tester,'-','LineWidth',LW);
+plot(Tclad_tester,z_tester,'--','LineWidth',LW);
+plot(Tbond_tester,z_tester,'-.','LineWidth',LW);
+plot(Tfuel_tester,z_tester,':','LineWidth',LW);
 hold off
 legend({'T_{cool}','T_{clad}','T_{bond}','T_{fuel}'},'Location','SouthEast')
 ylim([0,z(end)])
@@ -78,7 +78,7 @@ ylabel('Elevation [m]')
 title('Modeled Axial Temperature')
 set(gca,'FontName','Times New Roman','FontSize',12);
 print('../figs/axial_temp_plot.eps','-depsc2');
-close(gcf);
+% close(gcf);
 
 % matlab_blue = [0.00 0.447 0.741];
 % matlab_orange = [0.91 0.41 0.17];
@@ -108,7 +108,8 @@ ylabel('Temperature [K]')
 plot(z,Tcool,'LineWidth',LW);
 plot(z_tester,Tcool_tester,'LineWidth',LW);
 yyaxis right
-plot(z_tester,Tcool_project-Tcool_tester,'LineWidth',LW);
+h = plot(z_tester,Tcool_project-Tcool_tester,'-o','LineWidth',LW);
+set(h,'MarkerFaceColor',get(h,'Color'));
 hold off
 legend({'T_{cool} Analytic','T_{cool} Model','Analytic-Model'},'Location','southoutside')
 title('Temperature Difference')
@@ -117,4 +118,4 @@ xlim([0,z(end)])
 ylabel('Temperature Difference [K]')
 set(gca,'FontName','Times New Roman','FontSize',20);
 print('../figs/axial_difference_plot.eps','-depsc2');
-close(gcf);
+% close(gcf);

@@ -51,12 +51,9 @@ fprintf('Tfuel_ave = %.2f %.2f %.2f\n',Tfuel_ave,myTfuel_ave,Tfuel_ave-myTfuel_a
 fprintf('Tbond_ave = %.2f %.2f %.2f\n',Tbond_ave,myTbond_ave,Tbond_ave-myTbond_ave);
 fprintf('Tclad_ave = %.2f %.2f %.2f\n',Tclad_ave,myTclad_ave,Tclad_ave-myTclad_ave);
 
-ntest = length(rconst);
-delta_selected = (1/num_dots)*ntest;
-selected = floor(1:delta_selected:ntest);
 figure
 hold on
-plot(rconst,Tconst,'-^','Color','r','LineWidth',1.5,'MarkerIndices',selected,'MarkerFaceColor','r')
+plot(rconst,Tconst,':','Color','r','LineWidth',3)
 plot(r,T,'Color',matlab_blue,'LineWidth',LW)
 plot([0,rfuel],[Tfuel_ave,Tfuel_ave],'--','Color',matlab_orange,'LineWidth',LW)
 plot([rfuel,rbond],[Tbond_ave,Tbond_ave],'--','Color',matlab_orange,'HandleVisibility','off','LineWidth',LW)
@@ -79,4 +76,4 @@ hold off
 
 set(gca,'FontName','Times New Roman','FontSize',12);
 print('../figs/radial_temp_plot.eps','-depsc2');
-close(gcf)
+% close(gcf)
