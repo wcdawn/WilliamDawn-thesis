@@ -13,20 +13,12 @@ LW = 2;
 
 T = linspace(400,1200,1000);
 
-ndot = 10;
-ntest = length(T);
-delta_selected = ntest/ndot;
-selected = floor(1:delta_selected:ntest);
-
-matlab_blue = [0.00 0.447 0.741];
-matlab_orange = [0.91 0.41 0.17];
-
 lef_fuel_data = lef_fuel(T);
 
 figure
 hold on
-plot(T,lef_fuel_data,'-o','Color',matlab_blue,'LineWidth',LW,'MarkerIndices',selected,'MarkerFaceColor',matlab_blue)
-plot(T,lef_ht9(T),'-^','Color',matlab_orange,'LineWidth',LW,'MarkerIndices',selected,'MarkerFaceColor',matlab_orange)
+plot(T,lef_fuel_data,'-','LineWidth',LW)
+plot(T,lef_ht9(T),'--','LineWidth',LW)
 hold off
 legend({'LEF U10Zr','LEF HT9'},'Location','NorthWest')
 xlabel('Temperature [K]')
