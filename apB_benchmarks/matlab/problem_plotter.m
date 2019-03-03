@@ -4,11 +4,11 @@ close all
 % pseudo-input
 LW = 1;
 FN = 'Times New Roman';
-FS = 7;
+FS = 10;
 f2f = 1.0;
 
-fname = '../data/monju.csv';
-outname = '../figs/monju.eps';
+fname = '../data/iaea_refl.csv';
+outname = '../figs/iaea_refl.eps';
 
 side = 1.0/sqrt(3.0);
 base = 0.5*side;
@@ -66,9 +66,9 @@ end
 % arrow([key_x+0.8*f2f,key_y-0.5*f2f],[key_x+0.8*f2f,key_y+0.5*f2f],'Length',8,'Ends','both')
 % dimension_str = '14.70 [cm]';
 % text(key_x+f2f,key_y,dimension_str,'FontName',FN,'FontSize',FS+1);
-% bc_str = '$$\nabla \phi_g \cdot \hat{\mathbf{n}} = 0$$';
-% text(4*f2f,1*f2f,bc_str,'Interpreter','latex');
-% text(0*f2f,4*f2f,bc_str,'Interpreter','latex');
+% bc_str = sprintf('Mirror\nSymmetry');
+% text(4*f2f,1*f2f,bc_str,'FontName',FN,'FontSize',FS,'HorizontalAlignment','center');
+% text(0*f2f,4*f2f,bc_str,'FontName',FN,'FontSize',FS,'HorizontalAlignment','center');
 % text(8*f2f,8*f2f,'$$\alpha=0.5$$','Interpreter','latex');
 
 % SNR
@@ -84,9 +84,9 @@ end
 % arrow([key_x+0.8*f2f,key_y-0.5*f2f],[key_x+0.8*f2f,key_y+0.5*f2f],'Length',8,'Ends','both')
 % dimension_str = '11.20 [cm]';
 % text(key_x+f2f,key_y,dimension_str,'FontName',FN,'FontSize',FS+1);
-% bc_str = '$$\nabla \phi_g \cdot \hat{\mathbf{n}} = 0$$';
-% text(4*f2f,-1*f2f,bc_str,'Interpreter','latex');
-% text(0*f2f,4*f2f,bc_str,'Interpreter','latex');
+% bc_str = sprintf('Mirror\nSymmetry');
+% text(4*f2f,-1*f2f,bc_str,'FontName',FN,'FontSize',FS,'HorizontalAlignment','center');
+% text(1*f2f,4*f2f,bc_str,'FontName',FN,'FontSize',FS,'HorizontalAlignment','center');
 % text(7*f2f,7*f2f,'$$\alpha=0.5$$','Interpreter','latex');
 
 % HWR
@@ -120,30 +120,30 @@ end
 % arrow([key_x+0.8*f2f,key_y-0.5*f2f],[key_x+0.8*f2f,key_y+0.5*f2f],'Length',6,'Ends','both')
 % dimension_str = '20.00 [cm]';
 % text(key_x+f2f,key_y,dimension_str,'FontName',FN,'FontSize',FS+1);
-% bc_str = '$$\nabla \phi_g \cdot \hat{\mathbf{n}} = 0$$';
-% text(4*f2f,1*f2f,bc_str,'Interpreter','latex');
-% text(-1*f2f,1.5*f2f,bc_str,'Interpreter','latex');
+% bc_str = sprintf('Mirror\nSymmetry');
+% text(4*f2f,1*f2f,bc_str,'FontName',FN,'FontSize',FS+3,'HorizontalAlignment','center');
+% text(-0.5*f2f,1.5*f2f,bc_str,'FontName',FN,'FontSize',FS+3,'HorizontalAlignment','center');
 % out_bc_str = sprintf('\\alpha=0.125 \n \\alpha=0.5');
 % text(4*f2f,5*f2f,out_bc_str,'FontName',FN,'FontSize',FS);
 
 % IAEA_REFL
-% key_x = 0.0;
-% key_y = 0.6*max(ring)*f2f;
-% plot(key_x+hex(:,1)*f2f,key_y+hex(:,2)*f2f,'k-','LineWidth',LW)
-% key_str = sprintf('Material\n\\alpha=0.125\n\\alpha=0.5');
-% text(key_x,key_y,key_str,'FontName',FN,'FontSize',FS,...
-%     'HorizontalAlignment','center','VerticalAlignment','middle');
-% eigenvalue_str = sprintf('k_{eff}=\n1.006630 \\alpha=0.125\n1.005507 \\alpha=0.50');
-% text(key_x,key_y*0.7,eigenvalue_str,'FontName',FN,'FontSize',FS+1,...
-%     'HorizontalAlignment','center','VerticalAlignment','middle');
-% arrow([key_x+0.8*f2f,key_y-0.5*f2f],[key_x+0.8*f2f,key_y+0.5*f2f],'Length',6,'Ends','both')
-% dimension_str = '20.00 [cm]';
-% text(key_x+f2f*.9,key_y,dimension_str,'FontName',FN,'FontSize',FS+1);
-% bc_str = '$$\nabla \phi_g \cdot \hat{\mathbf{n}} = 0$$';
-% text(4*f2f,1*f2f,bc_str,'Interpreter','latex');
-% text(-1*f2f,1.5*f2f,bc_str,'Interpreter','latex');
-% out_bc_str = sprintf('\\alpha=0.125 \n \\alpha=0.5');
-% text(4*f2f,5.5*f2f,out_bc_str,'FontName',FN,'FontSize',FS);
+key_x = 0.0;
+key_y = 0.6*max(ring)*f2f;
+plot(key_x+hex(:,1)*f2f,key_y+hex(:,2)*f2f,'k-','LineWidth',LW)
+key_str = sprintf('Material\n\\alpha=0.125\n\\alpha=0.5');
+text(key_x,key_y,key_str,'FontName',FN,'FontSize',FS,...
+    'HorizontalAlignment','center','VerticalAlignment','middle');
+eigenvalue_str = sprintf('k_{eff}=\n1.006630 \\alpha=0.125\n1.005507 \\alpha=0.50');
+text(key_x,key_y*0.7,eigenvalue_str,'FontName',FN,'FontSize',FS+1,...
+    'HorizontalAlignment','center','VerticalAlignment','middle');
+arrow([key_x+0.8*f2f,key_y-0.5*f2f],[key_x+0.8*f2f,key_y+0.5*f2f],'Length',6,'Ends','both')
+dimension_str = '20.00 [cm]';
+text(key_x+f2f*.9,key_y,dimension_str,'FontName',FN,'FontSize',FS+1);
+bc_str = sprintf('Mirror\nSymmetry');
+text(4*f2f,1*f2f,bc_str,'FontName',FN,'FontSize',FS+3,'HorizontalAlignment','center');
+text(-0.5*f2f,1.5*f2f,bc_str,'FontName',FN,'FontSize',FS+3,'HorizontalAlignment','center');
+out_bc_str = sprintf('\\alpha=0.125 \n \\alpha=0.5');
+text(4*f2f,5.5*f2f,out_bc_str,'FontName',FN,'FontSize',FS);
 
 % KNK
 % key_x = 0.0;
@@ -161,19 +161,19 @@ end
 % text(5*f2f,5*f2f,'\alpha=0.5','FontName',FN,'FontSize',FS+3)
 
 % MONJU
-key_x = -5*f2f;
-key_y = 1*max(ring)*f2f;
-plot(key_x+hex(:,1)*f2f,key_y+hex(:,2)*f2f,'k-','LineWidth',LW)
-key_str = sprintf("Mat'l");
-text(key_x,key_y,key_str,'FontName',FN,'FontSize',FS,...
-    'HorizontalAlignment','center','VerticalAlignment','middle');
-arrow([key_x+0.8*f2f,key_y-0.5*f2f],[key_x+0.8*f2f,key_y+0.5*f2f],'Length',6,'Ends','both')
-dimension_str = '11.56 [cm]';
-text(key_x+f2f,key_y,dimension_str,'FontName',FN,'FontSize',FS+1);
-bc_str = sprintf('Rotational\nSymmetry');
-text(3*f2f,-1.3*f2f,bc_str,'FontName',FN,'FontSize',FS+3,'HorizontalAlignment','center')
-text(-4*f2f,3*f2f,bc_str,'FontName',FN,'FontSize',FS+3,'HorizontalAlignment','center')
-text(8*f2f,8*f2f,'\alpha=0.5','FontName',FN,'FontSize',FS+3)
+% key_x = -5*f2f;
+% key_y = 1*max(ring)*f2f;
+% plot(key_x+hex(:,1)*f2f,key_y+hex(:,2)*f2f,'k-','LineWidth',LW)
+% key_str = sprintf("Mat'l");
+% text(key_x,key_y,key_str,'FontName',FN,'FontSize',FS,...
+%     'HorizontalAlignment','center','VerticalAlignment','middle');
+% arrow([key_x+0.8*f2f,key_y-0.5*f2f],[key_x+0.8*f2f,key_y+0.5*f2f],'Length',6,'Ends','both')
+% dimension_str = '11.56 [cm]';
+% text(key_x+f2f,key_y,dimension_str,'FontName',FN,'FontSize',FS+1);
+% bc_str = sprintf('Rotational\nSymmetry');
+% text(3*f2f,-1.3*f2f,bc_str,'FontName',FN,'FontSize',FS+3,'HorizontalAlignment','center')
+% text(-4*f2f,3*f2f,bc_str,'FontName',FN,'FontSize',FS+3,'HorizontalAlignment','center')
+% text(8*f2f,8*f2f,'\alpha=0.5','FontName',FN,'FontSize',FS+3)
 
 hold off
 axis equal

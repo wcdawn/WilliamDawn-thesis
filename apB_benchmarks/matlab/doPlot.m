@@ -73,20 +73,20 @@ function doPlot(FS,ring,around,material,refpwr,refpwr2)
         
         % put the text there
         if (refpwr(i) == 0.0)
-%             this_str = sprintf('%d',material(i));
+            this_str = sprintf('%d',material(i));
 %             this_str = sprintf('%d\n---',material(i));
-            this_str = material_names{material(i)};
+%             this_str = material_names{material(i)};
             if ((strcmp(this_str,'CR')) && ((ring(i) == 6) || (ring(i) == 7)))
-                fill(this_hex(:,1),this_hex(:,2),0.6*ones(1,3));
+%                 fill(this_hex(:,1),this_hex(:,2),0.6*ones(1,3));
             end
         else
 %             this_str = sprintf('%d',material(i));
-%             this_str = sprintf('%d\n%.4f',material(i),refpwr(i));
+            this_str = sprintf('%d\n%.4f',material(i),refpwr(i));
             if (exist('refpwr2','var'))
                 this_str = ...
                     sprintf('%d\n%.4f\n%.4f',material(i),refpwr(i),refpwr2(i));
             end
-            this_str = material_names{material(i)};
+%             this_str = material_names{material(i)};
         end
         text(xc,yc,this_str,'FontName',FN,'FontSize',FS,...
             'HorizontalAlignment','center','VerticalAlignment','middle');
