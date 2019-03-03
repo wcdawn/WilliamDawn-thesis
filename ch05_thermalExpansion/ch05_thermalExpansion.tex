@@ -138,9 +138,9 @@
   coordinates uniformly throughout the reactor, expands area fractions within
   finite elements, and decreases number densities accordingly.
 
-  All dimensions in the reactor are expanded assuming the user-input
+  All dimensions in the reactor are expanded assuming the user input
   dimensions are at room-temperature conditions. Dimensions are expanded
-  according to two user-input temperatures, \texpfuel and \texpstruct.
+  according to two user input temperatures, \texpfuel and \texpstruct.
   \texpfuel corresponds to the average temperature of fuel material in the
   reactor and \texpstruct corresponds to the average temperature of structural
   material in the reactor. Typically, these values come from a previous
@@ -148,7 +148,7 @@
   \texpstruct must be known before a thermal expansion simulation begins. This
   is acceptable because the \glspl{lef} from \eref{eq:lef_ht9} and
   \eref{eq:lef_u10zr} are on the order $10^{-2}$ so small changes in
-  user-input temperatures will be insignificant.
+  user input temperatures will be insignificant.
 
   \subsection{Expansion of Finite Element Coordinates}
     \label{sec:expansion_of_fe_coordinates}
@@ -326,7 +326,7 @@
   The effect of thermal expansion on the effective neutron multiplication
   factor, $\keff$, is shown in this section. As stated previously in
   \sref{sec:model_details}, the user must input effective temperatures to which
-  the reactor is thermally expanded. These user-input values, $\texpfuel$ and
+  the reactor is thermally expanded. These user input values, $\texpfuel$ and
   $\texpstruct$, are varied and all other thermal feedback effects are disabled
   in the simulation. For this simplified demonstration, $\texpfuel=\texpstruct$.
   It is expected that thermal expansion will cause a significant decrease in
