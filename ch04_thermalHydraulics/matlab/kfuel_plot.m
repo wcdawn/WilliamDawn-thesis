@@ -1,7 +1,7 @@
 clear
 close all
 
-x = 0.1; % U-10Zr
+x = 0.1; % U10Zr
 
 kU   = @(T)(21.73 + 1.591e-2*T + 5.907e-6*T^2);
 kZr  = @(T)(8.853 + 7.082e-3*T + 2.533e-6*T^2 + 2.992e3/T);
@@ -30,7 +30,7 @@ xlim([Ttest(1),Ttest(end)])
 xlabel('T [K]')
 ylabel('Thermal Conductivity [W/m/K]')
 title('Thermal Conductivity of Reactor Materials')
-legend({'k_{U-10Zr}','k_{HT9}','k_{Na}'})
+legend({'k_{U10Zr}','k_{HT9}','k_{Na}'})
 set(gca,'FontName','Times New Roman','FontSize',12);
 print('../figs/kfuel_plot.eps','-depsc2');
 close(gcf)
