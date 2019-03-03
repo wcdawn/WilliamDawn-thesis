@@ -5,13 +5,15 @@
   The fast reactor is entirely composed of metals and, as such,
   experiences significant thermal expansion. While other designs may employ
   non-metallic fuel material (e.g. oxides or carbides), these are not considered
-  in this work. Reactor designs with metal fuel include \gls{ebr-ii}, as
-  designed and built by \gls{anl}, and PRISM, as designed by \gls{geh}.
+  in this work. In the future, nonmetallic fuels could be considered by
+  including new material properties in the model. Reactor designs with metal
+  fuel include \gls{ebr-ii}, as designed and built by \gls{anl}, and PRISM, as
+  designed by \gls{geh}.
 
   In metal fueled reactors, thermal expansion represents a significant
-  reactivity feedback effect.  The preliminary safety information document for
+  reactivity feedback effect. The preliminary safety information document for
   PRISM presents an estimate for thermal expansion feedback such that a 1\%
-  increase in radial dimension results in $-0.5 \units{$\Delta k$}$ indicating a
+  increase in radial dimension results in $-0.5 \units{$\Delta k$}$, indicating a
   significant effect \cite{GEFR793}. Additionally, thermal expansion has been
   demonstrated to serve as an inherent safety feature of fast reactors. In the
   remarkable \gls{ebr-ii} demonstrations in April 1986, two major accident
@@ -39,17 +41,19 @@
   The inherent safety demonstration test at \gls{ebr-ii} demonstrated the
   passive safety of the liquid metal cooled and metal fueled reactor design.
   These tests are simply not possible with currently operating \glspl{lwr}
-  designs. Using nothing but natural phenomena, the reactor was demonstrated to
-  shutdown and subsequent heat removal was achieved \cite{ebriitests}. These
-  tests are pivotal the strategy to demonstrate the performance of similar
-  reactors in \gls{atws} events. The tests also demonstrate the importance of 
-  modeling multiphysics effects in fast reactor applications.
+  designs. If operating \glspl{lwr} were to undergo these tests, the reactor
+  cores would not survive. Using nothing but natural phenomena, the reactor was
+  demonstrated to shutdown and subsequent heat removal was achieved
+  \cite{ebriitests}. These tests are pivotal the strategy to demonstrate the
+  performance of similar reactors in \gls{atws} events. The tests also
+  demonstrate the importance of modeling multiphysics effects in fast reactor
+  applications.
 
 \section{Material Properties}
   \label{sec:model_details__material_properties}
-  All structural materials in the reactor are thermally expanded as HT9
-  stainless steel. Fuel material is thermally expanded as metallic uranium
-  with 10\% Zr by weight included (i.e. U10Zr). The equations for the
+  In this thesis, all structural materials in the reactor are thermally expanded
+  as HT9 stainless steel. Fuel material is thermally expanded as metallic
+  uranium with 10\% Zr by weight included (i.e. U10Zr). The equations for the
   \gls{lef} used in this work are given as functions of temperature
   \begin{equation}
     \label{eq:lef_ht9}
@@ -86,15 +90,15 @@
     \label{fig:lef_plot}
   \end{figure}
 
-  All sodium in the reactor is assumed to be liquid.  Therefore, effects of
+  All sodium in the reactor is assumed to be liquid. Therefore, effects of
   thermal expansion within sodium are described by the change in density as a
-  function of temperature \cite{sodiumProp}, not by an \glsentryshort{lef}. 
+  function of temperature \cite{sodiumProp}, not by a \glsentryshort{lef}. 
   Consistent with this assumption, the mass of sodium within the reactor is not
-  conserved. Sodium coolant will flow into and out of the reactor vessel as
-  structural components thermally expand. Sodium in the bond region will flow
-  upward within the cladding into a gas plenum at the top of the fuel rod as the
-  fuel thermally expands. This is not modeled as the sodium level in the bond is
-  not tracked.
+  conserved with thermal expansion. Sodium coolant will flow into and out of the
+  reactor vessel as structural components thermally expand. Sodium in the bond
+  region will flow upward within the cladding into a gas plenum at the top of
+  the fuel rod as the fuel thermally expands. This is not modeled as the sodium
+  level in the bond is not tracked.
     
 \section{Model Details}
   \label{sec:model_details}
@@ -130,7 +134,7 @@
   spatial resolution. The model developed here for the simulation of fast
   reactors does not estimate temperature and heat generation at all positions
   due to the smearing of hexagonal assemblies. Therefore, a simplified thermal
-  expansion model is developed.  This simplified model expands finite element
+  expansion model is developed. This simplified model expands finite element
   coordinates uniformly throughout the reactor, expands area fractions within
   finite elements, and decreases number densities accordingly.
 
@@ -213,7 +217,7 @@
     These thermally expanded area fractions are then used to homogenize cross
     sections within an assembly as in \sref{sec:cross_section_treatment}.
 
-    The radius of the fuel rod, $R_F$, is expanded using the \gls{lef} for
+    The radius of the fuel material, $R_F$, is expanded using the \gls{lef} for
     U10Zr from \eref{eq:lef_u10zr}. All other dimensions within the hexagonal
     assembly (wire wrap diameter, can thickness, flat-to-flat measurement, etc.)
     are expanded using the \gls{lef} for HT9 from \eref{eq:lef_ht9}. Note that
