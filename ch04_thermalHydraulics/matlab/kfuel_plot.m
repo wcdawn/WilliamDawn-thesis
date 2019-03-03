@@ -24,7 +24,7 @@ figure
 hold on
 plot(Ttest,ktest,'LineWidth',LW);
 plot([Ttest(1),Ttest(end)],[kHT9,kHT9],'--','LineWidth',LW)
-plot([Ttest(1),Ttest(end)],[kNa,kNa],'--','LineWidth',LW)
+plot([Ttest(1),Ttest(end)],[kNa,kNa],'-.','LineWidth',LW)
 hold off
 xlim([Ttest(1),Ttest(end)])
 xlabel('T [K]')
