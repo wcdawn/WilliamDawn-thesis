@@ -21,7 +21,7 @@
     \widetilde{\chi_g}(\vr) & effective fission spectrum for energy group $g$,\\
     \keff & effective neutron multiplication factor, \\
     \nu \Sigma_{f,g}(\vr) & 
-      \parbox[t]{\columnwidth}{number of fission neutrons times microscopic 
+      \parbox[t]{\columnwidth}{number of fission neutrons times macroscopic 
         fission \\
         cross section in energy group $g$ \units{$\frac{1}{\text{cm}}$}, }\\
     \Sigma_{s,g' \rightarrow g} (\vr) & 
@@ -108,7 +108,7 @@
       + \int_{\Omega} \Sigma_{r,g}(\vr) \phi_g(\vr) v(\vr) \;d\vr =
       \int_{\Omega} q_g(\vr) v(\vr) \;d\vr
   \end{equation}
-  Partition integral into a summation of integrals over elements.
+  Partition the integral into a summation of integrals over elements.
   \begin{multline}
     \label{eq:element_by_element}
     -\sum_{e=1}^{N_E} D_{g,e} 
@@ -205,9 +205,9 @@
           \int_{\Omega_e} \grad \basis_i(\vr) \cdot \grad \basis_j(\vr) \;
           d\Omega_e + \\
         &\qquad \Sigma_{r,g,e} \int_{\Omega_e} \basis_i(\vr) \basis_j(\vr)
-          \; d\Omega_e, \\
+          \; d\Omega_e \\
         \label{eq:vector_population}
-        f_{i,g,e} &= q_{g,e} \int_{\Omega_e} \basis_i(\vr) \;d\Omega_e.
+        f_{i,g,e} &= q_{g,e} \int_{\Omega_e} \basis_i(\vr) \;d\Omega_e
       \end{align}
   \end{itemize}
 \end{frame}
@@ -237,10 +237,10 @@
   \begin{figure}
     \centering
     \subfloat[General Triangle Element.]
-      {\includegraphics[width=0.35\textwidth]{sketch_triangle}}
-    \vspace{0.2in}
+      {\includegraphics[width=0.4\textwidth]{sketch_triangle}}
+    \hspace{0.2in}
     \subfloat[Reference Triangle.]
-      {\includegraphics[width=0.35\textwidth]{Tref}}
+      {\includegraphics[width=0.4\textwidth]{Tref}}
     %\caption{Description of Triangle Elements.}
     \label{fig:triangle_elements}
   \end{figure}
@@ -261,14 +261,12 @@
       \end{figure}
     \end{column}
     \begin{column}{0.5\textwidth}
-      \vspace*{\fill}
       \begin{figure}
         \centering
         \includegraphics[width=0.8\textwidth]{Wref}
         \caption{Description of Reference Wedge.}
         \label{fig:Wref}
       \end{figure}
-      \vspace*{\fill}
     \end{column}
   \end{columns}
 \end{frame}
