@@ -1,13 +1,9 @@
 clear
 close all
 
-Lx = 1;
-Ly = 1;
+Lx = 100;
+Ly = 100;
 ntest = 100;
-
-qfixed = 1;
-sigma_r = 1;
-nusigma_f = 2;
 
 fun = @(x,y)(sin((pi/Lx)*x).*sin((pi/Ly)*y));
 
@@ -23,7 +19,7 @@ val = fun(X,Y);
 
 figure
 imagesc(x,y,val);
-view([0,90])
+view([0,-90])
 colormap(viridis)
 colorbar
 xlabel('x [cm]')
@@ -32,4 +28,4 @@ title('Two-Dimension, One-Group, Criticality')
 
 set(gca,'FontName','Times New Roman','FontSize',12);
 print('../figs/2d1g.eps','-depsc2');
-% close(gcf)
+close(gcf)
