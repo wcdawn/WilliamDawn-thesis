@@ -1,8 +1,8 @@
 clear
 close all
 
-T = 1;
-H = 2;
+T = 50;
+H = 100;
 ntest = 100; 
 
 alpha_0 = fzero(@(z) besselj(0, z), 3);
@@ -21,7 +21,7 @@ val = fun(R,Z)';
 
 figure('pos',[1000 1000 650 1000]);
 imagesc(r,z,val');
-view([0,90]);
+view([0,-90]);
 colormap(viridis);
 colorbar;
 xlabel('r [cm]');
