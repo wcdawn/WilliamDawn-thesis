@@ -99,20 +99,19 @@
     }
     \end{center}
   \end{table}
-  \begin{equation}
-    \label{eq:analytic_2d1g}
-    \phi(x,y) = \phi_0 \sin\left(\frac{\pi}{L_x} x\right) \, 
-      \sin\left(\frac{\pi}{L_y} y\right)
-  \end{equation}
 \end{frame}
 
 \begin{frame}{Two-Dimension, One-Group, Criticality}
   \begin{figure}
     \centering
     \includegraphics[width=0.7\textwidth]{2d1g}
-    \caption{Two-Dimension Criticality Flux Shape.}
     \label{fig:2d1g}
   \end{figure}
+  \begin{equation}
+    \label{eq:analytic_2d1g}
+    \phi(x,y) = \phi_0 \sin\left(\frac{\pi}{L_x} x\right) \, 
+      \sin\left(\frac{\pi}{L_y} y\right)
+  \end{equation}
 \end{frame}
 
 \begin{frame}{Three-Dimension, One-Group, Finite Cylinder}
@@ -154,12 +153,6 @@
     %\caption{Mesh Refinement of Curved Mesh.}
     \label{fig:circle_meshes}
   \end{figure}
-  \vspace{-0.1in}
-  \begin{equation}
-    \label{eq:analytic_finite_cyl}
-    \phi(r,z) = \phi_0 \, 
-      J_0\left(\frac{\alpha_0}{T} r\right) \sin\left(\frac{\pi}{H} z \right)
-  \end{equation}
 \end{frame}
 
 \begin{frame}{Three-Dimension, One-Group, Finite Cylinder}
@@ -168,9 +161,14 @@
     \subfloat{\includegraphics[width=0.4\textwidth]{finite_cyl}}
     \hspace{0.2in}
     \subfloat{\includegraphics[width=0.4\textwidth]{./figs/finite_cyl_refine3}}
-    \caption{Example Finite Cylinder Flux Shape.}
     \label{fig:finite_cyl}
   \end{figure}
+  \vspace{-0.1in}
+  \begin{equation}
+    \label{eq:analytic_finite_cyl}
+    \phi(r,z) = \phi_0 \, 
+      J_0\left(\frac{\alpha_0}{T} r\right) \sin\left(\frac{\pi}{H} z \right)
+  \end{equation}
 \end{frame}
 
 \begin{frame}{Benchmark Solutions}

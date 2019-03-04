@@ -76,8 +76,6 @@
 \begin{frame}{Combining Neutron Source}
   \begin{itemize}
     \item Neutron sources are combined into a single term.
-    \item This will resemble the \gls{fem} formulation.
-    \item Rewrite the multigroup neutron diffusion equation.
   \end{itemize}
   \begin{equation}
     \label{eq:multigroup_source}
@@ -142,36 +140,39 @@
     \label{eq:linear_combination}
     \phi_g(\vr) = \sum_{i=1}^{DOF} \upsilon_{g,i} \, \basis_i(\vr)
   \end{equation}
-  Coefficients $\{\upsilon_{g,i}\}$ will be solved in a linear system.
+
   $v(\vr) \in H_1(\Omega)$ is arbitrary and is chosen to be a
   linear combination of the basis functions with unit magnitude.
   \begin{equation} 
     \label{eq:linear_superposition}
     v(\vr) = \sum_{j=1}^{DOF} \basis_j(\vr)
   \end{equation}
+
+  Typically, $\basis(\vr)$ is a polynomial of a chosen order (e.g. linear,
+  quadratic, cubic).
 \end{frame}
 
 \begin{frame}{Linear System of Equations}
-  Including albedo form of boundary condition and assumption of 
-  linear combination of basis functions.
-  \begin{multline}
-    \label{eq:linear_equation}
-    \sum_{i=1}^{DOF} \upsilon_{i,g} \! \sum_{j=1}^{DOF} \left(
-      \sum_{e=1}^{N_E} \albedo \int_{\partial \Omega_e} \! \!
-      \basis_i(\vr)  \basis_j(\vr) ds +
-      \sum_{e=1}^{N_E} D_{g,e} 
-      \int_{\Omega_e} \! \grad \basis_i(\vr) \cdot \grad \basis_j(\vr) d\vr
-    \right.
-    \\
-    \left.
-      +
-      \sum_{e=1}^{N_E} \Sigma_{r,g,e}
-      \int_{\Omega_e} \basis_i(\vr) \basis_j(\vr) \; d\vr \right) 
-      =
-      \sum_{i=1}^{DOF} \left(
-      \sum_{e=1}^{N_E} q_{g,e} 
-      \int_{\Omega_e} \basis_i(\vr) \; d\vr \right)
-  \end{multline}
+  %Including albedo form of boundary condition and assumption of 
+  %linear combination of basis functions.
+  %\begin{multline}
+  %  \label{eq:linear_equation}
+  %  \sum_{i=1}^{DOF} \upsilon_{i,g} \! \sum_{j=1}^{DOF} \left(
+  %    \sum_{e=1}^{N_E} \albedo \int_{\partial \Omega_e} \! \!
+  %    \basis_i(\vr)  \basis_j(\vr) ds +
+  %    \sum_{e=1}^{N_E} D_{g,e} 
+  %    \int_{\Omega_e} \! \grad \basis_i(\vr) \cdot \grad \basis_j(\vr) d\vr
+  %  \right.
+  %  \\
+  %  \left.
+  %    +
+  %    \sum_{e=1}^{N_E} \Sigma_{r,g,e}
+  %    \int_{\Omega_e} \basis_i(\vr) \basis_j(\vr) \; d\vr \right) 
+  %    =
+  %    \sum_{i=1}^{DOF} \left(
+  %    \sum_{e=1}^{N_E} q_{g,e} 
+  %    \int_{\Omega_e} \basis_i(\vr) \; d\vr \right)
+  %\end{multline}
 
   Rewriting in the form common to the \gls{fem}.
   \begin{equation}
@@ -196,19 +197,19 @@
           \cite{textbookli}.
       \end{itemize}
     \item Solution via \gls{cg} method \cite{Kelley1995IterativeEquations}.
-    \item It is natural to populate the matrix $\ma_g$ in an element-by-element 
-      procedure.
-      \begin{align}
-        \label{eq:matrix_population}
-        A_{i,j,g,e} &= \albedo \int_{\partial \Omega_e} \basis_i(\vr) 
-          \basis_j(\vr) \; ds + D_{g,e} 
-          \int_{\Omega_e} \grad \basis_i(\vr) \cdot \grad \basis_j(\vr) \;
-          d\Omega_e + \\
-        &\qquad \Sigma_{r,g,e} \int_{\Omega_e} \basis_i(\vr) \basis_j(\vr)
-          \; d\Omega_e \\
-        \label{eq:vector_population}
-        f_{i,g,e} &= q_{g,e} \int_{\Omega_e} \basis_i(\vr) \;d\Omega_e
-      \end{align}
+    %\item It is natural to populate the matrix $\ma_g$ in an element-by-element 
+    %  procedure.
+    %  \begin{align}
+    %    \label{eq:matrix_population}
+    %    A_{i,j,g,e} &= \albedo \int_{\partial \Omega_e} \basis_i(\vr) 
+    %      \basis_j(\vr) \; ds + D_{g,e} 
+    %      \int_{\Omega_e} \grad \basis_i(\vr) \cdot \grad \basis_j(\vr) \;
+    %      d\Omega_e + \\
+    %    &\qquad \Sigma_{r,g,e} \int_{\Omega_e} \basis_i(\vr) \basis_j(\vr)
+    %      \; d\Omega_e \\
+    %    \label{eq:vector_population}
+    %    f_{i,g,e} &= q_{g,e} \int_{\Omega_e} \basis_i(\vr) \;d\Omega_e
+    %  \end{align}
   \end{itemize}
 \end{frame}
 
@@ -271,11 +272,10 @@
   \end{columns}
 \end{frame}
 
-\begin{frame}{Matrix Ordering}
+\begin{frame}{\gls{rcm} Matrix Ordering}
   \begin{itemize}
     \item Matrix is reordered to increase computational efficiency and compute
       the same solution.
-    \item Improve cache hits.
     \item \gls{rcm} order is chosen \cite{rcm}.
   \end{itemize}
   \vspace{-0.25in}

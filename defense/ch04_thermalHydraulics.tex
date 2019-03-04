@@ -1,20 +1,13 @@
 \section{Thermal Hydraulics}
 \label{sec:thermalHydraulics}
 
-\begin{frame}{Material Temperatures}
-  \vspace{-0.05in}
+\begin{frame}{Assembly Geometry}
   \begin{figure}
-    \begin{tabular}{cc}
-      \subfloat[Cool]{
-        \includegraphics[width=0.35\textwidth]{./figs/temp_cool}} &
-      \subfloat[Clad]{
-        \includegraphics[width=0.35\textwidth]{./figs/temp_clad}} \\
-      \subfloat[Bond]{
-        \includegraphics[width=0.35\textwidth]{./figs/temp_bond}} &
-      \subfloat[Fuel]{
-        \includegraphics[width=0.35\textwidth]{./figs/temp_fuel}}
-    \end{tabular}
-    \caption{Typical \glsentryshort{sfr} Average Material Temperatures.}
+    \centering
+    \subfloat{\includegraphics[width=0.4\textwidth]{pin_model}}
+    \hspace{0.2in}
+    \subfloat{\includegraphics[width=0.4\textwidth]{hex_can}}
+    \label{fig:assy_geometry}
   \end{figure}
 \end{frame}
 
@@ -100,18 +93,6 @@
     H_c &= \frac{N\!u \, k}{D_e} %\\
   \end{align}
   Then, the clad surface temperature, $T_C$ follows.
-\end{frame}
-
-\begin{frame}{Rod Surface Temperatures}
-  Subsequent surface temperatures are given by radial heat conduction.
-  \begin{align}
-    \label{eq:tb_forward}
-    T_B &= T_C + \frac{q'''_{i,k}}{2 k_C} R_F^2
-      \ln\left(\frac{R_C}{R_B}\right) \\
-    \label{eq:tf_forward}
-    T_F &= T_B + \frac{q'''_{i,k}}{2 k_B} R_F^2 
-      \ln\left(\frac{R_B}{R_F}\right) \\
-  \end{align}
 \end{frame}
 
 \begin{frame}{Fuel Centerline Temperature}
