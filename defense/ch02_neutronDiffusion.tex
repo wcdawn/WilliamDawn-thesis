@@ -290,21 +290,30 @@
 
 \begin{frame}{Power Iteration Method}
   \begin{itemize}
-    \item Multigroup neutron diffusion equation is an eigenvalue problem.
     \item Solution for largest eigenvalue $\keff$ and associated eigenvector
-      $\phi_g$.
+      $\vPhi$.
     \item Rewrite the multigroup neutron diffusion equation.
       \begin{equation}
         \label{eq:gehin_notation}
-        \mb(\vPhi,\keff) \vPhi = \frac{1}{\keff} \mm \vPhi
+        \mb(\vPhi,\keff) \, \vPhi = \frac{1}{\keff} \mm \, \vPhi
       \end{equation}
     \item The solution can be written.
+      \begin{equation}
+        %\label{eq:gehin_solution}
+        \vPhi = \frac{1}{\keff} \mr \, \vPhi \quad \text{ where } \quad
+        %\label{eq:gehin_r}
+        \mr = \mb^{-1} \, \mm
+      \end{equation}
+    \item Note: the \gls{fem} is used to calculate $\vPhi$, not $\mr$.
+    \item The power iteration method proceeds.
       \begin{align}
-        \label{eq:gehin_solution}
-        \vPhi &= \frac{1}{\keff} \mr \vPhi \\
-        \label{eq:gehin_r}
-        \mr = \mb^{-1} \mm
+        \label{eq:power_iteration_phi}
+        \vPhi^{(s+1)} &= \frac{1}{\keff^{(s)}} \mr \, \vPhi^{(s)} \\
+        \label{eq:power_iteration_eigenvalue}
+        \keff^{(s+1)} &= \keff^{(s)} \frac{\langle \vw, \vPhi^{(s+1)} \rangle}
+          {\langle \vw, \vPhi^{(s)}\rangle} \qquad s = 1,2,\ldots,\infty
       \end{align}
+
   \end{itemize}
 \end{frame}
 
