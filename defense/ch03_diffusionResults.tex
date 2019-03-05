@@ -156,14 +156,22 @@
 \end{frame}
 
 \begin{frame}{Three-Dimension, One-Group, Finite Cylinder}
-  \begin{figure}
-    \centering
-    \subfloat{\includegraphics[width=0.4\textwidth]{finite_cyl}}
-    \hspace{0.2in}
-    \subfloat{\includegraphics[width=0.4\textwidth]{./figs/finite_cyl_refine3}}
-    \label{fig:finite_cyl}
-  \end{figure}
-  \vspace{-0.1in}
+  \begin{columns}
+    \begin{column}{0.5\textwidth}
+      \begin{figure}
+        \centering
+        \subfloat{\includegraphics[width=0.7\textwidth]{finite_cyl}}
+      \end{figure}
+    \end{column}
+    \begin{column}{0.5\textwidth}
+      \begin{figure}
+        \centering
+        \vspace*{\fill}
+        \subfloat{\includegraphics[width=0.8\textwidth]{./figs/finite_cyl_refine3}}
+        \vspace*{\fill}
+      \end{figure}
+    \end{column}
+  \end{columns}
   \begin{equation}
     \label{eq:analytic_finite_cyl}
     \phi(r,z) = \phi_0 \, 
@@ -232,16 +240,16 @@
 \end{frame}
 
 \begin{frame}{VVER440 Benchmark Power Comparison}
+  \vspace{-0.3in}
   \begin{figure}
     \centering
     \includegraphics[width=\textwidth]{./figs/diffusion_vver440_colored}
     %\caption{VVER440 Benchmark Power Comparison for Most Refined Mesh.}
     \label{fig:diffusion_vver440}
   \end{figure}
-  %\Put(25,350){\includegraphics[width=0.15\textwidth]{hex_description}}
-  \vspace{-0.5in}
+  \vspace{-0.7in}
   \begin{center}
-    {VVER440 Benchmark Power Comparison for Most Refined Mesh.}
+    VVER440 Benchmark Power Comparison for Most Refined Mesh.
   \end{center}
 \end{frame}
 
