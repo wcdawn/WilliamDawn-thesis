@@ -857,7 +857,7 @@
     equation can be rewritten as 
     \begin{equation}
       \label{eq:gehin_notation}
-      \mb(\vPhi,\keff) \vPhi = \frac{1}{\keff} \mm \vPhi
+      \mb(\vPhi,\keff) \, \vPhi = \frac{1}{\keff} \mm \, \vPhi
     \end{equation}
     where $\vPhi$ is the vector of the flux containing all energy groups, matrix 
     $\mb$ contains the diffusion, removal, and all scattering terms, and $\mm$ 
@@ -867,12 +867,12 @@
     rewritten as
     \begin{equation}
       \label{eq:gehin_solution}
-      \vPhi = \frac{1}{\keff} \mr \vPhi
+      \vPhi = \frac{1}{\keff} \mr \, \vPhi
     \end{equation}
     where
     \begin{equation}
       \label{eq:gehin_r}
-      \mr = \mb^{-1} \mm.
+      \mr = \mb^{-1} \, \mm.
     \end{equation}
     Matrix $\mm$ is non-symmetric and is non-negative and $\mb$ is an S-matrix;
     therefore, $\mr$ is a non-symmetric, non-negative matrix.
@@ -883,7 +883,7 @@
     written as 
     \begin{align}
       \label{eq:power_iteration_phi}
-      \vPhi^{(s+1)} &= \frac{1}{\keff^{(s)}} \mr \vPhi^{(s)}, \\
+      \vPhi^{(s+1)} &= \frac{1}{\keff^{(s)}} \mr \, \vPhi^{(s)}, \\
       \label{eq:power_iteration_eigenvalue}
       \keff^{(s+1)} &= \keff^{(s)} \frac{\langle \vw, \vPhi^{(s+1)} \rangle}
         {\langle \vw, \vPhi^{(s)}\rangle}, \qquad s = 1,2,\ldots,\infty,
@@ -908,12 +908,12 @@
       \mu = \frac{1}{\keff}.
     \end{equation}
     The eigenvectors $\vu_n$ and
-    corresponding eigenvalues $\mu_n$ of $\mr$ are defined by
+    corresponding eigenvalues, $\mu_n$, of $\mr$ are defined by
     \begin{equation}
       \label{eq:eigen_definition}
       \vu_n = \mu_n \, \mr \, \vu_n.
     \end{equation}
-    It may be proved that all eigenvalues $\mu$ are real, positive, and 
+    It may be proved that all eigenvalues, $\mu$, are real, positive, and 
     distinct. The eigenvalues are then numbered in the sequence
     \begin{equation}
       \label{eq:eigen_order}
@@ -931,7 +931,7 @@
       \label{eq:eigen_normalization}
       \vu_n^T \vu_n = 1 \qquad \text{for } n = 1, 2, \ldots, N.
     \end{equation}
-    The initial vector $\vPhi^{(0)}$ may be expressed as a projection onto the
+    The initial vector, $\vPhi^{(0)}$, may be expressed as a projection onto the
     eigenvectors using a linear superposition of eigenvectors of the form
     \begin{equation}
       \label{eq:eigen_projection}
@@ -1023,7 +1023,7 @@
     The proof of the power iteration as presented is valid for general solution
     methods to the multigroup neutron diffusion equation. However, the exact
     procedure of this proof is computationally inefficient and not used in
-    practice. The matrix $\mm$ is not inverted to construct $\mr$ as in
+    practice. The matrix $\mb$ is not inverted to construct $\mr$ as in
     \eref{eq:gehin_r}. Instead, \eref{eq:gehin_notation} is solved using an
     iterative solution method. In this work, the \gls{fem} is used to solve
     \eref{eq:gehin_notation} as described in \sref{sec:formulation}. In the
