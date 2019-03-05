@@ -153,26 +153,26 @@
 \end{frame}
 
 \begin{frame}{Linear System of Equations}
-  %Including albedo form of boundary condition and assumption of 
-  %linear combination of basis functions.
-  %\begin{multline}
-  %  \label{eq:linear_equation}
-  %  \sum_{i=1}^{DOF} \upsilon_{i,g} \! \sum_{j=1}^{DOF} \left(
-  %    \sum_{e=1}^{N_E} \albedo \int_{\partial \Omega_e} \! \!
-  %    \basis_i(\vr)  \basis_j(\vr) ds +
-  %    \sum_{e=1}^{N_E} D_{g,e} 
-  %    \int_{\Omega_e} \! \grad \basis_i(\vr) \cdot \grad \basis_j(\vr) d\vr
-  %  \right.
-  %  \\
-  %  \left.
-  %    +
-  %    \sum_{e=1}^{N_E} \Sigma_{r,g,e}
-  %    \int_{\Omega_e} \basis_i(\vr) \basis_j(\vr) \; d\vr \right) 
-  %    =
-  %    \sum_{i=1}^{DOF} \left(
-  %    \sum_{e=1}^{N_E} q_{g,e} 
-  %    \int_{\Omega_e} \basis_i(\vr) \; d\vr \right)
-  %\end{multline}
+  Including albedo form of boundary condition and assumption of 
+  linear combination of basis functions.
+  \begin{multline}
+    \label{eq:linear_equation}
+    \sum_{i=1}^{DOF} \upsilon_{i,g} \! \sum_{j=1}^{DOF} \left(
+      \sum_{e=1}^{N_E} \albedo \int_{\partial \Omega_e} \! \!
+      \basis_i(\vr)  \basis_j(\vr) ds +
+      \sum_{e=1}^{N_E} D_{g,e} 
+      \int_{\Omega_e} \! \grad \basis_i(\vr) \cdot \grad \basis_j(\vr) d\vr
+    \right.
+    \\
+    \left.
+      +
+      \sum_{e=1}^{N_E} \Sigma_{r,g,e}
+      \int_{\Omega_e} \basis_i(\vr) \basis_j(\vr) \; d\vr \right) 
+      =
+      \sum_{i=1}^{DOF} \left(
+      \sum_{e=1}^{N_E} q_{g,e} 
+      \int_{\Omega_e} \basis_i(\vr) \; d\vr \right)
+  \end{multline}
 
   Rewriting in the form common to the \gls{fem}.
   \begin{equation}
