@@ -288,6 +288,26 @@
   \end{figure}
 \end{frame}
 
+\begin{frame}{Power Iteration Method}
+  \begin{itemize}
+    \item Multigroup neutron diffusion equation is an eigenvalue problem.
+    \item Solution for largest eigenvalue $\keff$ and associated eigenvector
+      $\phi_g$.
+    \item Rewrite the multigroup neutron diffusion equation.
+      \begin{equation}
+        \label{eq:gehin_notation}
+        \mb(\vPhi,\keff) \vPhi = \frac{1}{\keff} \mm \vPhi
+      \end{equation}
+    \item The solution can be written.
+      \begin{align}
+        \label{eq:gehin_solution}
+        \vPhi &= \frac{1}{\keff} \mr \vPhi \\
+        \label{eq:gehin_r}
+        \mr = \mb^{-1} \mm
+      \end{align}
+  \end{itemize}
+\end{frame}
+
 \begin{frame}{Power Iteration Algorithm}
 
     \begin{algorithm}[H]
