@@ -273,33 +273,6 @@ top color=transparent!50, bottom color=transparent!100]
 \newtheorem{exercise}[theorem]{Exercise}
 %\newtheorem{problem}[theorem]{Problem}
 
-%Two horrible hacks to get a "note page" after every slide.
-\newcommand{\noteframe}{
-\only<handout>{ %
-  \begin{frame}
-   \frametitle{Notes}
-   \begin{center}
-   \begin{tikzpicture}
-    \foreach \y in {0,1,2,3,4,5,6}
-     \draw[thick] (0,\y) -- (11,\y);
-   \end{tikzpicture}
-   \end{center}
-  \end{frame}
-  }%
-}
-
-\newcommand{\noteslide}{%to be used after every \framebreak
-\only<handout>{ %
-   \begin{center}
-   \begin{tikzpicture}
-    \foreach \y in {0,1,2,3,4,5,6}
-     \draw[thick] (0,\y) -- (11,\y);
-   \end{tikzpicture}
-   \end{center}
-   \framebreak
-   }%
-}
-
 % core color palette
 \definecolor{WolfpackRed}{RGB}{204,0,0}
 \definecolor{WolfpackBlack}{RGB}{0,0,0}
@@ -365,12 +338,13 @@ top color=transparent!50, bottom color=transparent!100]
 \useinnertheme{default}
 \setbeamercolor{block title}{fg=WolfpackBlack,bg=Gray60} %
 \setbeamercolor{block body}{fg=WolfpackBlack,bg=Gray25} %
+\setbeamersize{text margin left=2mm, text margin right=2mm}
 % print multiple slides per page draw border around slide
 \usepackage{pgfpages}
 % print with space for notes
 \usepackage{handoutWithNotes}
 % put 3 slides on 1 page with space for notes
-\pgfpagesuselayout{3 on 1 with notes}[letterpaper, border shrink=5mm]
+\pgfpagesuselayout{3 on 1 with notes}[letterpaper, border shrink=6mm]
 % settings to draw border around every first 3 slide per sheet
 \pgfpageslogicalpageoptions{1}{border code=\pgfusepath{stroke}}
 \pgfpageslogicalpageoptions{2}{border code=\pgfusepath{stroke}}
@@ -380,7 +354,7 @@ top color=transparent!50, bottom color=transparent!100]
   \usebeamercolor[fg]{footline}%
   \hspace{1em}%
   \normalsize
-  \insertframenumber
+  \textcolor{black}{\insertframenumber}
 }
 }
 
