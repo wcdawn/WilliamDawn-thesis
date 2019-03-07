@@ -1,7 +1,7 @@
 clear
 close all
 
-fname = '../data/reactivity_study_smallDelta_bigThexp_fixed.csv';
+fname = '../data/reactivity_study_correctTemp.csv';
 LW = 2;
 FN = 'Times New Roman';
 FS = 12;
@@ -176,8 +176,8 @@ xlabel('% Power');
 ylabel('Doppler Coefficient  K_D');
 title('Doppler Coefficient for ABR');
 set(gca,'FontName',FN,'FontSize',FS);
-print(gcf,'../figs/doppler_coefficient.eps','-depsc2');
-close(gcf)
+% print(gcf,'../figs/doppler_coefficient.eps','-depsc2');
+% close(gcf)
 
 
 fprintf('KDoppler(end) = %.2f\n',KDoppler(end));
