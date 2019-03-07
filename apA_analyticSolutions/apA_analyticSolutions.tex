@@ -7,8 +7,38 @@
   three-dimensional numerical solvers. One-group and two-group problems are
   addressed. Analytic solutions are important because they provide an exact
   solution that allows for analysis of convergence properties for a numerical
-  method.
+  method. A case matrix of the analytic solutions provided in this appendix is
+  provided in \tref{tab:analytic_case_matrix}. A variety of cases are provided
+  including fixed source and criticality problems. The number of spatial
+  dimensions, number of energy groups, and number of materials are varied.
+
+  \begin{table}
+    \caption{Case Matrix for Analytic Solutions.}
+    \label{tab:analytic_case_matrix}
+    \begin{center}
+      \begin{tabular}{lcccc}
+        \toprule
+        Case & Dimensions & Groups & Criticality & Materials \\
+        \midrule
+        % One-Dimension, One-Group, Fixed Source
+        1 & 1 & 1 &   & 1 \\
+        % One-Dimension, One-Group, Criticality
+        2 & 1 & 1 & \true & 1 \\
+        % Two-Dimension, One-Group, Criticality
+        3 & 2 & 1 & \true & 1 \\
+        % One-Dimension, Two-Group, Criticality
+        4 & 1 & 2 & \true & 1 \\
+        % One-Dimension, One-Group, Two-Region, Criticality
+        5 & 1 & 1 & \true & 2 \\
+        % Three-Dimension, One-Group, Finite Cylinder
+        6 & 3 & 1 & \true & 1 \\
+        \bottomrule
+      \end{tabular}
+    \end{center}
+  \end{table}
   
+  \FloatBarrier
+
   For the one-group reference problems, the neutron diffusion problem is written
   \begin{equation} 
     \label{eq:onegroup}

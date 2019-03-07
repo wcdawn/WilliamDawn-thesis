@@ -6,7 +6,31 @@
   These include two-dimensional and three-dimensional reactor benchmark
   problems. These benchmark descriptions are not original works but
   replications of data obtained from other sources. The intent is to make the
-  data more easily accessible for others solving similar problems.
+  data more easily accessible for others solving similar problems. The
+  benchmarks presented in this appendix are summarized in the case matrix in
+  \tref{tab:benchmark_case_matrix}. The benchmarks presented in this appendix
+  include two-dimensional and three-dimensional geometries as well as a variety
+  of energy group structures.
+
+  \begin{table}
+    \caption{Case Matrix for Benchmark Solutions.}
+    \label{tab:benchmark_case_matrix}
+    \begin{center}
+      \begin{tabular}{lccccc}
+        \toprule
+        Benchmark & Dimensions & Groups & Reactor Type &
+          \parbox[t]{0.6in}{\centering Neutron \\ Spectrum} \\
+        \midrule
+        VVER440 & 2 & 2 & \glsentryshort{lwr} & Thermal \\
+        SNR     & 2 & 4 & \glsentryshort{sfr} & Fast \\
+        \glsentryshort{hwr}     & 2 & 2 & \glsentryshort{hwr} & Thermal \\
+        IAEA ($\times4$)    & 2 & 2 & \glsentryshort{pwr} & Thermal \\
+        MONJU   & 3 & 3 & \glsentryshort{sfr} & Fast \\
+        KNK     & 3 & 4 & \glsentryshort{sfr} & Fast \\
+        \bottomrule
+      \end{tabular}
+    \end{center}
+  \end{table}
 
   All reactors in this section are based on a hexagonal design common to fast
   reactors. However, not all benchmarks presented are fast reactors. These
@@ -14,6 +38,8 @@
   diffusion equation solution method in \chref{ch:neutronDiffusion}. As such,
   the cross sections presented are those necessary to solve the multigroup
   neutron diffusion equation. 
+
+  \FloatBarrier
 
   For each benchmark problem, geometry and cross sections are presented. The 
   notation for cross sections are common to the field and noted below.
