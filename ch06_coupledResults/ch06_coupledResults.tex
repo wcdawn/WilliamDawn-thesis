@@ -272,11 +272,7 @@
   modeled for this reactor. The methodology and formulae from
   \sref{sec:reactivity_coefficients} are used. The reactor $\keff$ as a function
   of reactor power is plotted in \fref{fig:keff_effects}. Note $\keff$ decreases
-  as power increases implying a negative power coefficient. Compared to
-  zero-power conditions, these results represent a $590.94~\units{pcm}$ power
-  defect. This power defect is slightly lower than other \glspl{sfr}, but this
-  reactor was designed for steady-state neutronics calculations, not
-  multiphysics simulations.
+  as power increases implying a negative power coefficient.
   
   The reactivity coefficients themselves are plotted in
   \fref{fig:abr_reactivity_coefficients}. The combined power reactivity
@@ -320,3 +316,34 @@
     \caption{\gls{abr} Reactivity Coefficients.}
     \label{fig:abr_reactivity_coefficients}
   \end{figure}
+
+  Multiphysics effects are summarized in \tref{tab:multiphysics_worths}. To
+  separate the contributions of thermal hydraulics and thermal expansion, the
+  reactor was simulated using only the thermal expansion model and using both
+  thermal expansion and thermal hydraulics models.  The data in
+  \tref{tab:multiphysics_worths} indicates a power defect of
+  $-589.49~\units{pcm}$.  This power defect is slightly lower than other
+  \glspl{sfr}, but this reactor was designed for steady-state neutronics
+  calculations, not multiphysics simulations. The majority of the power defect,
+  $-559.64~\units{pcm}$, is attributed to thermal expansion effects.
+  The remaining $-29.85~\units{pcm}$ is attributed to thermal hydraulics and 
+  cross section feedback effects.
+
+  \begin{table}
+    \caption{Reactivity Worths of Multiphysics Effects.}
+    \label{tab:multiphysics_worths}
+    \begin{center}
+      \begin{tabular}{cccc}
+        \toprule
+        Case & $\keff$ & $\rho~\units{pcm}$ & Relative Worth $\units{pcm}$ \\
+        \midrule
+        No Feedback & 0.999808 & & \\
+        \addlinespace[0.1in]
+        Only Thermal Expansion & 0.994246 & -559.64  & -559.64 \\
+        \addlinespace[0.1in]
+        \shortstack{Thermal Hydraulics \\and Thermal Expansion} & 0.993950 &
+          -589.49 & -29.85 \\
+        \bottomrule
+      \end{tabular}
+    \end{center}
+  \end{table}
