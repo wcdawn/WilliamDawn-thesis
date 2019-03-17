@@ -11,6 +11,11 @@
 %\documentclass[handout,12pt]{beamer} % includes notes
 \usetheme{NCSU}
 
+% fix conflict between beamer and subfig
+\makeatletter
+\let\@@magyar@captionfix\relax
+\makeatother
+
 \usepackage{amsmath,amsfonts,amssymb}
 \usepackage{newtxtext}
 \usepackage{microtype}
