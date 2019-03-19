@@ -477,6 +477,7 @@
     \setlength{\ncsu@leading}{\baselineskip-\ncsu@capitalheight}%
     \setlength{\cftaftertoctitleskip}%
               {\ncsu@afterschapsep-\cftbeforechapskip-\ncsu@leading}%
+    \renewcommand{\contentsname}{TABLE OF CONTENTS}
     \tableofcontents%
     \clearpage%
     \ncsu@defaultspacing%
