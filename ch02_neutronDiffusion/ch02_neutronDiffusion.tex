@@ -159,13 +159,6 @@
   for each iteration of the solution (see Step \ref{state:chi_collapse} in
   \algorithmref{algorithm:general}).
 
-  \begin{figure}[b]
-    \centering
-    \includegraphics[width=0.4\textwidth]{fixed0}
-    \caption{Example of Rectangular Unstructured Mesh.}
-    \label{fig:fixed0}
-  \end{figure}
-  
 \section{Formulation of Finite Element Equations}
   \label{sec:formulation}
   This section presents the derivation of the spatial discretization of the
@@ -215,6 +208,14 @@
     Delaunay triangulation) to describe the geometry of the problem. An example
     of an unstructured mesh generated for a rectangular domain is shown in
     \fref{fig:fixed0}.
+
+    \begin{figure}%[b]
+      \centering
+      \includegraphics[width=0.4\textwidth]{fixed0}
+      \caption{Example of Rectangular Unstructured Mesh.}
+      \label{fig:fixed0}
+    \end{figure}
+  
 
     Proceeding with the Galerkin \gls{fem}, \eref{eq:multigroup_source} is
     multiplied by a testing function $v(\vr) \in H_1(\Omega)$ where $H$ is the
