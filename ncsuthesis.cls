@@ -206,7 +206,7 @@
     \nohyphens{\nolbreaks{\ncsu@thesistitle}.
    (Under the direction of
    \ifthenelse{\equal{\ncsu@chairtype}{chair}}%
-              {\ncsu@chair}{\ncsu@cochairI\ and \ncsu@cochairII}.)}\\
+              {\ncsu@chair}{\ncsu@cochairI\ and \ncsu@cochairII}).}\\
 
    \ncsu@defaultspacing
    \thispagestyle{empty}
@@ -426,7 +426,7 @@
             \vfill
        \ncsu@titlepageparagraph
            \vfill
-       \ncsu@program\\[2.5\ncsu@lineheight]
+       \ncsu@program\\[4.5\ncsu@lineheight]
        \ncsu@citystate\\[1\ncsu@lineheight]
        \ncsu@year
            \vfill
