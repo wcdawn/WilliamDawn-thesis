@@ -333,7 +333,14 @@
   calculations, not multiphysics simulations. The majority of the power defect,
   $-559.64~\units{pcm}$, is attributed to thermal expansion effects.
   The remaining $-29.85~\units{pcm}$ is attributed to thermal hydraulics and 
-  cross section feedback effects.
+  cross section feedback effects. This number is a bit deceiving as there is a
+  cancellation of errors occurring. The Doppler reactivity coefficient and
+  \gls{ctc}, as plotted in \fref{fig:doppler_reactivity_coefficient} and
+  \fref{fig:coolant_temperature_reactivity_coefficient} respectively, are shown
+  to have similar magnitude and opposite signs. For the \gls{abr} design, these
+  coefficients are similar in magnitude but other reactors may not have such a
+  cancellation. Therefore, the thermal hydraulics effects remain important for
+  accurate simulation of a general fast reactor.
 
   \begin{table}
     \caption{Reactivity Worths of Multiphysics Effects.}
