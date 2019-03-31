@@ -26,12 +26,9 @@
       \includegraphics[width=0.30\textwidth]{abr_phi_nod_group2}}
   \end{figure}
   \vspace{-0.1in}
-  %\begin{block}{}
-  %  \centering
   \begin{center}
     $\keff =  1.006694 $ \quad (\dif $-700\units{\glsentryshort{pcm}}$)
   \end{center}
-  %\end{block}
 \end{frame}
 
 \begin{frame}{Reactivity Coefficients}
@@ -99,25 +96,27 @@
   \end{figure}
 \end{frame}
 
-\begin{frame}{Reactivity Feedback Values}
+\begin{frame}{Multiphysics Contributions to Total Power Defect}
+  \begin{itemize}
+    \item $-559.64~\units{pcm}$ due to thermal expansion effects.
+    \item $-29.85~\units{pcm}$ due to thermal hydraulics effects.
+    \item Cancellation of error due to $\alpha_{Doppler}$ and $\alpha_{CTC}$.
+  \end{itemize}
   \begin{table}
-    %\caption{}
-    %\label{}
-    \begin{center}
-      \resizebox{\textwidth}{!}{
-        \begin{tabular}{cccc}
-          \toprule
-          Case & $\keff$ & $\rho~\units{pcm}$ & Incremental Worth $\units{pcm}$ \\
-          \midrule
-          No Feedback & 0.999808 & & \\
-          \addlinespace[0.1in]
-          Only Thermal Expansion & 0.994246 & -559.64  & -559.64 \\
-          \addlinespace[0.1in]
-          \shortstack{Thermal Hydraulics \\and Thermal Expansion} & 0.993950 &
-            -589.49 & -29.85 \\
-          \bottomrule
-        \end{tabular}
-      }
-    \end{center}
+    %\caption{Multiphysics Contributions to Total Power Defect.}
+    \label{tab:multiphysics_worths}
+    \centering
+    \resizebox{\textwidth}{!}{
+    \begin{tabular}{ccccc}
+      \toprule
+      Case & Thermal Expansion Power & Thermal Hydraulic Power & $\keff$ & 
+        Reactivity $\units{pcm}$ \\
+      \midrule
+      1 & 0\%   & 0\%   & 0.999808 & \\
+      1 & 100\% & 0\%   & 0.994246 & -559.64 \\
+      1 & 100\% & 100\% & 0.993950 & -589.49 \\
+      \bottomrule
+    \end{tabular}
+  }
   \end{table}
 \end{frame}

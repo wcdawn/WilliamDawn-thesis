@@ -327,7 +327,7 @@
   separate the contributions of thermal hydraulics and thermal expansion, the
   reactor was simulated using only the thermal expansion model and using both
   thermal expansion and thermal hydraulics models.  The data in
-  \tref{tab:multiphysics_worths} indicates a power defect of
+  \tref{tab:multiphysics_worths} indicates a total power defect of
   $-589.49~\units{pcm}$.  This power defect is slightly lower than other
   \glspl{sfr}, but this reactor was designed for steady-state neutronics
   calculations, not multiphysics simulations. The majority of the power defect,
@@ -344,20 +344,17 @@
   accurate simulation of a general fast reactor.
 
   \begin{table}
-    \caption{Reactivity Worths of Multiphysics Effects.}
+    \caption{Multiphysics Contributions to Total Power Defect.}
     \label{tab:multiphysics_worths}
-    \begin{center}
-      \begin{tabular}{cccc}
-        \toprule
-        Case & $\keff$ & $\rho~\units{pcm}$ & Incremental Worth $\units{pcm}$ \\
-        \midrule
-        No Feedback & 0.999808 & & \\
-        \addlinespace[0.1in]
-        Only Thermal Expansion & 0.994246 & -559.64  & -559.64 \\
-        \addlinespace[0.1in]
-        \shortstack{Thermal Hydraulics \\and Thermal Expansion} & 0.993950 &
-          -589.49 & -29.85 \\
-        \bottomrule
-      \end{tabular}
-    \end{center}
+    \centering
+    \begin{tabular}{ccccc}
+      \toprule
+      Case & Thermal Expansion Power & Thermal Hydraulic Power & $\keff$ & 
+        Reactivity $\units{pcm}$ \\
+      \midrule
+      1 & 0\%   & 0\%   & 0.999808 & \\
+      1 & 100\% & 0\%   & 0.994246 & -559.64 \\
+      1 & 100\% & 100\% & 0.993950 & -589.49 \\
+      \bottomrule
+    \end{tabular}
   \end{table}
