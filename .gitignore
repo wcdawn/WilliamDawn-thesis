@@ -29,5 +29,7 @@
 *.gls
 *.ist
 
-# this may get added later...
+# ignore all pdfs except the final document
 *.pdf
+!WilliamDawn-thesis.pdf
+!WilliamDawn-defense.pdf
