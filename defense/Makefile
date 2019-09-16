@@ -26,4 +26,4 @@ forcedefense :
 	$(MAKE) defense
 
 clean : 
-	rm $(DEFENSE_AUX) $(DEFENSE_INTERMEDIATES)
+	rm -f $(DEFENSE_AUX) $(DEFENSE_INTERMEDIATES)

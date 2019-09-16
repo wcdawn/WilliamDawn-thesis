@@ -35,5 +35,5 @@ forcetext :
 	$(MAKE) text
 
 clean :
-	rm $(AUX) $(INTERMEDIATES)
+	rm -f $(AUX) $(INTERMEDIATES)
 	$(MAKE) -C ./defense/ clean
