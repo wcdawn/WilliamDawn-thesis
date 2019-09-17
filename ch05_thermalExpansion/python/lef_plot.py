@@ -27,7 +27,7 @@ lef_fuel_data = lef_fuel(T)
 
 fig = plt.figure()
 plt.plot(T, lef_fuel_data)
-plt.plot(T, lef_ht9(T))
+plt.plot(T, lef_ht9(T), '--')
 plt.legend(['LEF U10Zr', 'LEF HT9'])
 plt.xlabel('Temperature [K]')
 plt.ylabel('Linear Expansion Factor (LEF)')
