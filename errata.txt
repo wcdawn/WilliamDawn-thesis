@@ -1,0 +1,2 @@
+Equation (A.95) should read
+\frac{k2}{k1} = 0.261324
