@@ -30,6 +30,7 @@
 *.ist
 
 # ignore all pdfs except the final document
-*.pdf
-!WilliamDawn-thesis.pdf
-!WilliamDawn-defense.pdf
+WilliamDawn-thesis.pdf
+WilliamDawn-defense.pdf
+
+hidden_epstopdf/*.pdf
