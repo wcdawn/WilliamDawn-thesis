@@ -18,8 +18,6 @@ def bandwidth(A):
         this_bandwidth = max(hi-lo, this_bandwidth)
     return this_bandwidth
 
-            
-
 LW = 2
 FN = 'Times New Roman'
 FS = 12
@@ -44,11 +42,13 @@ for i in range(len(data_uno[:,0])):
 plt.figure()
 plt.spy(A_uno, markersize=2)
 plt.title('Unordered Pattern - Bandwidth {:d}'.format(bandwidth(A_uno)))
-plt.savefig('./uno_pattern.png')
+plt.tight_layout()
+plt.savefig('../figs/uno_pattern.pdf', bbox_inches='tight', pad_inches=0)
 plt.close()
 
 plt.figure()
 plt.spy(A_rcm, markersize=2)
 plt.title('RCM Pattern - Bandwidth {:d}'.format(bandwidth(A_rcm)))
-plt.savefig('./rcm_pattern.png')
+plt.tight_layout()
+plt.savefig('../figs/rcm_pattern.pdf', bbox_inches='tight', pad_inches=0)
 plt.close()
