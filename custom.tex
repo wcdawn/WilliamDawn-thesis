@@ -1,0 +1,132 @@
+\usepackage[section, above, below]{placeins}
+% above & below helps to relax the strict FloatBarrier
+% this helps in the thermal conductivities appendix
+
+%\usepackage{draftwatermark}
+
+\usepackage{xcolor}
+
+\usepackage{sectsty}
+\allsectionsfont{\raggedright}
+
+\usepackage[chapter]{algorithm} % make sure to reset count at the new chapter
+\usepackage[noend]{algpseudocode}
+\renewcommand{\thealgorithm}{\arabic{chapter}.\arabic{algorithm}}
+
+\usepackage{csvsimple}
+
+\usepackage{subcaption}
+\usepackage{threeparttable}
+
+\usepackage{isotope}
+
+\usepackage{float}
+
+% reduce line spacing in verbatim environment to make things look more reasonable
+% 1.0 would be a more reasonable value but 0.0 looks good for ascii art
+\makeatletter
+\def\verbatim@font{\linespread{0.0}\normalfont\ttfamily}
+\makeatother
+
+\usepackage[all]{nowidow}
+
+\usepackage{textcomp} % texttrademark
+
+% define a command called \titlebreak that will only break in the text, not table of contents
+% table of contents needs to be wrapped like
+% \begingroup\intoctrue
+% \tableofcontents
+% \endgroup
+\newif\ifintoc
+\DeclareRobustCommand{\titlebreak}{%
+  \ifintoc
+    \unskip\space
+  \else
+    \newline
+  \fi
+}
+
+\renewcommand{\epsilon}{\varepsilon}
+
+\newenvironment{conditions}{\par\noindent\begin{tabular}{l@{${}={}$}l}}{\end{tabular}\vspace{0.25\baselineskip}\par\noindent}
+
+\usepackage{footnote}
+\makesavenoteenv{tabular} % allow footnotes at bottom of page for a table
+\makesavenoteenv{figure} % allow footnotes at bottom of page for a table
+\renewcommand*{\thefootnote}{\fnsymbol{footnote}} % use symbols instead of numbers in footnotes
+
+\usepackage{siunitx}
+\DeclareSIUnit{\dof}{\glsentryshort{dof}}
+\DeclareSIUnit{\pcm}{\glsentryshort{pcm}}
+\DeclareSIUnit{\mfp}{\glsentryshort{mfp}}
+\DeclareSIUnit{\weightpercent}{wt.\!\unit{\percent}}
+\DeclareSIPrefix{\million}{M}{6}
+\DeclareSIPrefix{\billion}{B}{9}
+
+\usepackage{makecell} % thead
+\usepackage{textcomp}
+
+\newcommand{\mc}[1]{\multicolumn{1}{c}{#1}}
+
+\usepackage{tikz}
+\usepackage{varwidth, enumitem}
+\usetikzlibrary{decorations.pathreplacing}
+\usetikzlibrary{calc}
+\usetikzlibrary{shapes, arrows.meta, positioning}
+
+%%%% % save tikz images to pdfs
+%%%% \usetikzlibrary{external}
+%%%% \tikzexternalize % activate!
+
+% segment length      -- distance between waves
+% amplitude           -- width of waves
+% meta-segment length -- degree of waviness
+\pgfdeclaredecoration{discontinuity}{start}{
+  \state{start}[width=0.5\pgfdecoratedinputsegmentremainingdistance-0.5\pgfdecorationsegmentlength,next state=first wave]
+  {}
+  \state{first wave}[width=\pgfdecorationsegmentlength, next state=second wave]
+  {
+    \pgfpathlineto{\pgfpointorigin}
+    \pgfpathmoveto{\pgfqpoint{0pt}{\pgfdecorationsegmentamplitude}}
+    \pgfpathcurveto
+        {\pgfpoint{-0.25*\pgfmetadecorationsegmentlength}{0.75\pgfdecorationsegmentamplitude}}
+        {\pgfpoint{-0.25*\pgfmetadecorationsegmentlength}{0.25\pgfdecorationsegmentamplitude}}
+        {\pgfpoint{0pt}{0pt}}
+    \pgfpathcurveto
+        {\pgfpoint{0.25*\pgfmetadecorationsegmentlength}{-0.25\pgfdecorationsegmentamplitude}}
+        {\pgfpoint{0.25*\pgfmetadecorationsegmentlength}{-0.75\pgfdecorationsegmentamplitude}}
+        {\pgfpoint{0pt}{-\pgfdecorationsegmentamplitude}}
+}
+\state{second wave}[width=0pt, next state=do nothing]
+  {
+    \pgfpathmoveto{\pgfqpoint{0pt}{\pgfdecorationsegmentamplitude}}
+    \pgfpathcurveto
+        {\pgfpoint{-0.25*\pgfmetadecorationsegmentlength}{0.75\pgfdecorationsegmentamplitude}}
+        {\pgfpoint{-0.25*\pgfmetadecorationsegmentlength}{0.25\pgfdecorationsegmentamplitude}}
+        {\pgfpoint{0pt}{0pt}}
+    \pgfpathcurveto
+        {\pgfpoint{0.25*\pgfmetadecorationsegmentlength}{-0.25\pgfdecorationsegmentamplitude}}
+        {\pgfpoint{0.25*\pgfmetadecorationsegmentlength}{-0.75\pgfdecorationsegmentamplitude}}
+        {\pgfpoint{0pt}{-\pgfdecorationsegmentamplitude}}
+    \pgfpathmoveto{\pgfpointorigin}
+}
+  \state{do nothing}[width=\pgfdecorationsegmentlength,next state=do nothing]{
+    \pgfpathlineto{\pgfpointdecoratedinputsegmentlast}
+  }
+  \state{final}
+  {
+    \pgfpathlineto{\pgfpointdecoratedpathlast}
+  }
+}
+
+\graphicspath{
+  {./ch01_introduction/figs/}
+  {./ch02_neutronDiffusion/figs/}
+  {./ch03_diffusionResults/figs/}
+  {./ch04_thermalHydraulics/figs/}
+  {./ch05_thermalExpansion/figs/}
+  {./ch06_coupledResults/figs/}
+  {./ch07_conclusions/figs/}
+  {./apA_analyticSolutions/figs/}
+  {./apB_benchmarks/figs/}
+  }

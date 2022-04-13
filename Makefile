@@ -1,5 +1,5 @@
 # Makefile
-CHAPTERS=ch*/ch*.tex ap*/ap*.tex variable_definitions.tex acronym.tex
+CHAPTERS=ch*/ch*.tex ap*/ap*.tex variable_definitions.tex acronym.tex custom.tex
 FIGURES=ch*/figs/*.* ap*/figs/*.*
 DATA=ch*/data/*.* ap*/data/*.*
 NAME=WilliamDawn-thesis
@@ -9,7 +9,9 @@ INTERMEDIATES=$(NAME).bbl $(NAME).blg $(NAME).lof $(NAME).lot \
 			$(NAME).acr $(NAME).alg $(NAME).glg $(NAME).glo \
 			$(NAME).gls $(NAME).ist
 
-.PHONY : all text defense forcedefense forcetext clean
+.PHONY : default all text defense forcedefense forcetext clean
+
+default : text
 
 all : text defense
 

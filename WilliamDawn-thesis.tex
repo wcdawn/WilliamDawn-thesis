@@ -1,192 +1,48 @@
-\pdfminorversion=7 % needed to use PDF 1.7 definition. 1.5 is default.
 \documentclass[11pt,          % font size: 11pt or 12pt
-               ms,            % degree:    ms or phd
-               onehalfspacing % spacing: onehalfspacing or doublespacing
+               ms,           % degree:    ms or phd
+               onehalfspacing,% spacing: onehalfspacing or doublespacing
                ]{ncsuthesis}
+
+\usepackage[utf8]{inputenc}
 
 %%----------------------------------------------------------------------------%%
 %%------------------------------ Import Packages -----------------------------%%
 %%----------------------------------------------------------------------------%%
 
 \usepackage{booktabs}  % professionally typeset tables
-\usepackage{csvsimple}
+\usepackage{amsmath}
+\usepackage{textcomp}  % better copyright sign, among other things
+\usepackage{xcolor}
+\usepackage{lipsum}    % filler text
+\usepackage{longtable}
+%\usepackage{subfig}    % composite figures
+%\usepackage{fancyhdr}  % creates headers
+%\pagestyle{fancy}
 
-\usepackage{amsmath,amssymb}
+% \usepackage{natbib}    % ability to use citet,citep
 
-\usepackage{subfig}    % composite figures
 \usepackage[outdir=./hidden_epstopdf/]{epstopdf}
 
-\usepackage[table]{xcolor}
-
-% user defined packages
-\usepackage[chapter]{algorithm} % make sure to reset count at the new chapter
-\usepackage[noend]{algpseudocode}
-\renewcommand{\thealgorithm}{\arabic{chapter}.\arabic{algorithm}}
-
-\usepackage{threeparttable} % for table with footnote
-\usepackage{isotope} % isotope notation e.g. \isotope[235]{U}
-
-\usepackage[acronym]{glossaries}
-\usepackage{acronym}
-\input{acronym}
-% this width could potentially allow text to flow off the page... 
-% but just don't do that...
-\setlength{\glsdescwidth}{\textwidth}
-\setglossarystyle{long}
-\renewcommand{\glsnamefont}[1]{\textbf{#1}}
-\renewcommand{\glsgroupskip}{}
-
-\usepackage[all]{nowidow}
-
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%%%%%%%%%%% Hack for alphanumeric bibliography
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%5
+% setup bibliography
 \usepackage[american]{babel} % periods inside quotations in citations
-\usepackage[utf8]{inputenc} % required by csquotes
 \usepackage{csquotes} % required by babel
-\RequirePackage[
-			style=alphabetic,%numeric-comp,%authoryear-comp,%
-			sorting=nyt,%ynt					
-			hyperref=true, %	
-			giveninits=true,%
-			backend=biber,
+\usepackage[
+      %style=alphabetic,%
+      style=numeric,%
+      sorting=none,%nyt,ynt          
+      hyperref=true, %  
+      giveninits=true,%
+      backend=biber,
       bibencoding=utf8,%
-			natbib=true,
-			url=false,
-			isbn=false,
-			maxnames=2, %for et al to be used
-			maxalphanames=1, %to avoid printing a + for every et al in abbreviation
-			doi=false]{biblatex}		
-			
-%needed to do et al after two names
-%http://tex.stackexchange.com/questions/44048/use-et-al-in-biblatex-custom-style
-\renewcommand*{\finalnamedelim}{\addspace\&\space}
-
-%Simplify abbreviation (the default uses either one or two authors and it 
-%indicates et al with a +) The following five lines make it so that only the 
-%first author is used in the abbreviation
-%http://tex.stackexchange.com/questions/27956/label-only-from-first-author
-\renewcommand*{\labelalphaothers}{}
-    \renewcommand*{\intitlepunct}{}
-    \DefineBibliographyStrings{english}{in={}}
-    \DeclareNameAlias{sortname}{family-given}
-    \DeclareNameAlias{default}{family-given}
-	
-\DeclareFieldFormat[article,periodical]{volume}{\mkbibbold{#1}}
-\makeatletter
-
-\newrobustcmd*{\parentexttrack}[1]{%
-  \begingroup
-  \blx@blxinit
-  \blx@setsfcodes
-  \blx@bibopenparen#1\blx@bibcloseparen
-  \endgroup}
-
-\AtEveryCite{%
-  \let\parentext=\parentexttrack%
-  \let\bibopenparen=\bibopenbracket%
-  \let\bibcloseparen=\bibclosebracket}
-
-\makeatother
-\renewcommand{\cite}[1]{\parencite{#1}}
-
-\renewbibmacro{in:}{%
-  \ifentrytype{article}{}{%
-  \printtext{\bibstring{in}\intitlepunct}}}
-  
-\AtEveryBibitem{\clearfield{month}}
-
-\AtEveryBibitem{\clearfield{language}}
-
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-
+      natbib=true,
+      url=false,
+      isbn=false,
+      maxnames=2, %for et al to be used
+      maxalphanames=1, %to avoid printing a + for every et al in abbreviation
+      doi=true,
+      sortcites, % sort multicite events (multiple citations in one command)
+]{biblatex}    
 \addbibresource{WilliamDawn-thesis.bib}
-\defbibheading{myheading}[BIBLIOGRAPHY]{
-\chapter*{#1}
-\markboth{#1}{#1}}
-
-\usepackage{dcolumn}% Align table columns on decimal point
-\usepackage{bm}% bold math
-\usepackage{cancel}
-\usepackage{verbatim}% multiline commenting
-\usepackage{ifthen}
-\usepackage{url}
-\usepackage{sectsty}
-\usepackage{balance} 
-\usepackage{graphicx} %eps figures can be used instead
-\usepackage{lastpage}
-\usepackage[format=plain,
-  justification=RaggedRight,
-  singlelinecheck=false,
-  font=small,labelfont=bf,
-  labelsep=space]{caption} 
-\usepackage{fancyhdr}
-\pagestyle{fancy}
-
-%http://tex.stackexchange.com/questions/100817/error-when-using-bc-from-abbrevs-in-caption
-%Getting BC
-\usepackage{abbrevs}
-\usepackage{etoolbox}
-\robustify{\DateMark} % after having loaded abbrevs
-
-%Needed to solve bug from citation Hydrodynamics in 21/2 dimensions
-\usepackage{units}
-%see http://www.latex-community.org/viewtopic.php?f=5&t=989
-
-\usepackage[sharp]{easylist} %used for brainstorming purposes 
-% used for \Asterisk for convolution %conflicts with \widering
-
-%compile on single pass
-%\usepackage[backend=biber,...]{biblatex}
-
-%%%%%%%%%%%%
-%%% Hack to make chapters start on odd pages
-% http://tex.stackexchange.com/questions/73591/how-to-have-a-blank-even-page-before-every-chapter
-%%%%%%%%%%%%
-%\newcommand{\ensureoddstart}{\checkoddpage\ifoddpage\else\newpage\mbox{}\fi}
-%\newcommand{\ensureoddstart}{}
-
-%%%Fancy tables
-%http://tex.stackexchange.com/questions/94032/fancy-tables-in-latex
-\usepackage[table]{xcolor}
-\usepackage{array,booktabs}
-\usepackage{colortbl}
-
-%%%%%%%%%%
-%%%%% Hack to allow more levels in outline
-%%%%%%%%%%
-%\setcounter{secnumdepth}{5}
-%\setcounter{tocdepth}{5} %may violate ETD
-%Usage http://pleasemakeanote.blogspot.com/2010/06/how-to-activate-subsubsubsection-in.html
-%\section{} % level 1
-%\subsection{} % level 2
-%\subsubsection{} % level 3
-%\paragraph{} % level 4 - equivalent to subsubsubsection
-%\subparagraph{} % level 5
-
-%http://tex.stackexchange.com/questions/60209/how-to-add-an-extra-level-of-sections-with-headings-below-subsubsection
-\usepackage{titlesec}
-
-\setcounter{secnumdepth}{4}
-
-\titleformat{\paragraph}
-{\normalfont\normalsize\bfseries}{\theparagraph}{1em}{}
-\titlespacing*{\paragraph}{0pt}{3.25ex plus 1ex minus .2ex}{1.5ex plus .2ex}
-
-%%%%%%%%%%%%%%%%%%%%%%%%%%
-%%%% Hack for containing figures within sections
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%http://ctan.org/pkg/placeins
-\usepackage[section]{placeins}
-%Defines a \FloatBarrier command, beyond which floats may not pass; useful,
-%for example, to ensure all floats for a section appear before the next 
-%\section command.
-% section option enforces float barriers at sections but NOT sub....sections
-
-%%%Hack for centering all figures
-%\makeatletter
-%\g@addto@macro\@floatboxreset\centering
-%\makeatother
 
 %%----------------------------------------------------------------------------%%
 %%---------------------------- Formatting Options ----------------------------%%
@@ -215,8 +71,7 @@
 
 %% Typographers recommend using a normal inter-word space after
 %% sentences. TeX's default is to add an wider space, but \frenchspacing
-%% gives a normal spacing. Comment out the following line if you prefer
-%% wider spaces between sentences.
+%% gives a normal spacing. Comment out the following line if you prefer wider spaces between sentences.
 \frenchspacing
 
 %% -------------------------------------------------------------------------- %%
@@ -225,10 +80,11 @@
 %%    your document are available in the file optional.tex 
 %%    (For example, hyperlinks, fancy chapter headings, and fonts)
 %% To use these options, uncomment the next line and see optional.tex
-\include{optional}
+\input{optional}
 %solve bug from fancyhdr in optional
 %http://nw360.blogspot.com/2006/11/latex-headheight-is-too-small.html
-\setlength{\headheight}{14pt}
+\setlength{\headheight}{26.94345pt} % corrected error in Overleaf
+\fancyhead[L]{\vspace{1mm}} % only puts chapter title in headers
 
 %%----------------------------------------------------------------------------%%
 %%---------------------------- Content Options -------------------------------%%
@@ -246,12 +102,24 @@
 \chair{Scott P. Palmtag}
 \memberI{Joseph M. Doster}
 \memberII{Ralph C. Smith}
+%\memberIII{Ralph C. Smith}   % unnecessary if committeesize=3
+%\memberIV{Steven P. Hamilton}    % unnecessary if committeesize=3, 4
 
 %% Student writing thesis, \student{First Middle}{Last}
-\student{William Christopher}{Dawn}
+\student{William Christopher}{Dawn} % a full middle name
 
-%% Degree program
+%% Degree program e.g. Marine, Earth, and Atmospheric Science
 \program{Nuclear Engineering}
+
+%%!!!!!! To Change Year !!!!!!%%
+% If year of graduation is not same as current year (common for December graduates
+% thanks to the Grad Schools odd graduation rules) go into ncsuthesis.cls and change 
+% \the\year in the line:
+% \newcommand{\ncsu@year}{\the\year}
+% to the year of graduation. E.g.:
+\makeatletter
+\renewcommand{\ncsu@year}{2019}
+\makeatother
 
 %% Thesis Title
 %%  Keep in mind, according to ETD guidelines:
@@ -261,45 +129,23 @@
 %%  Note: To break the title onto multiple lines, use \break instead of \\.
 %\thesistitle{A North Carolina State University Sample \LaTeX{} Thesis \break 
 %with a Title So Long it Needs a Line Break}
-\thesistitle{Simulation of Fast Reactors with the Finite Element Method and 
-Multiphysics Models}
+\thesistitle{Simulation of Fast Reactors with the Finite Element Method and Multiphysics Models}
 
-%% Degree year.  Necessary if your degree year doesn't equal the current year.
+%% Degree year. Necessary if your degree year doesn't equal the current year.
 %\degreeyear{1995}
+
+%% While your here make sure to change the PDF characteristics in optional.tex!!!
 
 %%----------------------------------------------------------------------------%%
 %%---------------------------- Personal Macros -------------------------------%%
 %%----------------------------------------------------------------------------%%
 
 %% A central location to add your favorite macros.
-%% user defined commands and macros
-\include{variable_definitions}
 
-\usepackage{color}
-\newcommand{\NEW}[1]{#1}
-\newcommand{\COMMENT}[1]{\textcolor{green}{#1}}
+\input{acronym}
+\input{custom}
+\input{variable_definitions}
 
-\newcommand{\NOTER}[1]{\textcolor{orange}{#1}}
-\newcommand{\NOTEC}[1]{\textcolor{blue}{#1}}
-\newcommand{\NOTEK}[1]{\textcolor{magenta}{#1}}
-
-\newcommand{\mum}{\ensuremath{{\mu}\text{m}}}
-
-%This makes it so that you can add short paths in your .tex by including the
-%folders where you store your images in the search path
-\graphicspath{
-  {./ch01_introduction/figs/}
-  {./ch02_neutronDiffusion/figs/}
-  {./ch03_diffusionResults/figs/}
-  {./ch04_thermalHydraulics/figs/}
-  {./ch05_thermalExpansion/figs/}
-  {./ch06_coupledResults/figs/}
-  {./ch07_conclusions/figs/}
-  {./apA_analyticSolutions/figs/}
-  {./apB_benchmarks/figs/}
-  }
-
-%%---------------------------------------------------------------------------%%
 \usepackage{calc}
 %% Capital letter height
 \newlength{\chaptercapitalheight}
@@ -307,24 +153,6 @@ Multiphysics Models}
 \newlength{\chapterfootskip}
 \setlength{\chapterfootskip}{\chaptercapitalheight}
 \addtolength{\chapterfootskip}{2\baselineskip}
-% A little extra space to ensure there are 2 full double spaced lines
-\addtolength{\chapterfootskip}{0.5ex}
-%\def\chapterfootskipnum{\chapterfootskip}
-\renewcommand{\listfigurename}{LIST OF FIGURES}
-\renewcommand{\listtablename}{LIST OF TABLES}
-\renewcommand{\bibname}{BIBLIOGRAPHY}
-
-%\renewcommand{\cfttoctitlefont}{\centering\ncsu@headingformat}
-
-%http://tex.stackexchange.com/questions/47184/height-of-figure-caption-textheight
-\newlength\graphht
-\newcommand\calculategraphicstargetheight[1]{%
-     \setlength\graphht{\textheight 
-                       -\parskip
-                       -\abovecaptionskip -\belowcaptionskip
-                       -(12pt * #1) % assuming baselineskip of 12pt in caption
-                       -\chapterfootskip
-                       }}
 
 %landscape support in fancyhdr from 
 %http://tex.stackexchange.com/questions/9071/how-to-translate-and-rotate-the-heading-of-landscaped-pages
@@ -339,17 +167,16 @@ Multiphysics Models}
 \renewcommand{\footrulewidth}{0pt}
 }
 
+%%---------------------------------------------------------------------------%%
 \begin{document}
-\pagestyle{plain}
 %%---------------------------------------------------------------------------%%
 \frontmatter
+
 \include{front}
-\include{disclaimer}
 
 %%---------------------------------------------------------------------------%%
 \mainmatter
 
-\pagestyle{plain}
 \include{ch01_introduction/ch01_introduction}
 \include{ch02_neutronDiffusion/ch02_neutronDiffusion}
 \include{ch03_diffusionResults/ch03_diffusionResults}
@@ -357,44 +184,37 @@ Multiphysics Models}
 \include{ch05_thermalExpansion/ch05_thermalExpansion}
 \include{ch06_coupledResults/ch06_coupledResults}
 \include{ch07_conclusions/ch07_conclusions}
-%\restoregeometry
-
 
 %%---------------------------------------------------------------------------%%
 %%  Bibliography 
-%\ensureoddstart
-\renewcommand\bibname{BIBLIOGRAPHY}
-\begin{spacing}{1}
- \setlength\bibitemsep{11pt} %22pt = 2*11pt, where fontsize is 11pt
- \phantomsection
- %\textorpdfstring and \uppercase needed due to hyperref package 
- % http://www.latex-community.org/forum/viewtopic.php?f=44&t=16601
- \addcontentsline{toc}{chapter}{Bibliography}
- %\vspace{-0.5in}
-\titleformat{\chapter}[display]{\bf\filcenter
-}{\chaptertitlename\ \thechapter}{11pt}{\bf\filcenter}
-\titlespacing*{\chapter}{0pt}{0.0in-9pt}{22pt}
+%% or use BibTeX
+%Citations should be of the form ``author year''  not ``author, year''
 
-\printbibliography[heading=myheading]
-\end{spacing}
-%\bibliographystyle{apalike}
+%%%% \bibpunct{(}{)}{;}{a}{}{,} % changes apalike bst into AMS format
+%%%% \bibliography{dissertation.bib}
+%%%% \bibliographystyle{apalike}
+
+\begin{singlespace}
+\printbibliography[title=REFERENCES]
+\addcontentsline{toc}{chapter}{References}
+\end{singlespace}
 
 %%---------------------------------------------------------------------------%%
 % Appendices
 %\ensureoddstart
 \restoregeometry
 \appendix
-\newgeometry{margin=1in,lmargin=1.25in,footskip=\chapterfootskip, includehead,
-  includefoot}
+%\newgeometry{margin=1in,lmargin=1.25in,footskip=\chapterfootskip, includehead, includefoot}
 
+% Can remove or add
 \include{apA_analyticSolutions/apA_analyticSolutions}
 \include{apB_benchmarks/apB_benchmarks}
 
 \restoregeometry
 
+%%---------------------------------------------------------------------------%%
 
 %%---------------------------------------------------------------------------%%
-%\ensureoddstart
 \backmatter
 
 \end{document}

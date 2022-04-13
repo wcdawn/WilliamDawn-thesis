@@ -4,7 +4,7 @@
 %% -------------------------------------------------------------------------- %%
 %% Fancy chapter headings
 %%  available options: Sonny, Lenny, Glenn, Conny, Rejne, Bjarne
-% \usepackage[Conny]{fncychap}
+%\usepackage[Sonny]{fncychap}
 \usepackage[Rejne]{fncychap}
 
 %%----------------------------------------------------------------------------%%
@@ -12,14 +12,12 @@
 %%  and citations.  Based on feedback from the NCSU thesis editor, 
 %%  the links are not visually distinct from normal text (i.e. no change
 %%  in color or extra boxes).
-
 \usepackage[
   pdfauthor={William Christopher Dawn},
-  pdftitle={Fast Reactor with FEM Multiphysics},
+  pdftitle={Multiphysics Modeling of Microreactors with Unstructured Mesh Neutron Transport and Exascale Computing Architectures},
   pdfcreator={pdftex},
-  pdfsubject={NC State ETD Thesis},
-  pdfkeywords={nuclear, sodium, fast, reactor, nuclear reactor, 
-    finite element, multiphysics},
+  pdfsubject={NC State ETD Dissertation},
+  pdfkeywords={FEM, MFEM, Exascale, ECP, neutron transport, SAAF, multiphysics, microreactor},
   colorlinks=true,
   linkcolor=black,
   citecolor=black,
@@ -27,11 +25,6 @@
   urlcolor=black,
 ]{hyperref}
 
-\usepackage[open=false,
-  openlevel=0,
-  atend,
-  numbered,
-]{bookmark}
 
 %% -------------------------------------------------------------------------- %%
 %% Microtype - If you use pdfTeX to compile your thesis, you can use
@@ -74,20 +67,10 @@
 
 %% Times
 \usepackage[T1]{fontenc}
-\usepackage{anyfontsize}
-\usepackage{newtxtext} % NOTE: automatically loads textcomp
-\usepackage{newtxmath}
+\usepackage{newtxtext, newtxmath}
 
 
 %% Sans serif fonts -------------------------
 
-% this will work with math and text
-%\renewcommand{\familydefault}{\sfdefault}
 %\usepackage[scaled]{helvet}  % Helvetica
-%\usepackage[EULERGREEK]{sansmath}
-%\sansmath
-%\ChNameVar{\centering\Large\fontfamily{phv}\selectfont}
-%\ChNumVar{\Huge\fontfamily{phv}\selectfont}
-%\ChTitleVar{\centering\Huge\fontfamily{phv}\selectfont}
-
 %\usepackage[scaled]{berasans} % Bera Sans

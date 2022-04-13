@@ -47,14 +47,12 @@
   \end{equation}
   where
   \begin{conditions}
-    D & diffusion coefficient \units{cm}, \\
-    \phi & scalar neutron flux \units{$\frac{1}{\text{cm}^2 \; \text{s}}$}, \\
-    \Sigma_r & macroscopic removal cross section \units{$\frac{1}{\text{cm}}$},\\
-    \keff & effective neutron multiplication factor,\\
-    \nu\Sigma_f & number of fission neutrons per unit neutron flux
-      \units{$\frac{1}{\text{cm}}$}, \\
-    q_{fixed} & fixed volumetric neutron source 
-      \units{$\frac{1}{\text{cm}^3 s}$}.
+    $D$ & diffusion coefficient \units{cm}, \\
+    $\phi$ & scalar neutron flux \units{$\frac{1}{\text{cm}^2 \; \text{s}}$}, \\
+    $\Sigma_r$ & macroscopic removal cross section \units{$\frac{1}{\text{cm}}$},\\
+    $\keff$ & effective neutron multiplication factor,\\
+    $\nu\Sigma_f$ & number of fission neutrons per unit neutron flux \units{$\frac{1}{\text{cm}}$}, \\
+    $q_{fixed}$ & fixed volumetric neutron source \units{$\frac{1}{\text{cm}^3 s}$}.
   \end{conditions}
   \eref{eq:onegroup} is valid for problems with constant coefficients
   (homogeneous materials). For problems considered here, material properties
@@ -593,9 +591,10 @@
   \tref{tab:1d2g_vver440}. For the specified cross sections and 
   $L_x = 100 \units{cm}$, the solutions are
   \begin{align}
-    \frac{k_2}{k_1} &= 0.0261324, \\
+    \frac{k_2}{k_1} &= 0.2613242\footnotemark{}, \\
     \keff &= 0.892349.
   \end{align}
+  \footnotetext{Incorrect in original thesis.}
 
   \begin{figure}
     \centering
@@ -658,7 +657,7 @@
   \end{align}
   \begin{figure}
     \centering
-    \includegraphics[width=0.5\textwidth]{2reg_geom}
+    \includegraphics[width=0.6\textwidth]{2reg_geom}
     \caption{Geometry for Two-Region Problem.}
     \label{fig:2reg_geom}
   \end{figure}
@@ -1099,7 +1098,7 @@
 
   \begin{figure}
     \centering
-    \includegraphics[width=0.4\textwidth]{finite_cyl}
+    \includegraphics[width=0.7\textwidth]{finite_cyl}
     \caption{Example Finite Cylinder Flux Shape.}
     \label{fig:finite_cyl}
   \end{figure}

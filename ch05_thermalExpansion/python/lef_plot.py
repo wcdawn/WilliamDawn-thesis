@@ -21,7 +21,7 @@ plt.rc('lines', lw=LW)
 plt.rc('mathtext', fontset='stix') # not explicitly Times New Roman but a good clone
 plt.rc('font', family=FN, size=FS)
 
-T = np.linspace(400.0, 1200.0, 1000.0)
+T = np.linspace(400.0, 1200.0, 1000)
 
 lef_fuel_data = lef_fuel(T)
 

@@ -83,12 +83,11 @@
 \makeatother
 \captionsetup[algorithm]{font=scriptsize}
 
-\usepackage[acronym]{glossaries}
-\usepackage{acronym}
 \input{../acronym}
 \glstocfalse
 \renewcommand{\glossarysection}[2][]{}
 
+\newenvironment{conditions}{\par\noindent\begin{tabular}{l@{${}={}$}l}}{\end{tabular}\vspace{0.25\baselineskip}\par\noindent}
 
 % Information to be included in the title page:
 \title[Fast Reactor and FEM]
